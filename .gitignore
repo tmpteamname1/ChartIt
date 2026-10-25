@@ -1,0 +1,38 @@
+
+# Dependencies
+frontend/node_modules/
+backend/.venv/
+venv/
+
+# Frontend build output
+frontend/dist/
+
+# Python generated files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django
+backend/db.sqlite3
+backend/media/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Testing and coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
