@@ -1,2 +1,5 @@
-# tmpname
-Repo za progi projekt grupe 09.
+# ChartIt
+Quick start:
+
+git clone [repository URL]
+cd ChartIt
