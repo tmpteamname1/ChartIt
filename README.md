@@ -53,6 +53,8 @@ npm run dev
 
 Aplikacija se otvara na **http://localhost:5173**. Vite razvojni poslužitelj prosljeđuje `/api`, `/admin` i `/static` na Django (port 8000), pa su klijent i API na istom originu kao i u produkciji. Django admin je dostupan na http://localhost:5173/admin/.
 
+Veza klijenta, API-ja i baze provjerava se na početnoj stranici, koja prikazuje "backend: OK", ili izravno na http://localhost:5173/api/health/.
+
 Na http://localhost:8000 Django prikazuje zadnju izgrađenu verziju React aplikacije (`npm run build`), a ne trenutni kod. Promjene u `frontend/src` tamo se vide tek nakon ponovnog builda, zato se u razvoju koristi port 5173.
 
 Nakon povlačenja novih promjena s gita po potrebi ponovno pokrenuti `python -m pip install -r requirements.txt`, `python manage.py migrate` i `npm install`.
