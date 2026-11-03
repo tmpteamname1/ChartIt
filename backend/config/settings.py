@@ -10,12 +10,24 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-import os
 import re
 from pathlib import Path
 
+import environ
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env(
+    DJANGO_DEBUG=(bool, True),
+    DJANGO_ALLOWED_HOSTS=(list, []),
+)
+
+# Local development reads .env from the repository root (shared with docker-compose.yml).
+# Variables already set in the environment (Docker, Azure) take precedence.
+ENV_FILE = BASE_DIR.parent / '.env'
+if ENV_FILE.exists():
+    environ.Env.read_env(ENV_FILE)
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,9 +37,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i!@7!g$(y5+)he+f76qs!j)m)t%xqx+m*pwj6gshb(bcz-mir1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() == 'true'
+DEBUG = env('DJANGO_DEBUG')
 
-ALLOWED_HOSTS = [host for host in os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',') if host]
+ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS')
 
 
 # Application definition
@@ -40,6 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
+    'reservations',
 ]
 
 MIDDLEWARE = [
@@ -76,11 +90,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# PostgreSQL only (ADR-03 needs range types and btree_gist), e.g.
+# postgres://user:password@localhost:5432/chartit (add ?sslmode=require on Azure)
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': env.db('DATABASE_URL'),
 }
 
 
