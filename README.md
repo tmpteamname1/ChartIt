@@ -81,6 +81,8 @@ Ako je port 5432 zauzet (npr. druga PostgreSQL baza na računalu), potrebno ju j
 
 Ako je lokalna baza stvorena prije uvođenja prilagođenog modela korisnika (aplikacija `accounts`), migracije javljaju grešku `InconsistentMigrationHistory`. Bazu je tada potrebno jednom obrisati s `docker compose down -v` i ponovno pokrenuti `docker compose up`.
 
+Ako Django javlja `Set the DJANGO_SECRET_KEY environment variable`, u `.env` nedostaju nove varijable. Treba ih prepisati iz `.env.example`, a za `DJANGO_SECRET_KEY` lokalno je dovoljan bilo koji dugi niz znakova.
+
 ## Pokretanje kao u produkciji
 
 Django poslužuje izgrađenu React aplikaciju i statičke datoteke (WhiteNoise), a pokreće se preko gunicorna. Baza mora biti pokrenuta (`docker compose up db`):
@@ -91,7 +93,7 @@ npm run build              # rezultat ide u backend/frontend_dist
 cd ../backend
 source .venv/bin/activate
 python manage.py collectstatic --noinput
-DJANGO_DEBUG=False gunicorn config.wsgi --bind 127.0.0.1:8000
+DJANGO_DEBUG=False DJANGO_HTTPS=False gunicorn config.wsgi --bind 127.0.0.1:8000
 ```
 
-Aplikacija je tada dostupna na http://localhost:8000. Gunicorn ne radi na Windowsima; tamo se ovaj način pokretanja isprobava u WSL-u ili Dockeru.
+Aplikacija je tada dostupna na http://localhost:8000. `DJANGO_HTTPS=False` isključuje preusmjeravanje na HTTPS i sigurne kolačiće, koji su uz `DJANGO_DEBUG=False` inače uključeni. Gunicorn ne radi na Windowsima; tamo se ovaj način pokretanja isprobava u WSL-u ili Dockeru.
