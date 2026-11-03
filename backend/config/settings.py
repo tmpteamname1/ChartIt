@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'accounts',
     'reservations',
 ]
 
@@ -95,6 +96,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': env.db('DATABASE_URL'),
 }
+
+
+# Custom user model (accounts app). Must be set before the first migration.
+AUTH_USER_MODEL = 'accounts.User'
 
 
 # Password validation

@@ -79,6 +79,8 @@ docker compose exec db psql -U chartit -d chartit     # konzola baze
 
 Ako je port 5432 zauzet (npr. druga PostgreSQL baza na računalu), potrebno ju je zaustaviti prije `docker compose up`.
 
+Ako je lokalna baza stvorena prije uvođenja prilagođenog modela korisnika (aplikacija `accounts`), migracije javljaju grešku `InconsistentMigrationHistory`. Bazu je tada potrebno jednom obrisati s `docker compose down -v` i ponovno pokrenuti `docker compose up`.
+
 ## Pokretanje kao u produkciji
 
 Django poslužuje izgrađenu React aplikaciju i statičke datoteke (WhiteNoise), a pokreće se preko gunicorna. Baza mora biti pokrenuta (`docker compose up db`):
