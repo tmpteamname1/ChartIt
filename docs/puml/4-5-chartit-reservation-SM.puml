@@ -1,0 +1,108 @@
+' ==============================================================================
+' 4-5-chartit-reservation-SM.puml
+'
+' Svrha:    Prikazuje životni ciklus domenskog objekta Rezervacija: stanja
+'           statusa (F-04), složeno stanje Potvrđena s podstanjima prije i
+'           nakon preuzimanja plovila te događaje, uvjete i akcije koji
+'           mijenjaju stanje. Prijelazi odgovaraju metodama razreda
+'           Reservation iz dijagrama 4-3.
+' Praćenje: Stanja i prijelazi trebaju biti provjerljivi u implementaciji
+'           (polje status, pickedUpAt, returnedAt; testovi prijelaza); pri
+'           odstupanju ažurirati model.
+'
+' Diagram level: Domain Object Behavioral Design
+' Diagram type:  State Machine Diagram
+' Version:       1.0
+' ==============================================================================
+
+@startuml
+title Sustav Chartit – životni ciklus rezervacije
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #212529
+
+skinparam state {
+    BackgroundColor #E7F1FF
+    BorderColor #0D6EFD
+}
+
+skinparam note {
+    BackgroundColor #F8F9FA
+    BorderColor #212529
+    FontColor #212529
+}
+
+' ==============================================================================
+' Kontekst objekta i varijable stanja
+' ==============================================================================
+state "Rezervacija" as Life {
+
+  Life : status : ReservationStatus
+  Life : pickedUpAt : DateTime [0..1]
+  Life : returnedAt : DateTime [0..1]
+
+  ' Rezervacija nastaje tek ako su podaci valjani i termin slobodan
+  ' (dijagram 4-4); neuspješni zahtjevi ne stvaraju objekt.
+  [*] --> Requested : korisnik podnese zahtjev\n[podaci valjani i termin slobodan]\n/ kopiraj cijene, izračunaj ukupni iznos
+
+  state "Zahtjev (REQUESTED)" as Requested
+  state "Odbijena (REJECTED)" as Rejected
+  state "Otkazana (CANCELLED)" as Cancelled
+  state "Završena (COMPLETED)" as Completed
+
+  ' ----------------------------------------------------------------------------
+  ' Složeno stanje: status ostaje CONFIRMED, a podstanje određuje pickedUpAt.
+  ' ----------------------------------------------------------------------------
+  state "Potvrđena (CONFIRMED)" as Confirmed {
+    state "Čeka preuzimanje" as AwaitingPickup
+    state "Plovilo preuzeto" as PickedUp
+
+    [*] --> AwaitingPickup
+    AwaitingPickup --> PickedUp : djelatnik evidentira preuzimanje\n[pickedUpAt == null]\n/ pickedUpAt = sada
+  }
+
+  ' Obrada zahtjeva (djelatnik tvrtke kojoj pripada plovilo)
+  Requested --> Confirmed : djelatnik potvrdi\n/ processedBy = djelatnik,\npošalji obavijest
+  Requested --> Rejected : djelatnik odbije(razlog)\n/ statusNote = razlog,\npošalji obavijest
+
+  ' Otkazivanje je dopušteno samo prije preuzimanja plovila.
+  Requested --> Cancelled : korisnik ili djelatnik otkaže(razlog)\n/ statusNote = razlog,\npošalji obavijest
+  AwaitingPickup --> Cancelled : korisnik ili djelatnik otkaže(razlog)\n[pickedUpAt == null]\n/ statusNote = razlog,\npošalji obavijest
+
+  ' Povrat zatvara najam.
+  PickedUp --> Completed : djelatnik evidentira povrat\n[pickedUpAt != null]\n/ returnedAt = sada
+
+  Rejected --> [*]
+  Cancelled --> [*]
+  Completed --> [*]
+}
+
+' ==============================================================================
+' Ograničenja
+' ==============================================================================
+
+note right of Requested
+  Stanja Zahtjev i Potvrđena zauzimaju termin
+  plovila: novi zahtjev za preklapajuće razdoblje
+  se odbija (409 Conflict).
+  Prijelazom u Odbijena ili Otkazana termin se
+  oslobađa i postaje dostupan drugim korisnicima.
+end note
+
+note bottom of Confirmed
+  Podstanja nisu zasebne vrijednosti statusa:
+  status ostaje CONFIRMED, a podstanje je
+  određeno poljem pickedUpAt.
+end note
+
+note right of Completed
+  Odbijena, Otkazana i Završena su završna
+  stanja. Svaki drugi događaj u nekom stanju
+  (npr. odbijanje potvrđene rezervacije)
+  odbija se pogreškom bez promjene stanja.
+  Završene rezervacije ulaze u statistiku
+  prihoda (F-13).
+end note
+
+@enduml

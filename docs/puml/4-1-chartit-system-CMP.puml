@@ -1,0 +1,114 @@
+' ==============================================================================
+' 4-1-chartit-system-CMP.puml
+'
+' Svrha:    Prikazuje glavne komponente sustava Chartit, njihove ovisnosti i
+'           vanjske sustave s kojima komuniciraju (OAuth pružatelj, e-pošta,
+'           vremenska prognoza, kartografske pločice). Klase, metode i
+'           fizička mrežna topologija namjerno nisu obuhvaćeni.
+' Praćenje: Komponente poslužitelja odgovaraju Django aplikacijama u
+'           repozitoriju (accounts, companies, fleet, reservations,
+'           notifications, reports, weather); pri promjeni arhitekture
+'           ažurirati model.
+'
+' Diagram level: High-level logical architecture
+' Diagram type:  UML Component Diagram
+' Version:       1.0
+' ==============================================================================
+
+@startuml
+title Sustav Chartit – komponente
+left to right direction
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam componentStyle rectangle
+skinparam ArrowColor #212529
+
+skinparam component {
+    BackgroundColor #E7F1FF
+    BorderColor #0D6EFD
+}
+
+skinparam database {
+    BackgroundColor #FFF3CD
+    BorderColor #212529
+}
+
+skinparam storage {
+    BackgroundColor #FFF3CD
+    BorderColor #212529
+}
+
+' ==============================================================================
+' Granica sustava i unutarnje komponente
+' ==============================================================================
+
+rectangle "Sustav Chartit" {
+
+  rectangle "Web-klijent (React, Vite)" as Web {
+    component "Javni dio\n(pretraga i detalji plovila)" as WebPublic
+    component "Korisnički dio\n(rezervacije korisnika)" as WebCustomer
+    component "Panel tvrtke\n(djelatnik, vlasnik)" as WebCompany
+    component "Administracija\nplatforme" as WebAdmin
+  }
+
+  rectangle "Poslužiteljska aplikacija (Django + DRF)" {
+    component "REST API" as API
+    component "Kontrola pristupa\n(uloge, izolacija tvrtki)" as Access
+    component "Autentifikacija\ni korisnici" as Auth
+    component "Upravljanje tvrtkama" as Companies
+    component "Upravljanje flotom\n(plovila, cijene, usluge,\nnedostupnost)" as Fleet
+    component "Usluga rezervacija" as Reservations
+    component "Usluga obavijesti" as Notify
+    component "Statistika i izvještaji" as Stats
+    component "Usluga vremenske prognoze" as Weather
+  }
+
+  database "PostgreSQL" as DB
+  storage "Pohrana fotografija" as Media
+}
+
+' ==============================================================================
+' Vanjski sustavi
+' ==============================================================================
+
+component "OAuth pružatelj\n(vanjski)" as OAuth
+component "Poslužitelj e-pošte\n(vanjski)" as Mail
+component "API vremenske prognoze\n(vanjski)" as WeatherAPI
+component "Pružatelj kartografskih pločica\n(vanjski)" as Maps
+
+' ==============================================================================
+' Ovisnosti i sučelja
+' ==============================================================================
+
+' Web-klijent
+WebPublic --> API : pretraga, detalji i\nslobodni termini plovila
+WebCustomer --> API : zahtjevi za rezervaciju,\npregled i otkazivanje
+WebCompany --> API : flota, rezervacije, preuzimanja,\ndjelatnici, statistika
+WebAdmin --> API : tvrtke, vlasnici,\nkategorije i luke
+Web --> OAuth : preusmjeravanje na prijavu
+Web --> Maps : kartografske pločice
+Web --> Media : prikaz fotografija
+
+' Poslužitelj
+API --> Access : provjera uloge i\npripadnosti tvrtki
+API --> Auth : prijava i korisnički profil
+API --> Companies : upravljanje tvrtkama\ni djelatnicima
+API --> Fleet : upravljanje plovilima
+API --> Reservations : rezervacije i promjene statusa
+API --> Stats : statistika i CSV izvoz
+API --> Weather : prognoza za lokaciju i razdoblje
+
+Auth --> OAuth : razmjena koda za token
+Reservations --> Fleet : cijene, dodatne usluge\ni razdoblja nedostupnosti
+Reservations --> Notify : potvrda, odbijanje,\notkazivanje
+Notify --> Mail : slanje e-pošte
+Weather --> WeatherAPI : dohvat prognoze
+Fleet --> Media : pohrana fotografija
+
+Auth --> DB : korisnici i uloge
+Companies --> DB : tvrtke i djelatnici
+Fleet --> DB : plovila, kategorije, luke
+Reservations --> DB : rezervacije i statusi
+Stats --> DB : agregacija podataka
+@enduml
