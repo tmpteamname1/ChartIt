@@ -1,29 +1,17 @@
-import { useEffect, useState } from 'react'
-
-type Status = 'loading' | 'ok' | 'error'
-
-// Relative URL: the Vite proxy (dev) and Django (production) serve /api on the same origin
-const HEALTH_URL = '/api/health/'
+import { Text } from '@mantine/core'
+import { useQuery } from '@tanstack/react-query'
+import { apiGet } from '../api/client'
 
 function BackendStatus() {
-  const [status, setStatus] = useState<Status>('loading')
+  const { data, isPending, isError } = useQuery({
+    queryKey: ['health'],
+    queryFn: ({ signal }) => apiGet<{ status: string }>('/api/health/', signal),
+    retry: false,
+  })
 
-  useEffect(() => {
-    const controller = new AbortController()
-
-    fetch(HEALTH_URL, { signal: controller.signal })
-      .then((response) => response.json())
-      .then((data) => setStatus(data.status === 'ok' ? 'ok' : 'error'))
-      .catch((error) => {
-        if (error.name !== 'AbortError') setStatus('error')
-      })
-
-    return () => controller.abort()
-  }, [])
-
-  if (status === 'loading') return <p>backend: provjera...</p>
-  if (status === 'ok') return <p>backend: OK</p>
-  return <p role="alert">backend: nedostupan</p>
+  if (isPending) return <Text size="xs" c="dimmed">backend: provjera...</Text>
+  if (!isError && data.status === 'ok') return <Text size="xs" c="dimmed">backend: OK</Text>
+  return <Text size="xs" c="red" role="alert">backend: nedostupan</Text>
 }
 
 export default BackendStatus
