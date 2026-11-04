@@ -169,3 +169,129 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 | Deaktivacija tvrtke s budućim potvrđenim rezervacijama. | Plovila nestaju iz pretrage, a korisnici imaju rezervacije kod tvrtke koja više nije aktivna. | Rezervacije ostaju vidljive korisnicima s kontaktom tvrtke; administrator prije deaktivacije vidi broj budućih rezervacija. Rješavanje tih najmova odgovornost je tvrtke izvan sustava. |
 | Vremenska prognoza može se shvatiti kao jamstvo. | Korisnik planira najam za nekoliko mjeseci na temelju prognoze koja je pouzdana samo nekoliko dana unaprijed. | Prognoza se prikazuje samo za dane unutar raspona pružatelja, uz oznaku da je informativna; za dalje datume prikazuje se poruka da prognoza još nije dostupna. |
 | Procijenjeni iznos u pregledniku razlikuje se od konačnog. | Korisnik može očekivati iznos koji nije zapisan u rezervaciji, npr. ako je vlasnik u međuvremenu promijenio cijenu. | Mjerodavan je iznos koji izračuna poslužitelj (ADR-04); prikazuje se u potvrdi zahtjeva i detaljima rezervacije. | 
+## 4.8 Mapa stranica i ruta klijentske aplikacije
+
+> Radna inačica za zadatak #52, prije pregleda s timom. Rute su ulaz za kostur React aplikacije (#61) i wireframee (#53 do #57).
+
+**Dogovor o URL-ovima:** rute klijentske aplikacije pišu se na hrvatskom, malim slovima, bez dijakritičkih znakova i s crticom između riječi (npr. `/moje-rezervacije`). Prefiksi `/api`, `/admin` i `/static` pripadaju Djangu, pa se administracija platforme u klijentu nalazi pod `/administracija`. Sve ostale putanje Django vraća kao React aplikaciju, koja ih sama usmjerava.
+
+Uloge odgovaraju polju `role` korisnika (KORISNIK, DJELATNIK, VLASNIK, ADMINISTRATOR); posjetitelj je neprijavljeni korisnik.
+
+### Javni dio (bez prijave)
+
+| Ekran | Ruta | Pristup | UC | F | Sadržaj |
+| --- | --- | --- | --- | --- | --- |
+| Početna i pretraga | `/` | svi | UC-01 | F-01, F-23, F-29 | Filtri (termin, luka polaska, kategorija, broj osoba, tvrtka), kartice rezultata, straničenje, poruka kada nema rezultata. |
+| Detalji plovila | `/plovila/:id` | svi | UC-11 | F-15, F-16, F-20 | Galerija, karakteristike i oprema, tvrtka s kontaktom, dnevna cijena, kalendar slobodnih termina, karta matične luke, prognoza, dodatne usluge, procjena cijene, gumb „Pošalji zahtjev”. |
+| Podaci o tvrtki | `/tvrtke/:id` | svi | UC-01 | F-29 | Osnovni podaci i kontakt tvrtke te popis njezinih plovila. |
+| Prijava | `/prijava` | neprijavljeni | UC-10 | F-17, F-18 | Gumb za prijavu preko OAuth pružatelja, poruka o neuspjeloj prijavi; u razvoju i prijava testnih korisnika (ENABLE_TEST_LOGIN). |
+
+### Korisnički dio
+
+| Ekran | Ruta | Pristup | UC | F | Sadržaj |
+| --- | --- | --- | --- | --- | --- |
+| Zahtjev za rezervaciju | `/plovila/:id/rezervacija` | KORISNIK | UC-02 | F-02, F-03, F-04 | Odabir razdoblja i dodatnih usluga, sažetak s iznosom poslužitelja, slanje. Potvrda poslanog zahtjeva i greška preklapanja prikazuju se kao stanja ovog ekrana. |
+| Moje rezervacije | `/moje-rezervacije` | KORISNIK | UC-03 | F-04, F-05 | Popis rezervacija sa statusom, terminom i iznosom; filtriranje prema statusu; straničenje. |
+| Detalji rezervacije | `/moje-rezervacije/:id` | KORISNIK | UC-03 | F-05, F-19, F-21 | Svi podaci, pohranjeni iznos, odabrane usluge, kontakt tvrtke, otkazivanje s potvrdnim dijalogom. |
+
+### Panel tvrtke
+
+| Ekran | Ruta | Pristup | UC | F | Sadržaj |
+| --- | --- | --- | --- | --- | --- |
+| Zahtjevi za rezervaciju | `/tvrtka/zahtjevi` | DJELATNIK, VLASNIK | UC-12 | F-03, F-11 | Zahtjevi poredani prema datumu početka najma, potvrda i odbijanje. Početni ekran panela. |
+| Raspored preuzimanja i povrata | `/tvrtka/raspored` | DJELATNIK, VLASNIK | UC-06 | F-12 | Preuzimanja i povrati po danima ili tjednu, odabir razdoblja. |
+| Rezervacije tvrtke | `/tvrtka/rezervacije` | VLASNIK | UC-05 | F-04, F-08 | Sve rezervacije tvrtke s filtrima prema statusu, plovilu i razdoblju. |
+| Detalji rezervacije (panel) | `/tvrtka/rezervacije/:id` | DJELATNIK, VLASNIK | UC-05, UC-13 | F-08, F-12, F-22 | Podaci o plovilu i korisniku, evidentiranje preuzimanja i povrata, završetak najma. |
+| Flota | `/tvrtka/flota` | VLASNIK | UC-04 | F-07 | Popis plovila tvrtke, deaktivacija. |
+| Novo plovilo | `/tvrtka/flota/novo` | VLASNIK | UC-04 | F-07 | Obrazac plovila: osnovni podaci, kategorija, luka, kapacitet, oprema, fotografije, cijena. |
+| Izmjena plovila | `/tvrtka/flota/:id` | VLASNIK | UC-04 | F-07 | Isti obrazac s postojećim podacima. |
+| Nedostupnost plovila | `/tvrtka/flota/:id/nedostupnost` | VLASNIK | UC-09 | F-09 | Razdoblja nedostupnosti, upozorenje o preklapanju s rezervacijom. |
+| Dodatne usluge | `/tvrtka/usluge` | VLASNIK | UC-04 | F-07 | Katalog usluga tvrtke s cijenama (vrijede za sva plovila tvrtke). |
+| Djelatnici | `/tvrtka/djelatnici` | VLASNIK | UC-08 | F-27 | Popis, dodavanje, izmjena i deaktivacija djelatnika. |
+| Podaci o tvrtki | `/tvrtka/podaci` | VLASNIK | – | F-28 | Obrazac s podacima tvrtke. |
+| Statistika | `/tvrtka/statistika` | VLASNIK | UC-07 | F-13, F-14 | Odabir razdoblja, zauzetost, rezervacije, prihod, popularnost usluga i kategorija, izvoz u CSV. |
+
+Ruta `/tvrtka` preusmjerava na `/tvrtka/zahtjevi`.
+
+### Administracija platforme
+
+| Ekran | Ruta | Pristup | UC | F | Sadržaj |
+| --- | --- | --- | --- | --- | --- |
+| Tvrtke | `/administracija/tvrtke` | ADMINISTRATOR | UC-14, UC-15 | F-25 | Popis tvrtki s pretragom i statusom. |
+| Nova tvrtka | `/administracija/tvrtke/nova` | ADMINISTRATOR | UC-14 | F-25, F-26 | Obrazac tvrtke (naziv, OIB, adresa, kontakt) i dodjela vlasnika; poruka o duplikatu OIB-a. |
+| Izmjena tvrtke | `/administracija/tvrtke/:id` | ADMINISTRATOR | UC-14, UC-15 | F-25, F-26 | Izmjena podataka, promjena vlasnika, deaktivacija s brojem budućih potvrđenih rezervacija. |
+| Korisnici | `/administracija/korisnici` | ADMINISTRATOR | – | F-10 | Pretraga korisnika, promjena uloge, deaktivacija računa. |
+| Kategorije plovila | `/administracija/kategorije` | ADMINISTRATOR | – | F-30 | Popis, dodavanje, izmjena i deaktivacija kategorija. |
+| Luke | `/administracija/luke` | ADMINISTRATOR | – | F-30 | Popis, dodavanje, izmjena i deaktivacija luka, s lokacijom na karti (F-16). |
+
+Ruta `/administracija` preusmjerava na `/administracija/tvrtke`.
+
+### Sustavne stranice
+
+| Ekran | Ruta | Sadržaj |
+| --- | --- | --- |
+| Nemate pristup | na adresi zaštićene rute | Prikazuje se prijavljenom korisniku bez potrebne uloge, bez promjene adrese. Neprijavljeni korisnik se preusmjerava na `/prijava`. |
+| Stranica ne postoji | svaka nepoznata ruta | Poruka i poveznica na početnu stranicu. |
+
+### Pokrivenost funkcijskih zahtjeva
+
+Svi funkcijski zahtjevi s korisničkim sučeljem pokriveni su barem jednim ekranom. Bez vlastitog ekrana su F-06 i F-24 (e-pošta; na ekranima se prikazuje samo poruka da će obavijest stići), F-18 (ostvaruje se izbornikom i zaštitom ruta prema ulozi) te F-19 (oslobađanje termina posljedica je otkazivanja na ekranu detalja rezervacije).
+
+### Glavni izbornik prema ulozi
+
+| Uloga | Zaglavlje | Bočni izbornik |
+| --- | --- | --- |
+| Posjetitelj | Logo (početna), Pretraga, Prijava | – |
+| KORISNIK | Logo, Pretraga, Moje rezervacije, izbornik računa (Odjava) | – |
+| DJELATNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored |
+| VLASNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored, Rezervacije, Flota, Dodatne usluge, Djelatnici, Podaci o tvrtki, Statistika |
+| ADMINISTRATOR | Logo, Pretraga, Administracija, izbornik računa | Tvrtke, Korisnici, Kategorije, Luke |
+
+Na mobitelu se poveznice iz zaglavlja i bočni izbornik sklapaju u izbornik koji se otvara gumbom (hamburger).
+
+### Dijagram navigacije
+
+```mermaid
+flowchart LR
+    subgraph Javno
+        P["/ pretraga"] --> D["/plovila/:id"]
+        D --> T["/tvrtke/:id"]
+        T --> D
+        L["/prijava"]
+    end
+    subgraph Korisnik
+        Z["/plovila/:id/rezervacija"] --> MR["/moje-rezervacije"]
+        MR --> MRD["/moje-rezervacije/:id"]
+    end
+    subgraph Tvrtka
+        TZ["/tvrtka/zahtjevi"]
+        TR["/tvrtka/raspored"] --> TRD["/tvrtka/rezervacije/:id"]
+        TREZ["/tvrtka/rezervacije"] --> TRD
+        TZ --> TRD
+        TF["/tvrtka/flota"] --> TFN["/tvrtka/flota/novo"]
+        TF --> TFI["/tvrtka/flota/:id"] --> TFD["/tvrtka/flota/:id/nedostupnost"]
+        TU["/tvrtka/usluge"]
+        TDJ["/tvrtka/djelatnici"]
+        TP["/tvrtka/podaci"]
+        TS["/tvrtka/statistika"]
+    end
+    subgraph Administracija
+        AT["/administracija/tvrtke"] --> ATN["/administracija/tvrtke/nova"]
+        AT --> ATI["/administracija/tvrtke/:id"]
+        AK["/administracija/korisnici"]
+        AKAT["/administracija/kategorije"]
+        AL["/administracija/luke"]
+    end
+    D -- "Pošalji zahtjev (prijavljen)" --> Z
+    D -- "Pošalji zahtjev (neprijavljen)" --> L
+    L -- "nakon prijave" --> D
+```
+
+### Otvorena pitanja za pregled s timom
+
+1. Smiju li djelatnik, vlasnik i administrator rezervirati plovilo kao korisnici? Prijedlog: ne, korisnički dio dostupan je samo ulozi KORISNIK.
+2. Tablica aktera u poglavlju 2 navodi F-31, koji nije definiran među funkcijskim zahtjevima.
+3. Glavni tokovi UC-04, UC-05, UC-08 i UC-09 navode administratora, a primarni akter je vlasnik; tekst treba uskladiti.
+4. F-10 (administrator upravlja djelatnicima) i F-27 (vlasnik upravlja djelatnicima) se preklapaju. Prijedlog: administrator mijenja uloge i deaktivira račune, a djelatnike tvrtke dodaje vlasnik.
+5. Treba li djelatniku zaseban pregled flote (F-12 „pregled osnovnih podataka o plovilu”) ili su dovoljni podaci o plovilu u detaljima rezervacije?
+6. Je li zahtjev za rezervaciju zasebna stranica ili dijalog na detaljima plovila (#54)? Prijedlog: zasebna ruta, kako bi korisnik nakon prijave mogao biti vraćen izravno na nju.
