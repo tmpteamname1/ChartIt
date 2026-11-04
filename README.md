@@ -1,12 +1,20 @@
 # ChartIt
 
-## Preduvjeti
+## Opis aplikacije
+
+<a id="deployment"></a>
+## Postavljanje (engl. deployment)
+
+<a id="quick-start"></a>
+## Brzi početak / instalacija
+
+### Preduvjeti
 
 - Docker Desktop (ili Docker Engine uz Docker Compose v2)
 - Node.js 20.19+ ili 22.12+ (uz npm)
 - Python 3.10+ (samo ako se backend pokreće izvan Dockera)
 
-## Preuzimanje projekta
+### Preuzimanje projekta
 
 ```bash
 git clone https://github.com/tmpteamname1/ChartIt.git
@@ -16,7 +24,7 @@ cp .env.example .env               # Windows: copy .env.example .env
 
 Baza je PostgreSQL u Dockeru. SQLite se ne koristi jer ograničenje preklapanja rezervacija (ADR-03) treba rasponske tipove i proširenje `btree_gist`.
 
-## Pokretanje u razvoju
+### Pokretanje u razvoju
 
 Potrebna su dva terminala: jedan za bazu i backend, a drugi za frontend.
 
@@ -46,7 +54,7 @@ Administratorski račun za Django admin (http://localhost:5173/admin/):
 docker compose exec backend python manage.py createsuperuser
 ```
 
-### Backend izvan Dockera (virtualno okruženje)
+#### Backend izvan Dockera (virtualno okruženje)
 
 U Dockeru se tada pokreće samo baza, a Django se spaja na nju preko `localhost:5432` (vrijednost `DATABASE_URL` u `.env`).
 
@@ -65,7 +73,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-### Korisne naredbe
+#### Korisne naredbe
 
 ```bash
 docker compose down                                   # zaustavljanje (podaci u bazi ostaju)
@@ -83,7 +91,7 @@ Ako je lokalna baza stvorena prije uvođenja prilagođenog modela korisnika (apl
 
 Ako Django javlja `Set the DJANGO_SECRET_KEY environment variable`, u `.env` nedostaju nove varijable. Treba ih prepisati iz `.env.example`, a za `DJANGO_SECRET_KEY` lokalno je dovoljan bilo koji dugi niz znakova.
 
-## Pokretanje kao u produkciji
+### Pokretanje kao u produkciji
 
 Django poslužuje izgrađenu React aplikaciju i statičke datoteke (WhiteNoise), a pokreće se preko gunicorna. Baza mora biti pokrenuta (`docker compose up db`):
 
@@ -97,3 +105,19 @@ DJANGO_DEBUG=False DJANGO_HTTPS=False gunicorn config.wsgi --bind 127.0.0.1:8000
 ```
 
 Aplikacija je tada dostupna na http://localhost:8000. `DJANGO_HTTPS=False` isključuje preusmjeravanje na HTTPS i sigurne kolačiće, koji su uz `DJANGO_DEBUG=False` inače uključeni. Gunicorn ne radi na Windowsima; tamo se ovaj način pokretanja isprobava u WSL-u ili Dockeru.
+
+## Tehnologije
+
+<a id="team-members"></a>
+## Članovi tima
+
+## Doprinos projektu
+
+<a id="license"></a>
+## Status licence
+
+<a id="ai-usage"></a>
+## Uporaba umjetne inteligencije
+
+<a id="code-of-conduct-and-support"></a>
+## Kodeks ponašanja i podrška
