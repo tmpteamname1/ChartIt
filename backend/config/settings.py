@@ -10,22 +10,58 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
+import re
 from pathlib import Path
+
+import environ
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(
+    DJANGO_DEBUG=(bool, False),
+    DJANGO_ALLOWED_HOSTS=(list, []),
+    DJANGO_CSRF_TRUSTED_ORIGINS=(list, []),
+    DJANGO_HSTS_SECONDS=(int, 3600),
+)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+# Local development reads .env from the repository root (shared with docker-compose.yml).
+# Variables already set in the environment (Docker, Azure) take precedence.
+ENV_FILE = BASE_DIR.parent / '.env'
+if ENV_FILE.exists():
+    environ.Env.read_env(ENV_FILE)
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-i!@7!g$(y5+)he+f76qs!j)m)t%xqx+m*pwj6gshb(bcz-mir1'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Deployment checklist: https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-ALLOWED_HOSTS = []
+# Required, no default. Production uses its own key set on the platform.
+# Read from os.environ directly: django-environ treats a value starting with "$"
+# (possible in generated keys) as a reference to another variable.
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    raise ImproperlyConfigured('Set the DJANGO_SECRET_KEY environment variable (see .env.example).')
+
+DEBUG = env('DJANGO_DEBUG')
+
+ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS')
+
+# Full origins with scheme, e.g. https://chartit.azurewebsites.net
+CSRF_TRUSTED_ORIGINS = env('DJANGO_CSRF_TRUSTED_ORIGINS')
+
+
+# HTTPS (NF-08). On by default when DEBUG is off; DJANGO_HTTPS=False allows a
+# production-like run over plain HTTP on localhost.
+if env.bool('DJANGO_HTTPS', default=not DEBUG):
+    # Azure App Service terminates TLS and forwards requests over HTTP with this header.
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    # Start short; raise to 31536000 (one year) once HTTPS is confirmed to work.
+    SECURE_HSTS_SECONDS = env('DJANGO_HSTS_SECONDS')
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 
 # Application definition
@@ -36,11 +72,17 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
+    'rest_framework',
+    'accounts',
+    'reservations',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -72,12 +114,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# PostgreSQL only (ADR-03 needs range types and btree_gist), e.g.
+# postgres://user:password@localhost:5432/chartit (add ?sslmode=require on Azure)
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': env.db('DATABASE_URL'),
 }
+
+
+# Custom user model (accounts app). Must be set before the first migration.
+AUTH_USER_MODEL = 'accounts.User'
 
 
 # Password validation
@@ -104,7 +149,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Zagreb'
 
 USE_I18N = True
 
@@ -115,6 +160,42 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STORAGES = {
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
+
+# React build output (npm run build in frontend/), served from the site root by WhiteNoise.
+FRONTEND_DIST_DIR = BASE_DIR / 'frontend_dist'
+WHITENOISE_ROOT = FRONTEND_DIST_DIR
+
+
+def _is_vite_hashed_file(path, url):
+    # Vite adds a content hash to file names in assets/, e.g. index-CSliV9zW.js
+    return re.match(r'^/assets/.+[.-][0-9a-zA-Z_-]{8,12}\..+$', url)
+
+
+WHITENOISE_IMMUTABLE_FILE_TEST = _is_vite_hashed_file
+
+# Django REST framework
+# Login is required by default; public views (search, vessel details) set
+# permission_classes = [AllowAny] explicitly (chapter 4, security).
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    # The browsable HTML API only in development.
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        *(['rest_framework.renderers.BrowsableAPIRenderer'] if DEBUG else []),
+    ],
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

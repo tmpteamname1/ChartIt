@@ -1,0 +1,119 @@
+' ==============================================================================
+' 4-4-chartit-reservation-request-SD.puml
+'
+' Svrha:    Prikazuje podnošenje zahtjeva za rezervaciju plovila (UC-02):
+'           dohvat ponude, stvaranje rezervacije uz provjeru invarijanti,
+'           provjeru preklapanja termina i pohranu, s ishodima 201, 400 i 409.
+'           Ishod 409 prikazan je i za istodobne zahtjeve koje zaustavlja
+'           ograničenje u bazi.
+' Praćenje: HTTP statusi, interakcije i grane trebaju ostati usklađeni s
+'           ponašanjem klijenta i poslužitelja te s dijagramom 4-3. Nazivi
+'           operacija su konceptualni i ne moraju se točno podudarati s
+'           implementacijom.
+'
+' Diagram level: Conceptual Interaction Design
+' Diagram type:  Sequence Diagram
+' Version:       1.0
+' ==============================================================================
+
+@startuml
+title Podnošenje zahtjeva za rezervaciju plovila
+
+skinparam maxMessageSize 150
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign center
+skinparam ArrowColor #212529
+
+skinparam sequence {
+    ParticipantBackgroundColor #E7F1FF
+    ParticipantBorderColor #0D6EFD
+    ActorBackgroundColor #F8F9FA
+    ActorBorderColor #212529
+    LifeLineBorderColor #212529
+}
+
+autonumber
+
+' ==============================================================================
+' Sudionici (sa stereotipima)
+' ==============================================================================
+actor "Korisnik" as User
+participant "Web-klijent" as Web <<UI>>
+participant "REST API" as API <<API>>
+participant "Usluga rezervacija" as Service <<Application>>
+participant "Katalog flote" as Catalog <<Repository>>
+participant "Rezervacija" as Res <<Domain>>
+database "Spremište rezervacija" as Store <<Persistence>>
+
+' ==============================================================================
+' Faza 1: odabir i slanje zahtjeva
+' ==============================================================================
+User -> Web : odaberi razdoblje, broj osoba,\nluku preuzimanja i dodatne usluge
+activate Web
+Web --> User : prikaži procijenjeni ukupni iznos
+User -> Web : pošalji zahtjev
+Web -> API : POST /reservations (plovilo, razdoblje,\nluka, broj osoba, usluge)
+activate API
+API -> Service : createRequest()
+activate Service
+
+' ==============================================================================
+' Faza 2: dohvat ponude i stvaranje rezervacije
+' ==============================================================================
+Service -> Catalog : findVessel(), findServices()
+activate Catalog
+Catalog --> Service : plovilo i odabrane usluge
+deactivate Catalog
+
+Service -> Res : request(korisnik, plovilo, razdoblje,\nluka, broj osoba, usluge)
+activate Res
+
+alt podaci nisu valjani\n(neaktivno plovilo, kapacitet, usluga druge tvrtke, datumi)
+  Res --> Service : ValidationException
+  deactivate Res
+  Service --> API : ValidationException
+  API --> Web : 400 Bad Request
+  Web --> User : prikaži potrebne ispravke
+
+else rezervacija je stvorena (REQUESTED, cijene kopirane)
+  activate Res
+  Res --> Service : nova rezervacija
+  deactivate Res
+
+  ' ============================================================================
+  ' Faza 3: provjera preklapanja i pohrana u jednoj transakciji
+  ' ============================================================================
+  Service -> Store : hasConflict(plovilo, razdoblje)
+  activate Store
+
+  alt termin se preklapa s rezervacijom\nili razdobljem nedostupnosti
+    Store --> Service : true
+    Service --> API : ConflictException
+    API --> Web : 409 Conflict
+    Web --> User : termin je zauzet,\nprikaži slobodne termine
+
+  else termin je slobodan
+    Store --> Service : false
+    Service -> Store : save(rezervacija)
+
+    alt pohrana je uspjela
+      Store --> Service : ID rezervacije
+      Service --> API : rezervacija
+      API --> Web : 201 Created (status, ukupni iznos)
+      Web --> User : prikaži potvrdu zaprimanja zahtjeva
+
+    else istodobni zahtjev zauzeo je termin\n(ograničenje u bazi)
+      Store --> Service : IntegrityError
+      Service --> API : ConflictException
+      API --> Web : 409 Conflict
+      Web --> User : termin je zauzet,\nprikaži slobodne termine
+    end
+  end
+  deactivate Store
+end
+
+deactivate Service
+deactivate API
+deactivate Web
+@enduml

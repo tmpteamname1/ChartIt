@@ -15,8 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
+
+from config.views import health, spa_index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/health/', health, name='health'),
+    # Every path not owned by Django returns the React app (must stay last).
+    re_path(r'^(?!(?:api|admin|static)(?:/|$)).*$', spa_index, name='spa'),
 ]
