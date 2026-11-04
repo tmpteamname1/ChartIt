@@ -15,13 +15,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import include, path, re_path
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from config.views import health, spa_index
+import config.schema  # noqa: F401  (registers the session login with drf-spectacular)
+from config.views import api_not_found, health, spa_index
+
+# API routes (docs chapter 4.9): /api/<resource>/, English plural nouns in kebab-case.
+# Each Django app lists its views in its own urls.py (DRF router), included here.
+api_urlpatterns = [
+    path('health/', health, name='health'),
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    # Must stay last.
+    re_path(r'^(?P<path>.*)$', api_not_found),
+]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/health/', health, name='health'),
+    path('api/', include(api_urlpatterns)),
     # Every path not owned by Django returns the React app (must stay last).
     re_path(r'^(?!(?:api|admin|static)(?:/|$)).*$', spa_index, name='spa'),
 ]

@@ -76,6 +76,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'rest_framework',
+    'django_filters',
+    'drf_spectacular',
     'accounts',
     'reservations',
 ]
@@ -147,7 +149,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# Croatian validation messages and Django admin.
+LANGUAGE_CODE = 'hr'
 
 TIME_ZONE = 'Europe/Zagreb'
 
@@ -180,12 +183,12 @@ def _is_vite_hashed_file(path, url):
 
 WHITENOISE_IMMUTABLE_FILE_TEST = _is_vite_hashed_file
 
-# Django REST framework
+# Django REST framework, conventions described in docs chapter 4.9.
 # Login is required by default; public views (search, vessel details) set
 # permission_classes = [AllowAny] explicitly (chapter 4, security).
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
+        'config.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -195,6 +198,23 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         *(['rest_framework.renderers.BrowsableAPIRenderer'] if DEBUG else []),
     ],
+    'DEFAULT_PAGINATION_CLASS': 'config.api.DefaultPagination',
+    # Active on a view once it sets filterset_fields, search_fields or ordering_fields.
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
+    'EXCEPTION_HANDLER': 'config.api.exception_handler',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# OpenAPI schema (/api/schema/) and Swagger UI (/api/docs/), public in every environment.
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'ChartIt API',
+    'DESCRIPTION': 'REST API platforme za najam plovila. Konvencije su opisane u poglavlju 4.9 dokumentacije.',
+    'VERSION': '0.1.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 }
 
 # Default primary key field type
