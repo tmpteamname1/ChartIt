@@ -166,6 +166,10 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STORAGES = {
+    # Uploaded files (vessel photos) in MEDIA_ROOT.
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
     'staticfiles': {
         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
     },
@@ -182,6 +186,13 @@ def _is_vite_hashed_file(path, url):
 
 
 WHITENOISE_IMMUTABLE_FILE_TEST = _is_vite_hashed_file
+
+
+# Uploaded files (docs chapter 6). WhiteNoise only serves files present at startup,
+# so Django serves /media/ itself (config/urls.py). On Azure MEDIA_ROOT is under /home,
+# the only storage kept across restarts, and outside /home/site/wwwroot, which deploys replace.
+MEDIA_URL = '/media/'
+MEDIA_ROOT = Path(env('DJANGO_MEDIA_ROOT', default=str(BASE_DIR / 'media')))
 
 # Django REST framework, conventions described in docs chapter 4.9.
 # Login is required by default; public views (search, vessel details) set

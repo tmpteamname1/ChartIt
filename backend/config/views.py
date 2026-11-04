@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import DatabaseError, connection
 from django.http import HttpResponse
 from django.views.decorators.cache import cache_control, never_cache
+from django.views.static import serve
 from drf_spectacular.utils import extend_schema, inline_serializer
 from rest_framework import serializers
 from rest_framework.decorators import api_view, permission_classes
@@ -39,6 +40,15 @@ def health(request):
 def api_not_found(request, path):
     """Unknown /api/ paths answer in the API error format instead of Django's HTML 404 page."""
     raise NotFound
+
+
+def media(request, path):
+    """Serve an uploaded file from MEDIA_ROOT (vessel photos).
+
+    WhiteNoise cannot serve files uploaded after startup. serve() rejects paths outside
+    MEDIA_ROOT, and SECURE_CONTENT_TYPE_NOSNIFF stops browsers from treating a file as another type.
+    """
+    return serve(request, path, document_root=settings.MEDIA_ROOT)
 
 
 @cache_control(no_cache=True)

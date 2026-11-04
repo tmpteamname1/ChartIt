@@ -1,10 +1,15 @@
+import tempfile
 from io import StringIO
 from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
 from django.db import OperationalError
-from django.test import TestCase, override_settings
+from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import path, reverse
 from rest_framework import generics, serializers, views
 from rest_framework.permissions import AllowAny, IsAdminUser
@@ -12,6 +17,7 @@ from rest_framework.response import Response
 
 import config.urls
 from config.api import DefaultPagination
+from config.validators import IMAGE_VALIDATORS, MAX_IMAGE_SIZE_MB
 
 
 class HealthCheckTests(TestCase):
@@ -148,3 +154,52 @@ class ApiSchemaTests(TestCase):
     def test_schema_generates_without_warnings(self):
         # Fails when a view cannot be described, e.g. a serializer field without a known type.
         call_command('spectacular', '--validate', '--fail-on-warn', stdout=StringIO(), stderr=StringIO())
+
+
+class MediaTests(SimpleTestCase):
+    def setUp(self):
+        media_root = tempfile.TemporaryDirectory()
+        self.addCleanup(media_root.cleanup)
+        settings_override = override_settings(MEDIA_ROOT=media_root.name)
+        settings_override.enable()
+        self.addCleanup(settings_override.disable)
+
+    def test_uploaded_file_is_served_under_media_url(self):
+        name = default_storage.save('vessels/photo.jpg', ContentFile(b'image bytes'))
+
+        response = self.client.get(default_storage.url(name))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(b''.join(response.streaming_content), b'image bytes')
+
+    def test_missing_file_returns_404_instead_of_the_react_app(self):
+        self.assertEqual(self.client.get('/media/vessels/missing.jpg').status_code, 404)
+
+    def test_paths_outside_media_root_are_rejected(self):
+        # serve() raises SuspiciousFileOperation, which Django answers with 400.
+        self.assertEqual(self.client.get('/media/../settings.py').status_code, 400)
+
+
+class ImageValidatorTests(SimpleTestCase):
+    def validate(self, name, size=100):
+        file = SimpleUploadedFile(name, b'x' * size)
+        for validator in IMAGE_VALIDATORS:
+            validator(file)
+
+    def test_accepts_allowed_image_types(self):
+        for name in ['photo.jpg', 'photo.JPEG', 'photo.png', 'photo.webp']:
+            with self.subTest(name=name):
+                self.validate(name)
+
+    def test_rejects_other_file_types(self):
+        for name in ['photo.gif', 'image.svg', 'page.html', 'photo']:
+            with self.subTest(name=name), self.assertRaises(ValidationError):
+                self.validate(name)
+
+    def test_rejects_files_over_the_size_limit(self):
+        limit = MAX_IMAGE_SIZE_MB * 1024 * 1024
+        self.validate('photo.jpg', size=limit)
+
+        with self.assertRaises(ValidationError) as context:
+            self.validate('photo.jpg', size=limit + 1)
+        self.assertEqual(context.exception.code, 'file_too_large')
