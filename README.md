@@ -22,6 +22,8 @@ cd ChartIt
 cp .env.example .env               # Windows: copy .env.example .env
 ```
 
+Vrijednosti iz `.env.example` dovoljne su za lokalni razvoj. Popis svih varijabli okruženja i pravila za tajne opisani su u poglavlju 6 dokumentacije (`docs/6-Postavljanje-instalacija-i-konfiguracija.md`).
+
 Baza je PostgreSQL u Dockeru. SQLite se ne koristi jer ograničenje preklapanja rezervacija (ADR-03) treba rasponske tipove i proširenje `btree_gist`.
 
 ### Pokretanje u razvoju
