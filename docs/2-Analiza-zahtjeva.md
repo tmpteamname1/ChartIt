@@ -87,5 +87,5 @@ Chartit - PROGI tim 9.4
 
 | Kontrolna točka          | Povratna informacija ili nalaz | Odluka o zahtjevu ili opsegu |
 | ------------------------ | ------------------------------ | ---------------------------- |
-| Iteracija 1 (7. tjedan)  | nista jos                      | nista jos                    |
-| Iteracija 2 (14. tjedan) | nista jos                      | nista jos                    |
+| Iteracija 1 (7. tjedan)  | TBD                            | TBD                          |
+| Iteracija 2 (14. tjedan) | TBD                            | TBD                          |

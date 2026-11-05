@@ -1,0 +1,190 @@
+' ==============================================================================
+' 4-2-chartit-data-ERD.puml
+'
+' Svrha:    Prikazuje trajne entitete sustava Chartit (korisnik, charter
+'           tvrtka, plovilo, kategorija, luka, fotografija, razdoblje
+'           nedostupnosti, dodatna usluga, rezervacija i odabrane usluge),
+'           njihove ključeve, reprezentativne atribute i kardinalnosti.
+'           Fizička implementacija baze nije obuhvaćena.
+' Praćenje: Entiteti, atributi i veze trebaju ostati usklađeni s Django
+'           modelima i migracijama; pri promjeni sheme ažurirati model.
+'
+' Diagram level: Logical data model
+' Diagram type:  Entity-Relationship Diagram (ERD), crow's foot
+' Version:       1.0
+' ==============================================================================
+
+@startuml
+title Sustav Chartit – logički podatkovni model
+left to right direction
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #212529
+
+skinparam entity {
+    BackgroundColor #E7F1FF
+    BorderColor #0D6EFD
+    FontColor #212529
+}
+
+' ==============================================================================
+' Korisnici i tvrtke
+' ==============================================================================
+
+' Jedna tablica pokriva sve uloge. Djelatnik i vlasnik pripadaju točno jednoj
+' tvrtki, a korisnik i administrator nemaju tvrtku (company_id je prazan).
+' Svaka tvrtka ima najviše jednog aktivnog vlasnika (jedinstveno ograničenje).
+entity "Korisnik" as User {
+    * user_id : ID <<PK>>
+    --
+    company_id : ID <<FK>>
+    email : text
+    display_name : text
+    phone : text
+    role : enum
+    oauth_subject : text
+    is_active : boolean
+    created_at : datetime
+}
+
+entity "Charter tvrtka" as Company {
+    * company_id : ID <<PK>>
+    --
+    name : text
+    oib : text
+    address : text
+    email : text
+    phone : text
+    is_active : boolean
+}
+
+' ==============================================================================
+' Zajednički šifrarnici (upravlja administrator)
+' ==============================================================================
+
+entity "Kategorija plovila" as Category {
+    * category_id : ID <<PK>>
+    --
+    name : text
+}
+
+entity "Luka" as Port {
+    * port_id : ID <<PK>>
+    --
+    name : text
+    latitude : decimal
+    longitude : decimal
+}
+
+' ==============================================================================
+' Flota i ponuda tvrtke
+' ==============================================================================
+
+entity "Plovilo" as Vessel {
+    * vessel_id : ID <<PK>>
+    --
+    * company_id : ID <<FK>>
+    * category_id : ID <<FK>>
+    * home_port_id : ID <<FK>>
+    name : text
+    description : text
+    length_m : decimal
+    max_people : integer
+    cabins : integer
+    year_built : integer
+    equipment : text
+    daily_price : decimal
+    is_active : boolean
+}
+
+entity "Fotografija plovila" as Photo {
+    * photo_id : ID <<PK>>
+    --
+    * vessel_id : ID <<FK>>
+    url : text
+    sort_order : integer
+}
+
+entity "Razdoblje nedostupnosti" as Unavailability {
+    * unavailability_id : ID <<PK>>
+    --
+    * vessel_id : ID <<FK>>
+    start_date : date
+    end_date : date
+    reason : text
+}
+
+' Katalog dodatnih usluga definira se na razini tvrtke i vrijedi za sva
+' njezina plovila; cijena je fiksna po najmu.
+entity "Dodatna usluga" as Service {
+    * service_id : ID <<PK>>
+    --
+    * company_id : ID <<FK>>
+    name : text
+    description : text
+    price : decimal
+    is_active : boolean
+}
+
+' ==============================================================================
+' Rezervacije
+' ==============================================================================
+
+' Tvrtka rezervacije određena je plovilom pa se ne pohranjuje zasebno.
+' Dnevna cijena i ukupni iznos pohranjuju se u trenutku podnošenja zahtjeva
+' kako kasnije promjene cijena ne bi mijenjale postojeće rezervacije.
+' Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
+entity "Rezervacija" as Reservation {
+    * reservation_id : ID <<PK>>
+    --
+    * customer_id : ID <<FK>>
+    * vessel_id : ID <<FK>>
+    * pickup_port_id : ID <<FK>>
+    processed_by_id : ID <<FK>>
+    start_date : date
+    end_date : date
+    number_of_people : integer
+    status : enum
+    daily_price : decimal
+    total_price : decimal
+    status_note : text
+    created_at : datetime
+    picked_up_at : datetime
+    returned_at : datetime
+}
+
+' Asocijativni entitet između rezervacije i dodatne usluge: jedna rezervacija
+' može uključivati više usluga, a ista se usluga može odabrati u više
+' rezervacija. Cijena usluge bilježi se na samoj vezi. Odabrane usluge moraju
+' pripadati istoj tvrtki kao i plovilo.
+entity "Odabrana dodatna usluga" as ReservationService {
+    * reservation_service_id : ID <<PK>>
+    --
+    * reservation_id : ID <<FK>>
+    * service_id : ID <<FK>>
+    priceAtBooking : decimal
+}
+
+' ==============================================================================
+' Veze između entiteta
+' ==============================================================================
+
+Company |o--o{ User : zapošljava ►
+
+Company ||--o{ Vessel : posjeduje ►
+Company ||--o{ Service : nudi ►
+Category ||--o{ Vessel : kategorizira ►
+Port ||--o{ Vessel : matična je luka ►
+
+Vessel ||--o{ Photo : ima ►
+Vessel ||--o{ Unavailability : nedostupno je u ►
+Vessel ||--o{ Reservation : rezervira se ►
+
+User ||--o{ Reservation : podnosi ►
+User |o--o{ Reservation : obrađuje ►
+Port ||--o{ Reservation : mjesto je preuzimanja ►
+
+Reservation ||--o{ ReservationService : uključuje ►
+Service ||--o{ ReservationService : odabire se ►
+@enduml
