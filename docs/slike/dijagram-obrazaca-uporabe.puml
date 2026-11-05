@@ -30,18 +30,16 @@ actor Admin as "Administrator"
 
 ' Sve uloge su specijalizacije korisnika aplikacije, a on je specijalizacija
 ' posjetitelja, pa nasljeđuju pretragu, detalje plovila i prijavu.
-User -|> Visitor
-Customer -|> User
-Staff -|> User
-Owner -|> User
-Admin -|> User
+Customer -|> Visitor
+Staff -|> Visitor
+Owner -|> Visitor
+Admin -|> Visitor
 
 ' Samo za raspored na dijagramu.
 Admin -[hidden]down-> Owner
 Owner -[hidden]down-> Staff
 Staff -[hidden]down-> Customer
-Customer -[hidden]down-> User
-User -[hidden]down-> Visitor
+Customer -[hidden]down-> Visitor
 
 ' ==============================================================================
 ' Sekundarni akteri (vanjski sustavi)
@@ -95,6 +93,7 @@ Customer -- UC03
 Staff -- UC12
 Staff -- UC06
 Staff -- UC13
+Staff -- UC05
 
 Owner -- UC04
 Owner -- UC05
@@ -111,7 +110,7 @@ Admin -- UC15
 UC10 -right- IdP
 UC11 -right- Weather
 UC11 -right- Maps
-UC02 -right- Mail
+UC03 -right- Mail
 UC12 -right- Mail
 
 ' Samo za raspored vanjskih sustava u jednom stupcu.
