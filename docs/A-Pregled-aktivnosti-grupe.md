@@ -23,14 +23,14 @@ Projektna grupa održava dva sastanka tjedno. Jedan sastanak održava se u sklop
 | 12.10.2026.; svi članovi | Razjašnjavanje projektnog zadatka i odabir tehnologija | SM je preporučio Django za razvoj poslužiteljskog dijela i React za razvoj klijentskog dijela aplikacije. | / |
 | 20.10.2026.; svi članovi | Dogovor o podjeli na pod-timove | BC, LL i BP će raditi na backendu, a LR, LN i MB na frontendu. | / |
 | 27.10.2026.; svi članovi | Definiranje zahtjeva i obrazaca uporabe | LL će definirati funkcionalne i nefunkcionalne zahtjeve te obrasce uporabe aplikacije. | [Analiza zahtjeva](https://github.com/tmpteamname1/ChartIt/blob/main/docs/2-Analiza-zahtjeva.md) |
-| 3.10.2026.; svi članovi | Dogovor o prvoj funkcionalnosti | Donesena je odluka da će prva implementirana funkcionalnost biti pretraživanje plovila za neulogiranog korisnika. | / |
+| 3.11.2026.; svi članovi | Dogovor o prvoj funkcionalnosti | Donesena je odluka da će prva implementirana funkcionalnost biti pretraživanje plovila za neulogiranog korisnika. | / |
 
 
 ## A.2 Plan rada
 
 **Trenutačni plan:** [GitHub Projects – Plan rada](https://github.com/orgs/tmpteamname1/projects/3)
 
-**Osoba zadužena za ažuriranje plana:** Bruno Crnković
+**Osoba zadužena za ažuriranje plana:** Sven Matić
 
 | Razdoblje/Tjedan | Glavni planirani rad | Odgovorni članovi | Poveznica na zadatke |
 |---|---|---|---|
