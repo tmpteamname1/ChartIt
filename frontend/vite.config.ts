@@ -17,6 +17,7 @@ export default defineConfig({
       '/api': djangoUrl,
       '/admin': djangoUrl,
       '/static': djangoUrl,
+      '/media': djangoUrl,
     },
   },
 })

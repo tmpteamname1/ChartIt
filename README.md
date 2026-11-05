@@ -46,6 +46,8 @@ Aplikacija se otvara na **http://localhost:5173**. Vite razvojni poslužitelj pr
 
 Veza klijenta, API-ja i baze provjerava se na početnoj stranici, koja prikazuje "backend: OK", ili izravno na http://localhost:5173/api/health/.
 
+Dokumentacija API-ja (Swagger UI) nalazi se na http://localhost:5173/api/docs/, a konvencije API-ja opisane su u [poglavlju 4.9](docs/4-Arhitektura-i-oblikovanje.md#49-konvencije-rest-api-ja). Nakon povlačenja promjena koje mijenjaju `requirements.txt` backend treba ponovno izgraditi s `docker compose up --build`.
+
 Na http://localhost:8000 Django prikazuje zadnju izgrađenu verziju React aplikacije (`npm run build`), a ne trenutni kod. Promjene u `frontend/src` tamo se vide tek nakon ponovnog builda, zato se u razvoju koristi port 5173.
 
 Administratorski račun za Django admin (http://localhost:5173/admin/):

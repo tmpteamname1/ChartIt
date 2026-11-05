@@ -295,3 +295,94 @@ flowchart LR
 4. F-10 (administrator upravlja djelatnicima) i F-27 (vlasnik upravlja djelatnicima) se preklapaju. Prijedlog: administrator mijenja uloge i deaktivira račune, a djelatnike tvrtke dodaje vlasnik.
 5. Treba li djelatniku zaseban pregled flote (F-12 „pregled osnovnih podataka o plovilu”) ili su dovoljni podaci o plovilu u detaljima rezervacije?
 6. Je li zahtjev za rezervaciju zasebna stranica ili dijalog na detaljima plovila (#54)? Prijedlog: zasebna ruta, kako bi korisnik nakon prijave mogao biti vraćen izravno na nju.
+
+## 4.9 Konvencije REST API-ja
+
+Pravila vrijede za sve endpointe i postavljena su jednom u `REST_FRAMEWORK` postavkama (`backend/config/settings.py`, `backend/config/api.py`), tako da ih novi pogledi dobivaju bez dodatnog koda.
+
+### Dokumentacija API-ja
+
+Shema OpenAPI generira se iz koda (drf-spectacular) i uvijek odgovara stvarnom stanju API-ja:
+
+- Swagger UI: `/api/docs/` (lokalno http://localhost:5173/api/docs/), javno dostupan i u produkciji jer su endpointi zaštićeni dopuštenjima, a ne skrivanjem.
+- Shema: `/api/schema/` (YAML), iz koje se po potrebi mogu generirati TypeScript tipovi za klijent.
+
+Novi pogled pojavljuje se u dokumentaciji automatski. Kratki opis dodaje se dekoratorom `@extend_schema(summary=...)`, a pogledi koji ne koriste serijalizator (npr. `APIView` s ručno složenim odgovorom) moraju opisati odgovor s `@extend_schema(responses=...)`. Test `test_schema_generates_without_warnings` ne prolazi ako se neki pogled ne može opisati.
+
+### URL-ovi
+
+- Svi endpointi su pod prefiksom `/api/`.
+- Nazivi resursa su engleske imenice u množini, malim slovima, s crticom između riječi, jednako kao nazivi modela u kodu: `/api/vessels/`, `/api/vessels/12/`, `/api/reservation-requests/`.
+- Završna kosa crta je obavezna (`/api/vessels/`). Putanja bez nje ili nepostojeća putanja pod `/api/` vraća 404 u formatu greške API-ja.
+- Svaka Django aplikacija ima vlastiti `urls.py` s DRF routerom, koji se uključuje u `api_urlpatterns` u `backend/config/urls.py`.
+- Rute klijentske aplikacije i dalje su na hrvatskom (poglavlje 4.8); jezik URL-ova API-ja ne vidi korisnik.
+
+### Popisi: straničenje, filtriranje i sortiranje
+
+Svaki endpoint popisa vraća stranicu rezultata (20 po zadanom):
+
+```json
+{
+  "count": 57,
+  "next": "http://localhost:5173/api/vessels/?page=2",
+  "previous": null,
+  "results": [ ... ]
+}
+```
+
+| Parametar | Primjer | Napomena |
+| --- | --- | --- |
+| `page` | `?page=2` | Stranica rezultata, počinje od 1. |
+| `page_size` | `?page_size=50` | Broj rezultata po stranici, najviše 100. |
+| filtri polja | `?port=3&category=1` | Samo polja navedena u `filterset_fields` ili `filterset_class` pogleda (django-filter). |
+| `search` | `?search=jadran` | Tekstualna pretraga po poljima iz `search_fields`. |
+| `ordering` | `?ordering=-daily_price` | Sortiranje po poljima iz `ordering_fields`; `-` znači silazno. |
+
+Queryset pogleda popisa mora imati zadani poredak (`order_by` ili `Meta.ordering`), inače straničenje nije stabilno i Django javlja upozorenje.
+
+### Format greške
+
+Sve greške API-ja imaju isti oblik, pa ih klijent obrađuje na jednom mjestu:
+
+```json
+{
+  "detail": "Invalid input.",
+  "code": "invalid",
+  "errors": {
+    "start_date": ["This field is required."],
+    "non_field_errors": ["Termin je zauzet."]
+  }
+}
+```
+
+- `detail` je kratak opis za prikaz, `code` stabilan strojni kod prema kojem klijent odlučuje što prikazati, a `errors` sadrži greške po poljima samo kod validacije (inače `null`).
+- Greške koje se ne odnose na jedno polje (npr. iz `validate()` serijalizatora) nalaze se pod ključem `non_field_errors`.
+
+| Status | `code` | Značenje i reakcija klijenta |
+| --- | --- | --- |
+| 400 | `invalid` | Neispravni podaci; greške se prikazuju uz polja obrasca. |
+| 401 | `not_authenticated` | Korisnik nije prijavljen; klijent ga upućuje na prijavu. |
+| 403 | `permission_denied` | Korisnik je prijavljen, ali nema ovlast za radnju. |
+| 404 | `not_found` | Objekt ne postoji ili pripada drugoj tvrtki (poglavlje 4.6). |
+| 405 | `method_not_allowed` | Metoda nije podržana na tom endpointu. |
+| 409 | prema domenskoj iznimci | Sukob s postojećim stanjem, npr. preklapanje termina (uvodi se s rezervacijama). |
+| 500 | – | Neočekivana greška poslužitelja; odgovor ne sadrži tehničke detalje. |
+
+DRF uz prijavu sesijom po zadanom vraća 403 i kada korisnik nije prijavljen. Razred `config.authentication.SessionAuthentication` zato vraća 401, kako bi klijent razlikovao „prijavi se” od „nemaš ovlast”.
+
+Poruke Djanga (npr. Django admin, „već postoji”) su na hrvatskom (`LANGUAGE_CODE = 'hr'`), a DRF nema hrvatski prijevod, pa su njegove standardne poruke („This field is required.”) na engleskom. Klijent zato za opće greške prikazuje vlastitu poruku prema polju `code`, a ne `detail`. Poruke koje pišemo sami (domenska pravila) pišu se na hrvatskom.
+
+### Datumi, vrijeme i iznosi
+
+- Datumi su u obliku ISO 8601 `YYYY-MM-DD` (npr. početak i kraj najma).
+- Trenuci događaja su ISO 8601 s vremenskom zonom, npr. `2026-11-04T14:30:00+01:00` (zona Europe/Zagreb). Klijent šalje vrijeme s oznakom zone.
+- Novčani iznosi su tekst s dvije decimale u eurima, npr. `"150.00"`, nikad broj s pomičnim zarezom (ADR-04, poglavlje 4.6).
+
+### Dodavanje novog endpointa
+
+1. U aplikaciji napisati serijalizator i pogled (najčešće `ModelViewSet` ili `ReadOnlyModelViewSet`).
+2. Postaviti dopuštenja: po zadanom je potrebna prijava, a javni pogledi izričito postavljaju `permission_classes = [AllowAny]`.
+3. Za popise postaviti zadani poredak i, po potrebi, `filterset_fields`, `search_fields` i `ordering_fields`.
+4. Registrirati pogled u routeru u `urls.py` aplikacije i, ako aplikacija još nije uključena, dodati je u `api_urlpatterns`.
+5. Provjeriti izgled endpointa u `/api/docs/` i napisati testove (uključujući pristup bez prijave i pristup podacima druge tvrtke).
+6. Promjene oblika odgovora postojećeg endpointa najaviti u opisu pull requesta (poglavlje 4.7).
