@@ -12,7 +12,8 @@ Očekivana korist je pregledniji i pouzdaniji rad s rezervacijama: jednoznačna 
 
 | Skupina korisnika ili dionika | Potreba ili interes relevantan za ovaj projekt |
 | --- | --- |
-| Korisnik (najmoprimac) | Pretraživati raspoloživa plovila prema terminu, lokaciji polaska, vrsti plovila i broju osoba; pregledati karakteristike, fotografije i cijene; izraditi rezervaciju s dodatnim uslugama; pregledati podatke i ukupan iznos rezervacije te primiti potvrdu elektroničkom poštom; vidjeti prognozu vremena i položaj luke na karti. |
+| Posjetitelj (neprijavljeni korisnik) | Bez prijave pregledavati i pretraživati raspoloživa plovila prema terminu, lokaciji polaska, vrsti plovila i broju osoba; vidjeti karakteristike, fotografije, cijene i slobodne termine plovila te prognozu vremena i položaj luke na karti. |
+| Registrirani korisnik  | Uz sve što može posjetitelj, izraditi rezervaciju za odabrano razdoblje s dodatnim uslugama; pregledati podatke i ukupan iznos svojih rezervacija te primiti potvrdu rezervacije elektroničkom poštom. |
 | Djelatnik charter tvrtke | Pregledati raspored preuzimanja i povrata plovila te osnovne podatke potrebne za realizaciju najma. |
 | Administrator sustava | Dodavati i mijenjati plovila i njihovu opremu, definirati cijene i dodatne usluge, upravljati rezervacijama te evidentirati razdoblja u kojima plovilo nije raspoloživo (servis, održavanje i sl.). |
 | Voditelj charter tvrtke | Pregledati statističke podatke (zauzetost plovila, broj rezervacija u razdoblju, ostvareni prihod, najtraženije kategorije plovila i dodatne usluge) te ih izvesti u formatu pogodnom za daljnju obradu ili arhiviranje. |
