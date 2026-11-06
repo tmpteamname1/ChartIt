@@ -1,0 +1,120 @@
+@startuml
+title Sustav ChartIt – slučajevi uporabe
+left to right direction
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #212529
+
+skinparam actor {
+    BackgroundColor #F8F9FA
+    BorderColor #212529
+    BackgroundColor<<external system>> #FFF3CD
+    BorderColor<<external system>> #856404
+}
+
+skinparam usecase {
+    BackgroundColor #E7F1FF
+    BorderColor #0D6EFD
+}
+
+' ==============================================================================
+' Primarni akteri (uloge, ne stanja)
+' ==============================================================================
+actor Visitor as "Posjetitelj"
+actor User as "Korisnik aplikacije"
+actor Customer as "Korisnik"
+actor Staff as "Djelatnik"
+actor Owner as "Vlasnik"
+actor Admin as "Administrator"
+
+' Sve uloge su specijalizacije korisnika aplikacije, a on je specijalizacija
+' posjetitelja, pa nasljeđuju pretragu, detalje plovila i prijavu.
+Customer -|> Visitor
+Staff -|> Visitor
+Owner -|> Visitor
+Admin -|> Visitor
+
+' Samo za raspored na dijagramu.
+Admin -[hidden]down-> Owner
+Owner -[hidden]down-> Staff
+Staff -[hidden]down-> Customer
+Customer -[hidden]down-> Visitor
+
+' ==============================================================================
+' Sekundarni akteri (vanjski sustavi)
+' ==============================================================================
+actor "Pružatelj identiteta\n(OAuth)" as IdP <<external system>>
+actor "Meteorološki servis" as Weather <<external system>>
+actor "Kartografski servis" as Maps <<external system>>
+actor "Servis e-pošte" as Mail <<external system>>
+
+' ==============================================================================
+' Granica sustava
+' ==============================================================================
+rectangle "Sustav ChartIt" as ChartIt {
+
+    ' Javni dio
+    (UC-10\nRegistracija i prijava) as UC10
+    (UC-01\nPretraživanje raspoloživih\nplovila) as UC01
+    (UC-11\nPregled detalja plovila) as UC11
+
+    ' Korisnik
+    (UC-02\nIzrada rezervacije) as UC02
+    (UC-03\nPregled i otkazivanje\nrezervacije) as UC03
+
+    ' Djelatnik
+    (UC-12\nObrada zahtjeva\nza rezervaciju) as UC12
+    (UC-06\nPregled preuzimanja\ni povrata) as UC06
+    (UC-13\nEvidentiranje preuzimanja\ni povrata) as UC13
+
+    ' Vlasnik
+    (UC-04\nUpravljanje plovilima) as UC04
+    (UC-05\nUpravljanje rezervacijama) as UC05
+    (UC-09\nServis plovila) as UC09
+    (UC-07\nPregled statistike\ni izvoz izvještaja) as UC07
+    (UC-08\nUpravljanje djelatnicima) as UC08
+
+    ' Administrator
+    (UC-14\nUpravljanje charter\ntvrtkama) as UC14
+    (UC-15\nDeaktivacija tvrtke) as UC15
+}
+
+' ==============================================================================
+' Asocijacije aktera i slučajeva uporabe
+' ==============================================================================
+Visitor -- UC10
+Visitor -- UC01
+Visitor -- UC11
+
+Customer -- UC02
+Customer -- UC03
+
+Staff -- UC12
+Staff -- UC06
+Staff -- UC13
+Staff -- UC05
+
+Owner -- UC04
+Owner -- UC05
+Owner -- UC09
+Owner -- UC07
+Owner -- UC08
+
+Admin -- UC14
+Admin -- UC15
+
+' ==============================================================================
+' Interakcije sa sekundarnim akterima
+' ==============================================================================
+UC10 -right- IdP
+UC11 -right- Weather
+UC11 -right- Maps
+UC03 -right- Mail
+UC12 -right- Mail
+
+' Samo za raspored vanjskih sustava u jednom stupcu.
+IdP -[hidden]down-> Weather
+Weather -[hidden]down-> Maps
+Maps -[hidden]down-> Mail
+@enduml

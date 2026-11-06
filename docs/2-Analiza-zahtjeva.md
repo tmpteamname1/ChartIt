@@ -1,7 +1,5 @@
 # 2. Analiza zahtjeva
 
-Chartit - PROGI tim 9.4
-
 ## 2.1 Funkcijski zahtjevi
 
 | ID   | Opis                                                                                                                                                                                                                                                                                                                            | Prioritet |
