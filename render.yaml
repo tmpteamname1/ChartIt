@@ -29,11 +29,11 @@ services:
           property: connectionString
       - key: DJANGO_SECRET_KEY
         generateValue: true
-      # Change both if Render assigns a different host name than chartit.onrender.com.
+      # Host name Render assigned to the service (chartit.onrender.com was taken).
       - key: DJANGO_ALLOWED_HOSTS
-        value: chartit.onrender.com
+        value: chartit-okv1.onrender.com
       - key: DJANGO_CSRF_TRUSTED_ORIGINS
-        value: https://chartit.onrender.com
+        value: https://chartit-okv1.onrender.com
       # Free web services have no persistent disk: uploaded files in the default
       # backend/media are lost on every deploy, restart and spin-down.
 
