@@ -23,6 +23,10 @@ services:
         value: 3.11.11
       - key: NODE_VERSION
         value: 22
+      # Shows the test role switcher in the production build (frontend/src/layouts/AccountMenu.tsx).
+      # Remove once OAuth login exists (#41).
+      - key: VITE_ROLE_SWITCHER
+        value: "true"
       - key: DATABASE_URL
         fromDatabase:
           name: chartit-db
