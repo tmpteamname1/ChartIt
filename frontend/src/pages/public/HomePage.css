@@ -1,0 +1,437 @@
+.boat-search-page {
+  min-height: 100%;
+  margin: -16px;
+  color: #173047;
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+}
+
+.boat-search-page *,
+.boat-search-page *::before,
+.boat-search-page *::after {
+  box-sizing: border-box;
+}
+
+.boat-search-page button,
+.boat-search-page input,
+.boat-search-page select {
+  font: inherit;
+}
+
+.boat-search-hero {
+  padding: 66px max(6vw, 24px) 45px;
+  color: white;
+  background:
+    radial-gradient(ellipse at 80% 20%, rgba(104, 182, 205, .34), transparent 34%),
+    linear-gradient(120deg, #123d56, #1e6572);
+}
+
+.boat-search-page .eyebrow {
+  margin: 0 0 10px;
+  color: #e99358;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.boat-search-hero h1 {
+  max-width: 680px;
+  margin: 0;
+  color: white;
+  font: 800 clamp(34px, 5vw, 54px)/1.12 Manrope, 'Segoe UI', sans-serif;
+  letter-spacing: -1.5px;
+}
+
+.boat-search-page .intro-copy {
+  margin-top: 16px;
+  color: #d6e6eb;
+  font-size: 16px;
+}
+
+.boat-search-page .search-panel {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr .8fr 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+  margin-top: 34px;
+  padding: 18px;
+  color: #173047;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 14px 36px rgba(8, 32, 48, .18);
+}
+
+.boat-search-page .search-panel label {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.boat-search-page .search-panel label span {
+  color: #6b7e8d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.boat-search-page .search-panel input,
+.boat-search-page .search-panel select {
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+  padding: 0 10px;
+  color: #173047;
+  background: #fbfcfd;
+  border: 1px solid #dce5ea;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.boat-search-page .search-button {
+  height: 44px;
+  padding: 0 17px;
+  color: white;
+  background: #e98243;
+  border: 0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.boat-search-page .search-button:hover {
+  background: #d97032;
+}
+
+.boat-search-page .demo-note {
+  margin: 12px 0 0;
+  color: #c5d9e0;
+  font-size: 12px;
+}
+
+.boat-search-page .results-section {
+  padding: 48px max(6vw, 24px) 64px;
+}
+
+.boat-search-page .section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.boat-search-page .section-heading .eyebrow {
+  color: #e98243;
+}
+
+.boat-search-page .section-heading h2 {
+  margin: 0;
+  color: #173047;
+  font: 800 27px Manrope, 'Segoe UI', sans-serif;
+}
+
+.boat-search-page .result-count {
+  padding: 7px 12px;
+  color: #516a7a;
+  background: #edf3f5;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.boat-search-page .boat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.boat-search-page .boat-card {
+  overflow: hidden;
+  background: white;
+  border: 1px solid #e6ecef;
+  border-radius: 14px;
+  box-shadow: 0 5px 18px rgba(24, 55, 73, .05);
+}
+
+.boat-search-page .boat-illustration {
+  position: relative;
+  display: grid;
+  height: 175px;
+  place-items: center;
+  overflow: hidden;
+  background: linear-gradient(160deg, #c6e7ed, #e7f3f3 56%, #a6d4d9);
+}
+
+.boat-search-page .boat-illustration-2 {
+  background: linear-gradient(160deg, #d4e4e8, #f2eee3 55%, #9ccbd3);
+}
+
+.boat-search-page .boat-illustration-3 {
+  background: linear-gradient(160deg, #c2e4e7, #f3ebdb 58%, #83c3ca);
+}
+
+.boat-search-page .boat-illustration > span:first-child {
+  z-index: 1;
+  margin-top: -15px;
+  font-size: 76px;
+  filter: drop-shadow(0 8px 5px rgba(29, 65, 73, .18));
+}
+
+.boat-search-page .water-line {
+  position: absolute;
+  right: -10%;
+  bottom: 26px;
+  left: -10%;
+  height: 36px;
+  background: rgba(56, 146, 163, .24);
+  border-radius: 50%;
+  transform: rotate(-3deg);
+}
+
+.boat-search-page .boat-details {
+  padding: 18px;
+}
+
+.boat-search-page .boat-title-row,
+.boat-search-page .boat-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.boat-search-page .boat-kind {
+  margin: 0 0 3px;
+  color: #7b8d99;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.boat-search-page .boat-title-row h3 {
+  margin: 0;
+  color: #173047;
+  font: 800 19px Manrope, 'Segoe UI', sans-serif;
+}
+
+.boat-search-page .capacity {
+  padding: 6px 9px;
+  color: #496575;
+  background: #f0f5f6;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.boat-search-page .boat-description {
+  min-height: 40px;
+  margin: 12px 0 18px;
+  color: #71828e;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.boat-search-page .boat-footer {
+  padding: 13px 0;
+  border-top: 1px solid #edf0f2;
+  color: #637a89;
+  font-size: 12px;
+}
+
+.boat-search-page .boat-footer strong {
+  color: #173047;
+  font-size: 17px;
+}
+
+.boat-search-page .boat-footer small {
+  color: #71828e;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.boat-search-page .details-button {
+  width: 100%;
+  padding: 11px;
+  color: #17616c;
+  background: #eff7f7;
+  border: 0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.boat-search-page .details-button:hover {
+  background: #e0f0f0;
+}
+
+.boat-search-page .empty-state {
+  padding: 42px 20px;
+  text-align: center;
+  background: white;
+  border: 1px dashed #cbd9df;
+  border-radius: 14px;
+}
+
+.boat-search-page .empty-state > span {
+  color: #e98243;
+  font-size: 34px;
+}
+
+.boat-search-page .empty-state h3 {
+  margin: 10px 0 5px;
+  color: #173047;
+  font: 800 18px Manrope, 'Segoe UI', sans-serif;
+}
+
+.boat-search-page .empty-state p {
+  color: #71828e;
+  font-size: 14px;
+}
+
+.boat-search-page footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 22px max(6vw, 24px);
+  color: #71828e;
+  background: white;
+  border-top: 1px solid #e9eef2;
+  font-size: 12px;
+}
+
+.boat-search-page footer span:first-child {
+  color: #173047;
+  font-weight: 800;
+}
+
+.boat-search-page .form-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #a53030;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.boat-search-page .dialog-backdrop {
+  position: fixed;
+  z-index: 300;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(12, 32, 45, .58);
+}
+
+.boat-search-page .boat-dialog {
+  position: relative;
+  width: min(100%, 540px);
+  padding: 30px;
+  color: #173047;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(8, 32, 48, .28);
+}
+
+.boat-search-page .boat-dialog h2 {
+  margin: 0 36px 10px 0;
+  color: #173047;
+  font: 800 27px Manrope, 'Segoe UI', sans-serif;
+}
+
+.boat-search-page .boat-dialog > p:not(.eyebrow):not(.dialog-note) {
+  color: #71828e;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.boat-search-page .dialog-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  color: #496575;
+  background: #f0f5f6;
+  border: 0;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.boat-search-page .dialog-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #edf0f2;
+}
+
+.boat-search-page .dialog-facts span {
+  display: grid;
+  gap: 4px;
+  color: #71828e;
+  font-size: 12px;
+}
+
+.boat-search-page .dialog-facts strong {
+  color: #173047;
+  font-size: 14px;
+}
+
+.boat-search-page .dialog-note {
+  margin: 18px 0 0;
+  padding: 12px;
+  color: #637a89;
+  background: #f4f8f9;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 980px) {
+  .boat-search-page .search-panel {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .boat-search-page .search-button {
+    grid-column: span 3;
+  }
+
+  .boat-search-page .boat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .boat-search-hero {
+    padding-top: 46px;
+  }
+
+  .boat-search-page .search-panel {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .boat-search-page .search-button {
+    grid-column: span 2;
+  }
+
+  .boat-search-page .boat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .boat-search-page .section-heading h2 {
+    font-size: 22px;
+  }
+
+  .boat-search-page footer {
+    gap: 12px;
+    flex-direction: column;
+  }
+
+  .boat-search-page .boat-dialog {
+    padding: 24px 20px;
+  }
+
+  .boat-search-page .dialog-facts {
+    grid-template-columns: 1fr;
+  }
+}
