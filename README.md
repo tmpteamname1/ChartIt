@@ -113,6 +113,12 @@ npm run format                     # Prettier
 
 Za provjeru bez mijenjanja datoteka koriste se `ruff format --check .` i `npm run format:check`.
 
+Commitovi koji samo formatiraju kod navedeni su u `.git-blame-ignore-revs`, pa ih `git blame` preskače i prikazuje stvarnog autora retka. GitHub tu datoteku čita sam, a lokalno je potrebno jednom pokrenuti:
+
+```bash
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
+
 ### Pokretanje kao u produkciji
 
 Django poslužuje izgrađenu React aplikaciju i statičke datoteke (WhiteNoise), a pokreće se preko gunicorna. Baza mora biti pokrenuta (`docker compose up db`):
