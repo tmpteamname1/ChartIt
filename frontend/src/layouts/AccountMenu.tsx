@@ -6,7 +6,10 @@ import { ROLE_LABELS, ROLES, type Role } from '../auth/roles'
 
 const VISITOR = 'POSJETITELJ'
 
-// Development only: switch roles without logging in to check the menus and layouts.
+// Temporary, until OAuth exists: also shown in a production build when VITE_ROLE_SWITCHER=true (render.yaml).
+const SHOW_ROLE_SWITCHER = import.meta.env.DEV || import.meta.env.VITE_ROLE_SWITCHER === 'true'
+
+// Switch roles without logging in to check the menus and layouts.
 function DevRoleSwitcher() {
   const { user, loginAs, logout } = useAuth()
 
@@ -32,7 +35,7 @@ function AccountMenu() {
 
   return (
     <Group gap="sm" wrap="nowrap">
-      {import.meta.env.DEV && (
+      {SHOW_ROLE_SWITCHER && (
         <Group visibleFrom="sm">
           <DevRoleSwitcher />
         </Group>
@@ -47,7 +50,9 @@ function AccountMenu() {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Label>
-              <Text size="sm" fw={500} c="bright">{user.name}</Text>
+              <Text size="sm" fw={500} c="bright">
+                {user.name}
+              </Text>
               <Text size="xs">{ROLE_LABELS[user.role]}</Text>
             </Menu.Label>
             <Menu.Divider />

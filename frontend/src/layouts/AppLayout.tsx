@@ -42,7 +42,13 @@ function AppLayout({ sidebar = [] }: { sidebar?: NavItem[] }) {
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between" wrap="nowrap">
           <Group gap="xs" wrap="nowrap">
-            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" aria-label="Izbornik" />
+            <Burger
+              opened={opened}
+              onClick={toggle}
+              hiddenFrom="sm"
+              size="sm"
+              aria-label="Izbornik"
+            />
             <Anchor component={Link} to="/" underline="never" fw={700} fz="lg">
               <Group gap={6} wrap="nowrap">
                 <IconSailboat size={24} stroke={1.5} />

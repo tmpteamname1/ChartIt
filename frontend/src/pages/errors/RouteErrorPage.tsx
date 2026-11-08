@@ -11,7 +11,9 @@ function RouteErrorPage() {
       title="Nešto je pošlo po zlu"
       description="Došlo je do neočekivane greške. Pokušajte ponovno učitati stranicu."
     >
-      <Button component="a" href="/">Na početnu</Button>
+      <Button component="a" href="/">
+        Na početnu
+      </Button>
     </EmptyState>
   )
 }

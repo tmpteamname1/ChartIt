@@ -44,8 +44,18 @@ export const COMPANY_NAV: NavItem[] = [
 
 export const ADMIN_NAV: NavItem[] = [
   { label: 'Tvrtke', to: '/administracija/tvrtke', roles: ['ADMINISTRATOR'], icon: IconBuilding },
-  { label: 'Korisnici', to: '/administracija/korisnici', roles: ['ADMINISTRATOR'], icon: IconUserCog },
-  { label: 'Kategorije', to: '/administracija/kategorije', roles: ['ADMINISTRATOR'], icon: IconCategory },
+  {
+    label: 'Korisnici',
+    to: '/administracija/korisnici',
+    roles: ['ADMINISTRATOR'],
+    icon: IconUserCog,
+  },
+  {
+    label: 'Kategorije',
+    to: '/administracija/kategorije',
+    roles: ['ADMINISTRATOR'],
+    icon: IconCategory,
+  },
   { label: 'Luke', to: '/administracija/luke', roles: ['ADMINISTRATOR'], icon: IconAnchor },
 ]
 

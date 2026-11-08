@@ -29,7 +29,9 @@ class HealthCheckTests(TestCase):
 
     def test_returns_503_without_details_when_database_is_unavailable(self):
         with (
-            patch('config.views.connection.cursor', side_effect=OperationalError('connection refused')),
+            patch(
+                'config.views.connection.cursor', side_effect=OperationalError('connection refused')
+            ),
             self.assertLogs('config.views', level='ERROR'),
         ):
             response = self.client.get(reverse('health'))
@@ -41,6 +43,12 @@ class HealthCheckTests(TestCase):
         response = self.client.post(reverse('health'))
 
         self.assertEqual(response.status_code, 405)
+
+    @override_settings(SECURE_SSL_REDIRECT=True)
+    def test_answers_over_http_when_https_redirect_is_on(self):
+        # Platform health checks may use plain HTTP; other paths still redirect to HTTPS.
+        self.assertEqual(self.client.get(reverse('health')).status_code, 200)
+        self.assertEqual(self.client.get('/admin/login/').status_code, 301)
 
 
 # Views used only by the API convention tests below; real endpoints live in the apps.
@@ -89,7 +97,9 @@ class PaginationTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         User = get_user_model()
-        User.objects.bulk_create(User(username=f'user{i}', email=f'user{i}@example.com') for i in range(25))
+        User.objects.bulk_create(
+            User(username=f'user{i}', email=f'user{i}@example.com') for i in range(25)
+        )
 
     def test_list_is_paginated_by_default(self):
         data = self.client.get('/api/test/users/').json()
@@ -104,7 +114,9 @@ class PaginationTests(TestCase):
         self.assertEqual(len(self.client.get('/api/test/users/?page_size=5').json()['results']), 5)
 
         with patch.object(DefaultPagination, 'max_page_size', 10):
-            self.assertEqual(len(self.client.get('/api/test/users/?page_size=500').json()['results']), 10)
+            self.assertEqual(
+                len(self.client.get('/api/test/users/?page_size=500').json()['results']), 10
+            )
 
 
 @override_settings(ROOT_URLCONF='config.tests')
@@ -132,7 +144,9 @@ class ErrorFormatTests(TestCase):
         self.assertIsNone(response.json()['errors'])
 
     def test_logged_in_without_permission_returns_403(self):
-        self.client.force_login(get_user_model().objects.create_user(username='ana', email='ana@example.com'))
+        self.client.force_login(
+            get_user_model().objects.create_user(username='ana', email='ana@example.com')
+        )
 
         response = self.client.get('/api/test/admin-only/')
 
@@ -153,7 +167,9 @@ class ApiSchemaTests(TestCase):
 
     def test_schema_generates_without_warnings(self):
         # Fails when a view cannot be described, e.g. a serializer field without a known type.
-        call_command('spectacular', '--validate', '--fail-on-warn', stdout=StringIO(), stderr=StringIO())
+        call_command(
+            'spectacular', '--validate', '--fail-on-warn', stdout=StringIO(), stderr=StringIO()
+        )
 
 
 class MediaTests(SimpleTestCase):
