@@ -10,7 +10,9 @@ function ForbiddenPage() {
       title="Nemate pristup"
       description="Ova stranica nije dostupna vašoj korisničkoj ulozi."
     >
-      <Button component={Link} to="/">Na početnu</Button>
+      <Button component={Link} to="/">
+        Na početnu
+      </Button>
     </EmptyState>
   )
 }
