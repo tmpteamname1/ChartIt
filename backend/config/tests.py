@@ -44,6 +44,12 @@ class HealthCheckTests(TestCase):
 
         self.assertEqual(response.status_code, 405)
 
+    @override_settings(SECURE_SSL_REDIRECT=True)
+    def test_answers_over_http_when_https_redirect_is_on(self):
+        # Platform health checks may use plain HTTP; other paths still redirect to HTTPS.
+        self.assertEqual(self.client.get(reverse('health')).status_code, 200)
+        self.assertEqual(self.client.get('/admin/login/').status_code, 301)
+
 
 # Views used only by the API convention tests below; real endpoints live in the apps.
 class _UserSerializer(serializers.ModelSerializer):
