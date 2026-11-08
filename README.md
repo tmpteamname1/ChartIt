@@ -7,6 +7,8 @@
 <a id="deployment"></a>
 ## Postavljanje (engl. deployment)
 
+Aplikacija je javno dostupna na https://chartit-okv1.onrender.com. Postupak postavljanja na Render opisan je u [poglavlju 6](docs/6-Postavljanje-instalacija-i-konfiguracija.md#postavljanje-na-render).
+
 <a id="quick-start"></a>
 ## Brzi početak / instalacija
 
