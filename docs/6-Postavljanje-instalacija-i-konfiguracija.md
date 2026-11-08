@@ -85,3 +85,25 @@ image = models.ImageField(upload_to='vessels/', validators=IMAGE_VALIDATORS)
 ```
 
 Datoteke se poslužuju s istog origina kao aplikacija, pa se ne smiju dopuštati vrste koje preglednik može izvršiti (npr. SVG ili HTML). Zaglavlje `X-Content-Type-Options: nosniff` (Django `SecurityMiddleware`) dodatno sprječava da preglednik datoteku protumači kao drugu vrstu.
+
+## Kontinuirana integracija (CI)
+
+Svaki pull request prema grani `main` i svaki push u `main` automatski se provjerava pomoću GitHub Actionsa (`.github/workflows/ci.yml`). Tako se greške otkrivaju prije merga, a ne nakon postavljanja, i pregledavatelj ne mora ručno pokretati provjere. Postavljanje na platformu pokreće se iz grane `main`, pa u nju ulazi samo kod koji je prošao provjere.
+
+Workflow ima dva posla koji rade usporedno:
+
+| Posao | Koraci |
+| --- | --- |
+| `frontend` | Node 22, `npm ci`, `npm run lint` (oxlint), `npm run format:check` (Prettier), `npm run build` (uključuje provjeru tipova `tsc -b`) |
+| `backend` | Python 3.11, PostgreSQL 17 kao service container, `ruff check`, `ruff format --check`, `manage.py check`, `manage.py makemigrations --check --dry-run` (otkriva promjene modela bez migracije), `manage.py test` |
+
+Verzije Nodea, Pythona i PostgreSQL-a jednake su onima u `docker-compose.yml`, `backend/Dockerfile` i `render.yaml`. Testovi koriste PostgreSQL, a ne SQLite, jer ograničenje preklapanja rezervacija treba rasponske tipove i `btree_gist` (ADR-03). Backend u CI-ju radi s `DJANGO_DEBUG=False`, kao u produkciji, i s `DJANGO_HTTPS=False` kako testni klijent ne bi bio preusmjeravan na HTTPS. CI ne treba nikakve tajne.
+
+Poslovi `frontend` i `backend` obavezne su provjere u pravilima grane `main` (ruleset "Approved before merge"), pa se pull request s neuspješnim CI-jem ne može spojiti. Promjena naziva posla zato zahtijeva i promjenu ruleseta. Workflow nema filtar po mapama (paths filter): obavezna provjera koja se zbog filtra ne pokrene ostaje na čekanju i blokira merge, a cijeli CI ionako traje nekoliko minuta.
+
+Ista provjera može se lokalno pokrenuti naredbama iz odjeljka "Formatiranje i provjera koda" u README-u.
+
+Odabrani su GitHub Actions jer je repozitorij na GitHubu: nema dodatne usluge ni računa, rezultat se prikazuje izravno u pull requestu, a za javne repozitorije je besplatan. Razmotrene alternative:
+
+- CI na platformi za postavljanje (Render ili Azure): provjerava samo ono što se postavlja, bez rezultata u pull requestu i bez mogućnosti da blokira merge.
+- Vanjske usluge (npr. CircleCI): isti rezultat, ali uz dodatni račun i povezivanje s repozitorijem.

@@ -1,5 +1,7 @@
 # ChartIt
 
+[![CI](https://github.com/tmpteamname1/ChartIt/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tmpteamname1/ChartIt/actions/workflows/ci.yml)
+
 ## Opis aplikacije
 
 <a id="deployment"></a>
@@ -111,7 +113,7 @@ npm run lint                       # oxlint
 npm run format                     # Prettier
 ```
 
-Za provjeru bez mijenjanja datoteka koriste se `ruff format --check .` i `npm run format:check`.
+Za provjeru bez mijenjanja datoteka koriste se `ruff format --check .` i `npm run format:check`. Iste provjere, uz build frontenda i backend testove, pokreće CI na svakom pull requestu ([poglavlje 6](docs/6-Postavljanje-instalacija-i-konfiguracija.md#kontinuirana-integracija-ci)).
 
 Commitovi koji samo formatiraju kod navedeni su u `.git-blame-ignore-revs`, pa ih `git blame` preskače i prikazuje stvarnog autora retka. GitHub tu datoteku čita sam, a lokalno je potrebno jednom pokrenuti:
 
