@@ -9,9 +9,23 @@ function BackendStatus() {
     retry: false,
   })
 
-  if (isPending) return <Text size="xs" c="dimmed">backend: provjera...</Text>
-  if (!isError && data.status === 'ok') return <Text size="xs" c="dimmed">backend: OK</Text>
-  return <Text size="xs" c="red" role="alert">backend: nedostupan</Text>
+  if (isPending)
+    return (
+      <Text size="xs" c="dimmed">
+        backend: provjera...
+      </Text>
+    )
+  if (!isError && data.status === 'ok')
+    return (
+      <Text size="xs" c="dimmed">
+        backend: OK
+      </Text>
+    )
+  return (
+    <Text size="xs" c="red" role="alert">
+      backend: nedostupan
+    </Text>
+  )
 }
 
 export default BackendStatus

@@ -50,7 +50,9 @@ function AccountMenu() {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Label>
-              <Text size="sm" fw={500} c="bright">{user.name}</Text>
+              <Text size="sm" fw={500} c="bright">
+                {user.name}
+              </Text>
               <Text size="xs">{ROLE_LABELS[user.role]}</Text>
             </Menu.Label>
             <Menu.Divider />

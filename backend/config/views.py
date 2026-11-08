@@ -17,7 +17,9 @@ logger = logging.getLogger(__name__)
 
 @extend_schema(
     summary='Provjera rada API-ja i baze',
-    responses=inline_serializer('Health', {'status': serializers.CharField(), 'database': serializers.CharField()}),
+    responses=inline_serializer(
+        'Health', {'status': serializers.CharField(), 'database': serializers.CharField()}
+    ),
 )
 @never_cache
 @api_view(['GET'])
