@@ -173,6 +173,8 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 
 > Radna inačica za zadatak #52, prije pregleda s timom. Rute su ulaz za kostur React aplikacije (#61) i wireframee (#53 do #57).
 
+Za sve ekrane iz ove mape zajednički nacrti i pravila učitavanja, praznih stanja, grešaka, obavijesti i potvrdnih dijaloga definirani su u [katalogu zajedničkih stanja sučelja (#58)](dizajn/58-Zajednicka-stanja-sucelja.md). [Tablica primjene po ekranima](dizajn/58-Zajednicka-stanja-sucelja.md#primjena-po-ekranima) povezuje rute s oznakama uzoraka koje se koriste u wireframeima #53–#57.
+
 **Dogovor o URL-ovima:** rute klijentske aplikacije pišu se na hrvatskom, malim slovima, bez dijakritičkih znakova i s crticom između riječi (npr. `/moje-rezervacije`). Prefiksi `/api`, `/admin` i `/static` pripadaju Djangu, pa se administracija platforme u klijentu nalazi pod `/administracija`. Sve ostale putanje Django vraća kao React aplikaciju, koja ih sama usmjerava.
 
 Uloge odgovaraju polju `role` korisnika (KORISNIK, DJELATNIK, VLASNIK, ADMINISTRATOR); posjetitelj je neprijavljeni korisnik.
