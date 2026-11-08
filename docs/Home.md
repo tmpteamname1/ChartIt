@@ -65,7 +65,8 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | Alat | Inačica ili model | Koristio/la | Glavna svrha |
 | --- | --- | --- | --- |
 | [Naziv alata] | [Inačica ili model, ako je poznat] | [Član/članovi tima] | [npr. izrada nacrta dokumentacije, generiranje izvora dijagrama] |
-| OpenAI Codex | Model nije zabilježen | Luka | Priprema tekstualnih skica i kratkih pravila zajedničkih stanja sučelja za #58 |
+| OpenAI Codex | GPT-6.1 Sol | Nikolić | Priprema tekstualnih skica i kratkih pravila zajedničkih stanja sučelja za #58 |
+| OpenAI Codex | GPT-6.1 Sol | Nikolić | Izrada i dorada skica rezervacija i prijave za #54 |
 
 ### Opseg doprinosa umjetne inteligencije
 
@@ -73,6 +74,7 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | --- | --- | --- | --- | --- |
 | [npr. 3. Obrasci uporabe, UC-002] | [Izrada nacrta / preoblikovanje / prijevod / izvor dijagrama / sažimanje] | [Kratak opis] | [Ulaz zadan alatu; dodane, ispravljene ili uklonjene činjenice] | [Stranica dokumentacije, `.puml` datoteka, PR] |
 | Zajednička stanja sučelja (#58), poveznice iz kazala i poglavlja 4.8 | Izrada skica i pravila prikaza | Jedna Markdown datoteka s tekstualnim skicama, kratkim pravilima i referencama na ekrane | Korisnik je zadao issue #58 i zatražio tekstualne skice u Markdownu; sadržaj je uspoređen s projektnom dokumentacijom. Timski pregled slijedi u PR-u. | [Skice i pravila](dizajn/58-Zajednicka-stanja-sucelja.md) |
+| Skice rezervacija i prijave (#54) i poveznice u poglavlju 4.8 | Izrada i dorada skica | Šest skica u SVG-u i uređivom formatu Excalidraw te poveznice iz mape stranica | Korisnik je zadao opseg #54, odabrao jednostavan stil prema priloženim primjerima i usmjerio dorade rasporeda i odabira usluga. | [SVG](dizajn/54-Wireframe-korisnickog-dijela.svg), [Excalidraw](dizajn/54-Wireframe-korisnickog-dijela.excalidraw), [mapa stranica](4-Arhitektura-i-oblikovanje.md#48-mapa-stranica-i-ruta-klijentske-aplikacije) |
 
 Stranice i artefakti koji nisu navedeni iznad izrađeni su bez pomoći generativne umjetne inteligencije.
 

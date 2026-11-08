@@ -175,6 +175,8 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 
 Za sve ekrane iz ove mape zajednički nacrti i pravila učitavanja, praznih stanja, grešaka, obavijesti i potvrdnih dijaloga definirani su u [katalogu zajedničkih stanja sučelja (#58)](dizajn/58-Zajednicka-stanja-sucelja.md). [Tablica primjene po ekranima](dizajn/58-Zajednicka-stanja-sucelja.md#primjena-po-ekranima) povezuje rute s oznakama uzoraka koje se koriste u wireframeima #53–#57.
 
+[Skice rezervacija i prijave (#54)](dizajn/54-Wireframe-korisnickog-dijela.svg) prate korisnički tok od odabira termina do pregleda i otkazivanja rezervacije. Dostupan je i [izvor za uređivanje u Excalidrawu](dizajn/54-Wireframe-korisnickog-dijela.excalidraw).
+
 **Dogovor o URL-ovima:** rute klijentske aplikacije pišu se na hrvatskom, malim slovima, bez dijakritičkih znakova i s crticom između riječi (npr. `/moje-rezervacije`). Prefiksi `/api`, `/admin` i `/static` pripadaju Djangu, pa se administracija platforme u klijentu nalazi pod `/administracija`. Sve ostale putanje Django vraća kao React aplikaciju, koja ih sama usmjerava.
 
 Uloge odgovaraju polju `role` korisnika (KORISNIK, DJELATNIK, VLASNIK, ADMINISTRATOR); posjetitelj je neprijavljeni korisnik.
