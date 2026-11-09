@@ -66,6 +66,7 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | --- | --- | --- | --- |
 | [Naziv alata] | [Inačica ili model, ako je poznat] | [Član/članovi tima] | [npr. izrada nacrta dokumentacije, generiranje izvora dijagrama] |
 | OpenAI Codex | Model nije zabilježen | Luka | Priprema tekstualnih skica i kratkih pravila zajedničkih stanja sučelja za #58 |
+| Claude Code | Claude Fable 5 | Rušev | Izrada skica javnog dijela (pretraga, detalji plovila, podaci o tvrtki) za #53 |
 
 ### Opseg doprinosa umjetne inteligencije
 
@@ -73,6 +74,7 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | --- | --- | --- | --- | --- |
 | [npr. 3. Obrasci uporabe, UC-002] | [Izrada nacrta / preoblikovanje / prijevod / izvor dijagrama / sažimanje] | [Kratak opis] | [Ulaz zadan alatu; dodane, ispravljene ili uklonjene činjenice] | [Stranica dokumentacije, `.puml` datoteka, PR] |
 | Zajednička stanja sučelja (#58), poveznice iz kazala i poglavlja 4.8 | Izrada skica i pravila prikaza | Jedna Markdown datoteka s tekstualnim skicama, kratkim pravilima i referencama na ekrane | Korisnik je zadao issue #58 i zatražio tekstualne skice u Markdownu; sadržaj je uspoređen s projektnom dokumentacijom. Timski pregled slijedi u PR-u. | [Skice i pravila](dizajn/58-Zajednicka-stanja-sucelja.md) |
+| Skice javnog dijela (#53) i poveznica u poglavlju 4.8 | Izrada skica | Šest skica u SVG-u i uređivom formatu Excalidraw (pretraga, stanje bez rezultata, detalji plovila, stanja kalendara, stanja prognoze i karte, podaci o tvrtki) te poveznica iz mape stranica | Korisnik je zadao issue #53. Alat je sadržaj uskladio s poglavljima 2, 3 i 4, katalogom stanja #58 i stilom skica #54, a oznake zahtjeva prilagodio trenutačnoj numeraciji iz poglavlja 2. Timski pregled slijedi u PR-u. | [SVG](dizajn/53-Wireframe-javnog-dijela.svg), [Excalidraw](dizajn/53-Wireframe-javnog-dijela.excalidraw), [mapa stranica](4-Arhitektura-i-oblikovanje.md#48-mapa-stranica-i-ruta-klijentske-aplikacije) |
 
 Stranice i artefakti koji nisu navedeni iznad izrađeni su bez pomoći generativne umjetne inteligencije.
 

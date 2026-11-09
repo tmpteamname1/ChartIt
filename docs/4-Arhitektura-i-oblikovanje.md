@@ -188,6 +188,8 @@ Uloge odgovaraju polju `role` korisnika (KORISNIK, DJELATNIK, VLASNIK, ADMINISTR
 | Podaci o tvrtki | `/tvrtke/:id` | svi | UC-01 | F-29 | Osnovni podaci i kontakt tvrtke te popis njezinih plovila. |
 | Prijava | `/prijava` | neprijavljeni | UC-10 | F-17, F-18 | Gumb za prijavu preko OAuth pružatelja, poruka o neuspjeloj prijavi; u razvoju i prijava testnih korisnika (ENABLE_TEST_LOGIN). |
 
+[Skice javnog dijela (#53)](dizajn/53-Wireframe-javnog-dijela.svg) prikazuju pretragu s filtrima i rezultatima, stanje bez rezultata, detalje plovila, stanja kalendara, prognoze i karte te podatke o tvrtki. Dostupan je i [izvor za uređivanje u Excalidrawu](dizajn/53-Wireframe-javnog-dijela.excalidraw). Oznake zahtjeva na skicama slijede trenutačnu numeraciju iz [poglavlja 2](2-Analiza-zahtjeva.md): pretraga F-01, detalji plovila F-02, prognoza F-16, karta F-17.
+
 ### Korisnički dio
 
 | Ekran | Ruta | Pristup | UC | F | Sadržaj |
