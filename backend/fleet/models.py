@@ -5,13 +5,15 @@ from django.db.models.functions import Lower
 
 class Category(models.Model):
     name = models.CharField('naziv', max_length=100, unique=True)
+
     class Meta:
         ordering = ['name']
         verbose_name = 'kategorija plovila'
         verbose_name_plural = 'kategorije plovila'
-        constraints = [ #razlikuje velika i mala slova, split i Split ne mogu oboje biti dodani
+        constraints = [  # razlikuje velika i mala slova, split i Split ne mogu oboje biti dodani
             models.UniqueConstraint(Lower('name'), name='fleet_category_name_ci_unique'),
         ]
+
     def __str__(self):
         return self.name
 
@@ -30,6 +32,7 @@ class Port(models.Model):
         decimal_places=6,
         validators=[MinValueValidator(-180), MaxValueValidator(180)],
     )
+
     class Meta:
         ordering = ['name']
         verbose_name = 'luka'
@@ -37,5 +40,6 @@ class Port(models.Model):
         constraints = [
             models.UniqueConstraint(Lower('name'), name='fleet_port_name_ci_unique'),
         ]
+
     def __str__(self):
         return self.name
