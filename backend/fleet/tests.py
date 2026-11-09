@@ -13,7 +13,7 @@ class CategoryTests(TestCase):
 
     def test_duplicate_name_rejected(self):
         Category.objects.create(name='Jedrilica')
-        with self.assertRaises(IntegrityError), transaction.atomic():
+        with self.assertRaises(IntegrityError), transaction.atomic(): #atomic - kod greške, promjene u bazi se ponište tako da se test nastavi normalno
             Category.objects.create(name='Jedrilica')
 
     def test_duplicate_name_rejected_case_insensitive(self):
@@ -33,7 +33,7 @@ class PortTests(TestCase):
         return Port(name=name, latitude=Decimal(lat), longitude=Decimal(lon))
 
     def test_valid_port_passes_validation(self):
-        self.make_port().full_clean()
+        self.make_port().full_clean() #full_clean() sam pokreće validatore
 
     def test_latitude_above_range_rejected(self):
         with self.assertRaises(ValidationError):
