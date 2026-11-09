@@ -26,11 +26,11 @@ Ažurirani popis članova, njihovih GitHub profila i glavnih uloga ili doprinosa
 | [2. Analiza zahtjeva](2-Analiza-zahtjeva.md) | Zahtjevi, ograničenja i sljedivost |
 | [3. Obrasci uporabe](3-Obrasci-uporabe.md) | Akteri i reprezentativne interakcije korisnika |
 | [4. Arhitektura i oblikovanje](4-Arhitektura-i-oblikovanje.md) | Glavne odluke oblikovanja, struktura, podaci i ponašanje |
-| [Zajednička stanja sučelja (#58)](dizajn/58-Zajednicka-stanja-sucelja.md) | Nacrti i pravila učitavanja, praznih stanja, grešaka, obavijesti i potvrda |
 | [5. Ispitivanje](5-Ispitivanje.md) | Pristup ispitivanju, stvarni rezultati i poznati nedostaci |
 | [6. Postavljanje, instalacija i konfiguracija](6-Postavljanje-instalacija-i-konfiguracija.md) | Lokalna instalacija, konfiguracija, javno postavljanje i administracija |
 | [7. Zaključak i budući rad](7-Zakljucak-i-buduci-rad.md) | Zaključak i moguća daljnja poboljšanja |
 | [A. Pregled aktivnosti grupe](A-Pregled-aktivnosti-grupe.md) | Aktivnosti tima, doprinosi i izazovi |
+| [Dizajn sučelja](dizajn/) | Skice ekrana i pravila za zajednička stanja sučelja |
 
 ## Ključne točke projekta
 
@@ -65,6 +65,7 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | Alat | Inačica ili model | Koristio/la | Glavna svrha |
 | --- | --- | --- | --- |
 | [Naziv alata] | [Inačica ili model, ako je poznat] | [Član/članovi tima] | [npr. izrada nacrta dokumentacije, generiranje izvora dijagrama] |
+| OpenAI Codex | GPT-6.1 Sol | Nikolić | Izrada i dorada skica panela tvrtke za #55 |
 | OpenAI Codex | Model nije zabilježen | Luka | Priprema tekstualnih skica i kratkih pravila zajedničkih stanja sučelja za #58 |
 
 ### Opseg doprinosa umjetne inteligencije
@@ -72,6 +73,7 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | Stranica, datoteka ili artefakt | Vrsta pomoći | Što je alat proizveo | Što je tim zadao i promijenio | Lokacija |
 | --- | --- | --- | --- | --- |
 | [npr. 3. Obrasci uporabe, UC-002] | [Izrada nacrta / preoblikovanje / prijevod / izvor dijagrama / sažimanje] | [Kratak opis] | [Ulaz zadan alatu; dodane, ispravljene ili uklonjene činjenice] | [Stranica dokumentacije, `.puml` datoteka, PR] |
+| Skice panela tvrtke (#55) i poveznice u poglavlju 4.8 | Izrada i usklađivanje skica | SVG i uređivi Excalidraw | Korisnik je zadao opseg, tražio da skice slijede lokalni ChartIt i predložak #54 te zatražio usporedbu s #53. Alat je usporedio skice s dokumentacijom i provjerio prikaze u oba formata. | [SVG](dizajn/55-Wireframe-panela-tvrtke.svg), [Excalidraw](dizajn/55-Wireframe-panela-tvrtke.excalidraw) |
 | Zajednička stanja sučelja (#58), poveznice iz kazala i poglavlja 4.8 | Izrada skica i pravila prikaza | Jedna Markdown datoteka s tekstualnim skicama, kratkim pravilima i referencama na ekrane | Korisnik je zadao issue #58 i zatražio tekstualne skice u Markdownu; sadržaj je uspoređen s projektnom dokumentacijom. Timski pregled slijedi u PR-u. | [Skice i pravila](dizajn/58-Zajednicka-stanja-sucelja.md) |
 
 Stranice i artefakti koji nisu navedeni iznad izrađeni su bez pomoći generativne umjetne inteligencije.

@@ -198,11 +198,13 @@ Uloge odgovaraju polju `role` korisnika (KORISNIK, DJELATNIK, VLASNIK, ADMINISTR
 
 ### Panel tvrtke
 
+Skice panela za [#55](https://github.com/tmpteamname1/ChartIt/issues/55) dostupne su kao [SVG pregled](dizajn/55-Wireframe-panela-tvrtke.svg) i [uređivi Excalidraw](dizajn/55-Wireframe-panela-tvrtke.excalidraw).
+
 | Ekran | Ruta | Pristup | UC | F | Sadržaj |
 | --- | --- | --- | --- | --- | --- |
 | Zahtjevi za rezervaciju | `/tvrtka/zahtjevi` | DJELATNIK, VLASNIK | UC-12 | F-03, F-11 | Zahtjevi poredani prema datumu početka najma, potvrda i odbijanje. Početni ekran panela. |
 | Raspored preuzimanja i povrata | `/tvrtka/raspored` | DJELATNIK, VLASNIK | UC-06 | F-12 | Preuzimanja i povrati po danima ili tjednu, odabir razdoblja. |
-| Rezervacije tvrtke | `/tvrtka/rezervacije` | VLASNIK | UC-05 | F-04, F-08 | Sve rezervacije tvrtke s filtrima prema statusu, plovilu i razdoblju. |
+| Rezervacije tvrtke | `/tvrtka/rezervacije` | DJELATNIK, VLASNIK | UC-05 | F-04, F-05, F-07, F-11 | Pregled rezervacija vlastite tvrtke s filtrima prema statusu, plovilu i razdoblju te dodavanje, izmjena i otkazivanje. |
 | Detalji rezervacije (panel) | `/tvrtka/rezervacije/:id` | DJELATNIK, VLASNIK | UC-05, UC-13 | F-08, F-12, F-22 | Podaci o plovilu i korisniku, evidentiranje preuzimanja i povrata, završetak najma. |
 | Flota | `/tvrtka/flota` | VLASNIK | UC-04 | F-07 | Popis plovila tvrtke, deaktivacija. |
 | Novo plovilo | `/tvrtka/flota/novo` | VLASNIK | UC-04 | F-07 | Obrazac plovila: osnovni podaci, kategorija, luka, kapacitet, oprema, fotografije, cijena. |
@@ -214,6 +216,8 @@ Uloge odgovaraju polju `role` korisnika (KORISNIK, DJELATNIK, VLASNIK, ADMINISTR
 | Statistika | `/tvrtka/statistika` | VLASNIK | UC-07 | F-13, F-14 | Odabir razdoblja, zauzetost, rezervacije, prihod, popularnost usluga i kategorija, izvoz u CSV. |
 
 Ruta `/tvrtka` preusmjerava na `/tvrtka/zahtjevi`.
+
+Pristup pregledu rezervacija u skicama slijedi [F-11](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi) i [UC-05](3-Obrasci-uporabe.md#uc-05-upravljanje-rezervacijama). Djelatnik i vlasnik upravljaju rezervacijama vlastite tvrtke.
 
 ### Administracija platforme
 
@@ -245,7 +249,7 @@ Svi funkcijski zahtjevi s korisničkim sučeljem pokriveni su barem jednim ekran
 | --- | --- | --- |
 | Posjetitelj | Logo (početna), Pretraga, Prijava | – |
 | KORISNIK | Logo, Pretraga, Moje rezervacije, izbornik računa (Odjava) | – |
-| DJELATNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored |
+| DJELATNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored, Rezervacije |
 | VLASNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored, Rezervacije, Flota, Dodatne usluge, Djelatnici, Podaci o tvrtki, Statistika |
 | ADMINISTRATOR | Logo, Pretraga, Administracija, izbornik računa | Tvrtke, Korisnici, Kategorije, Luke |
 
