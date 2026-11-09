@@ -202,22 +202,22 @@ Skice panela za [#55](https://github.com/tmpteamname1/ChartIt/issues/55) dostupn
 
 | Ekran | Ruta | Pristup | UC | F | Sadržaj |
 | --- | --- | --- | --- | --- | --- |
-| Zahtjevi za rezervaciju | `/tvrtka/zahtjevi` | DJELATNIK, VLASNIK | UC-12 | F-03, F-11 | Zahtjevi poredani prema datumu početka najma, potvrda i odbijanje. Početni ekran panela. |
-| Raspored preuzimanja i povrata | `/tvrtka/raspored` | DJELATNIK, VLASNIK | UC-06 | F-12 | Preuzimanja i povrati po danima ili tjednu, odabir razdoblja. |
-| Rezervacije tvrtke | `/tvrtka/rezervacije` | DJELATNIK, VLASNIK | UC-05 | F-04, F-05, F-07, F-11 | Pregled rezervacija vlastite tvrtke s filtrima prema statusu, plovilu i razdoblju te dodavanje, izmjena i otkazivanje. |
-| Detalji rezervacije (panel) | `/tvrtka/rezervacije/:id` | DJELATNIK, VLASNIK | UC-05, UC-13 | F-08, F-12, F-22 | Podaci o plovilu i korisniku, evidentiranje preuzimanja i povrata, završetak najma. |
-| Flota | `/tvrtka/flota` | VLASNIK | UC-04 | F-07 | Popis plovila tvrtke, deaktivacija. |
-| Novo plovilo | `/tvrtka/flota/novo` | VLASNIK | UC-04 | F-07 | Obrazac plovila: osnovni podaci, kategorija, luka, kapacitet, oprema, fotografije, cijena. |
-| Izmjena plovila | `/tvrtka/flota/:id` | VLASNIK | UC-04 | F-07 | Isti obrazac s postojećim podacima. |
-| Nedostupnost plovila | `/tvrtka/flota/:id/nedostupnost` | VLASNIK | UC-09 | F-09 | Razdoblja nedostupnosti, upozorenje o preklapanju s rezervacijom. |
-| Dodatne usluge | `/tvrtka/usluge` | VLASNIK | UC-04 | F-07 | Katalog usluga tvrtke s cijenama (vrijede za sva plovila tvrtke). |
-| Djelatnici | `/tvrtka/djelatnici` | VLASNIK | UC-08 | F-27 | Popis, dodavanje, izmjena i deaktivacija djelatnika. |
-| Podaci o tvrtki | `/tvrtka/podaci` | VLASNIK | – | F-28 | Obrazac s podacima tvrtke. |
-| Statistika | `/tvrtka/statistika` | VLASNIK | UC-07 | F-13, F-14 | Odabir razdoblja, zauzetost, rezervacije, prihod, popularnost usluga i kategorija, izvoz u CSV. |
+| Zahtjevi za rezervaciju | `/tvrtka/zahtjevi` | DJELATNIK, VLASNIK | UC-12 | F-04, F-05, F-07, F-11 | Zahtjevi poredani prema datumu početka najma, potvrda i odbijanje. Početni ekran panela. |
+| Raspored preuzimanja i povrata | `/tvrtka/raspored` | DJELATNIK, VLASNIK | UC-06 | F-13 | Preuzimanja i povrati po danima ili tjednu, odabir razdoblja. |
+| Rezervacije tvrtke | `/tvrtka/rezervacije` | DJELATNIK, VLASNIK | UC-05 | F-04, F-05, F-07, F-11 | Filtri prema statusu, plovilu i razdoblju. Dodavanje, izmjena i otkazivanje otvaraju dijaloge na popisu. Obrazac traži korisnika po točnoj adresi e-pošte i prikazuje dodatne usluge te ukupan iznos koji računa poslužitelj. |
+| Detalji rezervacije (panel) | `/tvrtka/rezervacije/:id` | DJELATNIK, VLASNIK | UC-05, UC-13 | F-05, F-11, F-13, F-14 | Podaci o plovilu i korisniku, odabrane usluge i pohranjeni iznos, evidentiranje preuzimanja i povrata te završetak najma. |
+| Flota | `/tvrtka/flota` | VLASNIK | UC-04 | F-08, F-09 | Popis plovila tvrtke, deaktivacija. |
+| Novo plovilo | `/tvrtka/flota/novo` | VLASNIK | UC-04 | F-08, F-09 | Obrazac plovila s osnovnim podacima, kategorijom, lukom, kapacitetom, opremom, fotografijama i cijenom. |
+| Izmjena plovila | `/tvrtka/flota/:id` | VLASNIK | UC-04 | F-08, F-09 | Isti obrazac s postojećim podacima. |
+| Nedostupnost plovila | `/tvrtka/flota/:id/nedostupnost` | VLASNIK | UC-09 | F-04, F-10 | Razdoblja nedostupnosti, upozorenje o preklapanju s rezervacijom. |
+| Dodatne usluge | `/tvrtka/usluge` | VLASNIK | UC-04 | F-09 | Katalog usluga tvrtke s cijenama (vrijede za sva plovila tvrtke). |
+| Djelatnici | `/tvrtka/djelatnici` | VLASNIK | UC-08 | F-21 | Popis djelatnika s dijalozima za dodavanje, izmjenu i deaktivaciju. |
+| Podaci o tvrtki | `/tvrtka/podaci` | VLASNIK | – | F-20 | Obrazac s podacima tvrtke. OIB je u ovom obrascu samo za čitanje. |
+| Statistika | `/tvrtka/statistika` | VLASNIK | UC-07 | F-15 | Odabir razdoblja, zauzetost, rezervacije, prihod, popularnost usluga i kategorija, izvoz u CSV. |
 
 Ruta `/tvrtka` preusmjerava na `/tvrtka/zahtjevi`.
 
-Pristup pregledu rezervacija u skicama slijedi [F-11](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi) i [UC-05](3-Obrasci-uporabe.md#uc-05-upravljanje-rezervacijama). Djelatnik i vlasnik upravljaju rezervacijama vlastite tvrtke.
+Oznake F u tablici slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi). Prema F-11 i [UC-05](3-Obrasci-uporabe.md#uc-05-upravljanje-rezervacijama), djelatnik i vlasnik upravljaju rezervacijama vlastite tvrtke. Trenutačni React router i izbornik omogućuju pristup popisu samo vlasniku. Prije izmjene koda treba potvrditi ovlasti s timom jer #55 za taj ekran navodi samo vlasnika.
 
 ### Administracija platforme
 
