@@ -1,0 +1,914 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1205" height="6829" viewBox="0 0 1205 6829" role="img" aria-labelledby="title desc">
+<title id="title">ChartIt · Mobilni wireframei</title>
+<desc id="desc">Mobilni prikazi pretrage, plovila, rezervacija, rasporeda i glavnog izbornika. Svaka skica široka je 375 px.</desc>
+<rect width="1205" height="6829" fill="#eaedf0"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<g id="mobilni-naslov" transform="translate(0 0)">
+<title>ChartIt · Mobilni wireframei</title>
+<text x="16" y="50" font-size="30" font-weight="700" fill="#262b30">ChartIt · Mobilni wireframei</text>
+<text x="16" y="77" font-size="16" font-weight="400" fill="#4c545c">Issue #57 · NF-03 · širina svake skice 375 px</text>
+</g>
+<g id="mobilni-odjeljak-1" transform="translate(0 0)">
+<title>Javni dio</title>
+<text x="16" y="128" font-size="22" font-weight="700" fill="#262b30">01  /  Javni dio</text>
+<text x="16" y="150" font-size="14" font-weight="400" fill="#4c545c">Pretraga i tri uzastopna dijela stranice detalja plovila.</text>
+</g>
+<g id="mobilni-01" transform="translate(16 170)">
+<title>01 · Rezultati pretrage</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">01  /  Rezultati pretrage</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Svi</text>
+<rect x="0" y="47" width="375" height="558" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<rect x="277" y="55" width="82" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="295" y="84" font-size="14" font-weight="700" fill="#262b30">Prijava</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Pretraga plovila</text>
+<text x="16" y="170" font-size="14" font-weight="400" fill="#4c545c">12 rezultata</text>
+<rect x="16" y="189" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="161" y="218" font-size="14" font-weight="700" fill="#262b30">Filtri (4)</text>
+<text x="16" y="256" font-size="13" font-weight="400" fill="#4c545c">12.–17. 6. 2027. · Split · Jedrilica · 4 osobe</text>
+<rect x="16" y="269" width="343" height="126" fill="#ffffff" stroke="#969da4"/>
+<rect x="26" y="279" width="82" height="57" fill="#dce1e5" stroke="#969da4"/>
+<line x1="49" y1="316" x2="85" y2="316" stroke="#4c545c"/>
+<line x1="49" y1="316" x2="58" y2="323" stroke="#4c545c"/>
+<line x1="85" y1="316" x2="76" y2="323" stroke="#4c545c"/>
+<line x1="58" y1="323" x2="76" y2="323" stroke="#4c545c"/>
+<line x1="67" y1="316" x2="67" y2="289" stroke="#4c545c"/>
+<line x1="67" y1="289" x2="58" y2="312" stroke="#4c545c"/>
+<line x1="58" y1="312" x2="67" y2="312" stroke="#4c545c"/>
+<text x="120" y="295" font-size="17" font-weight="700" fill="#262b30">Adria 38</text>
+<text x="120" y="313" font-size="13" font-weight="400" fill="#4c545c">Split · 8 osoba</text>
+<text x="120" y="333" font-size="14" font-weight="700" fill="#262b30">190,00 € / dan</text>
+<rect x="26" y="343" width="323" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="38" y="372" font-size="14" font-weight="700" fill="#262b30">Detalji plovila →</text>
+<rect x="16" y="406" width="343" height="126" fill="#ffffff" stroke="#969da4"/>
+<rect x="26" y="416" width="82" height="57" fill="#dce1e5" stroke="#969da4"/>
+<line x1="49" y1="453" x2="85" y2="453" stroke="#4c545c"/>
+<line x1="49" y1="453" x2="58" y2="460" stroke="#4c545c"/>
+<line x1="85" y1="453" x2="76" y2="460" stroke="#4c545c"/>
+<line x1="58" y1="460" x2="76" y2="460" stroke="#4c545c"/>
+<line x1="67" y1="453" x2="67" y2="426" stroke="#4c545c"/>
+<line x1="67" y1="426" x2="58" y2="449" stroke="#4c545c"/>
+<line x1="58" y1="449" x2="67" y2="449" stroke="#4c545c"/>
+<text x="120" y="432" font-size="17" font-weight="700" fill="#262b30">Bonaca 32</text>
+<text x="120" y="450" font-size="13" font-weight="400" fill="#4c545c">Split · 6 osoba</text>
+<text x="120" y="470" font-size="14" font-weight="700" fill="#262b30">160,00 € / dan</text>
+<rect x="26" y="480" width="323" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="38" y="509" font-size="14" font-weight="700" fill="#262b30">Detalji plovila →</text>
+<rect x="16" y="543" width="110" height="44" fill="#f5f6f7" stroke="#969da4"/>
+<text x="31" y="572" font-size="14" font-weight="700" fill="#4c545c">‹ Prethodna</text>
+<text x="173.5" y="571" font-size="14" font-weight="700" fill="#262b30">1 / 6</text>
+<rect x="249" y="543" width="110" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="270.5" y="572" font-size="14" font-weight="700" fill="#262b30">Sljedeća ›</text>
+<text x="0" y="625" font-size="13" font-weight="700" fill="#262b30">/</text>
+<text x="0" y="645" font-size="13" font-weight="400" fill="#4c545c">UC-01 · F-01 · NF-03</text>
+</g>
+<g id="mobilni-02" transform="translate(415 170)">
+<title>02 · Otvoreni filtri</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">02  /  Otvoreni filtri</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Svi</text>
+<rect x="0" y="47" width="375" height="704" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<rect x="277" y="55" width="82" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="295" y="84" font-size="14" font-weight="700" fill="#262b30">Prijava</text>
+<rect x="274" y="123" width="85" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="292.5" y="152" font-size="14" font-weight="700" fill="#262b30">Zatvori</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Filtri</text>
+<text x="16" y="186" font-size="13" font-weight="700" fill="#262b30">Termin od</text>
+<rect x="16" y="195" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="223" font-size="14" font-weight="400" fill="#262b30">12. 6. 2027.</text>
+<text x="16" y="263" font-size="13" font-weight="700" fill="#262b30">Termin do</text>
+<rect x="16" y="272" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="300" font-size="14" font-weight="400" fill="#262b30">17. 6. 2027.</text>
+<text x="16" y="340" font-size="13" font-weight="700" fill="#262b30">Luka polaska</text>
+<rect x="16" y="349" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="377" font-size="14" font-weight="400" fill="#262b30">Split</text>
+<line x1="335" y1="369" x2="340" y2="374" stroke="#262b30"/>
+<line x1="340" y1="374" x2="345" y2="369" stroke="#262b30"/>
+<text x="16" y="417" font-size="13" font-weight="700" fill="#262b30">Kategorija</text>
+<rect x="16" y="426" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="454" font-size="14" font-weight="400" fill="#262b30">Jedrilica</text>
+<line x1="335" y1="446" x2="340" y2="451" stroke="#262b30"/>
+<line x1="340" y1="451" x2="345" y2="446" stroke="#262b30"/>
+<text x="16" y="494" font-size="13" font-weight="700" fill="#262b30">Broj osoba</text>
+<rect x="16" y="503" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="531" font-size="14" font-weight="400" fill="#262b30">4</text>
+<line x1="335" y1="523" x2="340" y2="528" stroke="#262b30"/>
+<line x1="340" y1="528" x2="345" y2="523" stroke="#262b30"/>
+<text x="16" y="571" font-size="13" font-weight="700" fill="#262b30">Tvrtka</text>
+<rect x="16" y="580" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="608" font-size="14" font-weight="400" fill="#262b30">Sve tvrtke</text>
+<line x1="335" y1="600" x2="340" y2="605" stroke="#262b30"/>
+<line x1="340" y1="605" x2="345" y2="600" stroke="#262b30"/>
+<rect x="16" y="635" width="343" height="44" fill="#262b30" stroke="#262b30"/>
+<text x="140.5" y="664" font-size="14" font-weight="700" fill="#ffffff">Primijeni filtre</text>
+<rect x="16" y="689" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="150" y="718" font-size="14" font-weight="700" fill="#262b30">Očisti filtre</text>
+<text x="0" y="771" font-size="13" font-weight="700" fill="#262b30">/</text>
+<text x="0" y="791" font-size="13" font-weight="400" fill="#4c545c">UC-01 · F-01 · NF-03</text>
+</g>
+<g id="mobilni-01b" transform="translate(814 170)">
+<title>01b · Pretraga bez rezultata</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">01b  /  Pretraga bez rezultata</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Svi</text>
+<rect x="0" y="47" width="375" height="386" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<rect x="277" y="55" width="82" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="295" y="84" font-size="14" font-weight="700" fill="#262b30">Prijava</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Pretraga plovila</text>
+<text x="16" y="170" font-size="14" font-weight="400" fill="#4c545c">0 rezultata</text>
+<rect x="16" y="189" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="161" y="218" font-size="14" font-weight="700" fill="#262b30">Filtri (4)</text>
+<rect x="16" y="243" width="343" height="67" fill="#f5f6f7" stroke="#969da4"/>
+<text x="28" y="269" font-size="16" font-weight="700" fill="#262b30">Nema raspoloživih plovila</text>
+<text x="28" y="292" font-size="14" font-weight="400" fill="#262b30">Promijenite termin ili filtre.</text>
+<text x="0" y="453" font-size="13" font-weight="700" fill="#262b30">/</text>
+<text x="0" y="473" font-size="13" font-weight="400" fill="#4c545c">UC-01 · F-01 · P-01 · NF-03</text>
+</g>
+<g id="mobilni-03a" transform="translate(16 988)">
+<title>03a · Detalji plovila · 1/3</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">03a  /  Detalji plovila · 1/3</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Svi</text>
+<rect x="0" y="47" width="375" height="690" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<rect x="277" y="55" width="82" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="295" y="84" font-size="14" font-weight="700" fill="#262b30">Prijava</text>
+<rect x="16" y="123" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="118.5" y="152" font-size="14" font-weight="700" fill="#262b30">‹ Natrag na rezultate</text>
+<text x="16" y="201" font-size="24" font-weight="700" fill="#262b30">Adria 38</text>
+<text x="16" y="224" font-size="14" font-weight="400" fill="#4c545c">Jedrilica · 8 osoba · Split</text>
+<text x="16" y="260" font-size="17" font-weight="700" fill="#262b30">190,00 € / dan</text>
+<rect x="16" y="273" width="343" height="162" fill="#dce1e5" stroke="#969da4"/>
+<line x1="133" y1="381" x2="241" y2="381" stroke="#4c545c"/>
+<line x1="133" y1="381" x2="160" y2="388" stroke="#4c545c"/>
+<line x1="241" y1="381" x2="214" y2="388" stroke="#4c545c"/>
+<line x1="160" y1="388" x2="214" y2="388" stroke="#4c545c"/>
+<line x1="187" y1="381" x2="187" y2="300" stroke="#4c545c"/>
+<line x1="187" y1="300" x2="160" y2="377" stroke="#4c545c"/>
+<line x1="160" y1="377" x2="187" y2="377" stroke="#4c545c"/>
+<rect x="16" y="445" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="34.5" y="478" font-size="22" font-weight="700" fill="#262b30">‹</text>
+<text x="121.5" y="474" font-size="16" font-weight="700" fill="#262b30">Fotografija 1 od 4</text>
+<rect x="315" y="445" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="333.5" y="478" font-size="22" font-weight="700" fill="#262b30">›</text>
+<rect x="16" y="501" width="343" height="89" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="527" font-size="16" font-weight="700" fill="#262b30">O plovilu</text>
+<text x="28" y="550" font-size="14" font-weight="400" fill="#262b30">Duljina 11,6 m · 3 kabine</text>
+<text x="28" y="572" font-size="14" font-weight="400" fill="#262b30">Oprema uključuje GPS i pomoćni čamac.</text>
+<rect x="16" y="602" width="343" height="115" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="628" font-size="16" font-weight="700" fill="#262b30">Charter tvrtka</text>
+<text x="28" y="651" font-size="14" font-weight="400" fill="#262b30">Matična luka Split</text>
+<rect x="28" y="663" width="319" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="40" y="692" font-size="14" font-weight="700" fill="#262b30">Jadran Charter →</text>
+<text x="0" y="757" font-size="13" font-weight="700" fill="#262b30">/plovila/:id</text>
+<text x="0" y="777" font-size="13" font-weight="400" fill="#4c545c">UC-11 · F-02, F-16, F-17 · NF-06 · NF-03</text>
+</g>
+<g id="mobilni-03b" transform="translate(415 988)">
+<title>03b · Detalji plovila · 2/3</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">03b  /  Detalji plovila · 2/3</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Svi</text>
+<rect x="0" y="47" width="375" height="669" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<rect x="277" y="55" width="82" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="295" y="84" font-size="14" font-weight="700" fill="#262b30">Prijava</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Slobodni termini</text>
+<rect x="16" y="165" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="34.5" y="198" font-size="22" font-weight="700" fill="#262b30">‹</text>
+<text x="142" y="194" font-size="16" font-weight="700" fill="#262b30">Lipanj 2027.</text>
+<rect x="315" y="165" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="333.5" y="198" font-size="22" font-weight="700" fill="#262b30">›</text>
+<text x="32" y="234" font-size="13" font-weight="700" fill="#262b30">Po</text>
+<text x="83" y="234" font-size="13" font-weight="700" fill="#262b30">Ut</text>
+<text x="131.5" y="234" font-size="13" font-weight="700" fill="#262b30">Sr</text>
+<text x="179.5" y="234" font-size="13" font-weight="700" fill="#262b30">Če</text>
+<text x="228.5" y="234" font-size="13" font-weight="700" fill="#262b30">Pe</text>
+<text x="277" y="234" font-size="13" font-weight="700" fill="#262b30">Su</text>
+<text x="326.5" y="234" font-size="13" font-weight="700" fill="#262b30">Ne</text>
+<rect x="67" y="245" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="86" y="273" font-size="12" font-weight="700" fill="#262b30">1</text>
+<rect x="116" y="245" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="135" y="273" font-size="12" font-weight="700" fill="#262b30">2</text>
+<rect x="165" y="245" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="184" y="273" font-size="12" font-weight="700" fill="#262b30">3</text>
+<rect x="214" y="245" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="233" y="273" font-size="12" font-weight="700" fill="#262b30">4</text>
+<rect x="263" y="245" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="282" y="273" font-size="12" font-weight="700" fill="#262b30">5</text>
+<rect x="312" y="245" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="331" y="273" font-size="12" font-weight="700" fill="#262b30">6</text>
+<rect x="18" y="293" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="37" y="321" font-size="12" font-weight="700" fill="#262b30">7</text>
+<rect x="67" y="293" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="86" y="321" font-size="12" font-weight="700" fill="#262b30">8</text>
+<rect x="116" y="293" width="45" height="44" fill="#f5f6f7" stroke="#969da4"/>
+<text x="131.5" y="321" font-size="12" font-weight="700" fill="#4c545c">9×</text>
+<rect x="165" y="293" width="45" height="44" fill="#f5f6f7" stroke="#969da4"/>
+<text x="177" y="321" font-size="12" font-weight="700" fill="#4c545c">10×</text>
+<rect x="214" y="293" width="45" height="44" fill="#f5f6f7" stroke="#969da4"/>
+<text x="226" y="321" font-size="12" font-weight="700" fill="#4c545c">11×</text>
+<rect x="263" y="293" width="45" height="44" fill="#dce1e5" stroke="#262b30"/>
+<text x="278.5" y="321" font-size="12" font-weight="700" fill="#262b30">12</text>
+<rect x="312" y="293" width="45" height="44" fill="#dce1e5" stroke="#262b30"/>
+<text x="327.5" y="321" font-size="12" font-weight="700" fill="#262b30">13</text>
+<rect x="18" y="341" width="45" height="44" fill="#dce1e5" stroke="#262b30"/>
+<text x="33.5" y="369" font-size="12" font-weight="700" fill="#262b30">14</text>
+<rect x="67" y="341" width="45" height="44" fill="#dce1e5" stroke="#262b30"/>
+<text x="82.5" y="369" font-size="12" font-weight="700" fill="#262b30">15</text>
+<rect x="116" y="341" width="45" height="44" fill="#dce1e5" stroke="#262b30"/>
+<text x="131.5" y="369" font-size="12" font-weight="700" fill="#262b30">16</text>
+<rect x="165" y="341" width="45" height="44" fill="#dce1e5" stroke="#262b30"/>
+<text x="180.5" y="369" font-size="12" font-weight="700" fill="#262b30">17</text>
+<rect x="214" y="341" width="45" height="44" fill="#f5f6f7" stroke="#969da4"/>
+<text x="226" y="369" font-size="12" font-weight="700" fill="#4c545c">18×</text>
+<rect x="263" y="341" width="45" height="44" fill="#f5f6f7" stroke="#969da4"/>
+<text x="275" y="369" font-size="12" font-weight="700" fill="#4c545c">19×</text>
+<rect x="312" y="341" width="45" height="44" fill="#f5f6f7" stroke="#969da4"/>
+<text x="324" y="369" font-size="12" font-weight="700" fill="#4c545c">20×</text>
+<rect x="18" y="389" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="33.5" y="417" font-size="12" font-weight="700" fill="#262b30">21</text>
+<rect x="67" y="389" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="82.5" y="417" font-size="12" font-weight="700" fill="#262b30">22</text>
+<rect x="116" y="389" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="131.5" y="417" font-size="12" font-weight="700" fill="#262b30">23</text>
+<rect x="165" y="389" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="180.5" y="417" font-size="12" font-weight="700" fill="#262b30">24</text>
+<rect x="214" y="389" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="229.5" y="417" font-size="12" font-weight="700" fill="#262b30">25</text>
+<rect x="263" y="389" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="278.5" y="417" font-size="12" font-weight="700" fill="#262b30">26</text>
+<rect x="312" y="389" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="327.5" y="417" font-size="12" font-weight="700" fill="#262b30">27</text>
+<rect x="18" y="437" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="33.5" y="465" font-size="12" font-weight="700" fill="#262b30">28</text>
+<rect x="67" y="437" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="82.5" y="465" font-size="12" font-weight="700" fill="#262b30">29</text>
+<rect x="116" y="437" width="45" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="131.5" y="465" font-size="12" font-weight="700" fill="#262b30">30</text>
+<text x="16" y="498" font-size="13" font-weight="700" fill="#262b30">× zauzeto · 12.–17. 6. odabrani termin</text>
+<text x="16" y="519" font-size="13" font-weight="400" fill="#4c545c">Dan povrata može biti dan preuzimanja sljedećeg najma.</text>
+<text x="16" y="554" font-size="17" font-weight="700" fill="#262b30">Karta matične luke</text>
+<rect x="16" y="567" width="343" height="103" fill="#f5f6f7" stroke="#969da4"/>
+<line x1="28" y1="632" x2="117" y2="621" stroke="#969da4"/>
+<line x1="117" y1="621" x2="175" y2="642" stroke="#969da4"/>
+<line x1="175" y1="642" x2="245" y2="611" stroke="#969da4"/>
+<line x1="245" y1="611" x2="347" y2="599" stroke="#969da4"/>
+<ellipse cx="205" cy="612" rx="7" ry="7" fill="#dce1e5" stroke="#262b30"/>
+<line x1="205" y1="619" x2="205" y2="632" stroke="#262b30"/>
+<text x="221" y="645" font-size="14" font-weight="700" fill="#262b30">Split</text>
+<text x="16" y="695" font-size="14" font-weight="700" fill="#262b30">Mjesto preuzimanja · Split</text>
+<text x="0" y="736" font-size="13" font-weight="700" fill="#262b30">/plovila/:id</text>
+<text x="0" y="756" font-size="13" font-weight="400" fill="#4c545c">UC-11 · F-02, F-16, F-17 · NF-06 · NF-03</text>
+</g>
+<g id="mobilni-03c" transform="translate(814 988)">
+<title>03c · Detalji plovila · 3/3</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">03c  /  Detalji plovila · 3/3</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Svi</text>
+<rect x="0" y="47" width="375" height="636" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<rect x="277" y="55" width="82" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="295" y="84" font-size="14" font-weight="700" fill="#262b30">Prijava</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Vremenska prognoza</text>
+<text x="16" y="170" font-size="14" font-weight="400" fill="#4c545c">Split · 12.–17. 6. 2027.</text>
+<rect x="16" y="189" width="343" height="133" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="215" font-size="16" font-weight="700" fill="#262b30">Za odabrani termin</text>
+<text x="28" y="238" font-size="14" font-weight="400" fill="#262b30">12. 6. · Sunčano, 25 °C · Vjetar 12 km/h</text>
+<text x="28" y="260" font-size="14" font-weight="400" fill="#262b30">13. 6. · Oblačno, 24 °C · Vjetar 16 km/h</text>
+<text x="28" y="282" font-size="14" font-weight="400" fill="#262b30">14. 6. · Sunčano, 26 °C · Vjetar 10 km/h</text>
+<text x="28" y="304" font-size="14" font-weight="400" fill="#262b30">Za 15.–17. 6. prognoza još nije dostupna.</text>
+<text x="16" y="347" font-size="13" font-weight="400" fill="#4c545c">Prognoza je informativna.</text>
+<text x="16" y="377" font-size="17" font-weight="700" fill="#262b30">Dodatne usluge</text>
+<rect x="16" y="390" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<rect x="26" y="403" width="18" height="18" fill="#dce1e5" stroke="#262b30"/>
+<line x1="30" y1="412" x2="34" y2="416" stroke="#262b30"/>
+<line x1="34" y1="416" x2="40" y2="407" stroke="#262b30"/>
+<text x="54" y="418" font-size="14" font-weight="400" fill="#262b30">Završno čišćenje</text>
+<text x="301" y="418" font-size="14" font-weight="400" fill="#262b30">85,00 €</text>
+<rect x="16" y="442" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<rect x="26" y="455" width="18" height="18" fill="#ffffff" stroke="#262b30"/>
+<text x="54" y="470" font-size="14" font-weight="400" fill="#262b30">Paket ručnika</text>
+<text x="301" y="470" font-size="14" font-weight="400" fill="#262b30">30,00 €</text>
+<text x="16" y="507" font-size="13" font-weight="400" fill="#4c545c">Cijene usluga vrijede za cijeli najam.</text>
+<rect x="16" y="520" width="343" height="89" fill="#f5f6f7" stroke="#969da4"/>
+<text x="28" y="546" font-size="16" font-weight="700" fill="#262b30">Procjena ukupno 1.035,00 €</text>
+<text x="28" y="569" font-size="14" font-weight="400" fill="#262b30">5 dana × 190,00 € + 85,00 €</text>
+<text x="28" y="591" font-size="14" font-weight="400" fill="#262b30">Konačni iznos izračunava poslužitelj.</text>
+<rect x="16" y="621" width="343" height="44" fill="#262b30" stroke="#262b30"/>
+<text x="125" y="650" font-size="14" font-weight="700" fill="#ffffff">Nastavi na zahtjev</text>
+<text x="0" y="703" font-size="13" font-weight="700" fill="#262b30">/plovila/:id</text>
+<text x="0" y="723" font-size="13" font-weight="400" fill="#4c545c">UC-11 · F-02, F-16, F-17 · NF-06 · NF-03</text>
+</g>
+<g id="mobilni-odjeljak-2" transform="translate(0 0)">
+<title>Korisnički dio</title>
+<text x="16" y="1826" font-size="22" font-weight="700" fill="#262b30">02  /  Korisnički dio</text>
+<text x="16" y="1848" font-size="14" font-weight="400" fill="#4c545c">Zahtjev, pregled rezervacija i otkazivanje.</text>
+</g>
+<g id="mobilni-04" transform="translate(16 1868)">
+<title>04 · Zahtjev za rezervaciju</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">04  /  Zahtjev za rezervaciju</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
+<rect x="0" y="47" width="375" height="703" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327" y="83" font-size="14" font-weight="700" fill="#262b30">AK</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Zahtjev za rezervaciju</text>
+<text x="16" y="170" font-size="14" font-weight="400" fill="#4c545c">Adria 38 · Jadran Charter</text>
+<text x="16" y="206" font-size="17" font-weight="700" fill="#262b30">Termin</text>
+<text x="16" y="232" font-size="13" font-weight="700" fill="#262b30">Datum preuzimanja</text>
+<rect x="16" y="241" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="269" font-size="14" font-weight="400" fill="#262b30">12. 6. 2027.</text>
+<text x="16" y="309" font-size="13" font-weight="700" fill="#262b30">Datum povrata</text>
+<rect x="16" y="318" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="346" font-size="14" font-weight="400" fill="#262b30">17. 6. 2027.</text>
+<text x="16" y="387" font-size="14" font-weight="700" fill="#262b30">Termin je dostupan.</text>
+<text x="16" y="408" font-size="13" font-weight="400" fill="#4c545c">Dan povrata može biti dan preuzimanja sljedećeg najma.</text>
+<text x="16" y="444" font-size="17" font-weight="700" fill="#262b30">Dodatne usluge</text>
+<rect x="16" y="457" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<rect x="26" y="470" width="18" height="18" fill="#dce1e5" stroke="#262b30"/>
+<line x1="30" y1="479" x2="34" y2="483" stroke="#262b30"/>
+<line x1="34" y1="483" x2="40" y2="474" stroke="#262b30"/>
+<text x="54" y="485" font-size="14" font-weight="400" fill="#262b30">Završno čišćenje</text>
+<text x="301" y="485" font-size="14" font-weight="400" fill="#262b30">85,00 €</text>
+<rect x="16" y="509" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<rect x="26" y="522" width="18" height="18" fill="#ffffff" stroke="#262b30"/>
+<text x="54" y="537" font-size="14" font-weight="400" fill="#262b30">Paket ručnika</text>
+<text x="301" y="537" font-size="14" font-weight="400" fill="#262b30">30,00 €</text>
+<text x="16" y="574" font-size="13" font-weight="400" fill="#4c545c">Cijene usluga vrijede za cijeli najam.</text>
+<rect x="16" y="587" width="343" height="89" fill="#f5f6f7" stroke="#969da4"/>
+<text x="28" y="613" font-size="16" font-weight="700" fill="#262b30">Ukupno 1.035,00 €</text>
+<text x="28" y="636" font-size="14" font-weight="400" fill="#262b30">5 dana × 190,00 € + 85,00 €</text>
+<text x="28" y="658" font-size="14" font-weight="400" fill="#262b30">Iznos izračunava poslužitelj.</text>
+<rect x="16" y="688" width="343" height="44" fill="#262b30" stroke="#262b30"/>
+<text x="138" y="717" font-size="14" font-weight="700" fill="#ffffff">Pošalji zahtjev</text>
+<text x="0" y="770" font-size="13" font-weight="700" fill="#262b30">/plovila/:id/rezervacija</text>
+<text x="0" y="790" font-size="13" font-weight="400" fill="#4c545c">UC-02 · F-02, F-03, F-04 · U-03, G-01 · NF-03</text>
+</g>
+<g id="mobilni-04b" transform="translate(415 1868)">
+<title>04b · Termin više nije dostupan</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">04b  /  Termin više nije dostupan</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
+<rect x="0" y="47" width="375" height="725" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327" y="83" font-size="14" font-weight="700" fill="#262b30">AK</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Zahtjev za rezervaciju</text>
+<text x="16" y="170" font-size="14" font-weight="400" fill="#4c545c">Adria 38 · Jadran Charter</text>
+<text x="16" y="206" font-size="17" font-weight="700" fill="#262b30">Termin</text>
+<text x="16" y="232" font-size="13" font-weight="700" fill="#262b30">Datum preuzimanja</text>
+<rect x="16" y="241" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="269" font-size="14" font-weight="400" fill="#262b30">12. 6. 2027.</text>
+<text x="16" y="309" font-size="13" font-weight="700" fill="#262b30">Datum povrata</text>
+<rect x="16" y="318" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="346" font-size="14" font-weight="400" fill="#262b30">17. 6. 2027.</text>
+<rect x="16" y="373" width="343" height="86" fill="#f5f6f7" stroke="#969da4"/>
+<text x="28" y="399" font-size="16" font-weight="700" fill="#262b30">Termin je u međuvremenu zauzet</text>
+<text x="28" y="422" font-size="14" font-weight="400" fill="#262b30">Odaberite novi termin. Odabrane usluge su</text>
+<text x="28" y="441" font-size="14" font-weight="400" fill="#262b30">sačuvane.</text>
+<text x="16" y="488" font-size="17" font-weight="700" fill="#262b30">Dodatne usluge</text>
+<rect x="16" y="501" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<rect x="26" y="514" width="18" height="18" fill="#dce1e5" stroke="#262b30"/>
+<line x1="30" y1="523" x2="34" y2="527" stroke="#262b30"/>
+<line x1="34" y1="527" x2="40" y2="518" stroke="#262b30"/>
+<text x="54" y="529" font-size="14" font-weight="400" fill="#262b30">Završno čišćenje</text>
+<text x="301" y="529" font-size="14" font-weight="400" fill="#262b30">85,00 €</text>
+<rect x="16" y="553" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<rect x="26" y="566" width="18" height="18" fill="#ffffff" stroke="#262b30"/>
+<text x="54" y="581" font-size="14" font-weight="400" fill="#262b30">Paket ručnika</text>
+<text x="301" y="581" font-size="14" font-weight="400" fill="#262b30">30,00 €</text>
+<text x="16" y="618" font-size="13" font-weight="400" fill="#4c545c">Cijene usluga vrijede za cijeli najam.</text>
+<rect x="16" y="631" width="343" height="67" fill="#f5f6f7" stroke="#969da4"/>
+<text x="28" y="657" font-size="16" font-weight="700" fill="#262b30">Ukupno —</text>
+<text x="28" y="680" font-size="14" font-weight="400" fill="#262b30">Iznos se ponovno izračunava za novi termin.</text>
+<rect x="16" y="710" width="343" height="44" fill="#f5f6f7" stroke="#969da4"/>
+<text x="138" y="739" font-size="14" font-weight="700" fill="#4c545c">Pošalji zahtjev</text>
+<text x="0" y="792" font-size="13" font-weight="700" fill="#262b30">/plovila/:id/rezervacija</text>
+<text x="0" y="812" font-size="13" font-weight="400" fill="#4c545c">UC-02 · F-03, F-04 · G-05 · NF-03</text>
+</g>
+<g id="mobilni-04c" transform="translate(814 1868)">
+<title>04c · Potvrda slanja zahtjeva</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">04c  /  Potvrda slanja zahtjeva</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
+<rect x="0" y="47" width="375" height="356" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327" y="83" font-size="14" font-weight="700" fill="#262b30">AK</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Zahtjev je poslan</text>
+<rect x="16" y="165" width="343" height="111" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="188" font-size="13" font-weight="700" fill="#4c545c">Zahtjev</text>
+<text x="28" y="213" font-size="16" font-weight="700" fill="#262b30">Adria 38</text>
+<text x="28" y="236" font-size="14" font-weight="400" fill="#262b30">12.–17. 6. 2027.</text>
+<text x="28" y="258" font-size="14" font-weight="400" fill="#262b30">Ukupno 1.035,00 €</text>
+<text x="16" y="302" font-size="14" font-weight="400" fill="#262b30">Čeka potvrdu tvrtke. O potvrdi ili odbijanju obavijestit</text>
+<text x="16" y="321" font-size="14" font-weight="400" fill="#262b30">ćemo vas e-poštom.</text>
+<rect x="16" y="341" width="343" height="44" fill="#262b30" stroke="#262b30"/>
+<text x="132.5" y="370" font-size="14" font-weight="700" fill="#ffffff">Moje rezervacije</text>
+<text x="0" y="423" font-size="13" font-weight="700" fill="#262b30">/plovila/:id/rezervacija</text>
+<text x="0" y="443" font-size="13" font-weight="400" fill="#4c545c">UC-02 · F-03, F-05, F-06, F-07 · O-01 · NF-03</text>
+</g>
+<g id="mobilni-05" transform="translate(16 2707)">
+<title>05 · Moje rezervacije</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">05  /  Moje rezervacije</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
+<rect x="0" y="47" width="375" height="1002" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327" y="83" font-size="14" font-weight="700" fill="#262b30">AK</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Moje rezervacije</text>
+<text x="16" y="178" font-size="13" font-weight="700" fill="#262b30">Filtriraj prema statusu</text>
+<rect x="16" y="187" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="215" font-size="14" font-weight="400" fill="#262b30">Svi statusi</text>
+<line x1="335" y1="207" x2="340" y2="212" stroke="#262b30"/>
+<line x1="340" y1="212" x2="345" y2="207" stroke="#262b30"/>
+<rect x="16" y="242" width="343" height="137" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="265" font-size="13" font-weight="700" fill="#4c545c">Zahtjev</text>
+<text x="28" y="290" font-size="16" font-weight="700" fill="#262b30">Bura 34</text>
+<text x="28" y="313" font-size="14" font-weight="400" fill="#262b30">19.–23. 6. 2027. · 720,00 €</text>
+<rect x="28" y="325" width="319" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="40" y="354" font-size="14" font-weight="700" fill="#262b30">Detalji rezervacije →</text>
+<rect x="16" y="391" width="343" height="137" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="414" font-size="13" font-weight="700" fill="#4c545c">Potvrđena</text>
+<text x="28" y="439" font-size="16" font-weight="700" fill="#262b30">Adria 38</text>
+<text x="28" y="462" font-size="14" font-weight="400" fill="#262b30">12.–17. 6. 2027. · 1.035,00 €</text>
+<rect x="28" y="474" width="319" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="40" y="503" font-size="14" font-weight="700" fill="#262b30">Detalji rezervacije →</text>
+<rect x="16" y="540" width="343" height="137" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="563" font-size="13" font-weight="700" fill="#4c545c">Odbijena</text>
+<text x="28" y="588" font-size="16" font-weight="700" fill="#262b30">Bonaca 32</text>
+<text x="28" y="611" font-size="14" font-weight="400" fill="#262b30">8.–11. 6. 2027. · 480,00 €</text>
+<rect x="28" y="623" width="319" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="40" y="652" font-size="14" font-weight="700" fill="#262b30">Detalji rezervacije →</text>
+<rect x="16" y="689" width="343" height="137" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="712" font-size="13" font-weight="700" fill="#4c545c">Otkazana</text>
+<text x="28" y="737" font-size="16" font-weight="700" fill="#262b30">Bura 34</text>
+<text x="28" y="760" font-size="14" font-weight="400" fill="#262b30">3.–6. 6. 2027. · 540,00 €</text>
+<rect x="28" y="772" width="319" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="40" y="801" font-size="14" font-weight="700" fill="#262b30">Detalji rezervacije →</text>
+<rect x="16" y="838" width="343" height="137" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="861" font-size="13" font-weight="700" fill="#4c545c">Završeni najam</text>
+<text x="28" y="886" font-size="16" font-weight="700" fill="#262b30">Adria 38</text>
+<text x="28" y="909" font-size="14" font-weight="400" fill="#262b30">27.–30. 5. 2027. · 570,00 €</text>
+<rect x="28" y="921" width="319" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="40" y="950" font-size="14" font-weight="700" fill="#262b30">Detalji rezervacije →</text>
+<rect x="16" y="987" width="110" height="44" fill="#f5f6f7" stroke="#969da4"/>
+<text x="31" y="1016" font-size="14" font-weight="700" fill="#4c545c">‹ Prethodna</text>
+<text x="173.5" y="1015" font-size="14" font-weight="700" fill="#262b30">1 / 2</text>
+<rect x="249" y="987" width="110" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="270.5" y="1016" font-size="14" font-weight="700" fill="#262b30">Sljedeća ›</text>
+<text x="0" y="1069" font-size="13" font-weight="700" fill="#262b30">/moje-rezervacije</text>
+<text x="0" y="1089" font-size="13" font-weight="400" fill="#4c545c">UC-03 · F-05, F-06 · NF-03</text>
+</g>
+<g id="mobilni-06" transform="translate(415 2707)">
+<title>06 · Detalji rezervacije</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">06  /  Detalji rezervacije</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
+<rect x="0" y="47" width="375" height="681" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327" y="83" font-size="14" font-weight="700" fill="#262b30">AK</text>
+<rect x="16" y="123" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="128" y="152" font-size="14" font-weight="700" fill="#262b30">‹ Moje rezervacije</text>
+<text x="16" y="201" font-size="24" font-weight="700" fill="#262b30">Rezervacija #R-0241</text>
+<rect x="16" y="219" width="343" height="111" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="242" font-size="13" font-weight="700" fill="#4c545c">Potvrđena</text>
+<text x="28" y="267" font-size="16" font-weight="700" fill="#262b30">Adria 38</text>
+<text x="28" y="290" font-size="14" font-weight="400" fill="#262b30">12.–17. 6. 2027.</text>
+<text x="28" y="312" font-size="14" font-weight="400" fill="#262b30">Mjesto preuzimanja · Split</text>
+<rect x="16" y="342" width="343" height="67" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="368" font-size="16" font-weight="700" fill="#262b30">Odabrane usluge</text>
+<text x="28" y="391" font-size="14" font-weight="400" fill="#262b30">Završno čišćenje · 85,00 €</text>
+<rect x="16" y="421" width="343" height="67" fill="#f5f6f7" stroke="#969da4"/>
+<text x="28" y="447" font-size="16" font-weight="700" fill="#262b30">Ukupno 1.035,00 €</text>
+<text x="28" y="470" font-size="14" font-weight="400" fill="#262b30">Pohranjeni iznos rezervacije</text>
+<text x="16" y="517" font-size="17" font-weight="700" fill="#262b30">Kontakt tvrtke</text>
+<text x="16" y="545" font-size="15" font-weight="700" fill="#262b30">Jadran Charter</text>
+<rect x="16" y="558" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="122" y="587" font-size="14" font-weight="700" fill="#262b30">info@example.com</text>
+<rect x="16" y="612" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="133.5" y="641" font-size="14" font-weight="700" fill="#262b30">+385 21 555 018</text>
+<rect x="16" y="666" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="127" y="695" font-size="14" font-weight="700" fill="#262b30">Otkaži rezervaciju</text>
+<text x="0" y="748" font-size="13" font-weight="700" fill="#262b30">/moje-rezervacije/:id</text>
+<text x="0" y="768" font-size="13" font-weight="400" fill="#4c545c">UC-03 · F-05, F-06, F-12 · NF-03</text>
+</g>
+<g id="mobilni-06b" transform="translate(814 2707)">
+<title>06b · Dijalog otkazivanja</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">06b  /  Dijalog otkazivanja</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
+<rect x="0" y="47" width="375" height="350" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327" y="83" font-size="14" font-weight="700" fill="#262b30">AK</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Otkazati rezervaciju?</text>
+<rect x="16" y="165" width="343" height="67" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="191" font-size="16" font-weight="700" fill="#262b30">Adria 38</text>
+<text x="28" y="214" font-size="14" font-weight="400" fill="#262b30">12.–17. 6. 2027.</text>
+<text x="16" y="258" font-size="14" font-weight="400" fill="#262b30">Termin se oslobađa. Radnju nije moguće poništiti.</text>
+<rect x="16" y="281" width="343" height="44" fill="#dce1e5" stroke="#262b30"/>
+<text x="127.5" y="310" font-size="14" font-weight="700" fill="#262b30">Zadrži rezervaciju</text>
+<rect x="16" y="335" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="154" y="364" font-size="14" font-weight="700" fill="#262b30">Da, otkaži</text>
+<text x="0" y="417" font-size="13" font-weight="700" fill="#262b30">/moje-rezervacije/:id</text>
+<text x="0" y="437" font-size="13" font-weight="400" fill="#4c545c">UC-03 · F-05, F-12 · D-01 · NF-03</text>
+</g>
+<g id="mobilni-odjeljak-3" transform="translate(0 0)">
+<title>Panel tvrtke</title>
+<text x="16" y="3857" font-size="22" font-weight="700" fill="#262b30">03  /  Panel tvrtke</text>
+<text x="16" y="3879" font-size="14" font-weight="400" fill="#4c545c">Od rasporeda do evidentiranog preuzimanja i povrata.</text>
+</g>
+<g id="mobilni-07" transform="translate(16 3899)">
+<title>07 · Raspored preuzimanja i povrata</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">07  /  Raspored preuzimanja i povrata</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Djelatnik i vlasnik</text>
+<rect x="0" y="47" width="375" height="564" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327.5" y="83" font-size="14" font-weight="700" fill="#262b30">TD</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Raspored</text>
+<text x="16" y="170" font-size="14" font-weight="400" fill="#4c545c">Preuzimanja i povrati</text>
+<rect x="16" y="189" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="34.5" y="222" font-size="22" font-weight="700" fill="#262b30">‹</text>
+<text x="130.5" y="218" font-size="16" font-weight="700" fill="#262b30">12.–18. 6. 2027.</text>
+<rect x="315" y="189" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="333.5" y="222" font-size="22" font-weight="700" fill="#262b30">›</text>
+<text x="16" y="262" font-size="17" font-weight="700" fill="#262b30">Subota, 12. lipnja</text>
+<rect x="16" y="275" width="343" height="137" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="298" font-size="13" font-weight="700" fill="#4c545c">Preuzimanje</text>
+<text x="28" y="323" font-size="16" font-weight="700" fill="#262b30">Adria 38</text>
+<text x="28" y="346" font-size="14" font-weight="400" fill="#262b30">Ana Kovač · Split</text>
+<rect x="28" y="358" width="319" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="40" y="387" font-size="14" font-weight="700" fill="#262b30">Otvori #R-0241 →</text>
+<text x="16" y="441" font-size="17" font-weight="700" fill="#262b30">Četvrtak, 17. lipnja</text>
+<rect x="16" y="454" width="343" height="137" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="477" font-size="13" font-weight="700" fill="#4c545c">Povrat</text>
+<text x="28" y="502" font-size="16" font-weight="700" fill="#262b30">Adria 38</text>
+<text x="28" y="525" font-size="14" font-weight="400" fill="#262b30">Ana Kovač · Split</text>
+<rect x="28" y="537" width="319" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="40" y="566" font-size="14" font-weight="700" fill="#262b30">Otvori #R-0241 →</text>
+<text x="0" y="631" font-size="13" font-weight="700" fill="#262b30">/tvrtka/raspored</text>
+<text x="0" y="651" font-size="13" font-weight="400" fill="#4c545c">UC-06 · F-13 · NF-03</text>
+</g>
+<g id="mobilni-08" transform="translate(415 3899)">
+<title>08 · Evidentiranje preuzimanja</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">08  /  Evidentiranje preuzimanja</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Djelatnik i vlasnik</text>
+<rect x="0" y="47" width="375" height="638" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327.5" y="83" font-size="14" font-weight="700" fill="#262b30">TD</text>
+<rect x="16" y="123" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="150" y="152" font-size="14" font-weight="700" fill="#262b30">‹ Raspored</text>
+<text x="16" y="201" font-size="24" font-weight="700" fill="#262b30">Rezervacija #R-0241</text>
+<rect x="16" y="219" width="343" height="89" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="245" font-size="16" font-weight="700" fill="#262b30">Adria 38</text>
+<text x="28" y="268" font-size="14" font-weight="400" fill="#262b30">12.–17. 6. 2027.</text>
+<text x="28" y="290" font-size="14" font-weight="400" fill="#262b30">Mjesto preuzimanja · Split</text>
+<rect x="16" y="320" width="343" height="89" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="346" font-size="16" font-weight="700" fill="#262b30">Ana Kovač</text>
+<text x="28" y="369" font-size="14" font-weight="400" fill="#262b30">ana.kovac@example.com</text>
+<text x="28" y="391" font-size="14" font-weight="400" fill="#262b30">4 putnika</text>
+<rect x="16" y="421" width="343" height="89" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="447" font-size="16" font-weight="700" fill="#262b30">Usluge i pohranjeni iznos</text>
+<text x="28" y="470" font-size="14" font-weight="400" fill="#262b30">Završno čišćenje · 85,00 €</text>
+<text x="28" y="492" font-size="14" font-weight="400" fill="#262b30">Ukupno 1.035,00 €</text>
+<rect x="16" y="522" width="343" height="89" fill="#f5f6f7" stroke="#969da4"/>
+<text x="28" y="545" font-size="13" font-weight="700" fill="#4c545c">Potvrđena</text>
+<text x="28" y="570" font-size="16" font-weight="700" fill="#262b30">Čeka preuzimanje</text>
+<text x="28" y="593" font-size="14" font-weight="400" fill="#262b30">Preuzimanje i povrat nisu evidentirani.</text>
+<rect x="16" y="623" width="343" height="44" fill="#262b30" stroke="#262b30"/>
+<text x="107.5" y="652" font-size="14" font-weight="700" fill="#ffffff">Evidentiraj preuzimanje</text>
+<text x="0" y="705" font-size="13" font-weight="700" fill="#262b30">/tvrtka/rezervacije/:id</text>
+<text x="0" y="725" font-size="13" font-weight="400" fill="#4c545c">UC-13 · F-13, F-14 · U-03 · NF-03</text>
+</g>
+<g id="mobilni-09" transform="translate(814 3899)">
+<title>09 · Evidentiranje povrata</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">09  /  Evidentiranje povrata</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Djelatnik i vlasnik</text>
+<rect x="0" y="47" width="375" height="687" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327.5" y="83" font-size="14" font-weight="700" fill="#262b30">TD</text>
+<rect x="16" y="123" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="150" y="152" font-size="14" font-weight="700" fill="#262b30">‹ Raspored</text>
+<text x="16" y="201" font-size="24" font-weight="700" fill="#262b30">Rezervacija #R-0241</text>
+<rect x="16" y="219" width="343" height="89" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="245" font-size="16" font-weight="700" fill="#262b30">Adria 38</text>
+<text x="28" y="268" font-size="14" font-weight="400" fill="#262b30">12.–17. 6. 2027.</text>
+<text x="28" y="290" font-size="14" font-weight="400" fill="#262b30">Mjesto preuzimanja · Split</text>
+<rect x="16" y="320" width="343" height="89" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="346" font-size="16" font-weight="700" fill="#262b30">Ana Kovač</text>
+<text x="28" y="369" font-size="14" font-weight="400" fill="#262b30">ana.kovac@example.com</text>
+<text x="28" y="391" font-size="14" font-weight="400" fill="#262b30">4 putnika</text>
+<rect x="16" y="421" width="343" height="89" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="447" font-size="16" font-weight="700" fill="#262b30">Usluge i pohranjeni iznos</text>
+<text x="28" y="470" font-size="14" font-weight="400" fill="#262b30">Završno čišćenje · 85,00 €</text>
+<text x="28" y="492" font-size="14" font-weight="400" fill="#262b30">Ukupno 1.035,00 €</text>
+<rect x="16" y="522" width="343" height="111" fill="#f5f6f7" stroke="#969da4"/>
+<text x="28" y="545" font-size="13" font-weight="700" fill="#4c545c">Potvrđena</text>
+<text x="28" y="570" font-size="16" font-weight="700" fill="#262b30">Plovilo preuzeto</text>
+<text x="28" y="593" font-size="14" font-weight="400" fill="#262b30">Preuzimanje · 12. 6. 2027. u 09:03</text>
+<text x="28" y="615" font-size="14" font-weight="400" fill="#262b30">Povrat nije evidentiran.</text>
+<text x="16" y="659" font-size="14" font-weight="400" fill="#262b30">Evidentiranjem povrata završavate najam.</text>
+<rect x="16" y="672" width="343" height="44" fill="#262b30" stroke="#262b30"/>
+<text x="127" y="701" font-size="14" font-weight="700" fill="#ffffff">Evidentiraj povrat</text>
+<text x="0" y="754" font-size="13" font-weight="700" fill="#262b30">/tvrtka/rezervacije/:id</text>
+<text x="0" y="774" font-size="13" font-weight="400" fill="#4c545c">UC-13 · F-13, F-14 · U-03 · NF-03</text>
+</g>
+<g id="mobilni-07b" transform="translate(16 4700)">
+<title>07b · Raspored bez rezervacija</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">07b  /  Raspored bez rezervacija</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Djelatnik i vlasnik</text>
+<rect x="0" y="47" width="375" height="363" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327.5" y="83" font-size="14" font-weight="700" fill="#262b30">TD</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Raspored</text>
+<text x="16" y="170" font-size="14" font-weight="400" fill="#4c545c">Preuzimanja i povrati</text>
+<rect x="16" y="189" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="34.5" y="222" font-size="22" font-weight="700" fill="#262b30">‹</text>
+<text x="139.5" y="218" font-size="16" font-weight="700" fill="#262b30">3.–9. 7. 2027.</text>
+<rect x="315" y="189" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="333.5" y="222" font-size="22" font-weight="700" fill="#262b30">›</text>
+<rect x="16" y="245" width="343" height="67" fill="#f5f6f7" stroke="#969da4"/>
+<text x="28" y="271" font-size="16" font-weight="700" fill="#262b30">Nema preuzimanja ni povrata</text>
+<text x="28" y="294" font-size="14" font-weight="400" fill="#262b30">Odaberite drugo razdoblje.</text>
+<text x="0" y="430" font-size="13" font-weight="700" fill="#262b30">/tvrtka/raspored</text>
+<text x="0" y="450" font-size="13" font-weight="400" fill="#4c545c">UC-06 · F-13 · P-03 · NF-03</text>
+</g>
+<g id="mobilni-09b" transform="translate(415 4700)">
+<title>09b · Evidentiran povrat</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">09b  /  Evidentiran povrat</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Djelatnik i vlasnik</text>
+<rect x="0" y="47" width="375" height="638" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="30" y1="71" x2="46" y2="71" stroke="#262b30"/>
+<line x1="30" y1="77" x2="46" y2="77" stroke="#262b30"/>
+<line x1="30" y1="83" x2="46" y2="83" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327.5" y="83" font-size="14" font-weight="700" fill="#262b30">TD</text>
+<rect x="16" y="123" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="150" y="152" font-size="14" font-weight="700" fill="#262b30">‹ Raspored</text>
+<text x="16" y="201" font-size="24" font-weight="700" fill="#262b30">Rezervacija #R-0241</text>
+<rect x="16" y="219" width="343" height="89" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="245" font-size="16" font-weight="700" fill="#262b30">Adria 38</text>
+<text x="28" y="268" font-size="14" font-weight="400" fill="#262b30">12.–17. 6. 2027.</text>
+<text x="28" y="290" font-size="14" font-weight="400" fill="#262b30">Mjesto preuzimanja · Split</text>
+<rect x="16" y="320" width="343" height="89" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="346" font-size="16" font-weight="700" fill="#262b30">Ana Kovač</text>
+<text x="28" y="369" font-size="14" font-weight="400" fill="#262b30">ana.kovac@example.com</text>
+<text x="28" y="391" font-size="14" font-weight="400" fill="#262b30">4 putnika</text>
+<rect x="16" y="421" width="343" height="89" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="447" font-size="16" font-weight="700" fill="#262b30">Usluge i pohranjeni iznos</text>
+<text x="28" y="470" font-size="14" font-weight="400" fill="#262b30">Završno čišćenje · 85,00 €</text>
+<text x="28" y="492" font-size="14" font-weight="400" fill="#262b30">Ukupno 1.035,00 €</text>
+<rect x="16" y="522" width="343" height="89" fill="#f5f6f7" stroke="#969da4"/>
+<text x="28" y="548" font-size="16" font-weight="700" fill="#262b30">Završeni najam</text>
+<text x="28" y="571" font-size="14" font-weight="400" fill="#262b30">Preuzimanje · 12. 6. 2027. u 09:03</text>
+<text x="28" y="593" font-size="14" font-weight="400" fill="#262b30">Povrat · 17. 6. 2027. u 16:05</text>
+<rect x="16" y="623" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="122" y="652" font-size="14" font-weight="700" fill="#262b30">Natrag na raspored</text>
+<text x="0" y="705" font-size="13" font-weight="700" fill="#262b30">/tvrtka/rezervacije/:id</text>
+<text x="0" y="725" font-size="13" font-weight="400" fill="#4c545c">UC-13 · F-05, F-14 · O-01 · NF-03</text>
+</g>
+<g id="mobilni-odjeljak-4" transform="translate(0 0)">
+<title>Glavni izbornik</title>
+<text x="16" y="5486" font-size="22" font-weight="700" fill="#262b30">04  /  Glavni izbornik</text>
+<text x="16" y="5508" font-size="14" font-weight="400" fill="#4c545c">Otvoreni izbornik za posjetitelja i četiri prijavljene uloge.</text>
+</g>
+<g id="mobilni-n1" transform="translate(16 5528)">
+<title>N1 · Izbornik · Posjetitelj</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">N1  /  Izbornik · Posjetitelj</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Posjetitelj</text>
+<rect x="0" y="47" width="375" height="350" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="32" y1="71" x2="44" y2="83" stroke="#262b30"/>
+<line x1="32" y1="83" x2="44" y2="71" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<rect x="277" y="55" width="82" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="295" y="84" font-size="14" font-weight="700" fill="#262b30">Prijava</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Izbornik</text>
+<rect x="16" y="165" width="343" height="44" fill="#dce1e5" stroke="#262b30"/>
+<text x="28" y="194" font-size="14" font-weight="700" fill="#262b30">Pretraga</text>
+<text x="0" y="417" font-size="13" font-weight="700" fill="#262b30">/</text>
+<text x="0" y="437" font-size="13" font-weight="400" fill="#4c545c">NF-03 · navigacija prema ulozi</text>
+</g>
+<g id="mobilni-n2" transform="translate(415 5528)">
+<title>N2 · Izbornik · Korisnik</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">N2  /  Izbornik · Korisnik</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
+<rect x="0" y="47" width="375" height="350" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="32" y1="71" x2="44" y2="83" stroke="#262b30"/>
+<line x1="32" y1="83" x2="44" y2="71" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327" y="83" font-size="14" font-weight="700" fill="#262b30">AK</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Izbornik</text>
+<rect x="16" y="165" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="194" font-size="14" font-weight="700" fill="#262b30">Pretraga</text>
+<rect x="16" y="214" width="343" height="44" fill="#dce1e5" stroke="#262b30"/>
+<text x="28" y="243" font-size="14" font-weight="700" fill="#262b30">Moje rezervacije</text>
+<text x="0" y="417" font-size="13" font-weight="700" fill="#262b30">/moje-rezervacije</text>
+<text x="0" y="437" font-size="13" font-weight="400" fill="#4c545c">NF-03 · navigacija prema ulozi</text>
+</g>
+<g id="mobilni-n3" transform="translate(814 5528)">
+<title>N3 · Izbornik · Djelatnik</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">N3  /  Izbornik · Djelatnik</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Djelatnik</text>
+<rect x="0" y="47" width="375" height="408" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="32" y1="71" x2="44" y2="83" stroke="#262b30"/>
+<line x1="32" y1="83" x2="44" y2="71" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327.5" y="83" font-size="14" font-weight="700" fill="#262b30">TD</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Izbornik</text>
+<rect x="16" y="165" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="194" font-size="14" font-weight="700" fill="#262b30">Pretraga</text>
+<rect x="16" y="214" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="243" font-size="14" font-weight="700" fill="#262b30">Panel tvrtke</text>
+<line x1="16" y1="263" x2="359" y2="263" stroke="#969da4"/>
+<text x="16" y="288" font-size="13" font-weight="700" fill="#4c545c">U panelu tvrtke</text>
+<rect x="16" y="300" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="329" font-size="14" font-weight="700" fill="#262b30">Zahtjevi</text>
+<rect x="16" y="349" width="343" height="44" fill="#dce1e5" stroke="#262b30"/>
+<text x="28" y="378" font-size="14" font-weight="700" fill="#262b30">Raspored</text>
+<rect x="16" y="398" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="427" font-size="14" font-weight="700" fill="#262b30">Rezervacije</text>
+<text x="0" y="475" font-size="13" font-weight="700" fill="#262b30">/tvrtka/raspored</text>
+<text x="0" y="495" font-size="13" font-weight="400" fill="#4c545c">NF-03 · navigacija prema ulozi</text>
+</g>
+<g id="mobilni-n4" transform="translate(16 6050)">
+<title>N4 · Izbornik · Vlasnik</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">N4  /  Izbornik · Vlasnik</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Vlasnik</text>
+<rect x="0" y="47" width="375" height="653" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="32" y1="71" x2="44" y2="83" stroke="#262b30"/>
+<line x1="32" y1="83" x2="44" y2="71" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="328" y="83" font-size="14" font-weight="700" fill="#262b30">TV</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Izbornik</text>
+<rect x="16" y="165" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="194" font-size="14" font-weight="700" fill="#262b30">Pretraga</text>
+<rect x="16" y="214" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="243" font-size="14" font-weight="700" fill="#262b30">Panel tvrtke</text>
+<line x1="16" y1="263" x2="359" y2="263" stroke="#969da4"/>
+<text x="16" y="288" font-size="13" font-weight="700" fill="#4c545c">U panelu tvrtke</text>
+<rect x="16" y="300" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="329" font-size="14" font-weight="700" fill="#262b30">Zahtjevi</text>
+<rect x="16" y="349" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="378" font-size="14" font-weight="700" fill="#262b30">Raspored</text>
+<rect x="16" y="398" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="427" font-size="14" font-weight="700" fill="#262b30">Rezervacije</text>
+<rect x="16" y="447" width="343" height="44" fill="#dce1e5" stroke="#262b30"/>
+<text x="28" y="476" font-size="14" font-weight="700" fill="#262b30">Flota</text>
+<rect x="16" y="496" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="525" font-size="14" font-weight="700" fill="#262b30">Dodatne usluge</text>
+<rect x="16" y="545" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="574" font-size="14" font-weight="700" fill="#262b30">Djelatnici</text>
+<rect x="16" y="594" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="623" font-size="14" font-weight="700" fill="#262b30">Podaci o tvrtki</text>
+<rect x="16" y="643" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="672" font-size="14" font-weight="700" fill="#262b30">Statistika</text>
+<text x="0" y="720" font-size="13" font-weight="700" fill="#262b30">/tvrtka/flota</text>
+<text x="0" y="740" font-size="13" font-weight="400" fill="#4c545c">NF-03 · navigacija prema ulozi</text>
+</g>
+<g id="mobilni-n5" transform="translate(415 6050)">
+<title>N5 · Izbornik · Administrator</title>
+<text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">N5  /  Izbornik · Administrator</text>
+<text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Administrator</text>
+<rect x="0" y="47" width="375" height="457" fill="#ffffff" stroke="#262b30"/>
+<rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
+<line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
+<rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
+<line x1="32" y1="71" x2="44" y2="83" stroke="#262b30"/>
+<line x1="32" y1="83" x2="44" y2="71" stroke="#262b30"/>
+<text x="72" y="86" font-size="22" font-weight="700" fill="#262b30">ChartIt</text>
+<ellipse cx="337" cy="77" rx="22" ry="22" fill="#dce1e5" stroke="#969da4"/>
+<text x="327" y="83" font-size="14" font-weight="700" fill="#262b30">AD</text>
+<text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Izbornik</text>
+<rect x="16" y="165" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="194" font-size="14" font-weight="700" fill="#262b30">Pretraga</text>
+<rect x="16" y="214" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="243" font-size="14" font-weight="700" fill="#262b30">Administracija</text>
+<line x1="16" y1="263" x2="359" y2="263" stroke="#969da4"/>
+<text x="16" y="288" font-size="13" font-weight="700" fill="#4c545c">U administraciji</text>
+<rect x="16" y="300" width="343" height="44" fill="#dce1e5" stroke="#262b30"/>
+<text x="28" y="329" font-size="14" font-weight="700" fill="#262b30">Tvrtke</text>
+<rect x="16" y="349" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="378" font-size="14" font-weight="700" fill="#262b30">Korisnici</text>
+<rect x="16" y="398" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="427" font-size="14" font-weight="700" fill="#262b30">Kategorije</text>
+<rect x="16" y="447" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="476" font-size="14" font-weight="700" fill="#262b30">Luke</text>
+<text x="0" y="524" font-size="13" font-weight="700" fill="#262b30">/administracija/tvrtke</text>
+<text x="0" y="544" font-size="13" font-weight="400" fill="#4c545c">NF-03 · navigacija prema ulozi</text>
+</g>
+</g>
+</svg>

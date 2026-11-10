@@ -251,6 +251,8 @@ Svi funkcijski zahtjevi s korisničkim sučeljem pokriveni su barem jednim ekran
 
 Na mobitelu se poveznice iz zaglavlja i bočni izbornik sklapaju u izbornik koji se otvara gumbom (hamburger).
 
+[Mobilni wireframei (#57)](dizajn/57-Wireframe-mobilnog-prikaza.md) prikazuju izbornike po ulogama i ključne tokove na širini od 375 px te opisuju prijelomne točke, tablice i obrasce.
+
 ### Dijagram navigacije
 
 ```mermaid
