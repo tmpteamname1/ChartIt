@@ -71,6 +71,7 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | OpenAI Codex | Model nije zabilježen | Luka | Priprema tekstualnih skica i kratkih pravila zajedničkih stanja sučelja za #58 |
 | OpenAI Codex | GPT-6.1 Sol | Nikolić | Izrada i dorada skica rezervacija i prijave za #54 |
 | OpenAI Codex | GPT-6.1 Sol | Nikolić | Izrada i dorada mobilnih skica i pravila prilagodbe za #57 |
+| OpenAI Codex | GPT-6.1 Sol | Nikolić | Usklađivanje i provjera pristupa djelatnika rezervacijama tvrtke za #91 |
 
 ### Opseg doprinosa umjetne inteligencije
 
@@ -81,6 +82,7 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | Zajednička stanja sučelja (#58), poveznice iz kazala i poglavlja 4.8 | Izrada skica i pravila prikaza | Jedna Markdown datoteka s tekstualnim skicama, kratkim pravilima i referencama na ekrane | Korisnik je zadao issue #58 i zatražio tekstualne skice u Markdownu; sadržaj je uspoređen s projektnom dokumentacijom. Timski pregled slijedi u PR-u. | [Skice i pravila](dizajn/58-Zajednicka-stanja-sucelja.md) |
 | Skice rezervacija i prijave (#54) i poveznice u poglavlju 4.8 | Izrada i dorada skica | Šest skica u SVG-u i uređivom formatu Excalidraw te poveznice iz mape stranica | Korisnik je zadao opseg #54, odabrao jednostavan stil prema priloženim primjerima i usmjerio dorade rasporeda i odabira usluga. Provjereni su prikaz svih šest skica, podudarnost SVG-a i Excalidrawa te poveznice u dokumentaciji. | [SVG](dizajn/54-Wireframe-korisnickog-dijela.svg), [Excalidraw](dizajn/54-Wireframe-korisnickog-dijela.excalidraw), [mapa stranica](4-Arhitektura-i-oblikovanje.md#48-mapa-stranica-i-ruta-klijentske-aplikacije) |
 | Mobilne skice i pravila prilagodbe (#57) | Izrada i dorada skica i pravila prikaza | 25 skica u Excalidrawu sa SVG izvozom te pravila prilagodbe u poglavlju 4.8 | Korisnik je zadao opseg #57 i zatražio doradu prema pregledu PR-a #99. Skice su uspoređene sa zahtjevima, modelom rezervacije i povezanim skicama. | [SVG](dizajn/57-Wireframe-mobilnog-prikaza.svg), [Excalidraw](dizajn/57-Wireframe-mobilnog-prikaza.excalidraw), [pravila prilagodbe](4-Arhitektura-i-oblikovanje.md#mobilni-prikaz-57) |
+| Pristup djelatnika rezervacijama tvrtke (#91) | Izmjena i provjera klijentskog koda | Usklađeni su React ruta i stavka izbornika za djelatnika i vlasnika. | Korisnik je zadao opseg #91 i zatražio ponovnu provjeru. Alat je provjerio uloge u Chromeu te pokrenuo lint i build. | [Router](../frontend/src/router.tsx), [izbornik](../frontend/src/layouts/navigation.ts) |
 
 Stranice i artefakti koji nisu navedeni iznad izrađeni su bez pomoći generativne umjetne inteligencije.
 
