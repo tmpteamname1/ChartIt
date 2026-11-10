@@ -175,6 +175,8 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 
 Za sve ekrane iz ove mape zajednički nacrti i pravila učitavanja, praznih stanja, grešaka, obavijesti i potvrdnih dijaloga definirani su u [katalogu zajedničkih stanja sučelja (#58)](dizajn/58-Zajednicka-stanja-sucelja.md). [Tablica primjene po ekranima](dizajn/58-Zajednicka-stanja-sucelja.md#primjena-po-ekranima) povezuje rute s oznakama uzoraka koje se koriste u wireframeima #53–#57.
 
+[Skice rezervacija i prijave (#54)](dizajn/54-Wireframe-korisnickog-dijela.svg) prate korisnički tok od odabira termina do pregleda i otkazivanja rezervacije. Dostupan je i [izvor za uređivanje u Excalidrawu](dizajn/54-Wireframe-korisnickog-dijela.excalidraw).
+
 **Dogovor o URL-ovima:** rute klijentske aplikacije pišu se na hrvatskom, malim slovima, bez dijakritičkih znakova i s crticom između riječi (npr. `/moje-rezervacije`). Prefiksi `/api`, `/admin` i `/static` pripadaju Djangu, pa se administracija platforme u klijentu nalazi pod `/administracija`. Sve ostale putanje Django vraća kao React aplikaciju, koja ih sama usmjerava.
 
 Uloge odgovaraju polju `role` korisnika (KORISNIK, DJELATNIK, VLASNIK, ADMINISTRATOR); posjetitelj je neprijavljeni korisnik.
@@ -186,15 +188,15 @@ Uloge odgovaraju polju `role` korisnika (KORISNIK, DJELATNIK, VLASNIK, ADMINISTR
 | Početna i pretraga | `/` | svi | UC-01 | F-01, F-23, F-29 | Filtri (termin, luka polaska, kategorija, broj osoba, tvrtka), kartice rezultata, straničenje, poruka kada nema rezultata. |
 | Detalji plovila | `/plovila/:id` | svi | UC-11 | F-15, F-16, F-20 | Galerija, karakteristike i oprema, tvrtka s kontaktom, dnevna cijena, kalendar slobodnih termina, karta matične luke, prognoza, dodatne usluge, procjena cijene, gumb „Pošalji zahtjev”. |
 | Podaci o tvrtki | `/tvrtke/:id` | svi | UC-01 | F-29 | Osnovni podaci i kontakt tvrtke te popis njezinih plovila. |
-| Prijava | `/prijava` | neprijavljeni | UC-10 | F-17, F-18 | Gumb za prijavu preko OAuth pružatelja, poruka o neuspjeloj prijavi; u razvoju i prijava testnih korisnika (ENABLE_TEST_LOGIN). |
+| Prijava | `/prijava` | neprijavljeni | UC-10 | F-18 | Gumb za prijavu preko OAuth pružatelja, poruka o neuspjeloj prijavi; u razvoju i prijava testnih korisnika (ENABLE_TEST_LOGIN). |
 
 ### Korisnički dio
 
 | Ekran | Ruta | Pristup | UC | F | Sadržaj |
 | --- | --- | --- | --- | --- | --- |
 | Zahtjev za rezervaciju | `/plovila/:id/rezervacija` | KORISNIK | UC-02 | F-02, F-03, F-04 | Odabir razdoblja i dodatnih usluga, sažetak s iznosom poslužitelja, slanje. Potvrda poslanog zahtjeva i greška preklapanja prikazuju se kao stanja ovog ekrana. |
-| Moje rezervacije | `/moje-rezervacije` | KORISNIK | UC-03 | F-04, F-05 | Popis rezervacija sa statusom, terminom i iznosom; filtriranje prema statusu; straničenje. |
-| Detalji rezervacije | `/moje-rezervacije/:id` | KORISNIK | UC-03 | F-05, F-19, F-21 | Svi podaci, pohranjeni iznos, odabrane usluge, kontakt tvrtke, otkazivanje s potvrdnim dijalogom. |
+| Moje rezervacije | `/moje-rezervacije` | KORISNIK | UC-03 | F-05, F-06 | Popis rezervacija sa statusom, terminom i iznosom; filtriranje prema statusu; straničenje. |
+| Detalji rezervacije | `/moje-rezervacije/:id` | KORISNIK | UC-03 | F-05, F-06, F-12 | Svi podaci, pohranjeni iznos, odabrane usluge, kontakt tvrtke, otkazivanje s potvrdnim dijalogom. |
 
 ### Panel tvrtke
 
