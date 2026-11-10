@@ -228,7 +228,7 @@ Ruta `/tvrtka` preusmjerava na `/tvrtka/zahtjevi`.
 
 Ruta `/administracija` preusmjerava na `/administracija/tvrtke`.
 
-[Skice administracije (#56)](dizajn/56-Wireframe-administracije.svg) prikazuju popis tvrtki, obrazac tvrtke s duplikatom OIB-a, dodjelu vlasnika, deaktivaciju tvrtke, korisnike i uloge te šifrarnike kategorija i luka. Dostupan je i [izvor za uređivanje u Excalidrawu](dizajn/56-Wireframe-administracije.excalidraw). Oznake F u tablici i na skicama slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi).
+[Skice administracije (#56)](dizajn/56-Wireframe-administracije.svg) prikazuju popis tvrtki, obrazac tvrtke s duplikatom OIB-a, dodjelu vlasnika, deaktivaciju i ponovnu aktivaciju tvrtke, korisnike i uloge te šifrarnike kategorija i luka s potvrdom deaktivacije. Dostupan je i [izvor za uređivanje u Excalidrawu](dizajn/56-Wireframe-administracije.excalidraw). Oznake F u tablici administracije i na skicama #56 slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi).
 
 ### Sustavne stranice
 
@@ -294,11 +294,9 @@ flowchart LR
 ### Otvorena pitanja za pregled s timom
 
 1. Smiju li djelatnik, vlasnik i administrator rezervirati plovilo kao korisnici? Prijedlog: ne, korisnički dio dostupan je samo ulozi KORISNIK.
-2. Tablica aktera u poglavlju 2 navodi F-31, koji nije definiran među funkcijskim zahtjevima.
-3. Glavni tokovi UC-04, UC-05, UC-08 i UC-09 navode administratora, a primarni akter je vlasnik; tekst treba uskladiti.
-4. F-10 (administrator upravlja djelatnicima) i F-27 (vlasnik upravlja djelatnicima) se preklapaju. Prijedlog: administrator mijenja uloge i deaktivira račune, a djelatnike tvrtke dodaje vlasnik.
-5. Treba li djelatniku zaseban pregled flote (F-12 „pregled osnovnih podataka o plovilu”) ili su dovoljni podaci o plovilu u detaljima rezervacije?
-6. Je li zahtjev za rezervaciju zasebna stranica ili dijalog na detaljima plovila (#54)? Prijedlog: zasebna ruta, kako bi korisnik nakon prijave mogao biti vraćen izravno na nju.
+2. F-22 (administrator upravlja korisničkim računima i ulogama) i F-21 (vlasnik upravlja djelatnicima) se preklapaju. Prijedlog: administrator mijenja uloge i deaktivira račune, a djelatnike tvrtke dodaje vlasnik.
+3. Treba li djelatniku zaseban pregled flote (F-13 „pregled osnovnih podataka o plovilu”) ili su dovoljni podaci o plovilu u detaljima rezervacije?
+4. Je li zahtjev za rezervaciju zasebna stranica ili dijalog na detaljima plovila (#54)? Prijedlog: zasebna ruta, kako bi korisnik nakon prijave mogao biti vraćen izravno na nju.
 
 ## 4.9 Konvencije REST API-ja
 
