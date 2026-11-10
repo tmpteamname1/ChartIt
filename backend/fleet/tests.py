@@ -13,16 +13,19 @@ class CategoryTests(TestCase):
 
     def test_duplicate_name_rejected(self):
         Category.objects.create(name='Jedrilica')
-        with (
-            self.assertRaises(IntegrityError),
-            transaction.atomic(),
-        ):  # atomic - kod greške, promjene u bazi se ponište tako da se test nastavi normalno
+        # atomic - kod greške, promjene u bazi se ponište tako da se test nastavi normalno
+        with self.assertRaises(IntegrityError), transaction.atomic():
             Category.objects.create(name='Jedrilica')
 
     def test_duplicate_name_rejected_case_insensitive(self):
         Category.objects.create(name='Jedrilica')
         with self.assertRaises(IntegrityError), transaction.atomic():
             Category.objects.create(name='jedrilica')
+
+    def test_duplicate_name_with_spaces_rejected(self):
+        Category.objects.create(name='Jedrilica')
+        with self.assertRaises(IntegrityError), transaction.atomic():
+            Category.objects.create(name=' Jedrilica ')
 
     def test_ordering_by_name(self):
         Category.objects.create(name='Katamaran')
@@ -54,6 +57,21 @@ class PortTests(TestCase):
         with self.assertRaises(ValidationError):
             self.make_port(lon='-180.5').full_clean()
 
+    def test_latitude_out_of_range_rejected_by_database(self):
+        # baza mora odbiti krive koordinate i bez full_clean()
+        with self.assertRaises(IntegrityError), transaction.atomic():
+            self.make_port(lat='123').save()
+
+    def test_longitude_out_of_range_rejected_by_database(self):
+        with self.assertRaises(IntegrityError), transaction.atomic():
+            self.make_port(lon='150.5').save()
+            self.make_port(name='Zadar', lon='500').save()
+
+    def test_duplicate_name_rejected(self):
+        self.make_port().save()
+        with self.assertRaises(IntegrityError), transaction.atomic():
+            self.make_port().save()
+
     def test_duplicate_name_rejected_case_insensitive(self):
         self.make_port().save()
         with self.assertRaises(IntegrityError), transaction.atomic():
@@ -63,3 +81,4 @@ class PortTests(TestCase):
         self.make_port().save()
         port = Port.objects.get(name='Split')
         self.assertEqual(port.latitude, Decimal('43.508133'))
+        self.assertEqual(port.longitude, Decimal('16.440193'))
