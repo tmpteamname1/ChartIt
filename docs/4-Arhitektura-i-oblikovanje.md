@@ -22,7 +22,7 @@
 | Komponenta | Odgovornost | Razlog za ovu granicu |
 | --- | --- | --- |
 | Web klijent | Krovna komponenta za interakciju s korisnikom aplikacije bez poslovne logike F-17, NF-03 | Korisnička interakcija odvojena je od poslovnih pravila najma i trajne pohrane. |
-| Panel tvrtke (djelatnik, vlasnik)| Služi pregledu flote, rezervacija, preuzimanja, djelatnika i statistike. F-18, NF-02| Poslovanje pojedine tvrtke odvojeno je od korisničkog i administratorskog sučelja platforme. |
+| Panel tvrtke (djelatnik, vlasnik)| Služi pregledu flote, rezervacija, preuzimanja, djelatnika i statistike. F-08, F-11, F-13, F-14, F-15, F-21, NF-02| Poslovanje pojedine tvrtke odvojeno je od korisničkog i administratorskog sučelja platforme. |
 | Korisnički dio (rezervacije korisnika) | Pregled plovila, zahtjevanje, otkazivanje i pregled rezervacija. | Radnje korisnika nad vlastitim rezervacijama odvojene su od upravljanja ponudom tvrtke. |
 | Javni dio (pretraga i detalji plovila)| Pregled plovila, detalji i pregled slobodnih tremina | Sadržaj dostupan bez prijave odvojen je od funkcionalnosti koje zahtijevaju autentifikaciju. |
 | Administracija platforme | Pregled i editiranje tvrtki, vlasnika, kategorija i luka | Upravljanje platformom kao cjelinom odvojeno je od poslovanja pojedinih tvrtki. |
@@ -130,7 +130,7 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 | --- | --- | --- | --- |
 | Sigurnost | Autentifikacija putem vanjskog OAuth pružatelja | Svi zahtjevi osim javne pretrage i detalja plovila zahtijevaju prijavljenog korisnika; identitet se utvrđuje na poslužitelju iz tokena ili sesije, nikad iz podataka koje šalje klijent. | Aplikacija accounts; zadana klasa autentifikacije u DRF postavkama; javni pogledi izričito označeni kao dostupni bez prijave. |
 | Sigurnost | Autorizacija prema ulogama | Ovlasti korisnika, djelatnika, vlasnika i administratora provjeravaju se na poslužiteljskoj strani prije svake radnje; skrivanje gumba u korisničkom sučelju nije dovoljna zaštita. | DRF klase dopuštenja (npr. IsCompanyEmployee, IsCompanyOwner, IsPlatformAdmin) na svim pogledima; provjere u ReservationService. |
-| Sigurnost | Izolacija podataka tvrtki | Podaci tvrtke uvijek se filtriraju prema tvrtki prijavljenog korisnika, a ne prema identifikatoru iz URL-a ili tijela zahtjeva; zahtjev za objekt druge tvrtke vraća 404 Not Found | Zajednički bazni razred pogleda koji ograničava get_queryset() na request.user.company; svi pogledi panela tvrtke; automatizirani testovi s identifikatorima druge tvrtke (NF-02). | 
+| Sigurnost | Izolacija podataka tvrtki | Podaci tvrtke uvijek se filtriraju prema tvrtki prijavljenog korisnika, a ne prema identifikatoru iz URL-a ili tijela zahtjeva; zahtjev za objekt druge tvrtke vraća 404 Not Found | Zajednički bazni razred pogleda koji ograničava get_queryset() na request.user.company; svi pogledi panela tvrtke; automatizirani testovi s identifikatorima druge tvrtke (NF-02). |
 | Sigurnost	| Zaštita komunikacije i tajni | Sva komunikacija ide putem HTTPS-a, veza s bazom je zaštićena, a ključevi, lozinke i tajne OAuth-a čitaju se iz varijabli okruženja i ne pohranjuju se u repozitorij. | Django postavke (SECURE_SSL_REDIRECT, DATABASES), konfiguracija postavljanja, datoteka .env izvan repozitorija (NF-04).
 | Validacija podataka | Dvorazinska validacija | Klijent provjerava unos radi boljeg korisničkog iskustva, ali je provjera na poslužitelju jedina mjerodavna: serijalizatori provjeravaju oblik podataka, a domenski razredi poslovna pravila (kapacitet, datumi, pripadnost usluga tvrtki). | React obrasci; DRF serijalizatori; Reservation.request() i RentalPeriod.
 | Integritet podataka | Transakcije i ograničenja u bazi | Radnje koje mijenjaju više zapisa izvode se u jednoj transakciji; pravila koja se moraju poštovati i pri istodobnom radu provode se ograničenjima u bazi. | transaction.atomic u metodama ReservationService; ograničenje isključivanja za rezervacije, jedinstveni vlasnik po tvrtki (ADR-03).
@@ -245,7 +245,7 @@ Ruta `/administracija` preusmjerava na `/administracija/tvrtke`.
 
 ### Pokrivenost funkcijskih zahtjeva
 
-Svi funkcijski zahtjevi (F-01 do F-23) navedeni su uz barem jedan ekran u tablicama iznad. Bez vlastitog ekrana su F-07 (e-pošta; na ekranima se prikazuje samo poruka da će obavijest stići) i F-04 (sprječavanje preklapanja i oslobađanje termina posljedica su slanja zahtjeva te odbijanja i otkazivanja na ekranima zahtjeva i rezervacija). Ograničenje pristupa prema ulozi (NF-02) ostvaruje se izbornikom i zaštitom ruta.
+Svi funkcijski zahtjevi (F-01 do F-23) navedeni su uz barem jedan ekran u tablicama iznad. Bez vlastitog ekrana su F-07 (e-pošta; na ekranima se prikazuje samo poruka da će obavijest stići) i F-04, koji se ostvaruje na više ekrana. Preklapanje s postojećom rezervacijom i s razdobljem nedostupnosti plovila provjerava se pri slanju zahtjeva korisnika i pri stvaranju rezervacije u panelu tvrtke, a termin se oslobađa odbijanjem zahtjeva ili otkazivanjem rezervacije. Ograničenje pristupa prema ulozi (NF-02) ostvaruje se izbornikom i zaštitom ruta.
 
 ### Glavni izbornik prema ulozi
 
