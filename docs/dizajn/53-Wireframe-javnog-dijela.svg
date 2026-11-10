@@ -328,7 +328,7 @@
   <rect x="343" y="2388" width="273" height="1" fill="#53575a" stroke="none" />
   <text x="343" y="2400" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Procjena ukupno</text>
   <text x="571" y="2400" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="18" font-weight="bold">750 €</text>
-  <text x="343" y="2430" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Iznos je procjena. Konačni iznos računa</text>
+  <text x="343" y="2430" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Iznos je procjena. Konačni iznos izračunava</text>
   <text x="343" y="2445" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">poslužitelj pri slanju zahtjeva (ADR-04).</text>
   <rect x="343" y="2473" width="273" height="34" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
   <text x="420.9" y="2483" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="17" font-weight="bold">Pošalji zahtjev</text>
