@@ -175,6 +175,8 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 
 Za sve ekrane iz ove mape zajednički nacrti i pravila učitavanja, praznih stanja, grešaka, obavijesti i potvrdnih dijaloga definirani su u [katalogu zajedničkih stanja sučelja (#58)](dizajn/58-Zajednicka-stanja-sucelja.md). [Tablica primjene po ekranima](dizajn/58-Zajednicka-stanja-sucelja.md#primjena-po-ekranima) povezuje rute s oznakama uzoraka koje se koriste u wireframeima #53–#57.
 
+[Skice rezervacija i prijave (#54)](dizajn/54-Wireframe-korisnickog-dijela.svg) prate korisnički tok od odabira termina do pregleda i otkazivanja rezervacije. Dostupan je i [izvor za uređivanje u Excalidrawu](dizajn/54-Wireframe-korisnickog-dijela.excalidraw).
+
 **Dogovor o URL-ovima:** rute klijentske aplikacije pišu se na hrvatskom, malim slovima, bez dijakritičkih znakova i s crticom između riječi (npr. `/moje-rezervacije`). Prefiksi `/api`, `/admin` i `/static` pripadaju Djangu, pa se administracija platforme u klijentu nalazi pod `/administracija`. Sve ostale putanje Django vraća kao React aplikaciju, koja ih sama usmjerava.
 
 Uloge odgovaraju polju `role` korisnika (KORISNIK, DJELATNIK, VLASNIK, ADMINISTRATOR); posjetitelj je neprijavljeni korisnik.
@@ -186,34 +188,40 @@ Uloge odgovaraju polju `role` korisnika (KORISNIK, DJELATNIK, VLASNIK, ADMINISTR
 | Početna i pretraga | `/` | svi | UC-01 | F-01, F-23, F-29 | Filtri (termin, luka polaska, kategorija, broj osoba, tvrtka), kartice rezultata, straničenje, poruka kada nema rezultata. |
 | Detalji plovila | `/plovila/:id` | svi | UC-11 | F-15, F-16, F-20 | Galerija, karakteristike i oprema, tvrtka s kontaktom, dnevna cijena, kalendar slobodnih termina, karta matične luke, prognoza, dodatne usluge, procjena cijene, gumb „Pošalji zahtjev”. |
 | Podaci o tvrtki | `/tvrtke/:id` | svi | UC-01 | F-29 | Osnovni podaci i kontakt tvrtke te popis njezinih plovila. |
-| Prijava | `/prijava` | neprijavljeni | UC-10 | F-17, F-18 | Gumb za prijavu preko OAuth pružatelja, poruka o neuspjeloj prijavi; u razvoju i prijava testnih korisnika (ENABLE_TEST_LOGIN). |
+| Prijava | `/prijava` | neprijavljeni | UC-10 | F-18 | Gumb za prijavu preko OAuth pružatelja, poruka o neuspjeloj prijavi; u razvoju i prijava testnih korisnika (ENABLE_TEST_LOGIN). |
+
+[Skice javnog dijela (#53)](dizajn/53-Wireframe-javnog-dijela.svg) prikazuju pretragu s filtrima i rezultatima, stanje bez rezultata, detalje plovila, stanja kalendara, prognoze i karte te podatke o tvrtki. Dostupan je i [izvor za uređivanje u Excalidrawu](dizajn/53-Wireframe-javnog-dijela.excalidraw). Oznake zahtjeva na skicama slijede trenutačnu numeraciju iz [poglavlja 2](2-Analiza-zahtjeva.md): pretraga F-01, detalji plovila F-02, prognoza F-16, karta F-17.
 
 ### Korisnički dio
 
 | Ekran | Ruta | Pristup | UC | F | Sadržaj |
 | --- | --- | --- | --- | --- | --- |
-| Zahtjev za rezervaciju | `/plovila/:id/rezervacija` | KORISNIK | UC-02 | F-02, F-03, F-04 | Odabir razdoblja i dodatnih usluga, sažetak s iznosom poslužitelja, slanje. Potvrda poslanog zahtjeva i greška preklapanja prikazuju se kao stanja ovog ekrana. |
-| Moje rezervacije | `/moje-rezervacije` | KORISNIK | UC-03 | F-04, F-05 | Popis rezervacija sa statusom, terminom i iznosom; filtriranje prema statusu; straničenje. |
-| Detalji rezervacije | `/moje-rezervacije/:id` | KORISNIK | UC-03 | F-05, F-19, F-21 | Svi podaci, pohranjeni iznos, odabrane usluge, kontakt tvrtke, otkazivanje s potvrdnim dijalogom. |
+| Zahtjev za rezervaciju | `/plovila/:id/rezervacija` | KORISNIK | UC-02 | F-02, F-03, F-04 | Odabir razdoblja i dodatnih usluga, prikaz luke preuzimanja (matične luke plovila), unos broja putnika, sažetak s procjenom i slanje. Potvrda prikazuje pohranjeni iznos koji je izračunao poslužitelj. Potvrda i greška preklapanja prikazuju se kao stanja ovog ekrana. |
+| Moje rezervacije | `/moje-rezervacije` | KORISNIK | UC-03 | F-05, F-06 | Popis rezervacija sa statusom, terminom i iznosom; filtriranje prema statusu; straničenje. |
+| Detalji rezervacije | `/moje-rezervacije/:id` | KORISNIK | UC-03 | F-05, F-06, F-12 | Svi podaci, pohranjeni iznos, odabrane usluge, kontakt tvrtke, otkazivanje s potvrdnim dijalogom. |
 
 ### Panel tvrtke
 
+Skice panela za [#55](https://github.com/tmpteamname1/ChartIt/issues/55) dostupne su kao [SVG pregled](dizajn/55-Wireframe-panela-tvrtke.svg) i [uređivi Excalidraw](dizajn/55-Wireframe-panela-tvrtke.excalidraw).
+
 | Ekran | Ruta | Pristup | UC | F | Sadržaj |
 | --- | --- | --- | --- | --- | --- |
-| Zahtjevi za rezervaciju | `/tvrtka/zahtjevi` | DJELATNIK, VLASNIK | UC-12 | F-03, F-11 | Zahtjevi poredani prema datumu početka najma, potvrda i odbijanje. Početni ekran panela. |
-| Raspored preuzimanja i povrata | `/tvrtka/raspored` | DJELATNIK, VLASNIK | UC-06 | F-12 | Preuzimanja i povrati po danima ili tjednu, odabir razdoblja. |
-| Rezervacije tvrtke | `/tvrtka/rezervacije` | VLASNIK | UC-05 | F-04, F-08 | Sve rezervacije tvrtke s filtrima prema statusu, plovilu i razdoblju. |
-| Detalji rezervacije (panel) | `/tvrtka/rezervacije/:id` | DJELATNIK, VLASNIK | UC-05, UC-13 | F-08, F-12, F-22 | Podaci o plovilu i korisniku, evidentiranje preuzimanja i povrata, završetak najma. |
-| Flota | `/tvrtka/flota` | VLASNIK | UC-04 | F-07 | Popis plovila tvrtke, deaktivacija. |
-| Novo plovilo | `/tvrtka/flota/novo` | VLASNIK | UC-04 | F-07 | Obrazac plovila: osnovni podaci, kategorija, luka, kapacitet, oprema, fotografije, cijena. |
-| Izmjena plovila | `/tvrtka/flota/:id` | VLASNIK | UC-04 | F-07 | Isti obrazac s postojećim podacima. |
-| Nedostupnost plovila | `/tvrtka/flota/:id/nedostupnost` | VLASNIK | UC-09 | F-09 | Razdoblja nedostupnosti, upozorenje o preklapanju s rezervacijom. |
-| Dodatne usluge | `/tvrtka/usluge` | VLASNIK | UC-04 | F-07 | Katalog usluga tvrtke s cijenama (vrijede za sva plovila tvrtke). |
-| Djelatnici | `/tvrtka/djelatnici` | VLASNIK | UC-08 | F-27 | Popis, dodavanje, izmjena i deaktivacija djelatnika. |
-| Podaci o tvrtki | `/tvrtka/podaci` | VLASNIK | – | F-28 | Obrazac s podacima tvrtke. |
-| Statistika | `/tvrtka/statistika` | VLASNIK | UC-07 | F-13, F-14 | Odabir razdoblja, zauzetost, rezervacije, prihod, popularnost usluga i kategorija, izvoz u CSV. |
+| Zahtjevi za rezervaciju | `/tvrtka/zahtjevi` | DJELATNIK, VLASNIK | UC-12 | F-04, F-05, F-07, F-11 | Zahtjevi poredani prema datumu početka najma, potvrda i odbijanje. Početni ekran panela. |
+| Raspored preuzimanja i povrata | `/tvrtka/raspored` | DJELATNIK, VLASNIK | UC-06 | F-13 | Preuzimanja i povrati po danima ili tjednu, odabir razdoblja. |
+| Rezervacije tvrtke | `/tvrtka/rezervacije` | DJELATNIK, VLASNIK | UC-05 | F-04, F-05, F-07, F-11 | Filtri prema statusu, plovilu i razdoblju. Dodavanje, izmjena i otkazivanje otvaraju dijaloge na popisu. Obrazac traži korisnika po točnoj adresi e-pošte i prikazuje dodatne usluge te ukupan iznos koji računa poslužitelj. Za spremanje rezervacije mora biti odabran registrirani korisnik. |
+| Detalji rezervacije (panel) | `/tvrtka/rezervacije/:id` | DJELATNIK, VLASNIK | UC-05, UC-13 | F-05, F-11, F-13, F-14 | Podaci o plovilu i korisniku, odabrane usluge i pohranjeni iznos, evidentiranje preuzimanja i povrata te završetak najma. |
+| Flota | `/tvrtka/flota` | VLASNIK | UC-04 | F-08, F-09 | Popis plovila tvrtke, deaktivacija. |
+| Novo plovilo | `/tvrtka/flota/novo` | VLASNIK | UC-04 | F-08, F-09 | Obrazac plovila s osnovnim podacima, kategorijom, lukom, kapacitetom, opremom, fotografijama i cijenom. |
+| Izmjena plovila | `/tvrtka/flota/:id` | VLASNIK | UC-04 | F-08, F-09 | Isti obrazac s postojećim podacima. |
+| Nedostupnost plovila | `/tvrtka/flota/:id/nedostupnost` | VLASNIK | UC-09 | F-04, F-10 | Razdoblja nedostupnosti, upozorenje o preklapanju s rezervacijom. |
+| Dodatne usluge | `/tvrtka/usluge` | VLASNIK | UC-04 | F-09 | Katalog usluga tvrtke s cijenama (vrijede za sva plovila tvrtke). |
+| Djelatnici | `/tvrtka/djelatnici` | VLASNIK | UC-08 | F-21 | Popis djelatnika s dijalozima za dodavanje, izmjenu i deaktivaciju. |
+| Podaci o tvrtki | `/tvrtka/podaci` | VLASNIK | – | F-20 | Obrazac s podacima tvrtke. OIB je u ovom obrascu samo za čitanje. |
+| Statistika | `/tvrtka/statistika` | VLASNIK | UC-07 | F-15 | Odabir razdoblja, zauzetost, rezervacije, prihod, popularnost usluga i kategorija, izvoz u CSV. |
 
 Ruta `/tvrtka` preusmjerava na `/tvrtka/zahtjevi`.
+
+Oznake F u tablici slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi). Prema F-11 i [UC-05](3-Obrasci-uporabe.md#uc-05-upravljanje-rezervacijama), djelatnik i vlasnik upravljaju rezervacijama vlastite tvrtke. Usklađivanje React routera i izbornika ide u zaseban zadatak.
 
 ### Administracija platforme
 
@@ -247,7 +255,7 @@ Svi funkcijski zahtjevi s korisničkim sučeljem pokriveni su barem jednim ekran
 | --- | --- | --- |
 | Posjetitelj | Logo (početna), Pretraga, Prijava | – |
 | KORISNIK | Logo, Pretraga, Moje rezervacije, izbornik računa (Odjava) | – |
-| DJELATNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored |
+| DJELATNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored, Rezervacije |
 | VLASNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored, Rezervacije, Flota, Dodatne usluge, Djelatnici, Podaci o tvrtki, Statistika |
 | ADMINISTRATOR | Logo, Pretraga, Administracija, izbornik računa | Tvrtke, Korisnici, Kategorije, Luke |
 
@@ -288,8 +296,59 @@ flowchart LR
     end
     D -- "Pošalji zahtjev (prijavljen)" --> Z
     D -- "Pošalji zahtjev (neprijavljen)" --> L
-    L -- "nakon prijave" --> D
+    L -- "nakon prijave za nastavak zahtjeva" --> Z
 ```
+
+### Mobilni prikaz (#57)
+
+Skice razrađuju mobilni prikaz prema [NF-03](2-Analiza-zahtjeva.md#22-nefunkcijski-zahtjevi). Širina je 375 px, uz varijantu odabira termina na 320 px. Oznake ispod skica povezuju ih s rutama, ulogama i zahtjevima.
+
+- [Pregled svih skica (SVG)](dizajn/57-Wireframe-mobilnog-prikaza.svg)
+- [Uređivi izvor (Excalidraw)](dizajn/57-Wireframe-mobilnog-prikaza.excalidraw)
+
+Nakon izmjene izvorne datoteke u Excalidrawu izvezite cijelu scenu preko **Export image → SVG** s uključenom pozadinom i zamijenite SVG pregled.
+
+**Pregled skica**
+
+| Skice | Što prikazuju |
+| --- | --- |
+| 01, 02, 01b | Rezultati, otvoreni filtri i pretraga bez rezultata. |
+| 03a–03c | Jedna stranica detalja plovila pri pomicanju. Ispod galerije slijede kalendar, karta, prognoza, dodatne usluge i procjena iznosa. |
+| 03b-320 | Okomiti popis dostupnosti s odabirom datuma preuzimanja i povrata na zaslonu od 320 px. |
+| 04a–04d | Prijava za nastavak, zahtjev s lukom i brojem putnika, zauzeti termin uz očuvane usluge i potvrda slanja. |
+| 05, 06, 06b, 06c | Moje rezervacije, detalji s kontaktom tvrtke, potvrda otkazivanja i prikaz nakon preuzimanja. |
+| 07, 07b, 08, 09, 09b | Tjedni raspored, prazno razdoblje, evidentiranje preuzimanja i povrata te završeni najam. |
+| N1–N5 | Otvoreni izbornik za posjetitelja, korisnika, djelatnika, vlasnika i administratora. |
+
+**Prijelomne točke**
+
+Prijelomi slijede Mantineove točke `sm` i `md`. Širine u pikselima vrijede pri zadanoj veličini fonta preglednika od 16 px.
+
+| Širina prikaza | Raspored |
+| --- | --- |
+| Mobitel, ispod `48em` (< 768 px) | Jedan stupac. Glavna navigacija otvara se gumbom u zaglavlju. Filtri pretrage otvaraju zaseban prikaz preko rezultata. |
+| Tablet, od `48em` do ispod `62em` (768–991 px) | Vraćaju se poveznice u zaglavlju i bočni izbornik u panelima. Kartice i kratka polja mogu u dva stupca gdje ima dovoljno prostora. |
+| Računalo, od `62em` (≥ 992 px) | Koristi se širi raspored prema skicama javnog dijela, korisničkog dijela i panela. |
+
+**Pravila za manje zaslone**
+
+- **Tablice.** Popisi s radnjama po zapisu, primjerice zahtjevi, rezervacije, flota i tvrtke, na mobitelu prelaze u kartice. Na kartici ostaju naziv ili identifikator, ključni podaci, status i radnja za taj zapis. Guste tablice za usporedbu, primjerice u statistici, mogu se pomicati vodoravno unutar vlastitog okvira uz vidljiva zaglavlja. Stranica se pomiče okomito.
+- **Obrasci i dijalozi.** Polja, oznake i poruke greške slažu se u jedan stupac. Gumbi se nižu ispod sadržaja, s dodirnim područjem od najmanje 44 × 44 px. Pri prikazu tipkovnice obrazac se može pomicati do aktivnog polja i njegove greške. U potvrdnom dijalogu fokus prvo ide na odustajanje, a pri zatvaranju bez radnje vraća se na gumb koji ga je otvorio. Pri slanju se radnja privremeno onemogući prema uzorku U-03.
+- **Kalendar.** Pri sadržajnoj širini od najmanje 308 px koristi se mjesečna mreža sa sedam dodirnih područja od najmanje 44 × 44 px u retku. Ispod 308 px dostupnost se prikazuje kao okomiti popis datuma s tekstualnom oznakom statusa i odvojenim poljima za datum preuzimanja i povrata. Na zaslonu od 320 px s rubovima od 16 px ostaje 288 px sadržajne širine, kao u skici 03b-320.
+- **Izbornik.** Gumb u zaglavlju otvara i zatvara izbornik. U popisu je označena trenutačna stranica, a odabir poveznice zatvara izbornik. Ako popis ne stane po visini, može se pomicati do zadnje stavke. Posjetitelj ima prijavu u zaglavlju, a prijavljeni korisnik ondje otvara izbornik računa za odjavu. Skica N3 slijedi tablice ruta i izbornika u ovom odjeljku. Djelatnik i vlasnik imaju pristup rezervacijama vlastite tvrtke prema F-11 i UC-05. Usklađivanje React rute i izbornika prati [#91](https://github.com/tmpteamname1/ChartIt/issues/91).
+
+**Ponašanje u skiciranim tokovima**
+
+- **Pretraga.** Filtri obuhvaćaju termin, luku polaska, kategoriju, broj putnika i tvrtku. Otvaraju se s trenutačnim vrijednostima. Primjena vraća na prvu stranicu rezultata, a zatvaranje odbacuje promjene u otvorenom prikazu. Povratak iz detalja plovila zadržava primijenjene filtre i stranicu rezultata.
+- **Detalji i zahtjev.** Prijedlog je da se pri nastavku iz detalja plovila odabrani datumi i identifikatori dodatnih usluga privremeno spreme u `sessionStorage` pod ključem koji uključuje ID plovila. Ako je potrebna OAuth prijava, ona se izvodi u istoj kartici, a kao povratna adresa (`next`) koristi se provjerena interna ruta `/plovila/:id/rezervacija`. Obrazac pri otvaranju preuzima odabir za to plovilo i potom briše privremeni zapis. Korisnik može urediti odabir prije slanja. Zahtjev sadrži luku preuzimanja (matičnu luku plovila) i broj putnika, od jednog do kapaciteta plovila. Iznos prije slanja je procjena, a potvrda prikazuje konačni iznos koji je poslužitelj spremio uz rezervaciju prema ADR-04. Kod preklapanja korisnik mijenja termin uz ostale sačuvane podatke. [Sekvencijski dijagram zahtjeva](#441-reprezentativni-uml-sekvencijski-dijagram)
+- **Moje rezervacije.** Svaki status napisan je na kartici. Za prazan popis primjenjuje se P-02, s odlaskom na pretragu ili prikazom svih statusa ako je aktivan filtar. Na detaljima se prikazuju pohranjeni iznos i kontakt tvrtke, uključujući deaktivirane tvrtke. Dijalog D-01 dostupan je dok je rezervacija zahtjev ili je potvrđena i plovilo još nije preuzeto. Skica 06c prikazuje potvrđenu rezervaciju nakon preuzimanja, kad otkazivanje više nije dostupno. [Dijagram stanja rezervacije](#442-reprezentativni-uml-dijagram-stanja)
+- **Rad u marini.** Raspored grupira događaje po danu i razlikuje preuzimanje od povrata tekstom. Nakon podataka o plovilu i korisniku slijede stanje i dostupna radnja. Evidentiranje ažurira stanje nakon potvrde poslužitelja. Ako odgovor ne stigne, najprije se osvježi stanje rezervacije. Evidentirani povrat prikazuje zabilježeno vrijeme i status „Završeni najam”.
+
+Karta označava matičnu luku i mjesto preuzimanja. Pri nedostupnosti karte ili prognoze poruka se prikazuje u pripadajućem bloku prema V-01 ili V-02. Kalendar i nastavak prema zahtjevu ostaju dostupni. [Katalog zajedničkih stanja (#58)](dizajn/58-Zajednicka-stanja-sucelja.md#primjena-po-ekranima)
+
+**Provjera pri implementaciji**
+
+Na 320 i 375 px provjeriti filtre, prijavu s povratkom na zahtjev i očuvanim odabirom te radnje preuzimanja i povrata. Na 320 px provjeriti odabir oba datuma uz okomiti popis kao u skici 03b-320, a na 375 px u mjesečnoj mreži kao u skici 03b. Na 767 i 768 px provjeriti zamjenu hamburgera poveznicama u zaglavlju. Na 991 i 992 px provjeriti raspored kartica i obrazaca uz otvoren bočni izbornik. Stranica na tim širinama ostaje unutar prikaza, uz vodoravno pomicanje samo u predviđenim tablicama.
 
 ### Otvorena pitanja za pregled s timom
 
