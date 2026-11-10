@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2080" height="12911" viewBox="0 0 2080 12911" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="2080" height="13091" viewBox="0 0 2080 13091" role="img" aria-labelledby="title desc">
 <title id="title">ChartIt · Wireframe panela tvrtke</title>
 <desc id="desc">Skice za issue 55. Glavni prikazi i alternativna stanja panela za djelatnika i vlasnika charter tvrtke.</desc>
-<rect width="2080" height="12911" fill="#e8eaec"/>
+<rect width="2080" height="13091" fill="#e8eaec"/>
 <g font-family="Arial, Helvetica, sans-serif">
 <text x="24" y="55" font-size="34" font-weight="700" fill="#353a40">ChartIt · Wireframe panela tvrtke</text>
 <text x="25" y="84" font-size="17" font-weight="400" fill="#555c64">Issue #55  ·  Glavni prikazi 01–12, zatim alternativna stanja po broju skice</text>
@@ -157,7 +157,7 @@
 <rect x="1" y="468" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="488" font-size="14" font-weight="700" fill="#353a40">02 / Glavni prikaz</text>
 <text x="880" y="488" font-size="13" font-weight="700" fill="#353a40">Djelatnik i vlasnik</text>
-<text x="14" y="510" font-size="13" font-weight="400" fill="#353a40">/tvrtka/raspored · UC-06 · F-13 · #55 navodi F-12</text>
+<text x="14" y="510" font-size="13" font-weight="400" fill="#353a40">/tvrtka/raspored · UC-06 · F-13</text>
 <text x="222" y="140" font-size="14" font-weight="700" fill="#353a40">Razdoblje</text>
 <rect x="222" y="146" width="310" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="232" y="168" font-size="14" font-weight="400" fill="#353a40">12.–18. 6. 2027.</text>
@@ -246,7 +246,7 @@
 <rect x="1" y="593" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="613" font-size="14" font-weight="700" fill="#353a40">03 / Glavni prikaz</text>
 <text x="880" y="613" font-size="13" font-weight="700" fill="#353a40">Djelatnik i vlasnik</text>
-<text x="14" y="635" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije/:id · UC-05, UC-13 · F-05, F-11, F-13, F-14 · #55 navodi F-22</text>
+<text x="14" y="635" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije/:id · UC-05, UC-13 · F-05, F-11, F-13, F-14</text>
 <text x="222" y="143" font-size="15" font-weight="700" fill="#353a40">‹ Povratak na raspored</text>
 <text x="441" y="143" font-size="15" font-weight="700" fill="#353a40">#R-0241</text>
 <rect x="222" y="161" width="366" height="142" fill="none" stroke="#a1a7ad"/>
@@ -324,7 +324,7 @@
 <rect x="1" y="642" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="662" font-size="14" font-weight="700" fill="#353a40">04 / Glavni prikaz</text>
 <text x="880" y="662" font-size="13" font-weight="700" fill="#353a40">Djelatnik i vlasnik</text>
-<text x="14" y="684" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije · UC-05 · F-04, F-05, F-07, F-11 · #55 navodi F-08</text>
+<text x="14" y="684" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije · UC-05 · F-04, F-05, F-07, F-11</text>
 <text x="222" y="140" font-size="14" font-weight="700" fill="#353a40">Status</text>
 <rect x="222" y="146" width="146" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="232" y="168" font-size="14" font-weight="400" fill="#353a40">Svi statusi</text>
@@ -504,7 +504,7 @@
 <rect x="1" y="424" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="444" font-size="14" font-weight="700" fill="#353a40">05 / Glavni prikaz</text>
 <text x="906" y="444" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="466" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota · UC-04 · F-08, F-09 · #55 navodi F-07</text>
+<text x="14" y="466" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota · UC-04 · F-08, F-09</text>
 <text x="222" y="152" font-size="17" font-weight="700" fill="#353a40">Plovila vaše tvrtke</text>
 <rect x="814" y="126" width="168" height="34" fill="#dce0e4" stroke="#353a40"/>
 <text x="852.5" y="149" font-size="14" font-weight="700" fill="#353a40">Dodaj plovilo</text>
@@ -644,7 +644,7 @@
 <rect x="1" y="880" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="900" font-size="14" font-weight="700" fill="#353a40">06 / Glavni prikaz</text>
 <text x="906" y="900" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="922" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota/novo · UC-04 · F-08, F-09 · #55 navodi F-07</text>
+<text x="14" y="922" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota/novo · UC-04 · F-08, F-09</text>
 <text x="222" y="140" font-size="14" font-weight="700" fill="#353a40">Naziv</text>
 <rect x="222" y="146" width="244" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="480" y="140" font-size="14" font-weight="700" fill="#353a40">Tip plovila</text>
@@ -791,7 +791,7 @@
 <rect x="1" y="880" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="900" font-size="14" font-weight="700" fill="#353a40">07 / Glavni prikaz</text>
 <text x="906" y="900" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="922" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota/:id · UC-04 · F-08, F-09 · #55 navodi F-07</text>
+<text x="14" y="922" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota/:id · UC-04 · F-08, F-09</text>
 <text x="222" y="140" font-size="14" font-weight="700" fill="#353a40">Naziv</text>
 <rect x="222" y="146" width="244" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="232" y="168" font-size="14" font-weight="400" fill="#353a40">Adria 38</text>
@@ -956,7 +956,7 @@
 <rect x="1" y="498" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="518" font-size="14" font-weight="700" fill="#353a40">08 / Glavni prikaz</text>
 <text x="906" y="518" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="540" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota/:id/nedostupnost · UC-09 · F-04, F-10 · #55 navodi F-09</text>
+<text x="14" y="540" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota/:id/nedostupnost · UC-09 · F-04, F-10</text>
 <text x="222" y="143" font-size="17" font-weight="700" fill="#353a40">Adria 38 · Split</text>
 <rect x="222" y="159" width="760" height="34" fill="#eeeeee" stroke="#a1a7ad"/>
 <text x="230" y="180" font-size="13" font-weight="700" fill="#353a40">Početak</text>
@@ -1217,7 +1217,7 @@
 <rect x="1" y="400" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="420" font-size="14" font-weight="700" fill="#353a40">10 / Glavni prikaz</text>
 <text x="906" y="420" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="442" font-size="13" font-weight="400" fill="#353a40">/tvrtka/djelatnici · UC-08 · F-21 · #55 navodi F-27</text>
+<text x="14" y="442" font-size="13" font-weight="400" fill="#353a40">/tvrtka/djelatnici · UC-08 · F-21</text>
 <text x="222" y="153" font-size="17" font-weight="400" fill="#353a40">Djelatnici tvrtke Jadran Charter</text>
 <rect x="808" y="126" width="174" height="34" fill="#dce0e4" stroke="#353a40"/>
 <text x="839.5" y="149" font-size="14" font-weight="700" fill="#353a40">Dodaj djelatnika</text>
@@ -1346,7 +1346,7 @@
 <rect x="1" y="460" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="480" font-size="14" font-weight="700" fill="#353a40">11 / Glavni prikaz</text>
 <text x="906" y="480" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="502" font-size="13" font-weight="400" fill="#353a40">/tvrtka/podaci · F-20 · UC nije dodijeljen · #55 navodi F-28</text>
+<text x="14" y="502" font-size="13" font-weight="400" fill="#353a40">/tvrtka/podaci · F-20 · UC nije dodijeljen</text>
 <text x="222" y="144" font-size="14" font-weight="700" fill="#353a40">Naziv tvrtke</text>
 <rect x="222" y="150" width="366" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="232" y="172" font-size="14" font-weight="400" fill="#353a40">Jadran Charter</text>
@@ -1468,7 +1468,7 @@
 <rect x="1" y="528" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="548" font-size="14" font-weight="700" fill="#353a40">12 / Glavni prikaz</text>
 <text x="906" y="548" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="570" font-size="13" font-weight="400" fill="#353a40">/tvrtka/statistika · UC-07 · F-15 · #55 navodi F-13, F-14</text>
+<text x="14" y="570" font-size="13" font-weight="400" fill="#353a40">/tvrtka/statistika · UC-07 · F-15</text>
 <text x="222" y="142" font-size="14" font-weight="700" fill="#353a40">Od</text>
 <rect x="222" y="148" width="170" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="232" y="170" font-size="14" font-weight="400" fill="#353a40">1. 6. 2027.</text>
@@ -1920,7 +1920,7 @@
 <rect x="1" y="382" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="402" font-size="14" font-weight="700" fill="#353a40">02 / Nema rezervacija u razdoblju</text>
 <text x="880" y="402" font-size="13" font-weight="700" fill="#353a40">Djelatnik i vlasnik</text>
-<text x="14" y="424" font-size="13" font-weight="400" fill="#353a40">/tvrtka/raspored · UC-06 · F-13 · #55 navodi F-12 · P-03</text>
+<text x="14" y="424" font-size="13" font-weight="400" fill="#353a40">/tvrtka/raspored · UC-06 · F-13 · P-03</text>
 <text x="222" y="140" font-size="14" font-weight="700" fill="#353a40">Razdoblje</text>
 <rect x="222" y="146" width="310" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="232" y="168" font-size="14" font-weight="400" fill="#353a40">3.–9. 7. 2027.</text>
@@ -1989,7 +1989,7 @@
 <rect x="1" y="593" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="613" font-size="14" font-weight="700" fill="#353a40">03 / Ulaz iz rezervacija tvrtke</text>
 <text x="880" y="613" font-size="13" font-weight="700" fill="#353a40">Djelatnik i vlasnik</text>
-<text x="14" y="635" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije/:id · UC-05, UC-13 · F-05, F-11, F-13, F-14 · #55 navodi F-22</text>
+<text x="14" y="635" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije/:id · UC-05, UC-13 · F-05, F-11, F-13, F-14</text>
 <text x="222" y="143" font-size="15" font-weight="700" fill="#353a40">‹ Povratak na rezervacije</text>
 <text x="441" y="143" font-size="15" font-weight="700" fill="#353a40">#R-0241</text>
 <rect x="222" y="161" width="366" height="142" fill="none" stroke="#a1a7ad"/>
@@ -2067,7 +2067,7 @@
 <rect x="1" y="593" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="613" font-size="14" font-weight="700" fill="#353a40">03 / Plovilo preuzeto</text>
 <text x="880" y="613" font-size="13" font-weight="700" fill="#353a40">Djelatnik i vlasnik</text>
-<text x="14" y="635" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije/:id · UC-05, UC-13 · F-05, F-11, F-13, F-14 · #55 navodi F-22</text>
+<text x="14" y="635" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije/:id · UC-05, UC-13 · F-05, F-11, F-13, F-14</text>
 <text x="222" y="143" font-size="15" font-weight="700" fill="#353a40">‹ Povratak na raspored</text>
 <text x="441" y="143" font-size="15" font-weight="700" fill="#353a40">#R-0241</text>
 <rect x="222" y="161" width="366" height="142" fill="none" stroke="#a1a7ad"/>
@@ -2146,7 +2146,7 @@
 <rect x="1" y="554" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="574" font-size="14" font-weight="700" fill="#353a40">03 / Najam završen</text>
 <text x="880" y="574" font-size="13" font-weight="700" fill="#353a40">Djelatnik i vlasnik</text>
-<text x="14" y="596" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije/:id · UC-05, UC-13 · F-05, F-11, F-13, F-14 · #55 navodi F-22</text>
+<text x="14" y="596" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije/:id · UC-05, UC-13 · F-05, F-11, F-13, F-14</text>
 <text x="222" y="143" font-size="15" font-weight="700" fill="#353a40">‹ Povratak na raspored</text>
 <text x="441" y="143" font-size="15" font-weight="700" fill="#353a40">#R-0241</text>
 <rect x="222" y="161" width="366" height="142" fill="none" stroke="#a1a7ad"/>
@@ -2222,7 +2222,7 @@
 <rect x="1" y="565" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="585" font-size="14" font-weight="700" fill="#353a40">03 / Nakon otkazivanja rezervacije</text>
 <text x="880" y="585" font-size="13" font-weight="700" fill="#353a40">Djelatnik i vlasnik</text>
-<text x="14" y="607" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije/:id · UC-05, UC-13 · F-05, F-11, F-13, F-14 · #55 navodi F-22</text>
+<text x="14" y="607" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije/:id · UC-05, UC-13 · F-05, F-11, F-13, F-14</text>
 <text x="222" y="143" font-size="15" font-weight="700" fill="#353a40">‹ Povratak na rezervacije</text>
 <text x="441" y="143" font-size="15" font-weight="700" fill="#353a40">#R-0241</text>
 <rect x="222" y="161" width="366" height="142" fill="none" stroke="#a1a7ad"/>
@@ -2299,7 +2299,7 @@
 <rect x="1" y="736" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="756" font-size="14" font-weight="700" fill="#353a40">04 / Dodavanje rezervacije</text>
 <text x="880" y="756" font-size="13" font-weight="700" fill="#353a40">Djelatnik i vlasnik</text>
-<text x="14" y="778" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije · UC-05 · F-04, F-05, F-07, F-11 · #55 navodi F-08</text>
+<text x="14" y="778" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije · UC-05 · F-04, F-05, F-07, F-11</text>
 <rect x="229" y="126" width="746" height="572" fill="#f7f7f7" stroke="#a1a7ad"/>
 <text x="250" y="168" font-size="21" font-weight="700" fill="#353a40">Dodaj rezervaciju</text>
 <text x="250" y="204" font-size="14" font-weight="700" fill="#353a40">Plovilo</text>
@@ -2340,6 +2340,100 @@
 <text x="794" y="666" font-size="14" font-weight="700" fill="#353a40">Spremi rezervaciju</text>
 </g>
 <g id="wire55-panel-24" transform="translate(1052 7191)">
+<title>04 · Rezervacije tvrtke · Korisnik nije pronađen</title>
+<rect x="1" y="1" width="1002" height="726" fill="#ffffff" stroke="#353a40"/>
+<rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
+<line x1="2" y1="58" x2="1002" y2="58" stroke="#a1a7ad"/>
+<rect x="2" y="59" width="196" height="667" fill="#f6f6f6" stroke="none"/>
+<line x1="198" y1="59" x2="198" y2="726" stroke="#a1a7ad"/>
+<line x1="21" y1="30" x2="35" y2="30" stroke="#555c64"/>
+<line x1="35" y1="30" x2="32" y2="34" stroke="#555c64"/>
+<line x1="32" y1="34" x2="24" y2="34" stroke="#555c64"/>
+<line x1="24" y1="34" x2="21" y2="30" stroke="#555c64"/>
+<line x1="27" y1="28" x2="27" y2="20" stroke="#555c64"/>
+<line x1="27" y1="20" x2="33" y2="28" stroke="#555c64"/>
+<line x1="33" y1="28" x2="27" y2="28" stroke="#555c64"/>
+<line x1="25" y1="22" x2="22" y2="28" stroke="#555c64"/>
+<line x1="22" y1="28" x2="25" y2="28" stroke="#555c64"/>
+<text x="46" y="37" font-size="20" font-weight="700" fill="#353a40">ChartIt</text>
+<rect x="389" y="12" width="98" height="34" fill="#f6f6f6" stroke="none"/>
+<text x="409.5" y="35" font-size="14" font-weight="700" fill="#555c64">Pretraga</text>
+<rect x="496" y="12" width="122" height="34" fill="#dce0e4" stroke="#353a40"/>
+<text x="516.5" y="35" font-size="14" font-weight="700" fill="#353a40">Panel tvrtke</text>
+<ellipse cx="964.5" cy="29.5" rx="17.5" ry="17.5" fill="#dce0e4" stroke="#a1a7ad"/>
+<text x="956" y="34" font-size="13" font-weight="700" fill="#353a40">TD</text>
+<line x1="21" y1="84" x2="35" y2="84" stroke="#555c64"/>
+<line x1="35" y1="84" x2="35" y2="95" stroke="#555c64"/>
+<line x1="35" y1="95" x2="21" y2="95" stroke="#555c64"/>
+<line x1="21" y1="95" x2="21" y2="84" stroke="#555c64"/>
+<line x1="21" y1="89" x2="25" y2="89" stroke="#555c64"/>
+<line x1="25" y1="89" x2="27" y2="92" stroke="#555c64"/>
+<line x1="27" y1="92" x2="29" y2="92" stroke="#555c64"/>
+<line x1="29" y1="92" x2="31" y2="89" stroke="#555c64"/>
+<line x1="31" y1="89" x2="35" y2="89" stroke="#555c64"/>
+<text x="46" y="96" font-size="14" font-weight="400" fill="#353a40">Zahtjevi</text>
+<line x1="21" y1="119" x2="35" y2="119" stroke="#555c64"/>
+<line x1="35" y1="119" x2="35" y2="130" stroke="#555c64"/>
+<line x1="35" y1="130" x2="21" y2="130" stroke="#555c64"/>
+<line x1="21" y1="130" x2="21" y2="119" stroke="#555c64"/>
+<line x1="21" y1="123" x2="35" y2="123" stroke="#555c64"/>
+<line x1="25" y1="116" x2="25" y2="121" stroke="#555c64"/>
+<line x1="31" y1="116" x2="31" y2="121" stroke="#555c64"/>
+<text x="46" y="130" font-size="14" font-weight="400" fill="#353a40">Raspored</text>
+<rect x="10" y="143" width="178" height="30" fill="#dce0e4" stroke="none"/>
+<rect x="10" y="143" width="3" height="30" fill="#353a40" stroke="none"/>
+<line x1="21" y1="153" x2="24" y2="153" stroke="#555c64"/>
+<line x1="27" y1="153" x2="35" y2="153" stroke="#555c64"/>
+<line x1="21" y1="158" x2="24" y2="158" stroke="#555c64"/>
+<line x1="27" y1="158" x2="35" y2="158" stroke="#555c64"/>
+<line x1="21" y1="163" x2="24" y2="163" stroke="#555c64"/>
+<line x1="27" y1="163" x2="35" y2="163" stroke="#555c64"/>
+<text x="46" y="164" font-size="14" font-weight="700" fill="#353a40">Rezervacije</text>
+<text x="222" y="108" font-size="29" font-weight="700" fill="#353a40">Rezervacije tvrtke</text>
+<rect x="1" y="736" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
+<text x="14" y="756" font-size="14" font-weight="700" fill="#353a40">04 / Korisnik nije pronađen</text>
+<text x="880" y="756" font-size="13" font-weight="700" fill="#353a40">Djelatnik i vlasnik</text>
+<text x="14" y="778" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije · UC-05 · F-04, F-05, F-07, F-11 · G-01</text>
+<rect x="229" y="126" width="746" height="572" fill="#f7f7f7" stroke="#a1a7ad"/>
+<text x="250" y="168" font-size="21" font-weight="700" fill="#353a40">Dodaj rezervaciju</text>
+<text x="250" y="204" font-size="14" font-weight="700" fill="#353a40">Plovilo</text>
+<rect x="250" y="210" width="244" height="34" fill="#ffffff" stroke="#a1a7ad"/>
+<text x="260" y="232" font-size="14" font-weight="400" fill="#353a40">Adria 38</text>
+<text x="510" y="204" font-size="14" font-weight="700" fill="#353a40">Luka</text>
+<rect x="510" y="210" width="222" height="34" fill="#ffffff" stroke="#a1a7ad"/>
+<text x="520" y="232" font-size="14" font-weight="400" fill="#353a40">Split</text>
+<text x="748" y="204" font-size="14" font-weight="700" fill="#353a40">Broj putnika</text>
+<rect x="748" y="210" width="205" height="34" fill="#ffffff" stroke="#a1a7ad"/>
+<text x="758" y="232" font-size="14" font-weight="400" fill="#353a40">4</text>
+<text x="250" y="278" font-size="14" font-weight="700" fill="#353a40">Točna adresa e-pošte korisnika</text>
+<rect x="250" y="284" width="554" height="34" fill="#ffffff" stroke="#353a40"/>
+<text x="260" y="306" font-size="14" font-weight="400" fill="#353a40">nepoznat.korisnik@example.com</text>
+<text x="250" y="334" font-size="13" font-weight="700" fill="#353a40">! Korisnik s tom adresom nije registriran. Provjerite adresu e-pošte.</text>
+<rect x="818" y="284" width="135" height="34" fill="#ffffff" stroke="#a1a7ad"/>
+<text x="825.5" y="307" font-size="14" font-weight="700" fill="#353a40">Pronađi korisnika</text>
+<text x="250" y="373" font-size="14" font-weight="700" fill="#353a40">Datum preuzimanja</text>
+<rect x="250" y="379" width="339" height="34" fill="#ffffff" stroke="#a1a7ad"/>
+<text x="260" y="401" font-size="14" font-weight="400" fill="#353a40">27. 6. 2027.</text>
+<text x="608" y="373" font-size="14" font-weight="700" fill="#353a40">Datum povrata</text>
+<rect x="608" y="379" width="345" height="34" fill="#ffffff" stroke="#a1a7ad"/>
+<text x="618" y="401" font-size="14" font-weight="400" fill="#353a40">2. 7. 2027.</text>
+<text x="250" y="432" font-size="13" font-weight="400" fill="#353a40">Dan povrata može biti dan preuzimanja sljedećeg najma.</text>
+<text x="250" y="463" font-size="16" font-weight="700" fill="#353a40">Dodatne usluge</text>
+<rect x="250" y="478" width="16" height="16" fill="#dce0e4" stroke="#a1a7ad"/>
+<line x1="253" y1="486" x2="257" y2="490" stroke="#a1a7ad"/>
+<line x1="257" y1="490" x2="263" y2="482" stroke="#a1a7ad"/>
+<text x="276" y="492" font-size="15" font-weight="400" fill="#353a40">Završno čišćenje · 85,00 € po najmu</text>
+<rect x="250" y="506" width="16" height="16" fill="#ffffff" stroke="#a1a7ad"/>
+<text x="276" y="520" font-size="15" font-weight="400" fill="#353a40">Paket ručnika · 30,00 € po najmu</text>
+<rect x="250" y="543" width="703" height="73" fill="#ffffff" stroke="#a1a7ad"/>
+<text x="264" y="569" font-size="14" font-weight="400" fill="#353a40">Najam: 5 dana × 190,00 € · Dodatne usluge: 85,00 €</text>
+<text x="264" y="597" font-size="15" font-weight="700" fill="#353a40">Ukupno prema izračunu poslužitelja: 1.035,00 €</text>
+<rect x="640" y="643" width="108" height="34" fill="#ffffff" stroke="#a1a7ad"/>
+<text x="662.5" y="666" font-size="14" font-weight="700" fill="#353a40">Odustani</text>
+<rect x="760" y="643" width="193" height="34" fill="#eeeeee" stroke="#a1a7ad"/>
+<text x="794" y="666" font-size="14" font-weight="700" fill="#555c64">Spremi rezervaciju</text>
+</g>
+<g id="wire55-panel-25" transform="translate(24 8005)">
 <title>04 · Rezervacije tvrtke · Izmjena rezervacije</title>
 <rect x="1" y="1" width="1002" height="726" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -2393,7 +2487,7 @@
 <rect x="1" y="736" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="756" font-size="14" font-weight="700" fill="#353a40">04 / Izmjena rezervacije</text>
 <text x="880" y="756" font-size="13" font-weight="700" fill="#353a40">Djelatnik i vlasnik</text>
-<text x="14" y="778" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije · UC-05 · F-04, F-05, F-07, F-11 · #55 navodi F-08</text>
+<text x="14" y="778" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije · UC-05 · F-04, F-05, F-07, F-11</text>
 <rect x="229" y="126" width="746" height="572" fill="#f7f7f7" stroke="#a1a7ad"/>
 <text x="250" y="168" font-size="21" font-weight="700" fill="#353a40">Izmijeni rezervaciju</text>
 <text x="250" y="204" font-size="14" font-weight="700" fill="#353a40">Plovilo</text>
@@ -2433,7 +2527,7 @@
 <rect x="760" y="643" width="193" height="34" fill="#dce0e4" stroke="#353a40"/>
 <text x="799" y="666" font-size="14" font-weight="700" fill="#353a40">Spremi promjene</text>
 </g>
-<g id="wire55-panel-25" transform="translate(24 8005)">
+<g id="wire55-panel-26" transform="translate(1052 8005)">
 <title>04 · Rezervacije tvrtke · Novi termin se preklapa</title>
 <rect x="1" y="1" width="1002" height="815" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -2487,7 +2581,7 @@
 <rect x="1" y="825" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="845" font-size="14" font-weight="700" fill="#353a40">04 / Novi termin se preklapa</text>
 <text x="880" y="845" font-size="13" font-weight="700" fill="#353a40">Djelatnik i vlasnik</text>
-<text x="14" y="867" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije · UC-05 · F-04, F-05, F-07, F-11 · #55 navodi F-08 · G-05</text>
+<text x="14" y="867" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije · UC-05 · F-04, F-05, F-07, F-11 · G-05</text>
 <rect x="229" y="126" width="746" height="660" fill="#f7f7f7" stroke="#a1a7ad"/>
 <text x="250" y="168" font-size="21" font-weight="700" fill="#353a40">Izmijeni rezervaciju</text>
 <text x="250" y="204" font-size="14" font-weight="700" fill="#353a40">Plovilo</text>
@@ -2531,7 +2625,7 @@
 <rect x="760" y="728" width="193" height="34" fill="#dce0e4" stroke="#353a40"/>
 <text x="786" y="751" font-size="14" font-weight="700" fill="#353a40">Odaberi drugi termin</text>
 </g>
-<g id="wire55-panel-26" transform="translate(1052 8005)">
+<g id="wire55-panel-27" transform="translate(24 8908)">
 <title>04 · Rezervacije tvrtke · Potvrda otkazivanja</title>
 <rect x="1" y="1" width="1002" height="435" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -2585,7 +2679,7 @@
 <rect x="1" y="445" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="465" font-size="14" font-weight="700" fill="#353a40">04 / Potvrda otkazivanja</text>
 <text x="880" y="465" font-size="13" font-weight="700" fill="#353a40">Djelatnik i vlasnik</text>
-<text x="14" y="487" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije · UC-05 · F-04, F-05, F-07, F-11 · #55 navodi F-08 · D-01</text>
+<text x="14" y="487" font-size="13" font-weight="400" fill="#353a40">/tvrtka/rezervacije · UC-05 · F-04, F-05, F-07, F-11 · D-01</text>
 <rect x="222" y="130" width="608" height="260" fill="none" stroke="#a1a7ad"/>
 <text x="240" y="169" font-size="20" font-weight="700" fill="#353a40">Otkazati rezervaciju?</text>
 <text x="240" y="199" font-size="15" font-weight="400" fill="#353a40">#R-0241 · Adria 38 · Ana Kovač · 12.–17. 6. 2027.</text>
@@ -2599,7 +2693,7 @@
 <rect x="412" y="328" width="142" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="449.5" y="351" font-size="14" font-weight="700" fill="#353a40">Da, otkaži</text>
 </g>
-<g id="wire55-panel-27" transform="translate(24 8908)">
+<g id="wire55-panel-28" transform="translate(1052 8908)">
 <title>05 · Flota · Potvrda deaktivacije plovila</title>
 <rect x="1" y="1" width="1002" height="408" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -2702,7 +2796,7 @@
 <rect x="1" y="418" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="438" font-size="14" font-weight="700" fill="#353a40">05 / Potvrda deaktivacije plovila</text>
 <text x="906" y="438" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="460" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota · UC-04 · F-08, F-09 · #55 navodi F-07 · D-02</text>
+<text x="14" y="460" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota · UC-04 · F-08, F-09 · D-02</text>
 <rect x="319" y="140" width="566" height="224" fill="#f7f7f7" stroke="#a1a7ad"/>
 <text x="342" y="183" font-size="22" font-weight="700" fill="#353a40">Deaktivirati plovilo Adria 38?</text>
 <text x="342" y="224" font-size="15" font-weight="400" fill="#353a40">Plovilo se više neće nuditi u javnoj pretrazi.</text>
@@ -2713,7 +2807,7 @@
 <rect x="698" y="300" width="163" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="743.5" y="323" font-size="14" font-weight="700" fill="#353a40">Deaktiviraj</text>
 </g>
-<g id="wire55-panel-28" transform="translate(1052 8908)">
+<g id="wire55-panel-29" transform="translate(24 9431)">
 <title>07 · Izmjena plovila · Neispravna dnevna cijena</title>
 <rect x="1" y="1" width="1002" height="870" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -2816,7 +2910,7 @@
 <rect x="1" y="880" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="900" font-size="14" font-weight="700" fill="#353a40">07 / Neispravna dnevna cijena</text>
 <text x="906" y="900" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="922" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota/:id · UC-04 · F-08, F-09 · #55 navodi F-07 · G-01</text>
+<text x="14" y="922" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota/:id · UC-04 · F-08, F-09 · G-01</text>
 <text x="222" y="140" font-size="14" font-weight="700" fill="#353a40">Naziv</text>
 <rect x="222" y="146" width="244" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="232" y="168" font-size="14" font-weight="400" fill="#353a40">Adria 38</text>
@@ -2879,7 +2973,7 @@
 <rect x="793" y="809" width="189" height="34" fill="#dce0e4" stroke="#353a40"/>
 <text x="830" y="832" font-size="14" font-weight="700" fill="#353a40">Spremi promjene</text>
 </g>
-<g id="wire55-panel-29" transform="translate(24 9866)">
+<g id="wire55-panel-30" transform="translate(1052 9431)">
 <title>07 · Izmjena plovila · Spremanje promjena u tijeku</title>
 <rect x="1" y="1" width="1002" height="870" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -2982,7 +3076,7 @@
 <rect x="1" y="880" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="900" font-size="14" font-weight="700" fill="#353a40">07 / Spremanje promjena u tijeku</text>
 <text x="906" y="900" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="922" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota/:id · UC-04 · F-08, F-09 · #55 navodi F-07 · U-03</text>
+<text x="14" y="922" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota/:id · UC-04 · F-08, F-09 · U-03</text>
 <text x="222" y="140" font-size="14" font-weight="700" fill="#353a40">Naziv</text>
 <rect x="222" y="146" width="244" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="232" y="168" font-size="14" font-weight="400" fill="#353a40">Adria 38</text>
@@ -3044,7 +3138,7 @@
 <rect x="793" y="809" width="189" height="34" fill="#eeeeee" stroke="#a1a7ad"/>
 <text x="836.5" y="832" font-size="14" font-weight="700" fill="#555c64">◌  Spremanje…</text>
 </g>
-<g id="wire55-panel-30" transform="translate(1052 9866)">
+<g id="wire55-panel-31" transform="translate(24 10389)">
 <title>08 · Nedostupnost plovila · Termin se preklapa s rezervacijom</title>
 <rect x="1" y="1" width="1002" height="560" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -3147,7 +3241,7 @@
 <rect x="1" y="570" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="590" font-size="14" font-weight="700" fill="#353a40">08 / Termin se preklapa s rezervacijom</text>
 <text x="906" y="590" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="612" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota/:id/nedostupnost · UC-09 · F-04, F-10 · #55 navodi F-09 · G-05</text>
+<text x="14" y="612" font-size="13" font-weight="400" fill="#353a40">/tvrtka/flota/:id/nedostupnost · UC-09 · F-04, F-10 · G-05</text>
 <text x="222" y="143" font-size="17" font-weight="700" fill="#353a40">Adria 38 · Split</text>
 <rect x="222" y="159" width="760" height="34" fill="#eeeeee" stroke="#a1a7ad"/>
 <text x="230" y="180" font-size="13" font-weight="700" fill="#353a40">Početak</text>
@@ -3179,7 +3273,7 @@
 <rect x="796" y="499" width="186" height="34" fill="#eeeeee" stroke="#a1a7ad"/>
 <text x="832" y="522" font-size="14" font-weight="700" fill="#555c64">Spremi razdoblje</text>
 </g>
-<g id="wire55-panel-31" transform="translate(24 10824)">
+<g id="wire55-panel-32" transform="translate(1052 10389)">
 <title>09 · Dodatne usluge · Dodaj uslugu</title>
 <rect x="1" y="1" width="1002" height="453" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -3300,7 +3394,7 @@
 <rect x="733" y="371" width="165" height="34" fill="#dce0e4" stroke="#353a40"/>
 <text x="766" y="394" font-size="14" font-weight="700" fill="#353a40">Spremi uslugu</text>
 </g>
-<g id="wire55-panel-32" transform="translate(1052 10824)">
+<g id="wire55-panel-33" transform="translate(24 11037)">
 <title>09 · Dodatne usluge · Izmijeni uslugu</title>
 <rect x="1" y="1" width="1002" height="453" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -3424,7 +3518,7 @@
 <rect x="733" y="371" width="165" height="34" fill="#dce0e4" stroke="#353a40"/>
 <text x="766" y="394" font-size="14" font-weight="700" fill="#353a40">Spremi uslugu</text>
 </g>
-<g id="wire55-panel-33" transform="translate(24 11365)">
+<g id="wire55-panel-34" transform="translate(1052 11037)">
 <title>10 · Djelatnici · Dodavanje</title>
 <rect x="1" y="1" width="1002" height="416" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -3527,7 +3621,7 @@
 <rect x="1" y="426" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="446" font-size="14" font-weight="700" fill="#353a40">10 / Dodavanje</text>
 <text x="906" y="446" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="468" font-size="13" font-weight="400" fill="#353a40">/tvrtka/djelatnici · UC-08 · F-21 · #55 navodi F-27</text>
+<text x="14" y="468" font-size="13" font-weight="400" fill="#353a40">/tvrtka/djelatnici · UC-08 · F-21</text>
 <rect x="249" y="128" width="707" height="258" fill="#f7f7f7" stroke="#a1a7ad"/>
 <text x="271" y="168" font-size="21" font-weight="700" fill="#353a40">Dodaj djelatnika</text>
 <text x="271" y="205" font-size="14" font-weight="700" fill="#353a40">Ime i prezime</text>
@@ -3542,7 +3636,7 @@
 <rect x="796" y="327" width="138" height="34" fill="#dce0e4" stroke="#353a40"/>
 <text x="841.5" y="350" font-size="14" font-weight="700" fill="#353a40">Spremi</text>
 </g>
-<g id="wire55-panel-34" transform="translate(1052 11365)">
+<g id="wire55-panel-35" transform="translate(24 11578)">
 <title>10 · Djelatnici · Izmjena</title>
 <rect x="1" y="1" width="1002" height="416" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -3645,7 +3739,7 @@
 <rect x="1" y="426" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="446" font-size="14" font-weight="700" fill="#353a40">10 / Izmjena</text>
 <text x="906" y="446" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="468" font-size="13" font-weight="400" fill="#353a40">/tvrtka/djelatnici · UC-08 · F-21 · #55 navodi F-27</text>
+<text x="14" y="468" font-size="13" font-weight="400" fill="#353a40">/tvrtka/djelatnici · UC-08 · F-21</text>
 <rect x="249" y="128" width="707" height="258" fill="#f7f7f7" stroke="#a1a7ad"/>
 <text x="271" y="168" font-size="21" font-weight="700" fill="#353a40">Uredi djelatnika</text>
 <text x="271" y="205" font-size="14" font-weight="700" fill="#353a40">Ime i prezime</text>
@@ -3660,7 +3754,7 @@
 <rect x="796" y="327" width="138" height="34" fill="#dce0e4" stroke="#353a40"/>
 <text x="841.5" y="350" font-size="14" font-weight="700" fill="#353a40">Spremi</text>
 </g>
-<g id="wire55-panel-35" transform="translate(24 11869)">
+<g id="wire55-panel-36" transform="translate(1052 11578)">
 <title>10 · Djelatnici · Neispravan unos</title>
 <rect x="1" y="1" width="1002" height="416" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -3763,7 +3857,7 @@
 <rect x="1" y="426" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="446" font-size="14" font-weight="700" fill="#353a40">10 / Neispravan unos</text>
 <text x="906" y="446" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="468" font-size="13" font-weight="400" fill="#353a40">/tvrtka/djelatnici · UC-08 · F-21 · #55 navodi F-27 · G-01</text>
+<text x="14" y="468" font-size="13" font-weight="400" fill="#353a40">/tvrtka/djelatnici · UC-08 · F-21 · G-01</text>
 <rect x="249" y="128" width="707" height="258" fill="#f7f7f7" stroke="#a1a7ad"/>
 <text x="271" y="168" font-size="21" font-weight="700" fill="#353a40">Dodaj djelatnika</text>
 <text x="271" y="205" font-size="14" font-weight="700" fill="#353a40">Ime i prezime</text>
@@ -3780,7 +3874,7 @@
 <rect x="796" y="327" width="138" height="34" fill="#dce0e4" stroke="#353a40"/>
 <text x="841.5" y="350" font-size="14" font-weight="700" fill="#353a40">Spremi</text>
 </g>
-<g id="wire55-panel-36" transform="translate(1052 11869)">
+<g id="wire55-panel-37" transform="translate(24 12082)">
 <title>10 · Djelatnici · Potvrda deaktivacije</title>
 <rect x="1" y="1" width="1002" height="344" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -3883,7 +3977,7 @@
 <rect x="1" y="354" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="374" font-size="14" font-weight="700" fill="#353a40">10 / Potvrda deaktivacije</text>
 <text x="906" y="374" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="396" font-size="13" font-weight="400" fill="#353a40">/tvrtka/djelatnici · UC-08 · F-21 · #55 navodi F-27 · D-02</text>
+<text x="14" y="396" font-size="13" font-weight="400" fill="#353a40">/tvrtka/djelatnici · UC-08 · F-21 · D-02</text>
 <rect x="292" y="130" width="620" height="174" fill="none" stroke="#a1a7ad"/>
 <text x="312" y="170" font-size="20" font-weight="700" fill="#353a40">Deaktivirati djelatnika Ivana Babića?</text>
 <text x="312" y="199" font-size="15" font-weight="400" fill="#353a40">Djelatnik gubi pristup panelu. Povijest njegova rada ostaje dostupna.</text>
@@ -3893,7 +3987,7 @@
 <rect x="744" y="246" width="148" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="782" y="269" font-size="14" font-weight="700" fill="#353a40">Deaktiviraj</text>
 </g>
-<g id="wire55-panel-37" transform="translate(24 12373)">
+<g id="wire55-panel-38" transform="translate(1052 12082)">
 <title>11 · Podaci o tvrtki · Neispravan unos</title>
 <rect x="1" y="1" width="1002" height="450" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -3996,7 +4090,7 @@
 <rect x="1" y="460" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="480" font-size="14" font-weight="700" fill="#353a40">11 / Neispravan unos</text>
 <text x="906" y="480" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="502" font-size="13" font-weight="400" fill="#353a40">/tvrtka/podaci · F-20 · UC nije dodijeljen · #55 navodi F-28 · G-01</text>
+<text x="14" y="502" font-size="13" font-weight="400" fill="#353a40">/tvrtka/podaci · F-20 · UC nije dodijeljen · G-01</text>
 <text x="222" y="144" font-size="14" font-weight="700" fill="#353a40">Naziv tvrtke</text>
 <rect x="222" y="150" width="366" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="232" y="172" font-size="14" font-weight="400" fill="#353a40">Jadran Charter</text>
@@ -4016,7 +4110,7 @@
 <rect x="812" y="385" width="170" height="34" fill="#dce0e4" stroke="#353a40"/>
 <text x="839.5" y="408" font-size="14" font-weight="700" fill="#353a40">Spremi promjene</text>
 </g>
-<g id="wire55-panel-38" transform="translate(1052 12373)">
+<g id="wire55-panel-39" transform="translate(24 12620)">
 <title>12 · Statistika · Nema podataka</title>
 <rect x="1" y="1" width="1002" height="383" fill="#ffffff" stroke="#353a40"/>
 <rect x="2" y="2" width="1000" height="56" fill="#f6f6f6" stroke="none"/>
@@ -4119,7 +4213,7 @@
 <rect x="1" y="393" width="1002" height="54" fill="#f6f6f6" stroke="#a1a7ad"/>
 <text x="14" y="413" font-size="14" font-weight="700" fill="#353a40">12 / Nema podataka</text>
 <text x="906" y="413" font-size="13" font-weight="700" fill="#353a40">Samo vlasnik</text>
-<text x="14" y="435" font-size="13" font-weight="400" fill="#353a40">/tvrtka/statistika · UC-07 · F-15 · #55 navodi F-13, F-14 · P-03</text>
+<text x="14" y="435" font-size="13" font-weight="400" fill="#353a40">/tvrtka/statistika · UC-07 · F-15 · P-03</text>
 <text x="222" y="142" font-size="14" font-weight="700" fill="#353a40">Od</text>
 <rect x="222" y="148" width="170" height="34" fill="#ffffff" stroke="#a1a7ad"/>
 <text x="232" y="170" font-size="14" font-weight="400" fill="#353a40">1. 1. 2027.</text>

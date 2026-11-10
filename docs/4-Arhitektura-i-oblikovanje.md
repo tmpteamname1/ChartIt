@@ -204,7 +204,7 @@ Skice panela za [#55](https://github.com/tmpteamname1/ChartIt/issues/55) dostupn
 | --- | --- | --- | --- | --- | --- |
 | Zahtjevi za rezervaciju | `/tvrtka/zahtjevi` | DJELATNIK, VLASNIK | UC-12 | F-04, F-05, F-07, F-11 | Zahtjevi poredani prema datumu početka najma, potvrda i odbijanje. Početni ekran panela. |
 | Raspored preuzimanja i povrata | `/tvrtka/raspored` | DJELATNIK, VLASNIK | UC-06 | F-13 | Preuzimanja i povrati po danima ili tjednu, odabir razdoblja. |
-| Rezervacije tvrtke | `/tvrtka/rezervacije` | DJELATNIK, VLASNIK | UC-05 | F-04, F-05, F-07, F-11 | Filtri prema statusu, plovilu i razdoblju. Dodavanje, izmjena i otkazivanje otvaraju dijaloge na popisu. Obrazac traži korisnika po točnoj adresi e-pošte i prikazuje dodatne usluge te ukupan iznos koji računa poslužitelj. |
+| Rezervacije tvrtke | `/tvrtka/rezervacije` | DJELATNIK, VLASNIK | UC-05 | F-04, F-05, F-07, F-11 | Filtri prema statusu, plovilu i razdoblju. Dodavanje, izmjena i otkazivanje otvaraju dijaloge na popisu. Obrazac traži korisnika po točnoj adresi e-pošte i prikazuje dodatne usluge te ukupan iznos koji računa poslužitelj. Za spremanje rezervacije mora biti odabran registrirani korisnik. |
 | Detalji rezervacije (panel) | `/tvrtka/rezervacije/:id` | DJELATNIK, VLASNIK | UC-05, UC-13 | F-05, F-11, F-13, F-14 | Podaci o plovilu i korisniku, odabrane usluge i pohranjeni iznos, evidentiranje preuzimanja i povrata te završetak najma. |
 | Flota | `/tvrtka/flota` | VLASNIK | UC-04 | F-08, F-09 | Popis plovila tvrtke, deaktivacija. |
 | Novo plovilo | `/tvrtka/flota/novo` | VLASNIK | UC-04 | F-08, F-09 | Obrazac plovila s osnovnim podacima, kategorijom, lukom, kapacitetom, opremom, fotografijama i cijenom. |
@@ -217,7 +217,7 @@ Skice panela za [#55](https://github.com/tmpteamname1/ChartIt/issues/55) dostupn
 
 Ruta `/tvrtka` preusmjerava na `/tvrtka/zahtjevi`.
 
-Oznake F u tablici slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi). Prema F-11 i [UC-05](3-Obrasci-uporabe.md#uc-05-upravljanje-rezervacijama), djelatnik i vlasnik upravljaju rezervacijama vlastite tvrtke. Trenutačni React router i izbornik omogućuju pristup popisu samo vlasniku. Prije izmjene koda treba potvrditi ovlasti s timom jer #55 za taj ekran navodi samo vlasnika.
+Oznake F u tablici slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi). Prema F-11 i [UC-05](3-Obrasci-uporabe.md#uc-05-upravljanje-rezervacijama), djelatnik i vlasnik upravljaju rezervacijama vlastite tvrtke. Usklađivanje React routera i izbornika ide u zaseban zadatak.
 
 ### Administracija platforme
 
