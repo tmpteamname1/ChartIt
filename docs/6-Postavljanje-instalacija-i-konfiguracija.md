@@ -88,6 +88,36 @@ image = models.ImageField(upload_to='vessels/', validators=IMAGE_VALIDATORS)
 
 Datoteke se poslužuju s istog origina kao aplikacija, pa se ne smiju dopuštati vrste koje preglednik može izvršiti (npr. SVG ili HTML). Zaglavlje `X-Content-Type-Options: nosniff` (Django `SecurityMiddleware`) dodatno sprječava da preglednik datoteku protumači kao drugu vrstu.
 
+## Google OAuth prijava
+
+Prijava Google računom koristi OAuth 2.0. Aplikacija je registrirana u Google Cloud Consoleu (Google Auth Platform), a Django s Googleom komunicira preko Client ID-a i Client Secreta.
+
+### Registracija OAuth aplikacije
+
+1. **Projekt** je stvoren na zajedničkom Google računu tima (`progiprojekt94.fer@gmail.com `), a ne na osobnom računu jednog člana, kako pristup ne bi ovisio o jednoj osobi. 
+2. **Consent screen** (Google Auth Platform > Branding i Data Access):
+   - naziv aplikacije: `ChartIt`,
+   - kontakt e-pošta: `progiprojekt94.fer@gmail.com`,
+   - vrsta korisnika: External,
+   - opsezi: `openid`, `email`, `profile` (nisu osjetljivi opsezi, pa verifikacija nije potrebna).
+3. **Web client** (Google Auth Platform > Clients > Create client > Web application), naziv `ChartIt Web Client`. Client ID i Client Secret nastaju pri stvaranju.
+4. **Authorized redirect URIs**:
+   - lokalno: `http://localhost:8000/accounts/google/login/callback/`
+   - javna instanca: `https://chartit-okv1.onrender.com/accounts/google/login/callback/`
+5. **Test users:** dok je aplikacija u stanju "Testing", prijaviti se mogu samo korisnici s popisa (Audience > Test users).
+
+### Varijable okruženja
+
+| Varijabla | Tajna | Zadano | Opis i primjer |
+| --- | --- | --- | --- |
+| `GOOGLE_CLIENT_ID` | ne | nema | OAuth Client ID iz Google Cloud Consolea, oblika `xxx.apps.googleusercontent.com`. |
+| `GOOGLE_CLIENT_SECRET` | da | nema | OAuth Client Secret, oblika `GOCSPX-...`. Nikad se ne zapisuje u repozitorij. |
+
+| Okruženje | Gdje se postavljaju |
+| --- | --- |
+| Lokalno | U `.env` u korijenu repozitorija. |
+| Render | TREBA POPUNITI |
+
 ## Postavljanje na Render
 
 Aplikacija je javno dostupna na https://chartit-okv1.onrender.com. Render je zamjenski smještaj dok Azure nije dostupan, a postavljanje je zamišljeno jednako kao na Azureu: jedan servis na kojem Django poslužuje API, Django admin i izgrađenu React aplikaciju s istog origina (WhiteNoise). Zato frontend nema zaseban servis ni CORS postavke, a nepoznate putanje (npr. `/plovila/5`) vraćaju React aplikaciju, koja sama prikazuje odgovarajuću stranicu.
