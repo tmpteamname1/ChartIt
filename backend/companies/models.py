@@ -6,7 +6,7 @@ from django.db import models
 def validate_oib_checksum(value):
     """Provjera kontrolne znamenke OIB-a (ISO 7064, MOD 11,10)."""
     if len(value) != 11 or not (value.isascii() and value.isdigit()):
-        return 
+        return
     remainder = 10
     for digit in value[:10]:
         remainder = (remainder + int(digit)) % 10
@@ -21,7 +21,7 @@ def validate_oib_checksum(value):
             'OIB nije ispravan (neispravna kontrolna znamenka).',
             code='invalid_oib_checksum',
         )
-    
+
 
 class Company(models.Model):
     name = models.CharField(
@@ -37,7 +37,7 @@ class Company(models.Model):
                 message='OIB mora sadržavati točno 11 znamenki.',
                 code='invalid_oib',
             ),
-            validate_oib_checksum
+            validate_oib_checksum,
         ],
         verbose_name='OIB',
     )
@@ -64,5 +64,3 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
-
-
