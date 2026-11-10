@@ -25,6 +25,7 @@ function AppLayout({ sidebar = [] }: { sidebar?: NavItem[] }) {
         label={item.label}
         leftSection={item.icon && <item.icon size={18} stroke={1.5} />}
         active={isActive(pathname, item.to)}
+        mih={{ base: 44, sm: 0 }}
         onClick={close}
       />
     ))
@@ -46,8 +47,10 @@ function AppLayout({ sidebar = [] }: { sidebar?: NavItem[] }) {
               opened={opened}
               onClick={toggle}
               hiddenFrom="sm"
-              size="sm"
+              size="lg"
               aria-label="Izbornik"
+              aria-controls="app-navigation"
+              aria-expanded={opened}
             />
             <Anchor component={Link} to="/" underline="never" fw={700} fz="lg">
               <Group gap={6} wrap="nowrap">
@@ -74,7 +77,12 @@ function AppLayout({ sidebar = [] }: { sidebar?: NavItem[] }) {
         </Group>
       </AppShell.Header>
 
-      <AppShell.Navbar p="sm">
+      <AppShell.Navbar
+        id="app-navigation"
+        p="sm"
+        visibleFrom={opened ? undefined : 'sm'}
+        style={{ overflowY: 'auto' }}
+      >
         <Box hiddenFrom="sm">
           {renderNavLinks(headerLinks)}
           {sideLinks.length > 0 && <Divider my="sm" />}
