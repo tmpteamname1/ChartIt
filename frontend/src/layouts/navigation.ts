@@ -34,7 +34,7 @@ export const HEADER_LINKS: NavItem[] = [
 export const COMPANY_NAV: NavItem[] = [
   { label: 'Zahtjevi', to: '/tvrtka/zahtjevi', roles: COMPANY_ROLES, icon: IconInbox },
   { label: 'Raspored', to: '/tvrtka/raspored', roles: COMPANY_ROLES, icon: IconCalendarEvent },
-  { label: 'Rezervacije', to: '/tvrtka/rezervacije', roles: ['VLASNIK'], icon: IconListDetails },
+  { label: 'Rezervacije', to: '/tvrtka/rezervacije', roles: COMPANY_ROLES, icon: IconListDetails },
   { label: 'Flota', to: '/tvrtka/flota', roles: ['VLASNIK'], icon: IconSailboat },
   { label: 'Dodatne usluge', to: '/tvrtka/usluge', roles: ['VLASNIK'], icon: IconSparkles },
   { label: 'Djelatnici', to: '/tvrtka/djelatnici', roles: ['VLASNIK'], icon: IconUsers },

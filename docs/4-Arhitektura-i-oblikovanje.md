@@ -236,6 +236,8 @@ Oznake F u tablici slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijsk
 
 Ruta `/administracija` preusmjerava na `/administracija/tvrtke`.
 
+[Skice administracije (#56)](dizajn/56-Wireframe-administracije.svg) prikazuju popis tvrtki, obrazac tvrtke s duplikatom OIB-a, dodjelu vlasnika, deaktivaciju i ponovnu aktivaciju tvrtke, korisnike i uloge te šifrarnike kategorija i luka s potvrdom deaktivacije. Dostupan je i [izvor za uređivanje u Excalidrawu](dizajn/56-Wireframe-administracije.excalidraw). Oznake F u tablici administracije i na skicama #56 slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi).
+
 ### Sustavne stranice
 
 | Ekran | Ruta | Sadržaj |

@@ -68,10 +68,11 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | --- | --- | --- | --- |
 | [Naziv alata] | [Inačica ili model, ako je poznat] | [Član/članovi tima] | [npr. izrada nacrta dokumentacije, generiranje izvora dijagrama] |
 | OpenAI Codex | GPT-6.1 Sol | Nikolić | Izrada i dorada skica panela tvrtke za #55 |
-| OpenAI Codex | Model nije zabilježen | Luka | Priprema tekstualnih skica i kratkih pravila zajedničkih stanja sučelja za #58 |
+| OpenAI Codex | GPT-6.1 Sol | Nikolić | Priprema tekstualnih skica i kratkih pravila zajedničkih stanja sučelja za #58 |
 | OpenAI Codex | GPT-6.1 Sol | Nikolić | Izrada i dorada skica rezervacija i prijave za #54 |
 | OpenAI Codex | GPT-6.1 Sol | Nikolić | Izrada i dorada mobilnih skica i pravila prilagodbe za #57 |
 | Claude Code | Claude Fable 5 | Rušev | Usklađivanje oznaka zahtjeva u dokumentaciji s poglavljem 2 za #104 |
+| OpenAI Codex | GPT-6.1 Sol | Nikolić | Usklađivanje i provjera pristupa djelatnika rezervacijama tvrtke za #91 |
 
 ### Opseg doprinosa umjetne inteligencije
 
@@ -83,6 +84,7 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | Skice rezervacija i prijave (#54) i poveznice u poglavlju 4.8 | Izrada i dorada skica | Šest skica u SVG-u i uređivom formatu Excalidraw te poveznice iz mape stranica | Korisnik je zadao opseg #54, odabrao jednostavan stil prema priloženim primjerima i usmjerio dorade rasporeda i odabira usluga. Provjereni su prikaz svih šest skica, podudarnost SVG-a i Excalidrawa te poveznice u dokumentaciji. | [SVG](dizajn/54-Wireframe-korisnickog-dijela.svg), [Excalidraw](dizajn/54-Wireframe-korisnickog-dijela.excalidraw), [mapa stranica](4-Arhitektura-i-oblikovanje.md#48-mapa-stranica-i-ruta-klijentske-aplikacije) |
 | Mobilne skice i pravila prilagodbe (#57) | Izrada i dorada skica i pravila prikaza | 25 skica u Excalidrawu sa SVG izvozom te pravila prilagodbe u poglavlju 4.8 | Korisnik je zadao opseg #57 i zatražio doradu prema pregledu PR-a #99. Skice su uspoređene sa zahtjevima, modelom rezervacije i povezanim skicama. | [SVG](dizajn/57-Wireframe-mobilnog-prikaza.svg), [Excalidraw](dizajn/57-Wireframe-mobilnog-prikaza.excalidraw), [pravila prilagodbe](4-Arhitektura-i-oblikovanje.md#mobilni-prikaz-57) |
 | Oznake zahtjeva u poglavljima 4 i 6 te dijagramu stanja rezervacije (#104) | Usklađivanje oznaka | Zamjena starih oznaka F i NF trenutačnima prema preslikavanju iz #104, novi odlomak o pokrivenosti zahtjeva u 4.8 i ispravljena oznaka u PlantUML izvoru i SVG-u dijagrama stanja | Korisnik je zadao issue #104 s tablicom preslikavanja. Alat je svaku oznaku zamijenio prema sadržaju na mjestu navođenja i provjerio da sve oznake postoje u poglavlju 2. U SVG-u dijagrama oznaka je ispravljena izravno, u vidljivom tekstu i u ugrađenom PlantUML izvoru, bez ponovnog generiranja iz PlantUML-a. Timski pregled slijedi u PR-u. | [Arhitektura i oblikovanje](4-Arhitektura-i-oblikovanje.md), [postavljanje](6-Postavljanje-instalacija-i-konfiguracija.md), [dijagram stanja](puml/4-5-chartit-reservation-SM.puml) |
+| Pristup djelatnika rezervacijama tvrtke (#91) | Izmjena i provjera klijentskog koda | Usklađeni su React ruta i stavka izbornika za djelatnika i vlasnika. | Korisnik je zadao opseg #91 i zatražio ponovnu provjeru. Alat je provjerio uloge u Chromeu te pokrenuo lint i build. | [Router](../frontend/src/router.tsx), [izbornik](../frontend/src/layouts/navigation.ts) |
 
 Stranice i artefakti koji nisu navedeni iznad izrađeni su bez pomoći generativne umjetne inteligencije.
 
