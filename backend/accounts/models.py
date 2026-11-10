@@ -19,7 +19,14 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.KORISNIK)
 
-    # TODO: nullable foreign key company, added once the companies app exists.
+    company = models.ForeignKey(
+        'companies.Company',
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name='employees',
+        verbose_name='tvrtka',
+    )
 
     REQUIRED_FIELDS = ['email']
 
