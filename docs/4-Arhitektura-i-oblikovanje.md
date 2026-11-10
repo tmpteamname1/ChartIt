@@ -245,13 +245,11 @@ Svi funkcijski zahtjevi s korisničkim sučeljem pokriveni su barem jednim ekran
 | --- | --- | --- |
 | Posjetitelj | Logo (početna), Pretraga, Prijava | – |
 | KORISNIK | Logo, Pretraga, Moje rezervacije, izbornik računa (Odjava) | – |
-| DJELATNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored, Rezervacije |
+| DJELATNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored |
 | VLASNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored, Rezervacije, Flota, Dodatne usluge, Djelatnici, Podaci o tvrtki, Statistika |
 | ADMINISTRATOR | Logo, Pretraga, Administracija, izbornik računa | Tvrtke, Korisnici, Kategorije, Luke |
 
 Na mobitelu se poveznice iz zaglavlja i bočni izbornik sklapaju u izbornik koji se otvara gumbom (hamburger).
-
-Mobilni prikaz slijedi tablicu planiranih izbornika. Pristup rezervacijama za djelatnika potvrđen je prema F-11 i UC-05 u [PR-u #89](https://github.com/tmpteamname1/ChartIt/pull/89), gdje je usklađena tablica ruta.
 
 ### Dijagram navigacije
 
