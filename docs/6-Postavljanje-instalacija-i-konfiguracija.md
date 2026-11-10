@@ -83,7 +83,7 @@ Primjer u modelu:
 ```python
 from config.validators import IMAGE_VALIDATORS
 
-image = models.ImageField(upload_to="vessels/", validators=IMAGE_VALIDATORS)
+image = models.ImageField(upload_to='vessels/', validators=IMAGE_VALIDATORS)
 ```
 
 Datoteke se poslužuju s istog origina kao aplikacija, pa se ne smiju dopuštati vrste koje preglednik može izvršiti (npr. SVG ili HTML). Zaglavlje `X-Content-Type-Options: nosniff` (Django `SecurityMiddleware`) dodatno sprječava da preglednik datoteku protumači kao drugu vrstu.
