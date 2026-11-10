@@ -95,9 +95,8 @@ class CompanyOibTests(TestCase):
     def test_oib_is_unique_in_database(self):
         create_company(oib=VALID_OIB)
 
-        with self.assertRaises(IntegrityError):
-            with transaction.atomic():
-                create_company(name='Druga tvrtka', oib=VALID_OIB)
+        with self.assertRaises(IntegrityError), transaction.atomic():
+            create_company(name='Druga tvrtka', oib=VALID_OIB)
 
 
 class CompanyUserRelationTests(TestCase):
