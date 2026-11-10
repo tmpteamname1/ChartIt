@@ -68,7 +68,7 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | --- | --- | --- | --- |
 | [Naziv alata] | [Inačica ili model, ako je poznat] | [Član/članovi tima] | [npr. izrada nacrta dokumentacije, generiranje izvora dijagrama] |
 | OpenAI Codex | GPT-6.1 Sol | Nikolić | Izrada i dorada skica panela tvrtke za #55 |
-| OpenAI Codex | Model nije zabilježen | Luka | Priprema tekstualnih skica i kratkih pravila zajedničkih stanja sučelja za #58 |
+| OpenAI Codex | GPT-6.1 Sol | Nikolić | Priprema tekstualnih skica i kratkih pravila zajedničkih stanja sučelja za #58 |
 | OpenAI Codex | GPT-6.1 Sol | Nikolić | Izrada i dorada skica rezervacija i prijave za #54 |
 | OpenAI Codex | GPT-6.1 Sol | Nikolić | Izrada i dorada mobilnih skica i pravila prilagodbe za #57 |
 | OpenAI Codex | GPT-6.1 Sol | Nikolić | Usklađivanje i provjera pristupa djelatnika rezervacijama tvrtke za #91 |
