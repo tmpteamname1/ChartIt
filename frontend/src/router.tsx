@@ -64,11 +64,11 @@ export const router = createBrowserRouter([
               { index: true, element: <Navigate to="zahtjevi" replace /> },
               { path: 'zahtjevi', element: <RequestsPage /> },
               { path: 'raspored', element: <SchedulePage /> },
+              { path: 'rezervacije', element: <CompanyReservationsPage /> },
               { path: 'rezervacije/:id', element: <CompanyReservationDetailsPage /> },
               {
                 element: <RequireRole roles={['VLASNIK']} />,
                 children: [
-                  { path: 'rezervacije', element: <CompanyReservationsPage /> },
                   { path: 'flota', element: <FleetPage /> },
                   { path: 'flota/novo', element: <VesselFormPage /> },
                   { path: 'flota/:id', element: <VesselFormPage /> },
