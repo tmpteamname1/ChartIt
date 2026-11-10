@@ -10,7 +10,9 @@ function NotFoundPage() {
       title="Stranica ne postoji"
       description="Provjerite adresu ili se vratite na početnu stranicu."
     >
-      <Button component={Link} to="/">Na početnu</Button>
+      <Button component={Link} to="/">
+        Na početnu
+      </Button>
     </EmptyState>
   )
 }

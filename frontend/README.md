@@ -13,17 +13,17 @@ npm run build    # rezultat ide u backend/frontend_dist
 
 Odluke iz zadatka #60. Nova biblioteka uvodi se tek dogovorom s frontend dijelom tima.
 
-| Područje | Odluka | Razmatrana alternativa i obrazloženje |
-| --- | --- | --- |
-| Usmjeravanje | React Router | TanStack Router. React Router je najrašireniji i tim ga najvjerojatnije već poznaje. |
-| Komponente i stil | Mantine (`@mantine/core`, `@mantine/hooks`) | MUI; shadcn/ui s Tailwindom. Mantine ima gotove obrasce, tablice, dijaloge, obavijesti i responzivni layout (AppShell), stilizira se običnim CSS-om i ne traži učenje Tailwinda. |
-| Ikone | Tabler Icons (`@tabler/icons-react`) | Ikone koje koriste primjeri iz Mantine dokumentacije. |
-| Dohvat podataka | TanStack Query uz zajednički modul `api/` | Običan `fetch` s vlastitim hookom. TanStack Query sam vodi stanje učitavanja i grešaka (NF-05, 4.6). |
-| Odabir datuma i kalendar (F-20) | `@mantine/dates` | Zasebna biblioteka za kalendar. Ista biblioteka i stil kao ostatak sučelja, podržava raspon datuma i onemogućene dane. Uvodi se s prvim ekranom koji je treba. |
-| Datumi i vremenska zona | dayjs s dodatkom za vremenske zone | date-fns. `@mantine/dates` već koristi dayjs, pa se ne uvodi druga biblioteka. |
-| Obrasci | `@mantine/form` | React Hook Form. Izravno se povezuje s Mantine poljima. Po potrebi uz Zod. |
-| Karta (F-16) | react-leaflet s OpenStreetMap pločicama | Google Maps. Bez ključa, u skladu s ADR-05; prije uvođenja provjeriti uvjete korištenja pločica. |
-| Grafovi (F-13) | Odluka se odgađa; vjerojatno `@mantine/charts` (Recharts) | Chart.js. |
+| Područje                        | Odluka                                                    | Razmatrana alternativa i obrazloženje                                                                                                                                            |
+| ------------------------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Usmjeravanje                    | React Router                                              | TanStack Router. React Router je najrašireniji i tim ga najvjerojatnije već poznaje.                                                                                             |
+| Komponente i stil               | Mantine (`@mantine/core`, `@mantine/hooks`)               | MUI; shadcn/ui s Tailwindom. Mantine ima gotove obrasce, tablice, dijaloge, obavijesti i responzivni layout (AppShell), stilizira se običnim CSS-om i ne traži učenje Tailwinda. |
+| Ikone                           | Tabler Icons (`@tabler/icons-react`)                      | Ikone koje koriste primjeri iz Mantine dokumentacije.                                                                                                                            |
+| Dohvat podataka                 | TanStack Query uz zajednički modul `api/`                 | Običan `fetch` s vlastitim hookom. TanStack Query sam vodi stanje učitavanja i grešaka (NF-05, 4.6).                                                                             |
+| Odabir datuma i kalendar (F-20) | `@mantine/dates`                                          | Zasebna biblioteka za kalendar. Ista biblioteka i stil kao ostatak sučelja, podržava raspon datuma i onemogućene dane. Uvodi se s prvim ekranom koji je treba.                   |
+| Datumi i vremenska zona         | dayjs s dodatkom za vremenske zone                        | date-fns. `@mantine/dates` već koristi dayjs, pa se ne uvodi druga biblioteka.                                                                                                   |
+| Obrasci                         | `@mantine/form`                                           | React Hook Form. Izravno se povezuje s Mantine poljima. Po potrebi uz Zod.                                                                                                       |
+| Karta (F-16)                    | react-leaflet s OpenStreetMap pločicama                   | Google Maps. Bez ključa, u skladu s ADR-05; prije uvođenja provjeriti uvjete korištenja pločica.                                                                                 |
+| Grafovi (F-13)                  | Odluka se odgađa; vjerojatno `@mantine/charts` (Recharts) | Chart.js.                                                                                                                                                                        |
 
 ## Struktura mapa
 

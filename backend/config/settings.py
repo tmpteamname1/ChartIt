@@ -63,6 +63,10 @@ if env.bool('DJANGO_HTTPS', default=not DEBUG):
     SECURE_HSTS_SECONDS = env('DJANGO_HSTS_SECONDS')
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
+# Platform health checks (render.yaml healthCheckPath) may arrive over plain HTTP; a redirect
+# would count as healthy without reaching the database check. The response holds no sensitive data.
+SECURE_REDIRECT_EXEMPT = [r'^api/health/$']
+
 
 # Application definition
 
@@ -121,6 +125,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': env.db('DATABASE_URL'),
 }
+
+# For URLs that cannot carry ?sslmode itself, e.g. the one render.yaml takes from the database.
+# Without it libpq uses sslmode=prefer, which silently falls back to an unencrypted connection.
+if DATABASE_SSLMODE := env('DATABASE_SSLMODE', default=''):
+    DATABASES['default'].setdefault('OPTIONS', {})['sslmode'] = DATABASE_SSLMODE
 
 
 # Custom user model (accounts app). Must be set before the first migration.

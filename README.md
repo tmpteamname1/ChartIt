@@ -1,9 +1,13 @@
 # ChartIt
 
+[![CI](https://github.com/tmpteamname1/ChartIt/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tmpteamname1/ChartIt/actions/workflows/ci.yml)
+
 ## Opis aplikacije
 
 <a id="deployment"></a>
 ## Postavljanje (engl. deployment)
+
+Aplikacija je javno dostupna na https://chartit-okv1.onrender.com. Postupak postavljanja na Render opisan je u [poglavlju 6](docs/6-Postavljanje-instalacija-i-konfiguracija.md#postavljanje-na-render).
 
 <a id="quick-start"></a>
 ## Brzi početak / instalacija
@@ -72,7 +76,7 @@ U drugom terminalu:
 cd backend
 python3 -m venv .venv              # samo prvi put
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
-python -m pip install -r requirements.txt
+python -m pip install -r requirements-dev.txt   # requirements.txt + alati za razvoj (ruff)
 python manage.py migrate
 python manage.py runserver
 ```
@@ -94,6 +98,30 @@ Ako je port 5432 zauzet (npr. druga PostgreSQL baza na računalu), potrebno ju j
 Ako je lokalna baza stvorena prije uvođenja prilagođenog modela korisnika (aplikacija `accounts`), migracije javljaju grešku `InconsistentMigrationHistory`. Bazu je tada potrebno jednom obrisati s `docker compose down -v` i ponovno pokrenuti `docker compose up`.
 
 Ako Django javlja `Set the DJANGO_SECRET_KEY environment variable`, u `.env` nedostaju nove varijable. Treba ih prepisati iz `.env.example`, a za `DJANGO_SECRET_KEY` lokalno je dovoljan bilo koji dugi niz znakova.
+
+### Formatiranje i provjera koda
+
+Stil koda provjeravaju alati, a ne pregled koda. Backend koristi [ruff](https://docs.astral.sh/ruff/) (linter i formatter, postavke u `backend/pyproject.toml`), a frontend oxlint i [Prettier](https://prettier.io/) (postavke u `frontend/.oxlintrc.json` i `frontend/.prettierrc.json`). Osnovne postavke uređivača (kraj retka LF, uvlačenje) zadane su u `.editorconfig`.
+
+Prije otvaranja pull requesta:
+
+```bash
+cd backend                         # uz aktivirano virtualno okruženje
+ruff check --fix .                 # linter, sigurne ispravke radi sam
+ruff format .                      # formatiranje
+
+cd ../frontend
+npm run lint                       # oxlint
+npm run format                     # Prettier
+```
+
+Za provjeru bez mijenjanja datoteka koriste se `ruff format --check .` i `npm run format:check`. Iste provjere, uz build frontenda i backend testove, pokreće CI na svakom pull requestu ([poglavlje 6](docs/6-Postavljanje-instalacija-i-konfiguracija.md#kontinuirana-integracija-ci)).
+
+Commitovi koji samo formatiraju kod navedeni su u `.git-blame-ignore-revs`, pa ih `git blame` preskače i prikazuje stvarnog autora retka. GitHub tu datoteku čita sam, a lokalno je potrebno jednom pokrenuti:
+
+```bash
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
 
 ### Pokretanje kao u produkciji
 
