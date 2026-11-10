@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1205" height="7749" viewBox="0 0 1205 7749" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1205" height="7725" viewBox="0 0 1205 7725" role="img" aria-labelledby="title desc">
 <title id="title">ChartIt · Mobilni wireframei</title>
 <desc id="desc">Mobilni prikazi pretrage, plovila, rezervacija, rasporeda i glavnog izbornika. Svaka skica široka je 375 px.</desc>
-<rect width="1205" height="7749" fill="#eaedf0"/>
+<rect width="1205" height="7725" fill="#eaedf0"/>
 <g font-family="Arial, Helvetica, sans-serif">
 <g id="mobilni-naslov" transform="translate(0 0)">
 <title>ChartIt · Mobilni wireframei</title>
@@ -17,7 +17,7 @@
 <title>01 · Rezultati pretrage</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">01  /  Rezultati pretrage</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Svi</text>
-<rect x="0" y="47" width="375" height="558" fill="#ffffff" stroke="#262b30"/>
+<rect x="0" y="47" width="375" height="584" fill="#ffffff" stroke="#262b30"/>
 <rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
 <line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
 <rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
@@ -28,7 +28,7 @@
 <rect x="277" y="55" width="82" height="44" fill="#ffffff" stroke="#969da4"/>
 <text x="295" y="84" font-size="14" font-weight="700" fill="#262b30">Prijava</text>
 <text x="16" y="147" font-size="24" font-weight="700" fill="#262b30">Pretraga plovila</text>
-<text x="16" y="170" font-size="14" font-weight="400" fill="#4c545c">12 rezultata</text>
+<text x="16" y="170" font-size="14" font-weight="400" fill="#4c545c">24 rezultata</text>
 <rect x="16" y="189" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
 <text x="161" y="218" font-size="14" font-weight="700" fill="#262b30">Filtri (4)</text>
 <text x="16" y="256" font-size="13" font-weight="400" fill="#4c545c">12.–17. 6. 2027. · Split · Jedrilica · 4 osobe</text>
@@ -60,13 +60,14 @@
 <text x="120" y="470" font-size="14" font-weight="700" fill="#262b30">160,00 € / dan</text>
 <rect x="26" y="480" width="323" height="44" fill="#ffffff" stroke="#969da4"/>
 <text x="38" y="509" font-size="14" font-weight="700" fill="#262b30">Detalji plovila →</text>
-<rect x="16" y="543" width="110" height="44" fill="#f5f6f7" stroke="#969da4"/>
-<text x="31" y="572" font-size="14" font-weight="700" fill="#4c545c">‹ Prethodna</text>
-<text x="173.5" y="571" font-size="14" font-weight="700" fill="#262b30">1 / 6</text>
-<rect x="249" y="543" width="110" height="44" fill="#ffffff" stroke="#969da4"/>
-<text x="270.5" y="572" font-size="14" font-weight="700" fill="#262b30">Sljedeća ›</text>
-<text x="0" y="625" font-size="13" font-weight="700" fill="#262b30">/</text>
-<text x="0" y="645" font-size="13" font-weight="400" fill="#4c545c">UC-01 · F-01 · NF-03</text>
+<text x="16" y="556" font-size="13" font-weight="400" fill="#4c545c">⋮ Još 18 rezultata na ovoj stranici</text>
+<rect x="16" y="569" width="110" height="44" fill="#f5f6f7" stroke="#969da4"/>
+<text x="31" y="598" font-size="14" font-weight="700" fill="#4c545c">‹ Prethodna</text>
+<text x="173.5" y="597" font-size="14" font-weight="700" fill="#262b30">1 / 2</text>
+<rect x="249" y="569" width="110" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="270.5" y="598" font-size="14" font-weight="700" fill="#262b30">Sljedeća ›</text>
+<text x="0" y="651" font-size="13" font-weight="700" fill="#262b30">/</text>
+<text x="0" y="671" font-size="13" font-weight="400" fill="#4c545c">UC-01 · F-01 · NF-03</text>
 </g>
 <g id="mobilni-02" transform="translate(415 170)">
 <title>02 · Otvoreni filtri</title>
@@ -101,7 +102,7 @@
 <text x="28" y="454" font-size="14" font-weight="400" fill="#262b30">Jedrilica</text>
 <line x1="335" y1="446" x2="340" y2="451" stroke="#262b30"/>
 <line x1="340" y1="451" x2="345" y2="446" stroke="#262b30"/>
-<text x="16" y="494" font-size="13" font-weight="700" fill="#262b30">Broj osoba</text>
+<text x="16" y="494" font-size="13" font-weight="700" fill="#262b30">Broj putnika</text>
 <rect x="16" y="503" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
 <text x="28" y="531" font-size="14" font-weight="400" fill="#262b30">4</text>
 <line x1="335" y1="523" x2="340" y2="528" stroke="#262b30"/>
@@ -114,7 +115,7 @@
 <rect x="16" y="635" width="343" height="44" fill="#262b30" stroke="#262b30"/>
 <text x="140.5" y="664" font-size="14" font-weight="700" fill="#ffffff">Primijeni filtre</text>
 <rect x="16" y="689" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
-<text x="150" y="718" font-size="14" font-weight="700" fill="#262b30">Očisti filtre</text>
+<text x="148" y="718" font-size="14" font-weight="700" fill="#262b30">Ukloni filtre</text>
 <text x="0" y="771" font-size="13" font-weight="700" fill="#262b30">/</text>
 <text x="0" y="791" font-size="13" font-weight="400" fill="#4c545c">UC-01 · F-01 · NF-03</text>
 </g>
@@ -137,7 +138,7 @@
 <rect x="16" y="189" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
 <text x="161" y="218" font-size="14" font-weight="700" fill="#262b30">Filtri (4)</text>
 <rect x="16" y="243" width="343" height="67" fill="#f5f6f7" stroke="#969da4"/>
-<text x="28" y="269" font-size="16" font-weight="700" fill="#262b30">Nema raspoloživih plovila</text>
+<text x="28" y="269" font-size="16" font-weight="700" fill="#262b30">Nema plovila za odabrane kriterije.</text>
 <text x="28" y="292" font-size="14" font-weight="400" fill="#262b30">Promijenite termin ili filtre.</text>
 <rect x="16" y="322" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
 <text x="148" y="351" font-size="14" font-weight="700" fill="#262b30">Ukloni filtre</text>
@@ -326,9 +327,9 @@
 <text x="301" y="470" font-size="14" font-weight="400" fill="#262b30">30,00 €</text>
 <text x="16" y="507" font-size="13" font-weight="400" fill="#4c545c">Cijene usluga vrijede za cijeli najam.</text>
 <rect x="16" y="520" width="343" height="89" fill="#f5f6f7" stroke="#969da4"/>
-<text x="28" y="546" font-size="16" font-weight="700" fill="#262b30">Procjena ukupno 1.035,00 €</text>
+<text x="28" y="546" font-size="16" font-weight="700" fill="#262b30">Procijenjeni iznos 1.035,00 €</text>
 <text x="28" y="569" font-size="14" font-weight="400" fill="#262b30">5 dana × 190,00 € + 85,00 €</text>
-<text x="28" y="591" font-size="14" font-weight="400" fill="#262b30">Konačni iznos izračunava poslužitelj.</text>
+<text x="28" y="591" font-size="14" font-weight="400" fill="#262b30">Poslužitelj izračunava konačni iznos pri slanju.</text>
 <rect x="16" y="621" width="343" height="44" fill="#262b30" stroke="#262b30"/>
 <text x="125" y="650" font-size="14" font-weight="700" fill="#ffffff">Nastavi na zahtjev</text>
 <text x="0" y="703" font-size="13" font-weight="700" fill="#262b30">/plovila/:id</text>
@@ -369,7 +370,7 @@
 <title>04b · Zahtjev za rezervaciju</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">04b  /  Zahtjev za rezervaciju</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
-<rect x="0" y="47" width="375" height="883" fill="#ffffff" stroke="#262b30"/>
+<rect x="0" y="47" width="375" height="859" fill="#ffffff" stroke="#262b30"/>
 <rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
 <line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
 <rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
@@ -391,42 +392,39 @@
 <text x="16" y="387" font-size="14" font-weight="700" fill="#262b30">Termin je dostupan.</text>
 <text x="16" y="408" font-size="13" font-weight="400" fill="#4c545c">Dan povrata može biti dan preuzimanja sljedećeg najma.</text>
 <text x="16" y="440" font-size="13" font-weight="700" fill="#262b30">Luka preuzimanja</text>
-<rect x="16" y="449" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
-<text x="28" y="477" font-size="14" font-weight="400" fill="#262b30">Split</text>
-<line x1="335" y1="469" x2="340" y2="474" stroke="#262b30"/>
-<line x1="340" y1="474" x2="345" y2="469" stroke="#262b30"/>
-<text x="16" y="517" font-size="13" font-weight="700" fill="#262b30">Broj putnika</text>
-<rect x="16" y="526" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
-<text x="28" y="554" font-size="14" font-weight="400" fill="#262b30">4</text>
-<line x1="335" y1="546" x2="340" y2="551" stroke="#262b30"/>
-<line x1="340" y1="551" x2="345" y2="546" stroke="#262b30"/>
-<text x="16" y="594" font-size="13" font-weight="400" fill="#4c545c">Kapacitet plovila je 8 osoba.</text>
-<text x="16" y="624" font-size="17" font-weight="700" fill="#262b30">Dodatne usluge</text>
-<rect x="16" y="637" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
-<rect x="26" y="650" width="18" height="18" fill="#dce1e5" stroke="#262b30"/>
-<line x1="30" y1="659" x2="34" y2="663" stroke="#262b30"/>
-<line x1="34" y1="663" x2="40" y2="654" stroke="#262b30"/>
-<text x="54" y="665" font-size="14" font-weight="400" fill="#262b30">Završno čišćenje</text>
-<text x="301" y="665" font-size="14" font-weight="400" fill="#262b30">85,00 €</text>
-<rect x="16" y="689" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
-<rect x="26" y="702" width="18" height="18" fill="#ffffff" stroke="#262b30"/>
-<text x="54" y="717" font-size="14" font-weight="400" fill="#262b30">Paket ručnika</text>
-<text x="301" y="717" font-size="14" font-weight="400" fill="#262b30">30,00 €</text>
-<text x="16" y="754" font-size="13" font-weight="400" fill="#4c545c">Cijene usluga vrijede za cijeli najam.</text>
-<rect x="16" y="767" width="343" height="89" fill="#f5f6f7" stroke="#969da4"/>
-<text x="28" y="793" font-size="16" font-weight="700" fill="#262b30">Procjena ukupno 1.035,00 €</text>
-<text x="28" y="816" font-size="14" font-weight="400" fill="#262b30">5 dana × 190,00 € + 85,00 €</text>
-<text x="28" y="838" font-size="14" font-weight="400" fill="#262b30">Izračun poslužitelja prije slanja.</text>
-<rect x="16" y="868" width="343" height="44" fill="#262b30" stroke="#262b30"/>
-<text x="138" y="897" font-size="14" font-weight="700" fill="#ffffff">Pošalji zahtjev</text>
-<text x="0" y="950" font-size="13" font-weight="700" fill="#262b30">/plovila/:id/rezervacija</text>
-<text x="0" y="970" font-size="13" font-weight="400" fill="#4c545c">UC-02 · F-02, F-03, F-04 · U-03, G-01 · NF-03</text>
+<text x="16" y="463" font-size="14" font-weight="400" fill="#262b30">Split · matična luka plovila</text>
+<text x="16" y="493" font-size="13" font-weight="700" fill="#262b30">Broj putnika</text>
+<rect x="16" y="502" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="530" font-size="14" font-weight="400" fill="#262b30">4</text>
+<line x1="335" y1="522" x2="340" y2="527" stroke="#262b30"/>
+<line x1="340" y1="527" x2="345" y2="522" stroke="#262b30"/>
+<text x="16" y="570" font-size="13" font-weight="400" fill="#4c545c">Kapacitet plovila je 8 osoba.</text>
+<text x="16" y="600" font-size="17" font-weight="700" fill="#262b30">Dodatne usluge</text>
+<rect x="16" y="613" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<rect x="26" y="626" width="18" height="18" fill="#dce1e5" stroke="#262b30"/>
+<line x1="30" y1="635" x2="34" y2="639" stroke="#262b30"/>
+<line x1="34" y1="639" x2="40" y2="630" stroke="#262b30"/>
+<text x="54" y="641" font-size="14" font-weight="400" fill="#262b30">Završno čišćenje</text>
+<text x="301" y="641" font-size="14" font-weight="400" fill="#262b30">85,00 €</text>
+<rect x="16" y="665" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<rect x="26" y="678" width="18" height="18" fill="#ffffff" stroke="#262b30"/>
+<text x="54" y="693" font-size="14" font-weight="400" fill="#262b30">Paket ručnika</text>
+<text x="301" y="693" font-size="14" font-weight="400" fill="#262b30">30,00 €</text>
+<text x="16" y="730" font-size="13" font-weight="400" fill="#4c545c">Cijene usluga vrijede za cijeli najam.</text>
+<rect x="16" y="743" width="343" height="89" fill="#f5f6f7" stroke="#969da4"/>
+<text x="28" y="769" font-size="16" font-weight="700" fill="#262b30">Procijenjeni iznos 1.035,00 €</text>
+<text x="28" y="792" font-size="14" font-weight="400" fill="#262b30">5 dana × 190,00 € + 85,00 €</text>
+<text x="28" y="814" font-size="14" font-weight="400" fill="#262b30">Poslužitelj izračunava konačni iznos pri slanju.</text>
+<rect x="16" y="844" width="343" height="44" fill="#262b30" stroke="#262b30"/>
+<text x="138" y="873" font-size="14" font-weight="700" fill="#ffffff">Pošalji zahtjev</text>
+<text x="0" y="926" font-size="13" font-weight="700" fill="#262b30">/plovila/:id/rezervacija</text>
+<text x="0" y="946" font-size="13" font-weight="400" fill="#4c545c">UC-02 · F-02, F-03, F-04 · U-03, G-01 · NF-03</text>
 </g>
 <g id="mobilni-04c" transform="translate(814 1868)">
 <title>04c · Termin više nije dostupan</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">04c  /  Termin više nije dostupan</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
-<rect x="0" y="47" width="375" height="905" fill="#ffffff" stroke="#262b30"/>
+<rect x="0" y="47" width="375" height="881" fill="#ffffff" stroke="#262b30"/>
 <rect x="1" y="48" width="373" height="59" fill="#f5f6f7" stroke="none"/>
 <line x1="0" y1="107" x2="375" y2="107" stroke="#969da4"/>
 <rect x="16" y="55" width="44" height="44" fill="#ffffff" stroke="#969da4"/>
@@ -450,37 +448,34 @@
 <text x="28" y="422" font-size="14" font-weight="400" fill="#262b30">Odaberite novi termin. Usluge i ostali podaci</text>
 <text x="28" y="441" font-size="14" font-weight="400" fill="#262b30">ostaju sačuvani.</text>
 <text x="16" y="484" font-size="13" font-weight="700" fill="#262b30">Luka preuzimanja</text>
-<rect x="16" y="493" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
-<text x="28" y="521" font-size="14" font-weight="400" fill="#262b30">Split</text>
-<line x1="335" y1="513" x2="340" y2="518" stroke="#262b30"/>
-<line x1="340" y1="518" x2="345" y2="513" stroke="#262b30"/>
-<text x="16" y="561" font-size="13" font-weight="700" fill="#262b30">Broj putnika</text>
-<rect x="16" y="570" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
-<text x="28" y="598" font-size="14" font-weight="400" fill="#262b30">4</text>
-<line x1="335" y1="590" x2="340" y2="595" stroke="#262b30"/>
-<line x1="340" y1="595" x2="345" y2="590" stroke="#262b30"/>
-<text x="16" y="638" font-size="13" font-weight="400" fill="#4c545c">Kapacitet plovila je 8 osoba.</text>
-<text x="16" y="668" font-size="17" font-weight="700" fill="#262b30">Dodatne usluge</text>
-<rect x="16" y="681" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
-<rect x="26" y="694" width="18" height="18" fill="#dce1e5" stroke="#262b30"/>
-<line x1="30" y1="703" x2="34" y2="707" stroke="#262b30"/>
-<line x1="34" y1="707" x2="40" y2="698" stroke="#262b30"/>
-<text x="54" y="709" font-size="14" font-weight="400" fill="#262b30">Završno čišćenje</text>
-<text x="301" y="709" font-size="14" font-weight="400" fill="#262b30">85,00 €</text>
-<rect x="16" y="733" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
-<rect x="26" y="746" width="18" height="18" fill="#ffffff" stroke="#262b30"/>
-<text x="54" y="761" font-size="14" font-weight="400" fill="#262b30">Paket ručnika</text>
-<text x="301" y="761" font-size="14" font-weight="400" fill="#262b30">30,00 €</text>
-<text x="16" y="798" font-size="13" font-weight="400" fill="#4c545c">Cijene usluga vrijede za cijeli najam.</text>
-<rect x="16" y="811" width="343" height="67" fill="#f5f6f7" stroke="#969da4"/>
-<text x="28" y="837" font-size="16" font-weight="700" fill="#262b30">Ukupno —</text>
-<text x="28" y="860" font-size="14" font-weight="400" fill="#262b30">Iznos se ponovno izračunava za novi termin.</text>
-<rect x="16" y="890" width="343" height="44" fill="#f5f6f7" stroke="#969da4"/>
-<text x="138" y="919" font-size="14" font-weight="700" fill="#4c545c">Pošalji zahtjev</text>
-<text x="0" y="972" font-size="13" font-weight="700" fill="#262b30">/plovila/:id/rezervacija</text>
-<text x="0" y="992" font-size="13" font-weight="400" fill="#4c545c">UC-02 · F-03, F-04 · G-05 · NF-03</text>
+<text x="16" y="507" font-size="14" font-weight="400" fill="#262b30">Split · matična luka plovila</text>
+<text x="16" y="537" font-size="13" font-weight="700" fill="#262b30">Broj putnika</text>
+<rect x="16" y="546" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<text x="28" y="574" font-size="14" font-weight="400" fill="#262b30">4</text>
+<line x1="335" y1="566" x2="340" y2="571" stroke="#262b30"/>
+<line x1="340" y1="571" x2="345" y2="566" stroke="#262b30"/>
+<text x="16" y="614" font-size="13" font-weight="400" fill="#4c545c">Kapacitet plovila je 8 osoba.</text>
+<text x="16" y="644" font-size="17" font-weight="700" fill="#262b30">Dodatne usluge</text>
+<rect x="16" y="657" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<rect x="26" y="670" width="18" height="18" fill="#dce1e5" stroke="#262b30"/>
+<line x1="30" y1="679" x2="34" y2="683" stroke="#262b30"/>
+<line x1="34" y1="683" x2="40" y2="674" stroke="#262b30"/>
+<text x="54" y="685" font-size="14" font-weight="400" fill="#262b30">Završno čišćenje</text>
+<text x="301" y="685" font-size="14" font-weight="400" fill="#262b30">85,00 €</text>
+<rect x="16" y="709" width="343" height="44" fill="#ffffff" stroke="#969da4"/>
+<rect x="26" y="722" width="18" height="18" fill="#ffffff" stroke="#262b30"/>
+<text x="54" y="737" font-size="14" font-weight="400" fill="#262b30">Paket ručnika</text>
+<text x="301" y="737" font-size="14" font-weight="400" fill="#262b30">30,00 €</text>
+<text x="16" y="774" font-size="13" font-weight="400" fill="#4c545c">Cijene usluga vrijede za cijeli najam.</text>
+<rect x="16" y="787" width="343" height="67" fill="#f5f6f7" stroke="#969da4"/>
+<text x="28" y="813" font-size="16" font-weight="700" fill="#262b30">Ukupno —</text>
+<text x="28" y="836" font-size="14" font-weight="400" fill="#262b30">Iznos se ponovno izračunava za novi termin.</text>
+<rect x="16" y="866" width="343" height="44" fill="#f5f6f7" stroke="#969da4"/>
+<text x="138" y="895" font-size="14" font-weight="700" fill="#4c545c">Pošalji zahtjev</text>
+<text x="0" y="948" font-size="13" font-weight="700" fill="#262b30">/plovila/:id/rezervacija</text>
+<text x="0" y="968" font-size="13" font-weight="400" fill="#4c545c">UC-02 · F-03, F-04 · G-05 · NF-03</text>
 </g>
-<g id="mobilni-04d" transform="translate(16 2887)">
+<g id="mobilni-04d" transform="translate(16 2863)">
 <title>04d · Potvrda slanja zahtjeva</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">04d  /  Potvrda slanja zahtjeva</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
@@ -508,7 +503,7 @@
 <text x="0" y="445" font-size="13" font-weight="700" fill="#262b30">/plovila/:id/rezervacija</text>
 <text x="0" y="465" font-size="13" font-weight="400" fill="#4c545c">UC-02 · F-03, F-05, F-06, F-07 · O-01 · NF-03</text>
 </g>
-<g id="mobilni-05" transform="translate(415 2887)">
+<g id="mobilni-05" transform="translate(415 2863)">
 <title>05 · Moje rezervacije</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">05  /  Moje rezervacije</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
@@ -566,7 +561,7 @@
 <text x="0" y="1069" font-size="13" font-weight="700" fill="#262b30">/moje-rezervacije</text>
 <text x="0" y="1089" font-size="13" font-weight="400" fill="#4c545c">UC-03 · F-05, F-06 · NF-03</text>
 </g>
-<g id="mobilni-06" transform="translate(814 2887)">
+<g id="mobilni-06" transform="translate(814 2863)">
 <title>06 · Detalji rezervacije</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">06  /  Detalji rezervacije</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
@@ -606,7 +601,7 @@
 <text x="0" y="770" font-size="13" font-weight="700" fill="#262b30">/moje-rezervacije/:id</text>
 <text x="0" y="790" font-size="13" font-weight="400" fill="#4c545c">UC-03 · F-05, F-06, F-12 · NF-03</text>
 </g>
-<g id="mobilni-06b" transform="translate(16 4003)">
+<g id="mobilni-06b" transform="translate(16 3979)">
 <title>06b · Dijalog otkazivanja</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">06b  /  Dijalog otkazivanja</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
@@ -633,7 +628,7 @@
 <text x="0" y="417" font-size="13" font-weight="700" fill="#262b30">/moje-rezervacije/:id</text>
 <text x="0" y="437" font-size="13" font-weight="400" fill="#4c545c">UC-03 · F-05, F-12 · D-01 · NF-03</text>
 </g>
-<g id="mobilni-06c" transform="translate(415 4003)">
+<g id="mobilni-06c" transform="translate(415 3979)">
 <title>06c · Nakon preuzimanja</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">06c  /  Nakon preuzimanja</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
@@ -674,10 +669,10 @@
 </g>
 <g id="mobilni-odjeljak-3" transform="translate(0 0)">
 <title>Panel tvrtke</title>
-<text x="16" y="4831" font-size="22" font-weight="700" fill="#262b30">03  /  Panel tvrtke</text>
-<text x="16" y="4853" font-size="14" font-weight="400" fill="#4c545c">Od rasporeda do evidentiranog preuzimanja i povrata.</text>
+<text x="16" y="4807" font-size="22" font-weight="700" fill="#262b30">03  /  Panel tvrtke</text>
+<text x="16" y="4829" font-size="14" font-weight="400" fill="#4c545c">Od rasporeda do evidentiranog preuzimanja i povrata.</text>
 </g>
-<g id="mobilni-07" transform="translate(16 4873)">
+<g id="mobilni-07" transform="translate(16 4849)">
 <title>07 · Raspored preuzimanja i povrata</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">07  /  Raspored preuzimanja i povrata</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Djelatnik i vlasnik</text>
@@ -715,7 +710,7 @@
 <text x="0" y="631" font-size="13" font-weight="700" fill="#262b30">/tvrtka/raspored</text>
 <text x="0" y="651" font-size="13" font-weight="400" fill="#4c545c">UC-06 · F-13 · NF-03</text>
 </g>
-<g id="mobilni-08" transform="translate(415 4873)">
+<g id="mobilni-08" transform="translate(415 4849)">
 <title>08 · Evidentiranje preuzimanja</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">08  /  Evidentiranje preuzimanja</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Djelatnik i vlasnik</text>
@@ -753,7 +748,7 @@
 <text x="0" y="705" font-size="13" font-weight="700" fill="#262b30">/tvrtka/rezervacije/:id</text>
 <text x="0" y="725" font-size="13" font-weight="400" fill="#4c545c">UC-13 · F-13, F-14 · U-03 · NF-03</text>
 </g>
-<g id="mobilni-09" transform="translate(814 4873)">
+<g id="mobilni-09" transform="translate(814 4849)">
 <title>09 · Evidentiranje povrata</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">09  /  Evidentiranje povrata</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Djelatnik i vlasnik</text>
@@ -793,7 +788,7 @@
 <text x="0" y="754" font-size="13" font-weight="700" fill="#262b30">/tvrtka/rezervacije/:id</text>
 <text x="0" y="774" font-size="13" font-weight="400" fill="#4c545c">UC-13 · F-13, F-14 · U-03 · NF-03</text>
 </g>
-<g id="mobilni-07b" transform="translate(16 5674)">
+<g id="mobilni-07b" transform="translate(16 5650)">
 <title>07b · Raspored bez rezervacija</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">07b  /  Raspored bez rezervacija</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Djelatnik i vlasnik</text>
@@ -820,7 +815,7 @@
 <text x="0" y="430" font-size="13" font-weight="700" fill="#262b30">/tvrtka/raspored</text>
 <text x="0" y="450" font-size="13" font-weight="400" fill="#4c545c">UC-06 · F-13 · P-03 · NF-03</text>
 </g>
-<g id="mobilni-09b" transform="translate(415 5674)">
+<g id="mobilni-09b" transform="translate(415 5650)">
 <title>09b · Evidentiran povrat</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">09b  /  Evidentiran povrat</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Djelatnik i vlasnik</text>
@@ -858,10 +853,10 @@
 </g>
 <g id="mobilni-odjeljak-4" transform="translate(0 0)">
 <title>Glavni izbornik</title>
-<text x="16" y="6406" font-size="22" font-weight="700" fill="#262b30">04  /  Glavni izbornik</text>
-<text x="16" y="6428" font-size="14" font-weight="400" fill="#4c545c">Otvoreni izbornik za posjetitelja i četiri prijavljene uloge.</text>
+<text x="16" y="6382" font-size="22" font-weight="700" fill="#262b30">04  /  Glavni izbornik</text>
+<text x="16" y="6404" font-size="14" font-weight="400" fill="#4c545c">Otvoreni izbornik za posjetitelja i četiri prijavljene uloge.</text>
 </g>
-<g id="mobilni-n1" transform="translate(16 6448)">
+<g id="mobilni-n1" transform="translate(16 6424)">
 <title>N1 · Izbornik · Posjetitelj</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">N1  /  Izbornik · Posjetitelj</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Posjetitelj</text>
@@ -880,7 +875,7 @@
 <text x="0" y="417" font-size="13" font-weight="700" fill="#262b30">/</text>
 <text x="0" y="437" font-size="13" font-weight="400" fill="#4c545c">NF-03 · navigacija prema ulozi</text>
 </g>
-<g id="mobilni-n2" transform="translate(415 6448)">
+<g id="mobilni-n2" transform="translate(415 6424)">
 <title>N2 · Izbornik · Korisnik</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">N2  /  Izbornik · Korisnik</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Korisnik</text>
@@ -901,7 +896,7 @@
 <text x="0" y="417" font-size="13" font-weight="700" fill="#262b30">/moje-rezervacije</text>
 <text x="0" y="437" font-size="13" font-weight="400" fill="#4c545c">NF-03 · navigacija prema ulozi</text>
 </g>
-<g id="mobilni-n3" transform="translate(814 6448)">
+<g id="mobilni-n3" transform="translate(814 6424)">
 <title>N3 · Izbornik · Djelatnik</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">N3  /  Izbornik · Djelatnik</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Djelatnik</text>
@@ -930,7 +925,7 @@
 <text x="0" y="475" font-size="13" font-weight="700" fill="#262b30">/tvrtka/raspored</text>
 <text x="0" y="495" font-size="13" font-weight="400" fill="#4c545c">NF-03 · navigacija prema ulozi</text>
 </g>
-<g id="mobilni-n4" transform="translate(16 6970)">
+<g id="mobilni-n4" transform="translate(16 6946)">
 <title>N4 · Izbornik · Vlasnik</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">N4  /  Izbornik · Vlasnik</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Vlasnik</text>
@@ -969,7 +964,7 @@
 <text x="0" y="720" font-size="13" font-weight="700" fill="#262b30">/tvrtka/flota</text>
 <text x="0" y="740" font-size="13" font-weight="400" fill="#4c545c">NF-03 · navigacija prema ulozi</text>
 </g>
-<g id="mobilni-n5" transform="translate(415 6970)">
+<g id="mobilni-n5" transform="translate(415 6946)">
 <title>N5 · Izbornik · Administrator</title>
 <text x="0" y="17" font-size="17" font-weight="700" fill="#262b30">N5  /  Izbornik · Administrator</text>
 <text x="0" y="36" font-size="13" font-weight="400" fill="#4c545c">Administrator</text>
