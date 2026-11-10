@@ -15,8 +15,7 @@ export default defineConfig({
     // Forward Django routes so the dev server behaves like production (single origin)
     proxy: {
       '/api': djangoUrl,
-      // Match Django's /admin route without capturing React's /administracija.
-      '^/admin(?:[/?]|$)': djangoUrl,
+      '/admin': djangoUrl,
       '/static': djangoUrl,
       '/media': djangoUrl,
     },
