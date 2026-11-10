@@ -66,6 +66,7 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | --- | --- | --- | --- |
 | [Naziv alata] | [Inačica ili model, ako je poznat] | [Član/članovi tima] | [npr. izrada nacrta dokumentacije, generiranje izvora dijagrama] |
 | OpenAI Codex | Model nije zabilježen | Luka | Priprema tekstualnih skica i kratkih pravila zajedničkih stanja sučelja za #58 |
+| Claude Code | Claude Fable 5 | Rušev | Izrada skica administracije platforme (tvrtke, vlasnici, korisnici, kategorije, luke) za #56 |
 
 ### Opseg doprinosa umjetne inteligencije
 
@@ -73,6 +74,7 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | --- | --- | --- | --- | --- |
 | [npr. 3. Obrasci uporabe, UC-002] | [Izrada nacrta / preoblikovanje / prijevod / izvor dijagrama / sažimanje] | [Kratak opis] | [Ulaz zadan alatu; dodane, ispravljene ili uklonjene činjenice] | [Stranica dokumentacije, `.puml` datoteka, PR] |
 | Zajednička stanja sučelja (#58), poveznice iz kazala i poglavlja 4.8 | Izrada skica i pravila prikaza | Jedna Markdown datoteka s tekstualnim skicama, kratkim pravilima i referencama na ekrane | Korisnik je zadao issue #58 i zatražio tekstualne skice u Markdownu; sadržaj je uspoređen s projektnom dokumentacijom. Timski pregled slijedi u PR-u. | [Skice i pravila](dizajn/58-Zajednicka-stanja-sucelja.md) |
+| Skice administracije (#56) i redci administracije u poglavlju 4.8 | Izrada skica i usklađivanje oznaka zahtjeva | Devet skica u SVG-u i uređivom formatu Excalidraw (popis tvrtki, nova tvrtka, duplikat OIB-a, dodjela vlasnika, izmjena tvrtke, deaktivacija, korisnici, kategorije, luke), poveznica iz mape stranica i ispravljene oznake F u tablici administracije | Korisnik je zadao issue #56. Alat je sadržaj uskladio s poglavljima 2, 3 i 4, katalogom stanja #58 i stilom skica #53, a stare oznake zahtjeva zamijenio trenutačnima iz poglavlja 2. Timski pregled slijedi u PR-u. | [SVG](dizajn/56-Wireframe-administracije.svg), [Excalidraw](dizajn/56-Wireframe-administracije.excalidraw), [mapa stranica](4-Arhitektura-i-oblikovanje.md#48-mapa-stranica-i-ruta-klijentske-aplikacije) |
 
 Stranice i artefakti koji nisu navedeni iznad izrađeni su bez pomoći generativne umjetne inteligencije.
 

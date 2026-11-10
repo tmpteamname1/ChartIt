@@ -1,0 +1,483 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="5129" viewBox="0 0 960 5129" role="img" aria-label="Wireframei administracije platforme: tvrtke, vlasnici, korisnici, kategorije i luke">
+  <rect x="0" y="0" width="960" height="473" fill="#eeeeee" stroke="none" />
+  <rect x="24" y="24" width="912" height="422" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="215" y="96" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="26" font-weight="bold">Tvrtke</text>
+  <rect x="785" y="98" width="130" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="814.6" y="106" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Nova tvrtka</text>
+  <text x="215" y="142" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Pretraga</text>
+  <rect x="215" y="162" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="171" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal" opacity="0.5">Naziv ili OIB</text>
+  <text x="575" y="142" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Status</text>
+  <rect x="575" y="162" width="160" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="585" y="171" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Sve</text>
+  <text x="715.4" y="170" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">⌄</text>
+  <rect x="215" y="212" width="700" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="220" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Naziv</text>
+  <text x="415" y="220" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">OIB</text>
+  <text x="545" y="220" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Vlasnik</text>
+  <text x="735" y="220" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Status</text>
+  <text x="853" y="220" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold"></text>
+  <text x="225" y="249" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Charter tvrtka 1</text>
+  <text x="415" y="249" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">12345678901</text>
+  <text x="545" y="249" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Marko Ivić</text>
+  <text x="735" y="249" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivna</text>
+  <text x="853" y="250" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="270" width="700" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="279" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Charter tvrtka 2</text>
+  <text x="415" y="279" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">23456789012</text>
+  <text x="545" y="279" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Ana Kovač</text>
+  <text x="735" y="279" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivna</text>
+  <text x="853" y="280" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="300" width="700" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="309" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Charter tvrtka 3</text>
+  <text x="415" y="309" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">34567890123</text>
+  <text x="545" y="309" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal" opacity="0.5">Nije dodijeljen</text>
+  <text x="735" y="309" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivna</text>
+  <text x="853" y="310" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="330" width="700" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="339" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Charter tvrtka 4</text>
+  <text x="415" y="339" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">45678901234</text>
+  <text x="545" y="339" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Ivana Marić</text>
+  <text x="735" y="339" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Neaktivna</text>
+  <text x="853" y="340" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="360" width="700" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="369" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Charter tvrtka 5</text>
+  <text x="415" y="369" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">56789012345</text>
+  <text x="545" y="369" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Josip Jurić</text>
+  <text x="735" y="369" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivna</text>
+  <text x="853" y="370" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="390" width="700" height="1" fill="#53575a" stroke="none" />
+  <text x="457.8" y="410" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal" opacity="0.5">‹ Prethodna</text>
+  <text x="552.4" y="410" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">1 / 2</text>
+  <text x="599" y="410" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Sljedeća ›</text>
+  <rect x="24" y="24" width="912" height="52" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="45" y="42" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="19" font-weight="bold">ChartIt</text>
+  <text x="652" y="45" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Pretraga</text>
+  <rect x="728" y="37" width="126" height="26" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="746.2" y="43" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Administracija</text>
+  <rect x="883" y="37" width="33" height="26" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="889.4" y="43" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">AD</text>
+  <rect x="194" y="76" width="3" height="370" fill="#53575a" stroke="none" />
+  <rect x="36" y="91" width="146" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="1" />
+  <text x="48" y="100" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Tvrtke</text>
+  <text x="48" y="136" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Korisnici</text>
+  <text x="48" y="172" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Kategorije</text>
+  <text x="48" y="208" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Luke</text>
+  <text x="24" y="456" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">01  /  UC-14, UC-15 · F-19 · ruta: /administracija/tvrtke</text>
+  <rect x="0" y="489" width="960" height="616" fill="#eeeeee" stroke="none" />
+  <rect x="24" y="513" width="912" height="565" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="215" y="581" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">‹ Natrag na tvrtke</text>
+  <text x="215" y="605" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="26" font-weight="bold">Nova tvrtka</text>
+  <text x="215" y="655" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="17" font-weight="bold">Podaci tvrtke</text>
+  <text x="215" y="685" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Naziv</text>
+  <rect x="215" y="705" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="714" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Charter tvrtka 6</text>
+  <text x="575" y="685" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">OIB</text>
+  <rect x="575" y="705" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="585" y="714" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">67890123456</text>
+  <text x="215" y="743" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Adresa</text>
+  <rect x="215" y="763" width="700" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="772" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Obala 1, 21000 Split</text>
+  <text x="215" y="805" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">E-pošta</text>
+  <rect x="215" y="825" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="834" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">info@example.com</text>
+  <text x="575" y="805" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Telefon</text>
+  <rect x="575" y="825" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="585" y="834" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">+385 1 234 5678</text>
+  <text x="215" y="863" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">OIB ima 11 znamenki i jedinstven je u sustavu.</text>
+  <text x="215" y="900" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="17" font-weight="bold">Vlasnik</text>
+  <rect x="215" y="930" width="700" height="70" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="229" y="946" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Vlasnik nije dodijeljen.</text>
+  <text x="229" y="970" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Tvrtka može imati najviše jednog aktivnog vlasnika.</text>
+  <rect x="751" y="951" width="150" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="775" y="959" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Dodijeli vlasnika</text>
+  <rect x="673" y="1026" width="100" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="694.8" y="1034" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Odustani</text>
+  <rect x="785" y="1026" width="130" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="808.1" y="1034" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Spremi tvrtku</text>
+  <rect x="24" y="513" width="912" height="52" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="45" y="531" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="19" font-weight="bold">ChartIt</text>
+  <text x="652" y="534" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Pretraga</text>
+  <rect x="728" y="526" width="126" height="26" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="746.2" y="532" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Administracija</text>
+  <rect x="883" y="526" width="33" height="26" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="889.4" y="532" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">AD</text>
+  <rect x="194" y="565" width="3" height="513" fill="#53575a" stroke="none" />
+  <rect x="36" y="580" width="146" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="1" />
+  <text x="48" y="589" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Tvrtke</text>
+  <text x="48" y="625" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Korisnici</text>
+  <text x="48" y="661" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Kategorije</text>
+  <text x="48" y="697" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Luke</text>
+  <text x="24" y="1088" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">02  /  UC-14 · F-19 · ruta: /administracija/tvrtke/nova</text>
+  <rect x="0" y="1121" width="960" height="530" fill="#eeeeee" stroke="none" />
+  <rect x="24" y="1145" width="912" height="479" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="215" y="1213" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">‹ Natrag na tvrtke</text>
+  <text x="215" y="1237" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="26" font-weight="bold">Nova tvrtka</text>
+  <text x="215" y="1287" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="17" font-weight="bold">Podaci tvrtke</text>
+  <text x="215" y="1317" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Naziv</text>
+  <rect x="215" y="1337" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="1346" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Charter tvrtka 6</text>
+  <text x="575" y="1317" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">OIB</text>
+  <rect x="575" y="1337" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="585" y="1346" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">12345678901</text>
+  <text x="575" y="1375" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">! Tvrtka s ovim OIB-om već postoji.</text>
+  <text x="215" y="1397" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Adresa</text>
+  <rect x="215" y="1417" width="700" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="1426" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Obala 1, 21000 Split</text>
+  <text x="215" y="1459" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">E-pošta</text>
+  <rect x="215" y="1479" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="1488" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">info@example.com</text>
+  <text x="575" y="1459" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Telefon</text>
+  <rect x="575" y="1479" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="585" y="1488" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">+385 1 234 5678</text>
+  <text x="215" y="1517" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">OIB ima 11 znamenki i jedinstven je u sustavu.</text>
+  <text x="215" y="1540" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Tvrtka nije spremljena. Ostali uneseni podaci ostaju sačuvani, a fokus se vraća na polje OIB.</text>
+  <rect x="673" y="1572" width="100" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="694.8" y="1580" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Odustani</text>
+  <rect x="785" y="1572" width="130" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="808.1" y="1580" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Spremi tvrtku</text>
+  <rect x="24" y="1145" width="912" height="52" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="45" y="1163" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="19" font-weight="bold">ChartIt</text>
+  <text x="652" y="1166" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Pretraga</text>
+  <rect x="728" y="1158" width="126" height="26" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="746.2" y="1164" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Administracija</text>
+  <rect x="883" y="1158" width="33" height="26" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="889.4" y="1164" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">AD</text>
+  <rect x="194" y="1197" width="3" height="427" fill="#53575a" stroke="none" />
+  <rect x="36" y="1212" width="146" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="1" />
+  <text x="48" y="1221" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Tvrtke</text>
+  <text x="48" y="1257" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Korisnici</text>
+  <text x="48" y="1293" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Kategorije</text>
+  <text x="48" y="1329" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Luke</text>
+  <text x="24" y="1634" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">03  /  UC-14 (alternativni tok 4a) · F-19 · G-01</text>
+  <rect x="0" y="1667" width="960" height="481" fill="#eeeeee" stroke="none" />
+  <rect x="24" y="1691" width="450" height="232" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="38" y="1705" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Odabir postojećeg korisnika</text>
+  <text x="38" y="1733" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">E-pošta korisnika</text>
+  <rect x="38" y="1753" width="310" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="48" y="1762" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">ana@example.com</text>
+  <rect x="360" y="1753" width="100" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="394.8" y="1762" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Traži</text>
+  <rect x="38" y="1799" width="422" height="58" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="50" y="1811" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Ana Kovač</text>
+  <text x="50" y="1833" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">ana@example.com · uloga: Korisnik</text>
+  <rect x="298" y="1814" width="150" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="309" y="1822" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Dodijeli kao vlasnika</text>
+  <text x="38" y="1871" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Korisnik dobiva ulogu Vlasnik i pristup panelu ove tvrtke.</text>
+  <rect x="486" y="1691" width="450" height="232" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="500" y="1705" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Poziv novog vlasnika</text>
+  <text x="500" y="1733" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">E-pošta korisnika</text>
+  <rect x="500" y="1753" width="310" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="510" y="1762" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">novi@example.com</text>
+  <rect x="822" y="1753" width="100" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="856.8" y="1762" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Traži</text>
+  <text x="500" y="1795" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Nema korisnika s tom adresom e-pošte.</text>
+  <text x="500" y="1819" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Ime i prezime</text>
+  <rect x="500" y="1839" width="250" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="510" y="1848" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Petra Novak</text>
+  <rect x="762" y="1839" width="160" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="780.6" y="1848" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Pozovi kao vlasnika</text>
+  <text x="500" y="1883" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Račun se stvara s ulogom Vlasnik i povezuje pri prvoj prijavi</text>
+  <text x="500" y="1898" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">tom adresom e-pošte (F-18).</text>
+  <rect x="24" y="1935" width="450" height="186" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="38" y="1949" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Tvrtka već ima vlasnika</text>
+  <rect x="38" y="1977" width="422" height="58" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="50" y="1989" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Marko Ivić</text>
+  <text x="50" y="2011" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">marko@example.com · uloga: Vlasnik</text>
+  <rect x="298" y="1992" width="150" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="315.9" y="2000" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Promijeni vlasnika</text>
+  <text x="38" y="2051" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Tvrtka može imati najviše jednog aktivnog vlasnika.</text>
+  <text x="38" y="2069" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Novi vlasnik zamjenjuje dosadašnjeg, koji gubi pristup panelu</text>
+  <text x="38" y="2084" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">tvrtke. Promjena traži potvrdu.</text>
+  <rect x="486" y="1935" width="450" height="186" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="500" y="1949" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Korisnik već pripada drugoj tvrtki</text>
+  <rect x="500" y="1977" width="422" height="58" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="512" y="1989" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Ivana Marić</text>
+  <text x="512" y="2011" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">ivana@example.com · Vlasnik · Charter tvrtka 4</text>
+  <rect x="810" y="1992" width="100" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" opacity="0.45" />
+  <text x="836.6" y="2000" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold" opacity="0.45">Dodijeli</text>
+  <text x="500" y="2051" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">! Korisnik već pripada drugoj tvrtki.</text>
+  <text x="500" y="2072" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Vlasnik i djelatnik povezani su s jednom tvrtkom, pa dodjela</text>
+  <text x="500" y="2087" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">nije moguća.</text>
+  <text x="24" y="2131" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">04  /  UC-14 · F-19, F-18 · dodjela vlasnika: najviše jedan aktivni vlasnik po tvrtki</text>
+  <rect x="0" y="2164" width="960" height="730" fill="#eeeeee" stroke="none" />
+  <rect x="24" y="2188" width="912" height="679" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="215" y="2256" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">‹ Natrag na tvrtke</text>
+  <text x="215" y="2280" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="26" font-weight="bold">Charter tvrtka 1</text>
+  <text x="215" y="2330" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="17" font-weight="bold">Podaci tvrtke</text>
+  <text x="215" y="2360" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Naziv</text>
+  <rect x="215" y="2380" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="2389" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Charter tvrtka 1</text>
+  <text x="575" y="2360" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">OIB</text>
+  <rect x="575" y="2380" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="585" y="2389" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">12345678901</text>
+  <text x="215" y="2418" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Adresa</text>
+  <rect x="215" y="2438" width="700" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="2447" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Obala 1, 21000 Split</text>
+  <text x="215" y="2480" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">E-pošta</text>
+  <rect x="215" y="2500" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="2509" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">info@example.com</text>
+  <text x="575" y="2480" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Telefon</text>
+  <rect x="575" y="2500" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="585" y="2509" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">+385 1 234 5678</text>
+  <text x="215" y="2538" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">OIB ima 11 znamenki i jedinstven je u sustavu.</text>
+  <text x="215" y="2575" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="17" font-weight="bold">Vlasnik</text>
+  <rect x="215" y="2605" width="700" height="58" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="227" y="2617" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Marko Ivić</text>
+  <text x="227" y="2639" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">marko@example.com · uloga: Vlasnik</text>
+  <rect x="753" y="2620" width="150" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="770.9" y="2628" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Promijeni vlasnika</text>
+  <text x="215" y="2689" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="17" font-weight="bold">Status</text>
+  <rect x="215" y="2719" width="700" height="70" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="229" y="2735" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Aktivna</text>
+  <text x="229" y="2759" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Deaktivirana tvrtka i njezina plovila ne prikazuju se u javnoj pretrazi.</text>
+  <rect x="751" y="2740" width="150" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="773.2" y="2748" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Deaktiviraj tvrtku</text>
+  <rect x="653" y="2815" width="100" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="674.8" y="2823" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Odustani</text>
+  <rect x="765" y="2815" width="150" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="786.9" y="2823" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Spremi promjene</text>
+  <rect x="24" y="2188" width="912" height="52" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="45" y="2206" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="19" font-weight="bold">ChartIt</text>
+  <text x="652" y="2209" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Pretraga</text>
+  <rect x="728" y="2201" width="126" height="26" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="746.2" y="2207" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Administracija</text>
+  <rect x="883" y="2201" width="33" height="26" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="889.4" y="2207" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">AD</text>
+  <rect x="194" y="2240" width="3" height="627" fill="#53575a" stroke="none" />
+  <rect x="36" y="2255" width="146" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="1" />
+  <text x="48" y="2264" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Tvrtke</text>
+  <text x="48" y="2300" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Korisnici</text>
+  <text x="48" y="2336" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Kategorije</text>
+  <text x="48" y="2372" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Luke</text>
+  <text x="24" y="2877" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">05  /  UC-14, UC-15 · F-19 · ruta: /administracija/tvrtke/:id</text>
+  <rect x="0" y="2910" width="960" height="375" fill="#eeeeee" stroke="none" />
+  <rect x="24" y="2934" width="450" height="250" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="38" y="2948" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Tvrtka s budućim potvrđenim rezervacijama</text>
+  <text x="38" y="2980" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="17" font-weight="bold">Deaktivirati tvrtku Charter tvrtka 1?</text>
+  <text x="38" y="3014" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Buduće potvrđene rezervacije: 3</text>
+  <text x="38" y="3040" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Tvrtka i njezina plovila nestaju iz javne pretrage.</text>
+  <text x="38" y="3060" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Potvrđene rezervacije ostaju važeće, a zahtjevi na čekanju</text>
+  <text x="38" y="3077" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">se odbijaju.</text>
+  <text x="38" y="3097" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Postojeće rezervacije i povijest ostaju sačuvani.</text>
+  <rect x="38" y="3130" width="110" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="64.8" y="3138" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Odustani</text>
+  <rect x="160" y="3130" width="120" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="187.1" y="3138" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Deaktiviraj</text>
+  <text x="294" y="3138" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Fokus je na „Odustani”.</text>
+  <rect x="486" y="2934" width="450" height="250" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="500" y="2948" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Tvrtka bez budućih rezervacija</text>
+  <text x="500" y="2980" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="17" font-weight="bold">Deaktivirati tvrtku Charter tvrtka 3?</text>
+  <text x="500" y="3014" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Buduće potvrđene rezervacije: 0</text>
+  <text x="500" y="3040" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Tvrtka i njezina plovila nestaju iz javne pretrage.</text>
+  <text x="500" y="3060" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Postojeće rezervacije i povijest ostaju sačuvani.</text>
+  <rect x="500" y="3130" width="110" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="526.8" y="3138" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Odustani</text>
+  <rect x="622" y="3130" width="120" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="649.1" y="3138" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Deaktiviraj</text>
+  <rect x="24" y="3196" width="912" height="62" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="38" y="3210" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Nakon potvrde</text>
+  <text x="38" y="3232" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Tvrtka je deaktivirana. U popisu tvrtki prikazuje se sa statusom Neaktivna.</text>
+  <text x="24" y="3268" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">06  /  UC-15 (alternativni tok 1a) · F-19 · D-02 · pogl. 4.7</text>
+  <rect x="0" y="3301" width="960" height="639" fill="#eeeeee" stroke="none" />
+  <rect x="24" y="3325" width="912" height="588" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="215" y="3397" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="26" font-weight="bold">Korisnici</text>
+  <text x="215" y="3443" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Pretraga</text>
+  <rect x="215" y="3463" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="3472" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal" opacity="0.5">Ime ili e-pošta</text>
+  <text x="575" y="3443" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uloga</text>
+  <rect x="575" y="3463" width="160" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="585" y="3472" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Sve uloge</text>
+  <text x="715.4" y="3471" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">⌄</text>
+  <text x="755" y="3443" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Status</text>
+  <rect x="755" y="3463" width="160" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="765" y="3472" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Svi</text>
+  <text x="895.4" y="3471" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">⌄</text>
+  <rect x="215" y="3513" width="700" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="3521" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Ime</text>
+  <text x="355" y="3521" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">E-pošta</text>
+  <text x="525" y="3521" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uloga</text>
+  <text x="630" y="3521" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Tvrtka</text>
+  <text x="760" y="3521" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Status</text>
+  <text x="853" y="3521" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold"></text>
+  <text x="225" y="3550" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Ana Kovač</text>
+  <text x="355" y="3550" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">ana@example.com</text>
+  <text x="525" y="3550" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Korisnik</text>
+  <text x="630" y="3550" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">–</text>
+  <text x="760" y="3550" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivan</text>
+  <text x="853" y="3551" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="3571" width="700" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="3580" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Marko Ivić</text>
+  <text x="355" y="3580" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">marko@example.com</text>
+  <text x="525" y="3580" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Vlasnik</text>
+  <text x="630" y="3580" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Charter tvrtka 1</text>
+  <text x="760" y="3580" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivan</text>
+  <text x="853" y="3581" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="3601" width="700" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="3610" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Lana Radić</text>
+  <text x="355" y="3610" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">lana@example.com</text>
+  <text x="525" y="3610" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Djelatnik</text>
+  <text x="630" y="3610" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Charter tvrtka 1</text>
+  <text x="760" y="3610" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivan</text>
+  <text x="853" y="3611" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="3631" width="700" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="3640" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Iva Horvat</text>
+  <text x="355" y="3640" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">iva@example.com</text>
+  <text x="525" y="3640" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Administrator</text>
+  <text x="630" y="3640" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">–</text>
+  <text x="760" y="3640" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivan</text>
+  <text x="853" y="3641" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="3661" width="700" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="3670" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Josip Jurić</text>
+  <text x="355" y="3670" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">josip@example.com</text>
+  <text x="525" y="3670" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Korisnik</text>
+  <text x="630" y="3670" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">–</text>
+  <text x="760" y="3670" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Neaktivan</text>
+  <text x="853" y="3671" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="3691" width="700" height="1" fill="#53575a" stroke="none" />
+  <text x="457.8" y="3711" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal" opacity="0.5">‹ Prethodna</text>
+  <text x="552.4" y="3711" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">1 / 4</text>
+  <text x="599" y="3711" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Sljedeća ›</text>
+  <rect x="215" y="3751" width="700" height="138" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="229" y="3765" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Uređivanje korisnika: Ana Kovač · ana@example.com</text>
+  <text x="229" y="3795" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uloga</text>
+  <rect x="229" y="3815" width="170" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="239" y="3824" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Korisnik</text>
+  <text x="379.4" y="3823" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">⌄</text>
+  <text x="415" y="3795" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Tvrtka</text>
+  <rect x="415" y="3815" width="200" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="425" y="3824" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">–</text>
+  <text x="595.4" y="3823" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">⌄</text>
+  <rect x="811" y="3815" width="90" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="834" y="3824" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Spremi</text>
+  <rect x="659" y="3815" width="140" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="676.6" y="3824" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Deaktiviraj račun</text>
+  <text x="229" y="3859" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Tvrtka je obavezna za uloge Djelatnik i Vlasnik. Deaktivirani korisnik se ne može prijaviti.</text>
+  <rect x="24" y="3325" width="912" height="52" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="45" y="3343" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="19" font-weight="bold">ChartIt</text>
+  <text x="652" y="3346" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Pretraga</text>
+  <rect x="728" y="3338" width="126" height="26" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="746.2" y="3344" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Administracija</text>
+  <rect x="883" y="3338" width="33" height="26" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="889.4" y="3344" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">AD</text>
+  <rect x="194" y="3377" width="3" height="536" fill="#53575a" stroke="none" />
+  <text x="48" y="3401" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Tvrtke</text>
+  <rect x="36" y="3428" width="146" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="1" />
+  <text x="48" y="3437" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Korisnici</text>
+  <text x="48" y="3473" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Kategorije</text>
+  <text x="48" y="3509" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Luke</text>
+  <text x="24" y="3923" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">07  /  F-22 · deaktivacija računa: D-02 · ruta: /administracija/korisnici</text>
+  <rect x="0" y="3956" width="960" height="568" fill="#eeeeee" stroke="none" />
+  <rect x="24" y="3980" width="912" height="517" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="215" y="4052" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="26" font-weight="bold">Kategorije plovila</text>
+  <text x="215" y="4098" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Nova kategorija</text>
+  <rect x="215" y="4118" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="4127" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal" opacity="0.5">Naziv kategorije</text>
+  <rect x="567" y="4118" width="150" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="591.1" y="4127" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Dodaj kategoriju</text>
+  <rect x="215" y="4168" width="700" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="4176" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Naziv</text>
+  <text x="525" y="4176" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Status</text>
+  <text x="695" y="4176" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold"></text>
+  <text x="225" y="4205" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Jedrilica</text>
+  <text x="525" y="4205" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivna</text>
+  <text x="695" y="4206" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi  ·  Deaktiviraj</text>
+  <rect x="215" y="4226" width="700" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="4235" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Katamaran</text>
+  <text x="525" y="4235" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivna</text>
+  <text x="695" y="4236" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi  ·  Deaktiviraj</text>
+  <rect x="215" y="4256" width="700" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="4265" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Motorna jahta</text>
+  <text x="525" y="4265" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivna</text>
+  <text x="695" y="4266" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi  ·  Deaktiviraj</text>
+  <rect x="215" y="4286" width="700" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="4295" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Gumenjak</text>
+  <text x="525" y="4295" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Neaktivna</text>
+  <text x="695" y="4296" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi</text>
+  <rect x="215" y="4316" width="700" height="1" fill="#53575a" stroke="none" />
+  <rect x="215" y="4340" width="700" height="104" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="229" y="4354" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Izmjena kategorije</text>
+  <text x="229" y="4380" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Naziv</text>
+  <rect x="229" y="4400" width="340" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="239" y="4409" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Jedrilica</text>
+  <rect x="811" y="4400" width="90" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="834" y="4409" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Spremi</text>
+  <rect x="699" y="4400" width="100" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="720.8" y="4409" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Odustani</text>
+  <text x="215" y="4458" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Deaktivirana kategorija ne nudi se pri unosu plovila ni u filtrima pretrage. Postojeća plovila je zadržavaju.</text>
+  <rect x="24" y="3980" width="912" height="52" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="45" y="3998" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="19" font-weight="bold">ChartIt</text>
+  <text x="652" y="4001" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Pretraga</text>
+  <rect x="728" y="3993" width="126" height="26" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="746.2" y="3999" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Administracija</text>
+  <rect x="883" y="3993" width="33" height="26" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="889.4" y="3999" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">AD</text>
+  <rect x="194" y="4032" width="3" height="465" fill="#53575a" stroke="none" />
+  <text x="48" y="4056" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Tvrtke</text>
+  <text x="48" y="4092" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Korisnici</text>
+  <rect x="36" y="4119" width="146" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="1" />
+  <text x="48" y="4128" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Kategorije</text>
+  <text x="48" y="4164" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Luke</text>
+  <text x="24" y="4507" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">08  /  F-23 · ruta: /administracija/kategorije</text>
+  <rect x="0" y="4540" width="960" height="589" fill="#eeeeee" stroke="none" />
+  <rect x="24" y="4564" width="912" height="538" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="215" y="4636" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="26" font-weight="bold">Luke</text>
+  <rect x="805" y="4638" width="110" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="829.3" y="4646" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Nova luka</text>
+  <rect x="215" y="4686" width="330" height="28" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="225" y="4694" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Naziv</text>
+  <text x="355" y="4694" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Status</text>
+  <text x="475" y="4694" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold"></text>
+  <text x="225" y="4723" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Split</text>
+  <text x="355" y="4723" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivna</text>
+  <text x="475" y="4724" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="4744" width="330" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="4753" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Zadar</text>
+  <text x="355" y="4753" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivna</text>
+  <text x="475" y="4754" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="4774" width="330" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="4783" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Dubrovnik</text>
+  <text x="355" y="4783" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Aktivna</text>
+  <text x="475" y="4784" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="4804" width="330" height="1" fill="#53575a" stroke="none" />
+  <text x="225" y="4813" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Trogir</text>
+  <text x="355" y="4813" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Neaktivna</text>
+  <text x="475" y="4814" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Uredi ›</text>
+  <rect x="215" y="4834" width="330" height="1" fill="#53575a" stroke="none" />
+  <rect x="565" y="4686" width="350" height="392" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="579" y="4700" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Izmjena luke</text>
+  <text x="579" y="4728" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Naziv</text>
+  <rect x="579" y="4748" width="322" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="589" y="4757" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Split</text>
+  <text x="579" y="4790" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Geografska širina</text>
+  <rect x="579" y="4810" width="153" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="589" y="4819" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">43,5081</text>
+  <text x="748" y="4790" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Geografska dužina</text>
+  <rect x="748" y="4810" width="153" height="30" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="758" y="4819" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">16,4402</text>
+  <rect x="579" y="4854" width="322" height="130" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="724.4" y="4866" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="normal" opacity="0.6">Karta</text>
+  <ellipse cx="740" cy="4919" rx="7" ry="7" fill="#53575a" stroke="#53575a" stroke-width="2" />
+  <text x="754" y="4914" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Split</text>
+  <text x="579" y="4994" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Klik na kartu postavlja lokaciju luke.</text>
+  <text x="579" y="5010" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Ako karta nije dostupna, koordinate se unose ručno.</text>
+  <rect x="579" y="5034" width="130" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="596" y="5043" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Deaktiviraj luku</text>
+  <rect x="791" y="5034" width="110" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="808.8" y="5043" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Spremi luku</text>
+  <rect x="24" y="4564" width="912" height="52" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="45" y="4582" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="19" font-weight="bold">ChartIt</text>
+  <text x="652" y="4585" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Pretraga</text>
+  <rect x="728" y="4577" width="126" height="26" fill="#f6f6f6" stroke="#53575a" stroke-width="3" />
+  <text x="746.2" y="4583" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Administracija</text>
+  <rect x="883" y="4577" width="33" height="26" fill="#eeeeee" stroke="#53575a" stroke-width="3" />
+  <text x="889.4" y="4583" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">AD</text>
+  <rect x="194" y="4616" width="3" height="486" fill="#53575a" stroke="none" />
+  <text x="48" y="4640" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Tvrtke</text>
+  <text x="48" y="4676" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Korisnici</text>
+  <text x="48" y="4712" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="normal">Kategorije</text>
+  <rect x="36" y="4739" width="146" height="30" fill="#eeeeee" stroke="#53575a" stroke-width="1" />
+  <text x="48" y="4748" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Luke</text>
+  <text x="24" y="5112" fill="#53575a" dominant-baseline="hanging" font-family="Arial, sans-serif" font-size="12" font-weight="normal">09  /  F-23, F-17 · karta nedostupna: V-01 · ruta: /administracija/luke</text>
+</svg>

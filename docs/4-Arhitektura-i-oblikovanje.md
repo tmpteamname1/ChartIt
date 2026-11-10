@@ -219,14 +219,16 @@ Ruta `/tvrtka` preusmjerava na `/tvrtka/zahtjevi`.
 
 | Ekran | Ruta | Pristup | UC | F | Sadržaj |
 | --- | --- | --- | --- | --- | --- |
-| Tvrtke | `/administracija/tvrtke` | ADMINISTRATOR | UC-14, UC-15 | F-25 | Popis tvrtki s pretragom i statusom. |
-| Nova tvrtka | `/administracija/tvrtke/nova` | ADMINISTRATOR | UC-14 | F-25, F-26 | Obrazac tvrtke (naziv, OIB, adresa, kontakt) i dodjela vlasnika; poruka o duplikatu OIB-a. |
-| Izmjena tvrtke | `/administracija/tvrtke/:id` | ADMINISTRATOR | UC-14, UC-15 | F-25, F-26 | Izmjena podataka, promjena vlasnika, deaktivacija s brojem budućih potvrđenih rezervacija. |
-| Korisnici | `/administracija/korisnici` | ADMINISTRATOR | – | F-10 | Pretraga korisnika, promjena uloge, deaktivacija računa. |
-| Kategorije plovila | `/administracija/kategorije` | ADMINISTRATOR | – | F-30 | Popis, dodavanje, izmjena i deaktivacija kategorija. |
-| Luke | `/administracija/luke` | ADMINISTRATOR | – | F-30 | Popis, dodavanje, izmjena i deaktivacija luka, s lokacijom na karti (F-16). |
+| Tvrtke | `/administracija/tvrtke` | ADMINISTRATOR | UC-14, UC-15 | F-19 | Popis tvrtki s pretragom i statusom. |
+| Nova tvrtka | `/administracija/tvrtke/nova` | ADMINISTRATOR | UC-14 | F-19 | Obrazac tvrtke (naziv, OIB, adresa, kontakt) i dodjela vlasnika; poruka o duplikatu OIB-a. |
+| Izmjena tvrtke | `/administracija/tvrtke/:id` | ADMINISTRATOR | UC-14, UC-15 | F-19 | Izmjena podataka, promjena vlasnika, deaktivacija s brojem budućih potvrđenih rezervacija. |
+| Korisnici | `/administracija/korisnici` | ADMINISTRATOR | – | F-22 | Pretraga korisnika, promjena uloge, deaktivacija računa. |
+| Kategorije plovila | `/administracija/kategorije` | ADMINISTRATOR | – | F-23 | Popis, dodavanje, izmjena i deaktivacija kategorija. |
+| Luke | `/administracija/luke` | ADMINISTRATOR | – | F-23 | Popis, dodavanje, izmjena i deaktivacija luka, s lokacijom na karti (F-17). |
 
 Ruta `/administracija` preusmjerava na `/administracija/tvrtke`.
+
+[Skice administracije (#56)](dizajn/56-Wireframe-administracije.svg) prikazuju popis tvrtki, obrazac tvrtke s duplikatom OIB-a, dodjelu vlasnika, deaktivaciju tvrtke, korisnike i uloge te šifrarnike kategorija i luka. Dostupan je i [izvor za uređivanje u Excalidrawu](dizajn/56-Wireframe-administracije.excalidraw). Oznake F u tablici i na skicama slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi).
 
 ### Sustavne stranice
 
