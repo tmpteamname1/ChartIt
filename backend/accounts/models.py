@@ -19,6 +19,8 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.KORISNIK)
 
+    # Customers and platform administrators have no company; staff and owners belong to one.
+    # PROTECT: companies are deactivated, not deleted (4.6).
     company = models.ForeignKey(
         'companies.Company',
         null=True,

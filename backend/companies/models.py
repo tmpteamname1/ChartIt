@@ -4,7 +4,7 @@ from django.db import models
 
 
 def validate_oib_checksum(value):
-    """Provjera kontrolne znamenke OIB-a (ISO 7064, MOD 11,10)."""
+    """Checking the OIB control digit (ISO 7064, MOD 11,10)."""
     if len(value) != 11 or not (value.isascii() and value.isdigit()):
         return
     remainder = 10
@@ -24,6 +24,11 @@ def validate_oib_checksum(value):
 
 
 class Company(models.Model):
+    """Charter company (ER diagram, 4.3.1).
+
+    Companies are deactivated with is_active = False instead of being deleted (4.6).
+    """
+
     name = models.CharField(
         max_length=255,
         verbose_name='naziv',
@@ -46,7 +51,7 @@ class Company(models.Model):
         verbose_name='adresa',
     )
     email = models.EmailField(
-        verbose_name='e-mail',
+        verbose_name='E-pošta',
     )
     phone = models.CharField(
         max_length=30,
