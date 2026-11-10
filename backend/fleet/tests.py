@@ -64,8 +64,7 @@ class PortTests(TestCase):
 
     def test_longitude_out_of_range_rejected_by_database(self):
         with self.assertRaises(IntegrityError), transaction.atomic():
-            self.make_port(lon='150.5').save()
-            self.make_port(name='Zadar', lon='500').save()
+            self.make_port(lon='500').save()
 
     def test_duplicate_name_rejected(self):
         self.make_port().save()
