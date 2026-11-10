@@ -1,0 +1,103 @@
+' ==============================================================================
+' 4-6-chartit-oauth-SD.puml
+'
+' Svrha:    Prikazuje tok prijave putem vanjskog OAuth pružatelja (Google):
+'           od klika na gumb u React aplikaciji, preko OAuth toka koji provodi
+'           django-allauth (headless), povezivanja računa po potvrđenoj adresi
+'           e-pošte (F-18) i stvaranja sesije, do trenutka kada React sazna
+'           tko je prijavljen. Prikazuje i slučaj u kojem pružatelj ne vrati
+'           adresu e-pošte ili je ona nepotvrđena (AS-08).
+' Praćenje: Tok odgovara odluci ADR-06 (pružatelj, biblioteka, održavanje
+'           prijave sesijom); nazivi putanja provjeriti u dokumentaciji
+'           instalirane verzije allauth biblioteke i uskladiti s rasporedom
+'           ruta iz poglavlja 4.8; pri odstupanju ažurirati ADR-06.
+'
+' Diagram level: Runtime Behavioral Design
+' Diagram type:  Sequence Diagram
+' Version:       1.0
+' ==============================================================================
+
+@startuml
+title Sustav Chartit – prijava putem Googlea (allauth headless, sesija)
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #212529
+
+skinparam sequence {
+    ParticipantBackgroundColor #E7F1FF
+    ParticipantBorderColor #0D6EFD
+    ActorBackgroundColor #E7F1FF
+    ActorBorderColor #0D6EFD
+    LifeLineBorderColor #212529
+}
+
+skinparam note {
+    BackgroundColor #F8F9FA
+    BorderColor #212529
+    FontColor #212529
+}
+
+actor Korisnik
+participant "React (SPA)" as FE
+participant "Django + allauth" as BE
+participant "Google OAuth" as G
+
+' ==============================================================================
+' Pokretanje prijave
+' ==============================================================================
+Korisnik -> FE : Klik "Prijavi se putem Googlea"
+FE -> BE : GET /_allauth/browser/v1/config
+BE --> FE : 200 + CSRF kolačić
+FE -> BE : POST /auth/provider/redirect\n(provider=google, callback_url, process=login)
+BE --> Korisnik : 302 na Google autorizacijski URL
+
+' ==============================================================================
+' OAuth tok s pružateljem
+' ==============================================================================
+Korisnik -> G : Prijava i odobrenje pristupa
+G --> Korisnik : 302 na backend callback (kod)
+Korisnik -> BE : GET /accounts/google/login/callback/?code=...
+BE -> G : Zamjena koda za token
+G --> BE : Access token
+BE -> G : Dohvat profila
+G --> BE : Profil (e-pošta, status potvrde, ime)
+
+' ==============================================================================
+' Povezivanje računa po potvrđenoj e-pošti (F-18, AS-08)
+' ==============================================================================
+alt E-pošta postoji i potvrđena je
+  alt Račun s tom e-poštom već postoji
+    BE -> BE : Poveži prijavu s postojećim računom\n(zadržava se uloga)
+  else Račun ne postoji
+    BE -> BE : Registriraj novog korisnika\n(uloga KORISNIK)
+  end
+  BE -> BE : Stvori sesiju
+  BE --> Korisnik : 302 na callback_url\n+ Set-Cookie: sessionid (HttpOnly)
+  Korisnik -> FE : Učitaj stranicu
+  FE -> BE : GET /_allauth/browser/v1/auth/session\n(s kolačićem)
+  BE --> FE : 200 + korisnik (uloga)
+  FE -> Korisnik : Prikaz prijavljenog stanja
+else E-pošta nedostaje ili nije potvrđena
+  BE --> Korisnik : 302 na /prijava (neuspjela prijava)
+  Korisnik -> FE : Učitaj /prijava
+  FE -> Korisnik : Poruka o neuspjeloj prijavi
+end
+
+' ==============================================================================
+' Ograničenja
+' ==============================================================================
+
+note right of BE
+  Račun se povezuje samo po potvrđenoj adresi
+  e-pošte. Nepotvrđena adresa ili njezin
+  izostanak ne povezuje postojeći račun.
+end note
+
+note over FE, BE
+  Stanje prijave ne pohranjuje se u pregledniku:
+  React ga uvijek dohvaća upitom prema poslužitelju
+  (200 = prijavljen, 401 = nije prijavljen).
+end note
+
+@enduml
