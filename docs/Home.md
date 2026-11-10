@@ -27,7 +27,7 @@ Ažurirani popis članova, njihovih GitHub profila i glavnih uloga ili doprinosa
 | [3. Obrasci uporabe](3-Obrasci-uporabe.md) | Akteri i reprezentativne interakcije korisnika |
 | [4. Arhitektura i oblikovanje](4-Arhitektura-i-oblikovanje.md) | Glavne odluke oblikovanja, struktura, podaci i ponašanje |
 | [Zajednička stanja sučelja (#58)](dizajn/58-Zajednicka-stanja-sucelja.md) | Nacrti i pravila učitavanja, praznih stanja, grešaka, obavijesti i potvrda |
-| [Mobilni wireframei (#57)](dizajn/57-Wireframe-mobilnog-prikaza.md) | Skice na širini od 375 px i pravila prilagodbe sučelja |
+| [Mobilni wireframei (#57)](4-Arhitektura-i-oblikovanje.md#mobilni-prikaz-57) | Skice na širini od 375 px i pravila prilagodbe sučelja |
 | [5. Ispitivanje](5-Ispitivanje.md) | Pristup ispitivanju, stvarni rezultati i poznati nedostaci |
 | [6. Postavljanje, instalacija i konfiguracija](6-Postavljanje-instalacija-i-konfiguracija.md) | Lokalna instalacija, konfiguracija, javno postavljanje i administracija |
 | [7. Zaključak i budući rad](7-Zakljucak-i-buduci-rad.md) | Zaključak i moguća daljnja poboljšanja |
@@ -61,7 +61,7 @@ README repozitorija sadrži projektnu [izjavu o uporabi umjetne inteligencije](.
 
 Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usage). Ovaj odjeljak bilježi koji su alati korišteni, za koju dokumentaciju ili kod te kako je tim provjerio rezultat. Slijedi FER-ova [pravila o primjerenoj uporabi umjetne inteligencije](https://www.fer.unizg.hr/_download/repository/Policy%20on%20the%20appropriate%20use%20of%20artificial%20intelligence%20at%20the%20faculty%20of%20electrical%20engineering%20and%20computing%5B1%5D.pdf).
 
-Evidencija alata, doprinosa i provjera za [mobilne wireframee (#57)](dizajn/57-Wireframe-mobilnog-prikaza.md#uporaba-umjetne-inteligencije) nalazi se uz skice.
+Nikolić je koristio OpenAI Codex za izradu i doradu mobilnih skica u SVG-u i Excalidrawu te pravila prilagodbe. Model nije zabilježen. Sadržaj je uspoređen s issueom #57, analizom zahtjeva, obrascima uporabe, arhitekturom, React navigacijom i povezanim skicama. Provjereni su prikaz u Chromeu, uvoz u Excalidraw, podudarnost oba formata i poveznice. [Mobilni prikaz (#57)](4-Arhitektura-i-oblikovanje.md#mobilni-prikaz-57)
 
 ### Korišteni alati
 
