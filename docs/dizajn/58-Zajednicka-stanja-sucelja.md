@@ -209,5 +209,5 @@ U wireframeima ostalih ekrana možemo samo staviti oznaku uzorka i poveznicu na 
 | [#54 — Korisnički dio](https://github.com/tmpteamname1/ChartIt/issues/54) | Rezervacija: [U-03](#u-03), [G-01](#g-01), [G-05](#g-05), [O-01](#o-01). Moje rezervacije: [P-02](#p-02), [D-01](#d-01). |
 | [#55 — Panel tvrtke](https://github.com/tmpteamname1/ChartIt/issues/55) | Statistika i raspored: [P-03](#p-03). Obrasci: [G-01](#g-01), [G-05](#g-05), [U-03](#u-03). Deaktivacija: [D-02](#d-02). |
 | [#56 — Administracija](https://github.com/tmpteamname1/ChartIt/issues/56) | Duplikat OIB-a: [G-01](#g-01), uz polje OIB. Deaktivacija tvrtke: [D-02](#d-02), uz broj budućih potvrđenih rezervacija. |
-| [#57 — Mobilni prikaz](https://github.com/tmpteamname1/ChartIt/issues/57) | Isti uzorci i poruke, prilagođeni širini zaslona prema zajedničkom pravilu iznad. |
+| [#57 — Mobilni prikaz](https://github.com/tmpteamname1/ChartIt/issues/57) | Isti uzorci i poruke, prilagođeni širini zaslona prema zajedničkom pravilu iznad. [Skice i pravila prilagodbe](57-Wireframe-mobilnog-prikaza.md). |
 | Svi ekrani | Dohvat: [U-01](#u-01), [G-02](#g-02). Zaštićene i nepoznate stranice: [G-03](#g-03), [G-04](#g-04). |

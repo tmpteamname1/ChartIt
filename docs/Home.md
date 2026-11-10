@@ -61,13 +61,14 @@ README repozitorija sadrži projektnu [izjavu o uporabi umjetne inteligencije](.
 
 Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usage). Ovaj odjeljak bilježi koji su alati korišteni, za koju dokumentaciju ili kod te kako je tim provjerio rezultat. Slijedi FER-ova [pravila o primjerenoj uporabi umjetne inteligencije](https://www.fer.unizg.hr/_download/repository/Policy%20on%20the%20appropriate%20use%20of%20artificial%20intelligence%20at%20the%20faculty%20of%20electrical%20engineering%20and%20computing%5B1%5D.pdf).
 
+Evidencija alata, doprinosa i provjera za [mobilne wireframee (#57)](dizajn/57-Wireframe-mobilnog-prikaza.md#uporaba-umjetne-inteligencije) nalazi se uz skice.
+
 ### Korišteni alati
 
 | Alat | Inačica ili model | Koristio/la | Glavna svrha |
 | --- | --- | --- | --- |
 | [Naziv alata] | [Inačica ili model, ako je poznat] | [Član/članovi tima] | [npr. izrada nacrta dokumentacije, generiranje izvora dijagrama] |
 | OpenAI Codex | Model nije zabilježen | Luka | Priprema tekstualnih skica i kratkih pravila zajedničkih stanja sučelja za #58 |
-| OpenAI Codex | Model nije zabilježen | Nikolić | Izrada mobilnih skica i pravila prilagodbe za #57 |
 
 ### Opseg doprinosa umjetne inteligencije
 
@@ -75,7 +76,6 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | --- | --- | --- | --- | --- |
 | [npr. 3. Obrasci uporabe, UC-002] | [Izrada nacrta / preoblikovanje / prijevod / izvor dijagrama / sažimanje] | [Kratak opis] | [Ulaz zadan alatu; dodane, ispravljene ili uklonjene činjenice] | [Stranica dokumentacije, `.puml` datoteka, PR] |
 | Zajednička stanja sučelja (#58), poveznice iz kazala i poglavlja 4.8 | Izrada skica i pravila prikaza | Jedna Markdown datoteka s tekstualnim skicama, kratkim pravilima i referencama na ekrane | Korisnik je zadao issue #58 i zatražio tekstualne skice u Markdownu; sadržaj je uspoređen s projektnom dokumentacijom. Timski pregled slijedi u PR-u. | [Skice i pravila](dizajn/58-Zajednicka-stanja-sucelja.md) |
-| Mobilni prikaz (#57) | Izrada skica i pravila prikaza | SVG, uređivi Excalidraw i pravila za prijelome, tablice i obrasce | Korisnik je zadao issue #57. Skice su uspoređene s projektnom dokumentacijom i prethodnim skicama. Provjereni su sadržaj oba formata, prikaz skica i poveznice. | [Mobilni wireframei](dizajn/57-Wireframe-mobilnog-prikaza.md) |
 
 Stranice i artefakti koji nisu navedeni iznad izrađeni su bez pomoći generativne umjetne inteligencije.
 

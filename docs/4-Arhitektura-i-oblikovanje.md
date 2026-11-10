@@ -245,13 +245,13 @@ Svi funkcijski zahtjevi s korisničkim sučeljem pokriveni su barem jednim ekran
 | --- | --- | --- |
 | Posjetitelj | Logo (početna), Pretraga, Prijava | – |
 | KORISNIK | Logo, Pretraga, Moje rezervacije, izbornik računa (Odjava) | – |
-| DJELATNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored |
+| DJELATNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored, Rezervacije |
 | VLASNIK | Logo, Pretraga, Panel tvrtke, izbornik računa | Zahtjevi, Raspored, Rezervacije, Flota, Dodatne usluge, Djelatnici, Podaci o tvrtki, Statistika |
 | ADMINISTRATOR | Logo, Pretraga, Administracija, izbornik računa | Tvrtke, Korisnici, Kategorije, Luke |
 
 Na mobitelu se poveznice iz zaglavlja i bočni izbornik sklapaju u izbornik koji se otvara gumbom (hamburger).
 
-[Mobilni wireframei (#57)](dizajn/57-Wireframe-mobilnog-prikaza.md) prikazuju izbornike po ulogama i ključne tokove na širini od 375 px te opisuju prijelomne točke, tablice i obrasce.
+Mobilni prikaz slijedi tablicu planiranih izbornika. Pristup rezervacijama za djelatnika potvrđen je prema F-11 i UC-05 u [PR-u #89](https://github.com/tmpteamname1/ChartIt/pull/89), gdje je usklađena tablica ruta. [Mobilni wireframei (#57)](dizajn/57-Wireframe-mobilnog-prikaza.md) prikazuju ključne tokove na širini od 375 px te opisuju prijelomne točke, tablice i obrasce.
 
 ### Dijagram navigacije
 
