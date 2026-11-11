@@ -26,6 +26,8 @@ Varijable koje su već postavljene u okruženju (Docker, Azure, Render) imaju pr
 | `DJANGO_HTTPS` | ne | suprotno od `DJANGO_DEBUG` | Preusmjeravanje na HTTPS, sigurni kolačići i HSTS. `False` omogućuje lokalno pokretanje s produkcijskim postavkama preko HTTP-a. |
 | `DJANGO_HSTS_SECONDS` | ne | `3600` | Trajanje HSTS-a dok je HTTPS uključen. Povećati na `31536000` kada se potvrdi da HTTPS radi. |
 | `DJANGO_MEDIA_ROOT` | ne | `backend/media` | Mapa za učitane datoteke. Na Azureu `/home/media` (odjeljak Medijske datoteke). |
+| `GOOGLE_CLIENT_ID` | ne | nema | OAuth Client ID iz Google Cloud Consolea (`xxx.apps.googleusercontent.com`). Lokalno ID klijenta "ChartIt Web Client (lokalno)", na Renderu ID produkcijskog klijenta. |
+| `GOOGLE_CLIENT_SECRET` | da | nema | OAuth Client Secret (`GOCSPX-...`) istog klijenta. Lokalno secret lokalnog klijenta; produkcijski secret postoji samo na Renderu. |
 
 Varijable koje će se dodati s kasnijim zadacima (OAuth, slanje e-pošte, ključ za vremensku prognozu) upisuju se u ovu tablicu i u `.env.example` u istom PR-u u kojem se uvode. `.env.example` sadrži samo primjere i vrijednosti za lokalni razvoj, nikad stvarne tajne.
 
@@ -90,33 +92,30 @@ Datoteke se poslužuju s istog origina kao aplikacija, pa se ne smiju dopuštati
 
 ## Google OAuth prijava
 
-Prijava Google računom koristi OAuth 2.0. Aplikacija je registrirana u Google Cloud Consoleu (Google Auth Platform), a Django s Googleom komunicira preko Client ID-a i Client Secreta.
+Prijava Google računom koristi OAuth 2.0. Aplikacija je registrirana u Google Cloud Consoleu (Google Auth Platform), a Django s Googleom komunicira preko Client ID-a i Client Secreta. Putanja povratnog URL-a `/accounts/google/login/callback/` potječe iz biblioteke django-allauth odabrane u ADR-06 ([#86](https://github.com/tmpteamname1/ChartIt/pull/86)).
 
 ### Registracija OAuth aplikacije
 
-1. **Projekt** je stvoren na zajedničkom Google računu tima (`progiprojekt94.fer@gmail.com `), a ne na osobnom računu jednog člana, kako pristup ne bi ovisio o jednoj osobi. 
-2. **Consent screen** (Google Auth Platform > Branding i Data Access):
-   - naziv aplikacije: `ChartIt`,
-   - kontakt e-pošta: `progiprojekt94.fer@gmail.com`,
-   - vrsta korisnika: External,
-   - opsezi: `openid`, `email`, `profile` (nisu osjetljivi opsezi, pa verifikacija nije potrebna).
-3. **Web client** (Google Auth Platform > Clients > Create client > Web application), naziv `ChartIt Web Client`. Client ID i Client Secret nastaju pri stvaranju.
-4. **Authorized redirect URIs**:
-   - lokalno: `http://localhost:8000/accounts/google/login/callback/`
-   - javna instanca: `https://chartit-okv1.onrender.com/accounts/google/login/callback/`
-5. **Test users:** dok je aplikacija u stanju "Testing", prijaviti se mogu samo korisnici s popisa (Audience > Test users).
+1. **Projekt** je stvoren na zajedničkom Google računu tima (`progiprojekt94.fer@gmail.com`), a ne na osobnom računu jednog člana, kako pristup ne bi ovisio o jednoj osobi. Na račun se mogu prijaviti `Sven Matić` i `Lucian Lepur`, a lozinka se dijeli prema odjeljku "Dijeljenje tajni u timu". Dodatno su im u IAM-u dodijeljene uloge Owner.
+2. **Consent screen:**
+   - Branding: naziv aplikacije `ChartIt`, kontakt e-pošta `progiprojekt94.fer@gmail.com`,
+   - Data Access: opsezi `openid`, `email`, `profile` (nisu osjetljivi, pa verifikacija nije potrebna),
+   - Audience: vrsta korisnika External.
+3. **Test users** (Audience > Test users): dok je aplikacija u stanju "Testing", prijaviti se mogu samo korisnici s popisa. Na popisu su `<svi članovi tima i asistenti, navesti adrese ili imena>`. Prije demonstracije aplikacija se može prebaciti u "In production" (Publish app), što s osnovnim opsezima ne traži verifikaciju.
+4. **Web clientovi** (Clients > Create client > Web application). Consent screen, opsezi i test users zajednički su za oba klijenta.
+
+### Klijenti za lokalni razvoj i produkciju
+
+| Klijent | Authorized redirect URI | Gdje se koristi |
+| --- | --- | --- |
+| `ChartIt Web Client (lokalno)` | `http://localhost:8000/accounts/google/login/callback/` | `.env` članova tima. Secret se dijeli prema odjeljku "Dijeljenje tajni u timu". |
+| `ChartIt Web Client` | `https://chartit-okv1.onrender.com/accounts/google/login/callback/` | Samo Render. Produkcijski secret ne šalje se u WhatsApp grupu i ne upisuje se ni u jedan `.env`. |
+
+Redirect URI uvijek pokazuje na Django (backend), ne na Vite poslužitelj. Promjena na Googleu može se primijeniti tek nakon nekoliko minuta.
 
 ### Varijable okruženja
 
-| Varijabla | Tajna | Zadano | Opis i primjer |
-| --- | --- | --- | --- |
-| `GOOGLE_CLIENT_ID` | ne | nema | OAuth Client ID iz Google Cloud Consolea, oblika `xxx.apps.googleusercontent.com`. |
-| `GOOGLE_CLIENT_SECRET` | da | nema | OAuth Client Secret, oblika `GOCSPX-...`. Nikad se ne zapisuje u repozitorij. |
-
-| Okruženje | Gdje se postavljaju |
-| --- | --- |
-| Lokalno | U `.env` u korijenu repozitorija. |
-| Render | TREBA POPUNITI |
+Varijable `GOOGLE_CLIENT_ID` i `GOOGLE_CLIENT_SECRET` opisane su u tablici "Popis varijabli". Lokalno se postavljaju u `.env`, a na Renderu prema odjeljku "Varijable okruženja na Renderu".
 
 ## Postavljanje na Render
 
