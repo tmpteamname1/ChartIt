@@ -449,6 +449,17 @@ DRF uz prijavu sesijom po zadanom vraća 403 i kada korisnik nije prijavljen. Ra
 
 Poruke Djanga (npr. Django admin, „već postoji”) su na hrvatskom (`LANGUAGE_CODE = 'hr'`), a DRF nema hrvatski prijevod, pa su njegove standardne poruke („This field is required.”) na engleskom. Klijent zato za opće greške prikazuje vlastitu poruku prema polju `code`, a ne `detail`. Poruke koje pišemo sami (domenska pravila) pišu se na hrvatskom.
 
+### Prijava sesijom i CSRF zaštita
+
+Prijavljeni korisnik prepoznaje se po sesijskom kolačiću (`sessionid`, HttpOnly), koji preglednik šalje sam (ADR-06). Budući da preglednik kolačić šalje uz svaki zahtjev prema našoj domeni, zahtjevi koji mijenjaju podatke moraju dokazati da dolaze iz naše aplikacije (CSRF zaštita):
+
+- Django pri svakom učitavanju React aplikacije postavlja kolačić `csrftoken`. On nije HttpOnly jer ga JavaScript mora pročitati.
+- Uz svaki zahtjev `POST`, `PUT`, `PATCH` i `DELETE` klijent šalje vrijednost tog kolačića u zaglavlju `X-CSRFToken`. Za `GET` zaglavlje nije potrebno.
+- Zahtjev prijavljenog korisnika bez ispravnog tokena odbija se odgovorom 403 (`permission_denied`).
+- Zaglavlje dodaje zajednička funkcija za pozive u `frontend/src/api/`, a ne pojedini ekrani.
+
+CORS nije postavljen jer su klijent i poslužitelj na istom originu: u produkciji React poslužuje Django (ADR-01), a lokalno Vite prosljeđuje `/api` Djangu. Ako se to ikad promijeni, `CORS_ALLOWED_ORIGINS` i `CSRF_TRUSTED_ORIGINS` postavljaju se samo na našu domenu, nikad na `*`.
+
 ### Datumi, vrijeme i iznosi
 
 - Datumi su u obliku ISO 8601 `YYYY-MM-DD` (npr. početak i kraj najma).

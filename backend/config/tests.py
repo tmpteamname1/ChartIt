@@ -2,6 +2,7 @@ import tempfile
 from io import StringIO
 from unittest.mock import patch
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
@@ -9,7 +10,7 @@ from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
 from django.db import OperationalError
-from django.test import SimpleTestCase, TestCase, override_settings
+from django.test import Client, SimpleTestCase, TestCase, override_settings
 from django.urls import path, reverse
 from rest_framework import generics, serializers, views
 from rest_framework.permissions import AllowAny, IsAdminUser
@@ -71,8 +72,12 @@ class _NonFieldError(views.APIView):
         raise serializers.ValidationError('Termin je zauzet.')
 
 
+# No permission_classes: relies on the project default (IsAuthenticated).
 class _LoginRequired(views.APIView):
     def get(self, request):
+        return Response({})
+
+    def post(self, request):
         return Response({})
 
 
@@ -158,6 +163,35 @@ class ErrorFormatTests(TestCase):
 
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json()['code'], 'not_found')
+
+
+@override_settings(ROOT_URLCONF='config.tests')
+class CsrfTests(TestCase):
+    def setUp(self):
+        # The default test client skips CSRF checks; this one enforces them like a browser.
+        self.client = Client(enforce_csrf_checks=True)
+        self.client.force_login(
+            get_user_model().objects.create_user(username='ana', email='ana@example.com')
+        )
+
+    def test_react_page_sets_csrf_cookie(self):
+        self.client.get('/')
+
+        self.assertIn(settings.CSRF_COOKIE_NAME, self.client.cookies)
+
+    def test_post_without_csrf_token_is_rejected(self):
+        response = self.client.post('/api/test/login-required/')
+
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.json()['code'], 'permission_denied')
+
+    def test_post_with_csrf_token_from_cookie_passes(self):
+        self.client.get('/')
+        token = self.client.cookies[settings.CSRF_COOKIE_NAME].value
+
+        response = self.client.post('/api/test/login-required/', headers={'X-CSRFToken': token})
+
+        self.assertEqual(response.status_code, 200)
 
 
 class ApiSchemaTests(TestCase):
