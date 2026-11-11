@@ -2,7 +2,7 @@
 ' 4-5-chartit-reservation-SM.puml
 '
 ' Svrha:    Prikazuje životni ciklus domenskog objekta Rezervacija: stanja
-'           statusa (F-04), složeno stanje Potvrđena s podstanjima prije i
+'           statusa (F-05), složeno stanje Potvrđena s podstanjima prije i
 '           nakon preuzimanja plovila te događaje, uvjete i akcije koji
 '           mijenjaju stanje. Prijelazi odgovaraju metodama razreda
 '           Reservation iz dijagrama 4-3.
@@ -102,7 +102,7 @@ note right of Completed
   (npr. odbijanje potvrđene rezervacije)
   odbija se pogreškom bez promjene stanja.
   Završene rezervacije ulaze u statistiku
-  prihoda (F-13).
+  prihoda (F-15).
 end note
 
 @enduml

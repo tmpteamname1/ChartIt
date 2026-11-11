@@ -21,20 +21,20 @@
 **PlantUML izvor:** [izvor](./puml/4-1-chartit-system-CMP.puml)
 | Komponenta | Odgovornost | Razlog za ovu granicu |
 | --- | --- | --- |
-| Web klijent | Krovna komponenta za interakciju s korisnikom aplikacije bez poslovne logike F-16, NF-03 | Korisnička interakcija odvojena je od poslovnih pravila najma i trajne pohrane. |
-| Panel tvrtke (djelatnik, vlasnik)| Služi pregledu flote, rezervacija, preuzimanja, djelatnika i statistike. F-17, F-18| Poslovanje pojedine tvrtke odvojeno je od korisničkog i administratorskog sučelja platforme. |
+| Web klijent | Krovna komponenta za interakciju s korisnikom aplikacije bez poslovne logike F-17, NF-03 | Korisnička interakcija odvojena je od poslovnih pravila najma i trajne pohrane. |
+| Panel tvrtke (djelatnik, vlasnik)| Služi pregledu flote, rezervacija, preuzimanja, djelatnika i statistike. F-08, F-11, F-13, F-14, F-15, F-21, NF-02| Poslovanje pojedine tvrtke odvojeno je od korisničkog i administratorskog sučelja platforme. |
 | Korisnički dio (rezervacije korisnika) | Pregled plovila, zahtjevanje, otkazivanje i pregled rezervacija. | Radnje korisnika nad vlastitim rezervacijama odvojene su od upravljanja ponudom tvrtke. |
 | Javni dio (pretraga i detalji plovila)| Pregled plovila, detalji i pregled slobodnih tremina | Sadržaj dostupan bez prijave odvojen je od funkcionalnosti koje zahtijevaju autentifikaciju. |
 | Administracija platforme | Pregled i editiranje tvrtki, vlasnika, kategorija i luka | Upravljanje platformom kao cjelinom odvojeno je od poslovanja pojedinih tvrtki. |
 | REST API | Prima zahtjeve od web-klijenta i odgovara na njih. | Odgovornosti izložene putem HTTP-a odvojene su od poslovne logike pojedinih domena. |
-| Usluga vremenske prognoze | Komunicira s vanjskom uslugom za vremenske prognoze. F-15, NF-06| Komunikacija s vanjskim API-jem za prognozu odvojena je od ostatka sustava, uz mogućnost privremene pohrane i obrade nedostupnosti. |
-| Upravljanje tvrtkama | Komponenta preko koje se upravlja tvrtkama i djelatnicima (stvaranje, editiranje, brisanje). F-25, F-26, F-27, F-28| Podaci o tvrtkama i njihovim djelatnicima odvojeni su od ponude plovila koju tvrtke nude. |
-| Statistika i izvještaj | Komponenta preko koje se računa, prikazuje i izvozi statistika. F-13, F-14, F-31, NF-07| Agregacija i izvoz podataka odvojeni su od operativne obrade rezervacija. |
+| Usluga vremenske prognoze | Komunicira s vanjskom uslugom za vremenske prognoze. F-16, NF-06| Komunikacija s vanjskim API-jem za prognozu odvojena je od ostatka sustava, uz mogućnost privremene pohrane i obrade nedostupnosti. |
+| Upravljanje tvrtkama | Komponenta preko koje se upravlja tvrtkama i djelatnicima (stvaranje, editiranje, brisanje). F-19, F-20, F-21| Podaci o tvrtkama i njihovim djelatnicima odvojeni su od ponude plovila koju tvrtke nude. |
+| Statistika i izvještaj | Komponenta preko koje se računa, prikazuje i izvozi statistika. F-15| Agregacija i izvoz podataka odvojeni su od operativne obrade rezervacija. |
 | Autentifikacija i korisnici | Komponenta koja je u komunikaciji s OAuth poslužiteljem. Prijava i stvaranje korisnika. | Identitet i uloge korisnika odvojeni su od komunikacije s vanjskim OAuth pružateljem i od poslovnih podataka. |
-| Usluga rezervacija | Komponenta za stvaranje zahtjeva za rezervacije. Također vraća informacije o rezervacijama. F-02, F-03, F-04, F-05, F-08, F-11, F-12, F-19, F-21, F-22 | Pravila zauzetosti, izračuna cijene i promjena statusa rezervacije odvojena su od održavanja ponude. |
-| Kontrola pristupa  | Kompnenta za provjeru uloge i pripadnosti tvrtki. F-18, NF-02, NF-10| Provjera uloga i pripadnosti tvrtki izdvojena je kako bi se jednako primjenjivala na sve zahtjeve. |
-| Upravljanje flotom | Plovila, cijene usluga, fotografije, razdoblja zauzetosti. F-01, F-07, F-09, F-20, F-23, F-29, F-30| Ponuda plovila, cijena, dodatnih usluga i razdoblja nedostupnosti odvojena je od procesa rezerviranja. |
-| Usluga obavjesti | Komunikacija s vanjskim servisom za slanje elektroničke pošte. F-06, F-24| Slanje e-pošte odvojeno je od obrade rezervacija kako zastoj vanjskog poslužitelja ne bi utjecao na rezervaciju. |
+| Usluga rezervacija | Komponenta za stvaranje zahtjeva za rezervacije. Također vraća informacije o rezervacijama. F-03, F-04, F-05, F-06, F-11, F-12, F-13, F-14 | Pravila zauzetosti, izračuna cijene i promjena statusa rezervacije odvojena su od održavanja ponude. |
+| Kontrola pristupa  | Kompnenta za provjeru uloge i pripadnosti tvrtki. F-22, NF-02| Provjera uloga i pripadnosti tvrtki izdvojena je kako bi se jednako primjenjivala na sve zahtjeve. |
+| Upravljanje flotom | Plovila, cijene usluga, fotografije, razdoblja zauzetosti. F-01, F-02, F-08, F-09, F-10, F-23| Ponuda plovila, cijena, dodatnih usluga i razdoblja nedostupnosti odvojena je od procesa rezerviranja. |
+| Usluga obavjesti | Komunikacija s vanjskim servisom za slanje elektroničke pošte. F-07| Slanje e-pošte odvojeno je od obrade rezervacija kako zastoj vanjskog poslužitelja ne bi utjecao na rezervaciju. |
 
 
 ## 4.3 Model podataka i oblikovanje razreda
@@ -97,7 +97,7 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 ### ADR-02: Višetvrtkovnost u zajedničkoj bazi uz filtriranje po tvrtki
 | Polje | Zapis odluke |
 | --- | --- |
-| Kontekst i cilj | Platforma poslužuje više charter tvrtki. Vlasnici i djelatnici smiju vidjeti samo podatke svoje tvrtke (NF-10), a korisnici pretražuju plovila svih tvrtki (F-29) s jednim korisničkim računom. |
+| Kontekst i cilj | Platforma poslužuje više charter tvrtki. Vlasnici i djelatnici smiju vidjeti samo podatke svoje tvrtke (NF-02), a korisnici pretražuju plovila svih tvrtki (F-01) s jednim korisničkim računom. |
 | Kriteriji odluke | Pouzdana izolacija podataka tvrtki; jednostavna pretraga preko svih tvrtki; složenost primjerena timu bez iskustva s Djangom; mogućnost provjere izolacije testovima izravnih poziva API-ja. |
 | Razmatrane alternative | Zajednička baza i sheme, tvrtka kao strani ključ: jednostavno, pretraga preko svih tvrtki je običan upit, ali izolacija ovisi o dosljednom filtriranju u aplikaciji. Zasebna PostgreSQL shema po tvrtki (npr. django-tenants): jača izolacija, ali pretraga preko svih tvrtki i zajednički korisnici postaju složeni. Zasebna baza po tvrtki: najjača izolacija, ali neprimjereno za postavljanje i zajedničke šifrarnike. |
 | Odluka i obrazloženje | Odabrati zajedničku bazu u kojoj plovila, usluge i djelatnici pripadaju tvrtki putem stranog ključa. Izolacija se provodi u komponenti Kontrola pristupa: svi upiti tvrtke filtriraju se prema tvrtki prijavljenog korisnika, a ne prema identifikatoru iz zahtjeva. Prihvaća se rizik da propušteno filtriranje otkrije tuđe podatke, što se ublažava zajedničkim baznim razredima za poglede i automatiziranim testovima s identifikatorima druge tvrtke. |
@@ -106,7 +106,7 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 ### ADR-03: Sprječavanje preklapanja rezervacija ograničenjem u bazi podataka
 | Polje | Zapis odluke |
 | --- | --- |
-| Kontekst i cilj | Isto plovilo ne smije imati preklapajuće rezervacije, a preklapanje se mora spriječiti već pri podnošenju zahtjeva (F-03). Sustav istodobno koristi više korisnika (NF-01), pa dva zahtjeva za isti termin mogu stići u istom trenutku. |
+| Kontekst i cilj | Isto plovilo ne smije imati preklapajuće rezervacije, a preklapanje se mora spriječiti već pri podnošenju zahtjeva (F-04). Sustav istodobno koristi više korisnika (NF-01), pa dva zahtjeva za isti termin mogu stići u istom trenutku. |
 | Kriteriji odluke | Preklapanje mora biti spriječeno i pri istodobnim zahtjevima; korisnik dobiva razumljiv odgovor; rješenje je provjerljivo testovima i ne usporava znatno sustav (NF-05). |
 | Razmatrane alternative | Samo provjera u aplikaciji prije spremanja: jednostavno, ali dva istodobna zahtjeva mogu proći provjeru i oba se spremiti. Zaključavanje retka plovila (select_for_update) tijekom provjere: sprječava utrku, ali ovisi o tome da svaki dio koda koji stvara rezervacije zaključava ispravno. Ograničenje isključivanja u PostgreSQL-u (rasponi datuma po plovilu) uz provjeru u aplikaciji: baza jamči ispravnost neovisno o kodu, a aplikacijska provjera daje korisniku jasnu poruku. |
 | Odluka i obrazloženje | Odabrati ograničenje isključivanja nad razdobljem rezervacije za statuse Zahtjev i Potvrđena, uz prethodnu provjeru preklapanja u istoj transakciji, koja uključuje i razdoblja nedostupnosti. Povreda ograničenja pretvara se u odgovor 409 Conflict, jednako kao uobičajeno preklapanje. Prihvaća se vezanje uz PostgreSQL (proširenje btree_gist) te to što ograničenje ne pokriva razdoblja nedostupnosti, koja se provjeravaju samo u aplikaciji. |
@@ -115,7 +115,7 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 ### ADR-04: Pohrana cijena u rezervaciji u trenutku podnošenja zahtjeva
 | Polje | Zapis odluke |
 | --- | --- |
-| Kontekst i cilj | Vlasnik može mijenjati dnevnu cijenu plovila i cijene dodatnih usluga (F-07), a korisnik mora vidjeti iznos koji je prihvatio (F-05), dok statistika prihoda mora ostati točna za prošla razdoblja (F-13, NF-07). |
+| Kontekst i cilj | Vlasnik može mijenjati dnevnu cijenu plovila i cijene dodatnih usluga (F-09), a korisnik mora vidjeti iznos koji je prihvatio (F-06), dok statistika prihoda mora ostati točna za prošla razdoblja (F-15). |
 | Kriteriji odluke | Iznos postojeće rezervacije ne mijenja se nakon podnošenja; izvještaji su ponovljivi; model podataka ostaje jednostavan. |
 | Razmatrane alternative | Izračun iz trenutačnih cijena putem stranog ključa: nema dupliciranja, ali promjena cijene mijenja postojeće rezervacije i prošlu statistiku. Povijest cijena s razdobljima važenja: točno, ali složeniji model i upiti. Kopiranje cijena u rezervaciju i odabrane usluge: jednostavno i ponovljivo, uz manje dupliciranja podataka. |
 | Odluka i obrazloženje | Odabrati kopiranje dnevne cijene u rezervaciju i cijene svake usluge u zapis odabrane usluge pri stvaranju rezervacije te pohranu ukupnog iznosa koji izračunava poslužitelj. Iznos koji prikazuje klijent samo je procjena. Prihvaća se da se ista cijena nalazi na više mjesta i da se naknadno ispravljanje cijene ne prenosi na postojeće rezervacije. |
@@ -124,7 +124,7 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 ### ADR-05: Dohvat vremenske prognoze putem poslužitelja
 | Polje | Zapis odluke |
 | --- | --- |
-| Kontekst i cilj | Detalji plovila prikazuju vremensku prognozu za lokaciju i razdoblje najma (F-15). Vanjski servis može biti nedostupan, a korisnik tada mora dobiti obavijest (NF-06), dok stranica mora ostati brza (NF-05). |
+| Kontekst i cilj | Detalji plovila prikazuju vremensku prognozu za lokaciju i razdoblje najma (F-16). Vanjski servis može biti nedostupan, a korisnik tada mora dobiti obavijest (NF-06), dok stranica mora ostati brza (NF-05). |
 | Kriteriji odluke | Ključ vanjskog servisa ne smije biti izložen u pregledniku; nedostupnost servisa ne smije zaustaviti prikaz detalja plovila; mogućnost zamjene pružatelja bez promjene klijenta. |
 | Razmatrane alternative | Izravan poziv iz preglednika: manje koda na poslužitelju, ali ključ je izložen, nema privremene pohrane i svaki klijent ovisi o formatu vanjskog servisa. Dohvat putem poslužitelja (usluga vremenske prognoze): dodatna komponenta, ali omogućuje privremenu pohranu, jedinstven format odgovora i kontroliranu obradu pogrešaka. |
 | Odluka i obrazloženje | Odabrati dohvat putem poslužitelja, uz privremenu pohranu odgovora za lokaciju i datum te zaseban zahtjev klijenta, tako da se detalji plovila prikazuju i kad prognoza nije dostupna. Kartografske pločice dohvaćaju se izravno iz preglednika jer ne zahtijevaju ključ. Prihvaća se dodatno opterećenje poslužitelja i moguće kašnjenje prognoze zbog privremene pohrane. |
@@ -146,12 +146,12 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 | --- | --- | --- | --- |
 | Sigurnost | Autentifikacija putem vanjskog OAuth pružatelja | Svi zahtjevi osim javne pretrage i detalja plovila zahtijevaju prijavljenog korisnika; identitet se utvrđuje na poslužitelju iz sesije, nikad iz podataka koje šalje klijent. | Aplikacija accounts; zadana klasa autentifikacije u DRF postavkama; javni pogledi izričito označeni kao dostupni bez prijave. |
 | Sigurnost | Autorizacija prema ulogama | Ovlasti korisnika, djelatnika, vlasnika i administratora provjeravaju se na poslužiteljskoj strani prije svake radnje; skrivanje gumba u korisničkom sučelju nije dovoljna zaštita. | DRF klase dopuštenja (npr. IsCompanyEmployee, IsCompanyOwner, IsPlatformAdmin) na svim pogledima; provjere u ReservationService. |
-| Sigurnost | Izolacija podataka tvrtki | Podaci tvrtke uvijek se filtriraju prema tvrtki prijavljenog korisnika, a ne prema identifikatoru iz URL-a ili tijela zahtjeva; zahtjev za objekt druge tvrtke vraća 404 Not Found | Zajednički bazni razred pogleda koji ograničava get_queryset() na request.user.company; svi pogledi panela tvrtke; automatizirani testovi s identifikatorima druge tvrtke (NF-10). | 
-| Sigurnost	| Zaštita komunikacije i tajni | Sva komunikacija ide putem HTTPS-a, veza s bazom je zaštićena, a ključevi, lozinke i tajne OAuth-a čitaju se iz varijabli okruženja i ne pohranjuju se u repozitorij. | Django postavke (SECURE_SSL_REDIRECT, DATABASES), konfiguracija postavljanja, datoteka .env izvan repozitorija (NF-04, NF-08).
+| Sigurnost | Izolacija podataka tvrtki | Podaci tvrtke uvijek se filtriraju prema tvrtki prijavljenog korisnika, a ne prema identifikatoru iz URL-a ili tijela zahtjeva; zahtjev za objekt druge tvrtke vraća 404 Not Found | Zajednički bazni razred pogleda koji ograničava get_queryset() na request.user.company; svi pogledi panela tvrtke; automatizirani testovi s identifikatorima druge tvrtke (NF-02). |
+| Sigurnost	| Zaštita komunikacije i tajni | Sva komunikacija ide putem HTTPS-a, veza s bazom je zaštićena, a ključevi, lozinke i tajne OAuth-a čitaju se iz varijabli okruženja i ne pohranjuju se u repozitorij. | Django postavke (SECURE_SSL_REDIRECT, DATABASES), konfiguracija postavljanja, datoteka .env izvan repozitorija (NF-04).
 | Validacija podataka | Dvorazinska validacija | Klijent provjerava unos radi boljeg korisničkog iskustva, ali je provjera na poslužitelju jedina mjerodavna: serijalizatori provjeravaju oblik podataka, a domenski razredi poslovna pravila (kapacitet, datumi, pripadnost usluga tvrtki). | React obrasci; DRF serijalizatori; Reservation.request() i RentalPeriod.
 | Integritet podataka | Transakcije i ograničenja u bazi | Radnje koje mijenjaju više zapisa izvode se u jednoj transakciji; pravila koja se moraju poštovati i pri istodobnom radu provode se ograničenjima u bazi. | transaction.atomic u metodama ReservationService; ograničenje isključivanja za rezervacije, jedinstveni vlasnik po tvrtki (ADR-03).
 | Integritet podataka | Upravljanje stanjem rezervacije	| Status rezervacije mijenja se isključivo metodama domenskog razreda pozvanima iz servisa; pogledi i serijalizatori ne postavljaju status izravno. | Reservation.confirm(), reject(), cancel(), recordPickup(), recordReturn(); status samo za čitanje u serijalizatorima.
-| Integritet podataka | Deaktivacija umjesto brisanja | Tvrtke, plovila, usluge i korisnici se deaktiviraju, a ne brišu, kako bi povijest rezervacija i statistika ostale potpune. | Polje is_active i filtriranje aktivnih zapisa u javnoj pretrazi; strani ključevi s on_delete=PROTECT (NF-07, UC-15).
+| Integritet podataka | Deaktivacija umjesto brisanja | Tvrtke, plovila, usluge i korisnici se deaktiviraju, a ne brišu, kako bi povijest rezervacija i statistika ostale potpune. | Polje is_active i filtriranje aktivnih zapisa u javnoj pretrazi; strani ključevi s on_delete=PROTECT (F-15, UC-15).
 | Obrada pogrešaka | Jedinstveno preslikavanje iznimki u HTTP odgovore | Domenske iznimke preslikavaju se na jednom mjestu u odgovarajuće statuse (400, 401, 403, 404, 409, 500) i jedinstveni JSON oblik s kodom, porukom i pogreškama po poljima; korisniku se ne prikazuju tehnički detalji. | Prilagođeni DRF exception handler; zajednički modul klijenta za obradu odgovora i prikaz poruka.
 | Integracija vanjskih servisa | Ograničeno čekanje i postupna degradacija | Pozivi vremenske prognoze i kartografskih pločica imaju vremensko ograničenje; nedostupnost servisa prikazuje se kao obavijest, a ostatak stranice radi normalno. | weather aplikacija (timeout, privremena pohrana); komponente karte i prognoze u Reactu (NF-06, ADR-05).
 | Obavijesti | Slanje nakon potvrde transakcije	| E-pošta se šalje tek nakon uspješne pohrane promjene; neuspjeh slanja se bilježi, ali ne poništava rezervaciju. | transaction.on_commit u ReservationService; implementacija sučelja ReservationNotifier.
@@ -167,7 +167,7 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 | Rizik ili kompromis | Posljedica | Odgovor na rizik |
 | --- | --- | --- |
 | Jedna instanca poslužiteljske aplikacije i jedna baza podataka (ADR-01). | Kvar smještaja aplikacije ili baze privremeno onemogućuje pretragu, rezervacije i rad tvrtki. | Rizik je prihvaćen za opseg projekta; ne uvodi se pričuvna instanca ni automatsko prebacivanje. Baza se može sigurnosno kopirati. |
-| Izolacija podataka tvrtki ovisi o filtriranju u aplikaciji, a ne o razdvajanju u bazi (ADR-02). | Pogled u kojem je filtriranje izostavljeno mogao bi otkriti ili omogućiti izmjenu podataka druge tvrtke. | Svi pogledi panela tvrtke nasljeđuju zajednički bazni razred koji ograničava upite na tvrtku korisnika; automatizirani testovi izravno pozivaju API s identifikatorima druge tvrtke (NF-10); pregled koda pri svakom spajanju. |
+| Izolacija podataka tvrtki ovisi o filtriranju u aplikaciji, a ne o razdvajanju u bazi (ADR-02). | Pogled u kojem je filtriranje izostavljeno mogao bi otkriti ili omogućiti izmjenu podataka druge tvrtke. | Svi pogledi panela tvrtke nasljeđuju zajednički bazni razred koji ograničava upite na tvrtku korisnika; automatizirani testovi izravno pozivaju API s identifikatorima druge tvrtke (NF-02); pregled koda pri svakom spajanju. |
 | Ograničenje u bazi sprječava preklapanje samo među rezervacijama, ne i s razdobljima nedostupnosti (ADR-03). | Vlasnik koji unosi nedostupnost i korisnik koji istodobno šalje zahtjev mogli bi stvoriti preklapanje. | Unos nedostupnosti i stvaranje rezervacije zaključavaju redak plovila (select_for_update) i provjeravaju preklapanje u istoj transakciji; vjerojatnost je mala, pa se dodatno ograničenje u bazi ne uvodi. |
 | Oslanjanje na mogućnosti specifične za PostgreSQL (rasponi datuma, proširenje btree_gist). | Rješenje se ne može izvoditi na SQLite-u, a razlika okruženja može sakriti pogreške. | Svi članovi tima i testovi koriste PostgreSQL u Dockeru; SQLite se ne koristi ni lokalno. |
 | Fotografije plovila pohranjuju se u datotečni sustav poslužitelja. | Pri ponovnom postavljanju ili zamjeni kontejnera fotografije se mogu izgubiti. | Mapa za medije montira se kao trajni volumen; prijelaz na S3 kompatibilnu pohranu ostavljen je kao mogući sljedeći korak. |
@@ -201,9 +201,9 @@ Uloge odgovaraju polju `role` korisnika (KORISNIK, DJELATNIK, VLASNIK, ADMINISTR
 
 | Ekran | Ruta | Pristup | UC | F | Sadržaj |
 | --- | --- | --- | --- | --- | --- |
-| Početna i pretraga | `/` | svi | UC-01 | F-01, F-23, F-29 | Filtri (termin, luka polaska, kategorija, broj osoba, tvrtka), kartice rezultata, straničenje, poruka kada nema rezultata. |
-| Detalji plovila | `/plovila/:id` | svi | UC-11 | F-15, F-16, F-20 | Galerija, karakteristike i oprema, tvrtka s kontaktom, dnevna cijena, kalendar slobodnih termina, karta matične luke, prognoza, dodatne usluge, procjena cijene, gumb „Pošalji zahtjev”. |
-| Podaci o tvrtki | `/tvrtke/:id` | svi | UC-01 | F-29 | Osnovni podaci i kontakt tvrtke te popis njezinih plovila. |
+| Početna i pretraga | `/` | svi | UC-01 | F-01 | Filtri (termin, luka polaska, kategorija, broj osoba, tvrtka), kartice rezultata, straničenje, poruka kada nema rezultata. |
+| Detalji plovila | `/plovila/:id` | svi | UC-11 | F-02, F-16, F-17 | Galerija, karakteristike i oprema, tvrtka s kontaktom, dnevna cijena, kalendar slobodnih termina, karta matične luke, prognoza, dodatne usluge, procjena cijene, gumb „Pošalji zahtjev”. |
+| Podaci o tvrtki | `/tvrtke/:id` | svi | UC-01 | F-02 | Osnovni podaci i kontakt tvrtke te popis njezinih plovila. |
 | Prijava | `/prijava` | neprijavljeni | UC-10 | F-18 | Gumb za prijavu preko OAuth pružatelja, poruka o neuspjeloj prijavi; u razvoju i prijava testnih korisnika (ENABLE_TEST_LOGIN). |
 
 [Skice javnog dijela (#53)](dizajn/53-Wireframe-javnog-dijela.svg) prikazuju pretragu s filtrima i rezultatima, stanje bez rezultata, detalje plovila, stanja kalendara, prognoze i karte te podatke o tvrtki. Dostupan je i [izvor za uređivanje u Excalidrawu](dizajn/53-Wireframe-javnog-dijela.excalidraw). Oznake zahtjeva na skicama slijede trenutačnu numeraciju iz [poglavlja 2](2-Analiza-zahtjeva.md): pretraga F-01, detalji plovila F-02, prognoza F-16, karta F-17.
@@ -263,7 +263,7 @@ Ruta `/administracija` preusmjerava na `/administracija/tvrtke`.
 
 ### Pokrivenost funkcijskih zahtjeva
 
-Svi funkcijski zahtjevi s korisničkim sučeljem pokriveni su barem jednim ekranom. Bez vlastitog ekrana su F-06 i F-24 (e-pošta; na ekranima se prikazuje samo poruka da će obavijest stići), F-18 (ostvaruje se izbornikom i zaštitom ruta prema ulozi) te F-19 (oslobađanje termina posljedica je otkazivanja na ekranu detalja rezervacije).
+Svi funkcijski zahtjevi (F-01 do F-23) navedeni su uz barem jedan ekran u tablicama iznad. Bez vlastitog ekrana su F-07 (e-pošta; na ekranima se prikazuje samo poruka da će obavijest stići) i F-04, koji se ostvaruje na više ekrana. Preklapanje s postojećom rezervacijom i s razdobljem nedostupnosti plovila provjerava se pri slanju zahtjeva korisnika i pri stvaranju rezervacije u panelu tvrtke, a termin se oslobađa odbijanjem zahtjeva ili otkazivanjem rezervacije. Ograničenje pristupa prema ulozi (NF-02) ostvaruje se izbornikom i zaštitom ruta.
 
 ### Glavni izbornik prema ulozi
 

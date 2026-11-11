@@ -2,7 +2,7 @@
 
 ## Varijable okruženja i tajne
 
-Ključevi, lozinke i ostale tajne ne pohranjuju se u repozitorij, nego se čitaju iz varijabli okruženja (poglavlje 4.6; NF-04, NF-08). Django ih čita u `backend/config/settings.py` pomoću biblioteke `django-environ`.
+Ključevi, lozinke i ostale tajne ne pohranjuju se u repozitorij, nego se čitaju iz varijabli okruženja (poglavlje 4.6; NF-04). Django ih čita u `backend/config/settings.py` pomoću biblioteke `django-environ`.
 
 | Okruženje | Gdje se varijable postavljaju |
 | --- | --- |
