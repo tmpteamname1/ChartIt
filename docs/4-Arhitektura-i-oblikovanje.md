@@ -212,9 +212,6 @@ Uloge odgovaraju polju `role` korisnika (KORISNIK, DJELATNIK, VLASNIK, ADMINISTR
 
 | Ekran | Ruta | Pristup | UC | F | Sadržaj |
 | --- | --- | --- | --- | --- | --- |
-| Zahtjev za rezervaciju | `/plovila/:id/rezervacija` | KORISNIK | UC-02 | F-02, F-03, F-04 | Odabir razdoblja i dodatnih usluga, sažetak s iznosom poslužitelja, slanje. Potvrda poslanog zahtjeva i greška preklapanja prikazuju se kao stanja ovog ekrana. |
-| Moje rezervacije | `/moje-rezervacije` | KORISNIK | UC-03 | F-05, F-06 | Popis rezervacija sa statusom, terminom i iznosom; filtriranje prema statusu; straničenje. |
-| Detalji rezervacije | `/moje-rezervacije/:id` | KORISNIK | UC-03 | F-05, F-06, F-12 | Svi podaci, pohranjeni iznos, odabrane usluge, kontakt tvrtke, otkazivanje s potvrdnim dijalogom. |
 | Zahtjev za rezervaciju | `/plovila/:id/rezervacija` | KORISNIK | UC-02 | F-02, F-03, F-04 | Odabir razdoblja i dodatnih usluga, prikaz luke preuzimanja (matične luke plovila), unos broja putnika, sažetak s procjenom i slanje. Potvrda prikazuje pohranjeni iznos koji je izračunao poslužitelj. Potvrda i greška preklapanja prikazuju se kao stanja ovog ekrana. |
 | Moje rezervacije | `/moje-rezervacije` | KORISNIK | UC-03 | F-05, F-06 | Popis rezervacija sa statusom, terminom i iznosom; filtriranje prema statusu; straničenje. |
 | Detalji rezervacije | `/moje-rezervacije/:id` | KORISNIK | UC-03 | F-05, F-06, F-12 | Svi podaci, pohranjeni iznos, odabrane usluge, kontakt tvrtke, otkazivanje s potvrdnim dijalogom. |
