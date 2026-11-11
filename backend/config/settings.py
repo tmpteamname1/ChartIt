@@ -50,6 +50,10 @@ ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS')
 # Full origins with scheme, e.g. https://chartit.azurewebsites.net
 CSRF_TRUSTED_ORIGINS = env('DJANGO_CSRF_TRUSTED_ORIGINS')
 
+# Login as a seeded test user without OAuth (docs 4.7). Local development only; when off,
+# the /api/auth/test-login/ routes are not registered at all.
+ENABLE_TEST_LOGIN = env.bool('ENABLE_TEST_LOGIN', default=False)
+
 
 # HTTPS (NF-08). On by default when DEBUG is off; DJANGO_HTTPS=False allows a
 # production-like run over plain HTTP on localhost.
