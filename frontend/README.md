@@ -51,6 +51,10 @@ Rute prate mapu stranica u [poglavlju 4.8](../docs/4-Arhitektura-i-oblikovanje.m
 
 Sva četiri dijela koriste `AppLayout`: javni i korisnički dio imaju samo zaglavlje, a panel tvrtke i administracija i bočni izbornik. Na mobitelu se izbornik otvara gumbom (hamburger). Stavke izbornika i uloge koje ih vide definirane su u `layouts/navigation.ts`.
 
+## Pozivi prema API-ju
+
+Svi pozivi idu kroz `src/api/client.ts`. Zahtjevi koji mijenjaju podatke (`POST`, `PUT`, `PATCH`, `DELETE`) moraju slati zaglavlje `X-CSRFToken` s vrijednošću kolačića `csrftoken`, inače ih poslužitelj odbija s 403. Detalji su u [poglavlju 4.9, Prijava sesijom i CSRF zaštita](../docs/4-Arhitektura-i-oblikovanje.md#prijava-sesijom-i-csrf-zaštita).
+
 ## Privremena prijava
 
 Do epica za OAuth prijava je lažna: u razvoju se uloga bira padajućim izbornikom u zaglavlju i pamti u pregledniku. `RequireRole` neprijavljenog korisnika šalje na `/prijava`, a korisniku bez odgovarajuće uloge prikazuje „Nemate pristup”. Ovo je samo za izgled sučelja; ovlasti uvijek provjerava poslužitelj.

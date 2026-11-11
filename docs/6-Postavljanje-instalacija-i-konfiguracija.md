@@ -2,7 +2,7 @@
 
 ## Varijable okruženja i tajne
 
-Ključevi, lozinke i ostale tajne ne pohranjuju se u repozitorij, nego se čitaju iz varijabli okruženja (poglavlje 4.6; NF-04, NF-08). Django ih čita u `backend/config/settings.py` pomoću biblioteke `django-environ`.
+Ključevi, lozinke i ostale tajne ne pohranjuju se u repozitorij, nego se čitaju iz varijabli okruženja (poglavlje 4.6; NF-04). Django ih čita u `backend/config/settings.py` pomoću biblioteke `django-environ`.
 
 | Okruženje | Gdje se varijable postavljaju |
 | --- | --- |
@@ -26,6 +26,8 @@ Varijable koje su već postavljene u okruženju (Docker, Azure, Render) imaju pr
 | `DJANGO_HTTPS` | ne | suprotno od `DJANGO_DEBUG` | Preusmjeravanje na HTTPS, sigurni kolačići i HSTS. `False` omogućuje lokalno pokretanje s produkcijskim postavkama preko HTTP-a. |
 | `DJANGO_HSTS_SECONDS` | ne | `3600` | Trajanje HSTS-a dok je HTTPS uključen. Povećati na `31536000` kada se potvrdi da HTTPS radi. |
 | `DJANGO_MEDIA_ROOT` | ne | `backend/media` | Mapa za učitane datoteke. Na Azureu `/home/media` (odjeljak Medijske datoteke). |
+| `GOOGLE_CLIENT_ID` | ne | nema | OAuth Client ID iz Google Cloud Consolea (`xxx.apps.googleusercontent.com`). Lokalno ID klijenta "ChartIt Web Client (lokalno)", na Renderu ID produkcijskog klijenta. |
+| `GOOGLE_CLIENT_SECRET` | da | nema | OAuth Client Secret (`GOCSPX-...`) istog klijenta. Lokalno secret lokalnog klijenta; produkcijski secret postoji samo na Renderu. |
 
 Varijable koje će se dodati s kasnijim zadacima (OAuth, slanje e-pošte, ključ za vremensku prognozu) upisuju se u ovu tablicu i u `.env.example` u istom PR-u u kojem se uvode. `.env.example` sadrži samo primjere i vrijednosti za lokalni razvoj, nikad stvarne tajne.
 
@@ -88,6 +90,33 @@ image = models.ImageField(upload_to='vessels/', validators=IMAGE_VALIDATORS)
 
 Datoteke se poslužuju s istog origina kao aplikacija, pa se ne smiju dopuštati vrste koje preglednik može izvršiti (npr. SVG ili HTML). Zaglavlje `X-Content-Type-Options: nosniff` (Django `SecurityMiddleware`) dodatno sprječava da preglednik datoteku protumači kao drugu vrstu.
 
+## Google OAuth prijava
+
+Prijava Google računom koristi OAuth 2.0. Aplikacija je registrirana u Google Cloud Consoleu (Google Auth Platform), a Django s Googleom komunicira preko Client ID-a i Client Secreta. Putanja povratnog URL-a `/accounts/google/login/callback/` potječe iz biblioteke django-allauth odabrane u ADR-06 ([#86](https://github.com/tmpteamname1/ChartIt/pull/86)).
+
+### Registracija OAuth aplikacije
+
+1. **Projekt** je stvoren na zajedničkom Google računu tima (`progiprojekt94.fer@gmail.com`), a ne na osobnom računu jednog člana, kako pristup ne bi ovisio o jednoj osobi. Na račun se mogu prijaviti `Sven Matić` i `Lucian Lepur`, a lozinka se dijeli prema odjeljku "Dijeljenje tajni u timu". Dodatno su im u IAM-u dodijeljene uloge Owner.
+2. **Consent screen:**
+   - Branding: naziv aplikacije `ChartIt`, kontakt e-pošta `progiprojekt94.fer@gmail.com`,
+   - Data Access: opsezi `openid`, `email`, `profile` (nisu osjetljivi, pa verifikacija nije potrebna),
+   - Audience: vrsta korisnika External.
+3. **Test users** (Audience > Test users): dok je aplikacija u stanju "Testing", prijaviti se mogu samo korisnici s popisa. Na popis se dodaju Google računi svih članova tima i asistenata. Adrese se ne navode u repozitoriju, nego se popis vodi i provjerava u konzoli. Pristup projektu u IAM-u ne dodaje korisnika na taj popis. Prije demonstracije aplikacija se može prebaciti u "In production" (Publish app), što s osnovnim opsezima ne traži verifikaciju.
+4. **Web klijenti** (Clients > Create client > Web application). Consent screen, opsezi i test users zajednički su za oba klijenta.
+
+### Klijenti za lokalni razvoj i produkciju
+
+| Klijent | Authorized redirect URI | Gdje se koristi |
+| --- | --- | --- |
+| `ChartIt Web Client (lokalno)` | `http://localhost:8000/accounts/google/login/callback/` | `.env` članova tima. Secret se dijeli prema odjeljku "Dijeljenje tajni u timu". |
+| `ChartIt Web Client` | `https://chartit-okv1.onrender.com/accounts/google/login/callback/` | Samo Render. Produkcijski secret ne šalje se u WhatsApp grupu i ne upisuje se ni u jedan `.env`. |
+
+Redirect URI uvijek pokazuje na Django (backend), ne na Vite poslužitelj. Promjena na Googleu može se primijeniti tek nakon nekoliko minuta.
+
+### Varijable okruženja
+
+Varijable `GOOGLE_CLIENT_ID` i `GOOGLE_CLIENT_SECRET` opisane su u tablici "Popis varijabli". Lokalno se postavljaju u `.env`, a na Renderu prema odjeljku "Varijable okruženja na Renderu".
+
 ## Postavljanje na Render
 
 Aplikacija je javno dostupna na https://chartit-okv1.onrender.com. Render je zamjenski smještaj dok Azure nije dostupan, a postavljanje je zamišljeno jednako kao na Azureu: jedan servis na kojem Django poslužuje API, Django admin i izgrađenu React aplikaciju s istog origina (WhiteNoise). Zato frontend nema zaseban servis ni CORS postavke, a nepoznate putanje (npr. `/plovila/5`) vraćaju React aplikaciju, koja sama prikazuje odgovarajuću stranicu.
@@ -120,6 +149,8 @@ Cijela konfiguracija nalazi se u `render.yaml` (Render Blueprint) u korijenu rep
 | `DJANGO_ALLOWED_HOSTS`, `DJANGO_CSRF_TRUSTED_ORIGINS` | `render.yaml`, naziv poslužitelja koji je dodijelio Render. |
 | `PYTHON_VERSION`, `NODE_VERSION` | `render.yaml`, iste verzije kao u `backend/Dockerfile` i CI-ju. |
 | `VITE_ROLE_SWITCHER` | `render.yaml`, prikazuje prekidač testnih uloga dok ne postoji OAuth prijava (#41). |
+| `GOOGLE_CLIENT_ID` | `render.yaml`, ID produkcijskog klijenta `ChartIt Web Client`. Nije tajna. |
+| `GOOGLE_CLIENT_SECRET` | Upisuje se ručno u Render > `chartit` > Environment (`sync: false`). Render ne traži vrijednost za postojeći Blueprint, pa se nakon dodavanja u `render.yaml` mora postaviti ručno. |
 
 `DJANGO_DEBUG` nije postavljen, pa je `False`, a time su uključeni i preusmjeravanje na HTTPS, sigurni kolačići i HSTS. Render prekida TLS i prosljeđuje zahtjeve sa zaglavljem `X-Forwarded-Proto`, kao i Azure. `/api/health/` izuzet je od preusmjeravanja (`SECURE_REDIRECT_EXEMPT`), jer bi preusmjeravanje Render smatrao uspješnim odgovorom bez provjere baze.
 
