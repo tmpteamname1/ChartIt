@@ -101,8 +101,8 @@ Prijava Google računom koristi OAuth 2.0. Aplikacija je registrirana u Google C
    - Branding: naziv aplikacije `ChartIt`, kontakt e-pošta `progiprojekt94.fer@gmail.com`,
    - Data Access: opsezi `openid`, `email`, `profile` (nisu osjetljivi, pa verifikacija nije potrebna),
    - Audience: vrsta korisnika External.
-3. **Test users** (Audience > Test users): dok je aplikacija u stanju "Testing", prijaviti se mogu samo korisnici s popisa. Na popisu su `<svi članovi tima i asistenti, navesti adrese ili imena>`. Prije demonstracije aplikacija se može prebaciti u "In production" (Publish app), što s osnovnim opsezima ne traži verifikaciju.
-4. **Web clientovi** (Clients > Create client > Web application). Consent screen, opsezi i test users zajednički su za oba klijenta.
+3. **Test users** (Audience > Test users): dok je aplikacija u stanju "Testing", prijaviti se mogu samo korisnici s popisa. Na popis se dodaju Google računi svih članova tima i asistenata. Adrese se ne navode u repozitoriju, nego se popis vodi i provjerava u konzoli. Pristup projektu u IAM-u ne dodaje korisnika na taj popis. Prije demonstracije aplikacija se može prebaciti u "In production" (Publish app), što s osnovnim opsezima ne traži verifikaciju.
+4. **Web klijenti** (Clients > Create client > Web application). Consent screen, opsezi i test users zajednički su za oba klijenta.
 
 ### Klijenti za lokalni razvoj i produkciju
 
@@ -149,6 +149,8 @@ Cijela konfiguracija nalazi se u `render.yaml` (Render Blueprint) u korijenu rep
 | `DJANGO_ALLOWED_HOSTS`, `DJANGO_CSRF_TRUSTED_ORIGINS` | `render.yaml`, naziv poslužitelja koji je dodijelio Render. |
 | `PYTHON_VERSION`, `NODE_VERSION` | `render.yaml`, iste verzije kao u `backend/Dockerfile` i CI-ju. |
 | `VITE_ROLE_SWITCHER` | `render.yaml`, prikazuje prekidač testnih uloga dok ne postoji OAuth prijava (#41). |
+| `GOOGLE_CLIENT_ID` | `render.yaml`, ID produkcijskog klijenta `ChartIt Web Client`. Nije tajna. |
+| `GOOGLE_CLIENT_SECRET` | Upisuje se ručno u Render > `chartit` > Environment (`sync: false`). Render ne traži vrijednost za postojeći Blueprint, pa se nakon dodavanja u `render.yaml` mora postaviti ručno. |
 
 `DJANGO_DEBUG` nije postavljen, pa je `False`, a time su uključeni i preusmjeravanje na HTTPS, sigurni kolačići i HSTS. Render prekida TLS i prosljeđuje zahtjeve sa zaglavljem `X-Forwarded-Proto`, kao i Azure. `/api/health/` izuzet je od preusmjeravanja (`SECURE_REDIRECT_EXEMPT`), jer bi preusmjeravanje Render smatrao uspješnim odgovorom bez provjere baze.
 
