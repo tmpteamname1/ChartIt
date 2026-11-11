@@ -460,6 +460,28 @@ Prijavljeni korisnik prepoznaje se po sesijskom kolačiću (`sessionid`, HttpOnl
 
 CORS nije postavljen jer su klijent i poslužitelj na istom originu: u produkciji React poslužuje Django (ADR-01), a lokalno Vite prosljeđuje `/api` Djangu. Ako se to ikad promijeni, `CORS_ALLOWED_ORIGINS` i `CSRF_TRUSTED_ORIGINS` postavljaju se samo na našu domenu, nikad na `*`.
 
+### Dopuštenja prema ulogama
+
+Uloga se provjerava na poslužitelju klasama dopuštenja iz `backend/accounts/permissions.py` (poglavlje 4.6). Uloga se uvijek čita iz baze (`request.user.role`), nikad iz podataka koje šalje klijent.
+
+| Klasa | Dopuštene uloge |
+|---|---|
+| `IsPlatformAdmin` | ADMINISTRATOR |
+| `IsCompanyOwner` | VLASNIK |
+| `IsCompanyEmployee` | DJELATNIK, VLASNIK (vlasnik može sve što i djelatnik) |
+
+```python
+from accounts.permissions import IsCompanyOwner
+
+
+class CompanyServiceViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsCompanyOwner]
+```
+
+- Klasa zamjenjuje zadani `IsAuthenticated` i sama zahtijeva prijavljenog i aktivnog korisnika: bez prijave odgovor je 401, a s pogrešnom ulogom 403.
+- Klase provjeravaju samo ulogu, a ne kojoj tvrtki podaci pripadaju. Pogledi panela tvrtke zato uz njih nasljeđuju zajednički bazni razred koji ograničava `get_queryset()` na `request.user.company` (ADR-02, #101).
+- Django superkorisnik (`createsuperuser`) dobiva ulogu KORISNIK i nema pristup API-ju administracije dok mu se uloga ne promijeni u ADMINISTRATOR.
+
 ### Datumi, vrijeme i iznosi
 
 - Datumi su u obliku ISO 8601 `YYYY-MM-DD` (npr. početak i kraj najma).
@@ -469,7 +491,7 @@ CORS nije postavljen jer su klijent i poslužitelj na istom originu: u produkcij
 ### Dodavanje novog endpointa
 
 1. U aplikaciji napisati serijalizator i pogled (najčešće `ModelViewSet` ili `ReadOnlyModelViewSet`).
-2. Postaviti dopuštenja: po zadanom je potrebna prijava, a javni pogledi izričito postavljaju `permission_classes = [AllowAny]`.
+2. Postaviti dopuštenja: po zadanom je potrebna prijava, a javni pogledi izričito postavljaju `permission_classes = [AllowAny]`. Pogledi dostupni samo određenim ulogama koriste klase iz `accounts/permissions.py` (vidi „Dopuštenja prema ulogama”).
 3. Za popise postaviti zadani poredak i, po potrebi, `filterset_fields`, `search_fields` i `ordering_fields`.
 4. Registrirati pogled u routeru u `urls.py` aplikacije i, ako aplikacija još nije uključena, dodati je u `api_urlpatterns`.
 5. Provjeriti izgled endpointa u `/api/docs/` i napisati testove (uključujući pristup bez prijave i pristup podacima druge tvrtke).
