@@ -44,6 +44,12 @@ services:
         value: chartit-okv1.onrender.com
       - key: DJANGO_CSRF_TRUSTED_ORIGINS
         value: https://chartit-okv1.onrender.com
+      # Production Google OAuth client "ChartIt Web Client" (#43). The secret is set
+      # by hand in the dashboard; Render does not prompt for it on an existing Blueprint.
+      - key: GOOGLE_CLIENT_ID
+        value: 1024250450845-49n11k59v5nu8e7el7oblqmfho0sb11c.apps.googleusercontent.com
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
       # Free web services have no persistent disk: uploaded files in the default
       # backend/media are lost on every deploy, restart and spin-down.
 
