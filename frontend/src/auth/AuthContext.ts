@@ -10,6 +10,8 @@ export interface AuthContextValue {
   user: User | null
   // TODO: replace with the OAuth login from the auth epic; for now any role can be picked.
   loginAs: (role: Role) => void
+  // Real session login as a seeded test user (#49), only when VITE_ENABLE_TEST_LOGIN is on.
+  loginAsTestUser: (username: string) => Promise<User>
   logout: () => void
 }
 

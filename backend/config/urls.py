@@ -15,11 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path, re_path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 import config.schema  # noqa: F401  (registers the session login with drf-spectacular)
+from accounts.urls import test_login_urlpatterns
 from config.views import api_not_found, health, media, spa_index
 
 # API routes (docs chapter 4.9): /api/<resource>/, English plural nouns in kebab-case.
@@ -28,6 +30,8 @@ api_urlpatterns = [
     path('health/', health, name='health'),
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path('docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    # Test login without OAuth (docs 4.7). When off the routes do not exist and answer 404.
+    *([path('auth/', include(test_login_urlpatterns))] if settings.ENABLE_TEST_LOGIN else []),
     # Must stay last.
     re_path(r'^(?P<path>.*)$', api_not_found),
 ]

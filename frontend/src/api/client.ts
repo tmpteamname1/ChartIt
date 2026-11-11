@@ -28,17 +28,43 @@ export class ApiError extends Error {
 }
 
 export async function apiGet<T>(path: string, signal?: AbortSignal): Promise<T> {
-  const response = await fetch(path, { signal, headers: { Accept: 'application/json' } })
+  const response = await request('GET', path, { signal, headers: { Accept: 'application/json' } })
+  return response.json() as Promise<T>
+}
+
+// Returns undefined for an empty response (204 No Content).
+export async function apiPost<T>(path: string, data?: unknown): Promise<T> {
+  const response = await request('POST', path, {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      // Django rejects changes from a logged-in session without the token (docs 4.9).
+      'X-CSRFToken': readCookie('csrftoken') ?? '',
+    },
+    body: data === undefined ? undefined : JSON.stringify(data),
+  })
+  return (response.status === 204 ? undefined : response.json()) as Promise<T>
+}
+
+async function request(method: string, path: string, init: RequestInit): Promise<Response> {
+  const response = await fetch(path, { ...init, method })
   if (!response.ok) {
     const body = await readErrorBody(response)
     throw new ApiError(
       response.status,
-      body?.detail ?? `GET ${path} failed with ${response.status}`,
+      body?.detail ?? `${method} ${path} failed with ${response.status}`,
       body?.code,
       body?.errors ?? null,
     )
   }
-  return response.json() as Promise<T>
+  return response
+}
+
+// The token changes on login, so it is read for every request.
+function readCookie(name: string): string | null {
+  const prefix = `${name}=`
+  const cookie = document.cookie.split('; ').find((part) => part.startsWith(prefix))
+  return cookie ? decodeURIComponent(cookie.slice(prefix.length)) : null
 }
 
 async function readErrorBody(response: Response): Promise<ApiErrorBody | null> {
