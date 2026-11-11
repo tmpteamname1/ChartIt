@@ -4,7 +4,8 @@
 import type { Role } from '../auth/roles'
 import { apiGet, apiPost } from './client'
 
-export const TEST_LOGIN_ENABLED = import.meta.env.VITE_ENABLE_TEST_LOGIN === 'true'
+// Case-insensitive, like ENABLE_TEST_LOGIN in Django, so both can be written as True in .env.
+export const TEST_LOGIN_ENABLED = import.meta.env.VITE_ENABLE_TEST_LOGIN?.toLowerCase() === 'true'
 
 export interface TestUser {
   username: string

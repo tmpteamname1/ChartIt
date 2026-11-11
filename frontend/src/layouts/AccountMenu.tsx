@@ -1,13 +1,16 @@
 import { Avatar, Button, Group, Menu, Select, Text, UnstyledButton } from '@mantine/core'
 import { IconLogout } from '@tabler/icons-react'
 import { Link, useNavigate } from 'react-router'
+import { TEST_LOGIN_ENABLED } from '../api/auth'
 import { useAuth } from '../auth/AuthContext'
 import { ROLE_LABELS, ROLES, type Role } from '../auth/roles'
 
 const VISITOR = 'POSJETITELJ'
 
 // Temporary, until OAuth exists: also shown in a production build when VITE_ROLE_SWITCHER=true (render.yaml).
-const SHOW_ROLE_SWITCHER = import.meta.env.DEV || import.meta.env.VITE_ROLE_SWITCHER === 'true'
+// Hidden when the real test login on /prijava is on, so there is only one way to log in.
+const SHOW_ROLE_SWITCHER =
+  (import.meta.env.DEV || import.meta.env.VITE_ROLE_SWITCHER === 'true') && !TEST_LOGIN_ENABLED
 
 // Switch roles without logging in to check the menus and layouts.
 function DevRoleSwitcher() {
