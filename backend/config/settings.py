@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_spectacular',
     'accounts',
+    'companies',
     'reservations',
     'fleet',
 ]

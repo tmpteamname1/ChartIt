@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.test import TestCase
+
+from companies.models import Company
 
 User = get_user_model()
 
@@ -22,3 +24,27 @@ class UserModelTests(TestCase):
 
         with self.assertRaises(IntegrityError):
             User.objects.create_user(username='ana2', email='Ana@Example.com')
+
+    def test_employee_must_have_company(self):
+        with self.assertRaises(IntegrityError), transaction.atomic():
+            User.objects.create_user(
+                username='employee',
+                email='employee@example.com',
+                role=User.Role.DJELATNIK,
+            )
+
+    def test_customer_cannot_have_company(self):
+        company = Company.objects.create(
+            name='Test Charter',
+            oib='12345678901',
+            address='Split',
+            email='test@example.com',
+            phone='+385911234567',
+        )
+
+        with self.assertRaises(IntegrityError), transaction.atomic():
+            User.objects.create_user(
+                username='customer',
+                email='customer@example.com',
+                company=company,
+            )
