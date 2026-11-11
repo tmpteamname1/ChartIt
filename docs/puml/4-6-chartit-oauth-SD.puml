@@ -6,7 +6,8 @@
 '           django-allauth (headless), povezivanja računa po potvrđenoj adresi
 '           e-pošte (F-18) i stvaranja sesije, do trenutka kada React sazna
 '           tko je prijavljen. Prikazuje i slučaj u kojem pružatelj ne vrati
-'           adresu e-pošte ili je ona nepotvrđena (AS-08).
+'           adresu e-pošte ili je ona nepotvrđena (AS-08), koji odbija
+'           vlastiti SocialAccountAdapter.
 ' Praćenje: Tok odgovara odluci ADR-06 (pružatelj, biblioteka, održavanje
 '           prijave sesijom); nazivi putanja provjeriti u dokumentaciji
 '           instalirane verzije allauth biblioteke i uskladiti s rasporedom
@@ -14,11 +15,11 @@
 '
 ' Diagram level: Runtime Behavioral Design
 ' Diagram type:  Sequence Diagram
-' Version:       1.0
+' Version:       1.1
 ' ==============================================================================
 
 @startuml
-title Sustav Chartit – prijava putem Googlea (allauth headless, sesija)
+title Sustav Chartit - prijava putem Googlea (allauth headless, sesija)
 
 skinparam shadowing false
 skinparam defaultFontName Arial
@@ -49,7 +50,11 @@ participant "Google OAuth" as G
 Korisnik -> FE : Klik "Prijavi se putem Googlea"
 FE -> BE : GET /_allauth/browser/v1/config
 BE --> FE : 200 + CSRF kolačić
-FE -> BE : POST /auth/provider/redirect\n(provider=google, callback_url, process=login)
+FE -> BE : POST /_allauth/browser/v1/auth/provider/redirect\n(provider=google, callback_url, process=login)
+note right
+  Slanje HTML obrasca (navigacija preglednika),
+  a ne fetch: odgovor 302 vodi preglednik na Google.
+end note
 BE --> Korisnik : 302 na Google autorizacijski URL
 
 ' ==============================================================================
@@ -79,9 +84,10 @@ alt E-pošta postoji i potvrđena je
   BE --> FE : 200 + korisnik (uloga)
   FE -> Korisnik : Prikaz prijavljenog stanja
 else E-pošta nedostaje ili nije potvrđena
-  BE --> Korisnik : 302 na /prijava (neuspjela prijava)
-  Korisnik -> FE : Učitaj /prijava
-  FE -> Korisnik : Poruka o neuspjeloj prijavi
+  BE -> BE : SocialAccountAdapter odbija prijavu
+  BE --> Korisnik : 302 na callback_url?error=...
+  Korisnik -> FE : Učitaj callback_url
+  FE -> Korisnik : Poruka o neuspjeloj prijavi na /prijava
 end
 
 ' ==============================================================================
@@ -91,7 +97,9 @@ end
 note right of BE
   Račun se povezuje samo po potvrđenoj adresi
   e-pošte. Nepotvrđena adresa ili njezin
-  izostanak ne povezuje postojeći račun.
+  izostanak ne povezuje postojeći račun;
+  to je ponašanje vlastitog adaptera, a ne
+  zadano ponašanje allautha.
 end note
 
 note over FE, BE
