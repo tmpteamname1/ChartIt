@@ -11,7 +11,7 @@
 | Cijene se kopiraju u rezervaciju pri podnošenju zahtjeva | Izračun iz trenutačnih cijena; povijest cijena s razdobljima važenja | Vlasnik slobodno mijenja cijene plovila i usluga, a korisnik i statistika prihoda moraju zadržati iznos iz trenutka rezervacije. Model ostaje jednostavan uz dupliciranje cijena u više tablica. Obrazloženje je u ADR-04. |
 | Zapisi se deaktiviraju umjesto brisanja | Brisanje s kaskadnim uklanjanjem povezanih podataka	| Deaktivirana tvrtka, plovilo ili djelatnik i dalje su dio povijesti rezervacija i statistike. Kompromis je obavezno filtriranje aktivnih zapisa u pretrazi i panelima te rast baze s neaktivnim podacima. |
 | Vanjski servisi uz postupnu degradaciju, a prognoza putem poslužitelja | Izravni pozivi iz preglednika bez obrade nedostupnosti | Prognoza i karta dopunjuju detalje plovila, ali njihova nedostupnost ne smije spriječiti pretragu i rezervaciju. Poslužitelj skriva ključ i privremeno pohranjuje prognozu, uz dodatnu komponentu i moguće kašnjenje podataka. Obrazloženje je u ADR-05.
-
+| Prijava putem Googlea uz django-allauth (headless) i Django sesiju s HttpOnly kolačićem | GitHub kao pružatelj; social-auth-app-django ili dj-rest-auth kao biblioteka; JWT umjesto sesije | Google imaju gotovo svi krajnji korisnici, a allauth u headless načinu sam rješava OAuth tok, povezivanje računa i stvaranje korisnika za React aplikaciju. Račun se po F-18 povezuje po adresi e-pošte, i to samo ako je pružatelj označi potvrđenom (AS-08), jer bi pogrešno povezivanje dalo tuđu ulogu i podatke tvrtke. Sesija je sigurnija od tokena jer JavaScript ne može pročitati kolačić, a odjava je trenutna; moguća je jer Django poslužuje React s istog origina. Cijena je ovisnost o jednom pružatelju, veći opseg biblioteke od nužnog i vlastiti adapter koji odbija prijavu bez potvrđene e-pošte. Vidi ADR-06. |
 ## 4.2 Gradivni blokovi i UML dijagram komponenata
 
 **Dijagram komponenata:**
@@ -77,6 +77,12 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 
 **PlantUML izvor:** [izvor](./puml/4-5-chartit-reservation-SM.puml)
 
+### 4.4.3 Sekvencijski dijagram prijave putem OAuth pružatelja
+![Sekvencijski dijagram prijave putem OAuth pružatelja](./assets/diagrams/4-6-chartit-oauth-SD.svg)<br>
+**Slika 4.6 Sekvencijski dijagram prijave putem vanjskog OAuth pružatelja**
+
+**PlantUML izvor:** [izvor](./puml/4-6-chartit-oauth-SD.puml)
+
 ## 4.5 Zapisi arhitekturnih odluka
 
 ### ADR-01: Jedan poslužiteljski sustav (Django) i zasebna React aplikacija
@@ -124,11 +130,21 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 | Odluka i obrazloženje | Odabrati dohvat putem poslužitelja, uz privremenu pohranu odgovora za lokaciju i datum te zaseban zahtjev klijenta, tako da se detalji plovila prikazuju i kad prognoza nije dostupna. Kartografske pločice dohvaćaju se izravno iz preglednika jer ne zahtijevaju ključ. Prihvaća se dodatno opterećenje poslužitelja i moguće kašnjenje prognoze zbog privremene pohrane. |
 | Status | Prihvaćeno. |
 
+### ADR-06: OAuth pružatelj, biblioteka i način održavanja prijave
+
+| Polje | Zapis odluke |
+| --- | --- |
+| Kontekst i cilj | Korisnici, vlasnici i djelatnici tvrtki prijavljuju se i registriraju vanjskim računom, bez zasebnih lozinki na platformi (F-18). Klijent je zasebna React aplikacija (ADR-01), pa poslužitelj mora provesti OAuth tok i klijentu omogućiti da sazna tko je prijavljen. Korisnik se povezuje s postojećim računom po adresi e-pošte, a pristup podacima tvrtke ovisi o tom računu (ADR-02), pa bi pogrešno povezivanje dalo napadaču tuđu ulogu. Odluka se oslanja na pretpostavku AS-08 da pružatelj vraća valjanu adresu e-pošte. |
+| Kriteriji odluke | Tim može izraditi, integrirati, postaviti i objasniti rješenje; sigurnost prijave i zaštita korisničkih podataka; uklapanje u postojeću arhitekturu (ADR-01) i raspored domena na kojem se aplikacija postavlja; količina koda koji tim mora sam napisati i održavati; dostupnost krajnjim korisnicima i zrelost rješenja (dokumentacija, održavanje). |
+| Razmatrane alternative | Pružatelj. Google: najširi doseg i vraća potvrđenu adresu e-pošte, pa je povezivanje po e-pošti sigurno. GitHub: jednostavan za tim, ali netipičan za krajnje korisnike, a e-pošta nije uvijek dostupna ni potvrđena. Biblioteka. django-allauth (headless): namijenjen SPA aplikacijama i sam rješava OAuth tok, povezivanje računa i stvaranje korisnika, ali je opsežniji od nužnog. social-auth-app-django: zreo, ali bez headless API-ja, pa bi se REST sloj za React pisao ručno. dj-rest-auth: za društvenu prijavu ionako koristi allauth, a usmjeren je na tokene. Održavanje prijave. Django sesija (HttpOnly kolačić uz CSRF zaštitu): JavaScript ne čita kolačić, odjava je trenutna, Django to podržava izravno, ali traži same-site klijent i poslužitelj. JWT: radi i na različitim domenama, ali treba riješiti pohranu, osvježavanje i opoziv tokena. |
+| Odluka i obrazloženje | Odabrati Google kao pružatelja, django-allauth u headless načinu i Django sesiju s HttpOnly kolačićem i CSRF zaštitom. Povezivanje po e-pošti uključuje se postavkama `SOCIALACCOUNT_EMAIL_AUTHENTICATION` i `SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT` i vrijedi samo za potvrđenu adresu. Odbijanje prijave bez adrese ili s nepotvrđenom adresom nije zadano ponašanje allautha (u headless načinu vodi u `provider_signup` ili stvara račun s nepotvrđenom adresom), pa se piše vlastiti `SocialAccountAdapter` koji takvu prijavu odbija; React tada na `/prijava` prikazuje poruku o neuspjeloj prijavi (tok u 4.4.3). Klijent i poslužitelj su na istom originu jer Django poslužuje React (ADR-01, poglavlje 6), pa je uvjet same-site ispunjen. Prihvaća se ovisnost o Googleu kao jedinom pružatelju na početku, veći opseg biblioteke od nužnog, vlastiti kod adaptera i to da povezivanje po e-pošti vrijedi samo dok pružatelj jamči potvrđenu adresu. |
+| Status | Prijedlog. |
+
 ## 4.6 Zajednička pravila oblikovanja (engl. Cross-cutting concerns)
 
 | Aspekt | Mehanizam | Pravilo | Mjesto primjene
 | --- | --- | --- | --- |
-| Sigurnost | Autentifikacija putem vanjskog OAuth pružatelja | Svi zahtjevi osim javne pretrage i detalja plovila zahtijevaju prijavljenog korisnika; identitet se utvrđuje na poslužitelju iz tokena ili sesije, nikad iz podataka koje šalje klijent. | Aplikacija accounts; zadana klasa autentifikacije u DRF postavkama; javni pogledi izričito označeni kao dostupni bez prijave. |
+| Sigurnost | Autentifikacija putem vanjskog OAuth pružatelja | Svi zahtjevi osim javne pretrage i detalja plovila zahtijevaju prijavljenog korisnika; identitet se utvrđuje na poslužitelju iz sesije, nikad iz podataka koje šalje klijent. | Aplikacija accounts; zadana klasa autentifikacije u DRF postavkama; javni pogledi izričito označeni kao dostupni bez prijave. |
 | Sigurnost | Autorizacija prema ulogama | Ovlasti korisnika, djelatnika, vlasnika i administratora provjeravaju se na poslužiteljskoj strani prije svake radnje; skrivanje gumba u korisničkom sučelju nije dovoljna zaštita. | DRF klase dopuštenja (npr. IsCompanyEmployee, IsCompanyOwner, IsPlatformAdmin) na svim pogledima; provjere u ReservationService. |
 | Sigurnost | Izolacija podataka tvrtki | Podaci tvrtke uvijek se filtriraju prema tvrtki prijavljenog korisnika, a ne prema identifikatoru iz URL-a ili tijela zahtjeva; zahtjev za objekt druge tvrtke vraća 404 Not Found | Zajednički bazni razred pogleda koji ograničava get_queryset() na request.user.company; svi pogledi panela tvrtke; automatizirani testovi s identifikatorima druge tvrtke (NF-10). | 
 | Sigurnost	| Zaštita komunikacije i tajni | Sva komunikacija ide putem HTTPS-a, veza s bazom je zaštićena, a ključevi, lozinke i tajne OAuth-a čitaju se iz varijabli okruženja i ne pohranjuju se u repozitorij. | Django postavke (SECURE_SSL_REDIRECT, DATABASES), konfiguracija postavljanja, datoteka .env izvan repozitorija (NF-04, NF-08).
