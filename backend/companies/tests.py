@@ -1,14 +1,15 @@
+from django.contrib.admin.sites import AdminSite
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
 from django.db.models.deletion import ProtectedError
 from django.test import TestCase
 
+from .admin import CompanyAdmin
 from .models import Company
 
 User = get_user_model()
 
-# Oba OIB-a imaju ispravnu kontrolnu znamenku (ISO 7064, MOD 11,10).
 VALID_OIB = '69435151530'
 OTHER_VALID_OIB = '12345678903'
 
@@ -111,6 +112,7 @@ class CompanyUserRelationTests(TestCase):
             username='ana',
             email='ana@example.com',
             company=company,
+            role=User.Role.DJELATNIK,
         )
 
         self.assertEqual(list(company.employees.all()), [user])
@@ -121,6 +123,7 @@ class CompanyUserRelationTests(TestCase):
             username='ana',
             email='ana@example.com',
             password='test123',
+            role=User.Role.DJELATNIK,
             company=company,
         )
 
@@ -135,3 +138,43 @@ class CompanyUserRelationTests(TestCase):
         company.delete()
 
         self.assertFalse(Company.objects.exists())
+
+
+class UserCompanyChoicesTests(TestCase):
+    def validate_company_choice(self, company):
+        user = User(username='ana', email='ana@example.com', company=company)
+        field = User._meta.get_field('company')
+        field.validate(company.pk, user)
+
+    def test_active_company_is_a_valid_choice(self):
+        company = create_company()
+
+        self.validate_company_choice(company)
+
+    def test_inactive_company_is_not_a_valid_choice(self):
+        company = create_company(is_active=False)
+
+        with self.assertRaises(ValidationError):
+            self.validate_company_choice(company)
+
+
+class CompanyAdminTests(TestCase):
+    def setUp(self):
+        self.model_admin = CompanyAdmin(Company, AdminSite())
+
+    def test_companies_cannot_be_deleted_in_admin(self):
+        company = create_company()
+
+        self.assertFalse(self.model_admin.has_delete_permission(None))
+        self.assertFalse(self.model_admin.has_delete_permission(None, company))
+
+    def test_deactivate_action_deactivates_selected_companies(self):
+        first = create_company(oib=VALID_OIB)
+        second = create_company(name='Druga tvrtka', oib=OTHER_VALID_OIB)
+
+        self.model_admin.deactivate(None, Company.objects.all())
+
+        first.refresh_from_db()
+        second.refresh_from_db()
+        self.assertFalse(first.is_active)
+        self.assertFalse(second.is_active)

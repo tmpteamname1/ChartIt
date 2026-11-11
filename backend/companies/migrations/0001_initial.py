@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255, verbose_name='naziv')),
                 ('oib', models.CharField(max_length=11, unique=True, validators=[django.core.validators.RegexValidator(code='invalid_oib', message='OIB mora sadržavati točno 11 znamenki.', regex='^[0-9]{11}$'), companies.models.validate_oib_checksum], verbose_name='OIB')),
                 ('address', models.CharField(max_length=255, verbose_name='adresa')),
-                ('email', models.EmailField(max_length=254, verbose_name='e-mail')),
+                ('email', models.EmailField(max_length=254, verbose_name='E-pošta')),
                 ('phone', models.CharField(max_length=30, verbose_name='telefon')),
                 ('is_active', models.BooleanField(default=True, verbose_name='aktivna')),
             ],
