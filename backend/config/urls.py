@@ -28,6 +28,7 @@ api_urlpatterns = [
     path('health/', health, name='health'),
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path('docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('', include('fleet.urls')),
     # Must stay last.
     re_path(r'^(?P<path>.*)$', api_not_found),
 ]
