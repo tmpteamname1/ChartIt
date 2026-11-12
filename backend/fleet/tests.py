@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
 from django.test import TestCase
+from rest_framework.test import APITestCase
 
 from .models import Category, Port
 
@@ -81,3 +82,22 @@ class PortTests(TestCase):
         port = Port.objects.get(name='Split')
         self.assertEqual(port.latitude, Decimal('43.508133'))
         self.assertEqual(port.longitude, Decimal('16.440193'))
+
+
+class PublicApiTests(APITestCase):
+    def test_categories_public_sorted_not_paginated(self):
+        Category.objects.create(name='Katamaran')
+        Category.objects.create(name='Jedrilica')
+
+        response = self.client.get('/api/categories/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual([c['name'] for c in response.json()], ['Jedrilica', 'Katamaran'])
+
+    def test_ports_public_with_coordinates(self):
+        Port.objects.create(name='Split', latitude=Decimal('43.508133'), longitude=Decimal('16.440193'))
+
+        response = self.client.get('/api/ports/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(set(response.json()[0]), {'id', 'name', 'latitude', 'longitude'})

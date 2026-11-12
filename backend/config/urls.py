@@ -31,6 +31,7 @@ api_urlpatterns = [
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path('docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('', include('fleet.urls')),
+    path('', include('companies.urls')),
     # Test login without OAuth (docs 4.7). When off the routes do not exist and ans...
     *([path('auth/', include(test_login_urlpatterns))] if settings.ENABLE_TEST_LOGIN else []),
     # Must stay last.
