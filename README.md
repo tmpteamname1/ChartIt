@@ -99,6 +99,24 @@ Ako je lokalna baza stvorena prije uvođenja prilagođenog modela korisnika (apl
 
 Ako Django javlja `Set the DJANGO_SECRET_KEY environment variable`, u `.env` nedostaju nove varijable. Treba ih prepisati iz `.env.example`, a za `DJANGO_SECRET_KEY` lokalno je dovoljan bilo koji dugi niz znakova.
 
+#### Testna prijava
+
+Za isprobavanje uloga bez Google računa lokalno se može prijaviti kao testni korisnik (poglavlje 4.7):
+
+1. U `.env` postaviti `ENABLE_TEST_LOGIN=True` i `VITE_ENABLE_TEST_LOGIN=True` (vidi `.env.example`) te ponovno pokrenuti backend (`docker compose up -d backend`) i `npm run dev`.
+2. Stvoriti testne korisnike: `docker compose exec backend python manage.py seed_test_users`. Naredba se može pokrenuti više puta i ne stvara duplikate.
+3. Na stranici `/prijava` odabrati korisnika u izborniku „Prijavi se kao...”.
+
+| Korisničko ime | Uloga | Tvrtka |
+|---|---|---|
+| `test-korisnik` | KORISNIK | – |
+| `test-djelatnik` | DJELATNIK | Testna tvrtka d.o.o. |
+| `test-vlasnik` | VLASNIK | Testna tvrtka d.o.o. |
+| `test-vlasnik-2` | VLASNIK | Druga testna tvrtka d.o.o. |
+| `test-administrator` | ADMINISTRATOR | – |
+
+Vlasnik druge tvrtke služi za ručnu provjeru da tvrtka ne vidi tuđe podatke. Testni korisnici nemaju lozinku i mogu se prijaviti samo ovim putem. Bez `ENABLE_TEST_LOGIN` (zadano) endpointi `/api/auth/test-login/` i `/api/auth/test-logout/` ne postoje (404), a izbornik se ne prikazuje. Na javnoj instanci zastavica se ne uključuje.
+
 ### Formatiranje i provjera koda
 
 Stil koda provjeravaju alati, a ne pregled koda. Backend koristi [ruff](https://docs.astral.sh/ruff/) (linter i formatter, postavke u `backend/pyproject.toml`), a frontend oxlint i [Prettier](https://prettier.io/) (postavke u `frontend/.oxlintrc.json` i `frontend/.prettierrc.json`). Osnovne postavke uređivača (kraj retka LF, uvlačenje) zadane su u `.editorconfig`.

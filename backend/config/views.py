@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import DatabaseError, connection
 from django.http import HttpResponse
 from django.views.decorators.cache import cache_control, never_cache
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.static import serve
 from drf_spectacular.utils import extend_schema, inline_serializer
 from rest_framework import serializers
@@ -54,8 +55,12 @@ def media(request, path):
 
 
 @cache_control(no_cache=True)
+@ensure_csrf_cookie
 def spa_index(request):
-    """Return the built React index.html; React handles client-side routing."""
+    """Return the built React index.html; React handles client-side routing.
+
+    Sets the csrftoken cookie, which React sends back in the X-CSRFToken header (docs 4.9).
+    """
     index_file = settings.FRONTEND_DIST_DIR / 'index.html'
     try:
         return HttpResponse(index_file.read_bytes(), content_type='text/html')
