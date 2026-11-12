@@ -1,3 +1,6 @@
+// Company fleet list and creation API. The mock backs these calls until #116.
+// Both request and response keep DecimalField values as strings.
+
 import type { NamedRef, Paginated } from './catalog'
 import { createMockVessel, queryMockCompanyVessels } from './mocks/company'
 import { mockDelay } from './mocks/delay'

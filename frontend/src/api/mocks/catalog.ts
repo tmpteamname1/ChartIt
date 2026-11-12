@@ -1,5 +1,5 @@
 // Mock catalogue data in the exact shape of the API responses (#74, #75).
-// Used by src/api/catalog.ts. The fleet mock shares the category and port lookups.
+// Only modules under src/api import mocks. The fleet mock shares the category and port lookups.
 
 import type { Category, Company, Paginated, Port, VesselFilters, VesselListItem } from '../catalog'
 import { ApiError, toQueryString } from '../client'

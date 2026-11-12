@@ -1,3 +1,5 @@
+// In-memory company fleet and field validation for company.ts until #116.
+
 import type { NamedRef, Paginated } from '../catalog'
 import { ApiError, toQueryString } from '../client'
 import type { CompanyVessel, VesselCreate } from '../company'
@@ -15,14 +17,37 @@ type VesselRow = [
   cabins: number,
   year: number,
   price: string,
-  active?: false,
+  details?: Partial<Pick<CompanyVessel, 'description' | 'equipment' | 'is_active'>>,
 ]
 
 const rows: VesselRow[] = [
-  ['Akvamarin', 3, 6, '12.40', 8, 4, 2019, '180.00'],
-  ['Barka', 2, 4, '6.50', 6, 0, 2022, '75.00'],
-  ['Bonaca', 4, 6, '13.70', 10, 4, 2018, '420.00'],
-  ['Ćuk', 3, 4, '9.20', 4, 2, 2008, '95.00', false],
+  [
+    'Akvamarin',
+    3,
+    6,
+    '12.40',
+    8,
+    4,
+    2019,
+    '180.00',
+    { description: 'Jedrilica za višednevne izlete po zadarskom arhipelagu.' },
+  ],
+  ['Barka', 2, 4, '6.50', 6, 0, 2022, '75.00', { equipment: '' }],
+  [
+    'Bonaca',
+    4,
+    6,
+    '13.70',
+    10,
+    4,
+    2018,
+    '420.00',
+    {
+      description: 'Katamaran s četiri kabine i natkrivenim kokpitom.',
+      equipment: 'GPS ploter, VHF radio, prsluci za spašavanje',
+    },
+  ],
+  ['Ćuk', 3, 4, '9.20', 4, 2, 2008, '95.00', { is_active: false }],
   ['Delfin', 2, 5, '7.40', 8, 0, 2021, '110.00'],
   ['Gajeta', 3, 2, '10.60', 6, 3, 2014, '135.00'],
   ['Hridi', 5, 4, '15.20', 8, 3, 2017, '890.00'],
@@ -36,7 +61,7 @@ const rows: VesselRow[] = [
   ['Periska', 4, 3, '14.50', 12, 6, 2019, '540.00'],
   ['Ruža vjetrova', 3, 4, '15.80', 10, 5, 2021, '260.00'],
   ['Salpa', 5, 1, '16.10', 8, 3, 2015, '980.00'],
-  ['Škoj', 3, 3, '8.90', 4, 2, 2007, '88.50', false],
+  ['Škoj', 3, 3, '8.90', 4, 2, 2007, '88.50', { is_active: false }],
   ['Tamaris', 4, 1, '13.90', 10, 5, 2022, '460.00'],
   ['Uvala', 1, 5, '26.00', 14, 7, 2012, '1750.00'],
   ['Val', 3, 2, '10.90', 6, 3, 2019, '140.00'],
@@ -49,11 +74,11 @@ function findRef(items: NamedRef[], id: number): NamedRef | undefined {
 }
 
 const vessels: CompanyVessel[] = rows.map(
-  ([name, category, port, length, people, cabins, year, price, active], index) => ({
+  ([name, category, port, length, people, cabins, year, price, details], index) => ({
     id: index + 1,
     name,
-    description: '',
-    equipment: 'VHF radio, prsluci za spašavanje',
+    description: details?.description ?? '',
+    equipment: details?.equipment ?? 'VHF radio, prsluci za spašavanje',
     category: findRef(mockCategories, category)!,
     home_port: findRef(mockPorts, port)!,
     length_m: length,
@@ -61,7 +86,7 @@ const vessels: CompanyVessel[] = rows.map(
     cabins,
     year_built: year,
     daily_price: price,
-    is_active: active ?? true,
+    is_active: details?.is_active ?? true,
   }),
 )
 
@@ -96,7 +121,7 @@ const requiredFields = [
 ] as const
 
 // Keep decimals in string form, including when validating and padding to two places.
-function decimal(value: string, maxWholeDigits?: number): string | undefined {
+function decimal(value: string, maxWholeDigits: number): string | undefined {
   if (typeof value !== 'string') return
 
   const match = /^([+-]?)(\d*)(?:\.(\d{0,2}))?$/.exec(value.trim())
@@ -106,7 +131,7 @@ function decimal(value: string, maxWholeDigits?: number): string | undefined {
   if (!whole && !fraction) return
 
   const integer = whole.replace(/^0+/, '') || '0'
-  if (maxWholeDigits !== undefined && integer.length > maxWholeDigits) return
+  if (integer.length > maxWholeDigits) return
 
   const digits = fraction.padEnd(2, '0')
   const negative = sign === '-' && (integer !== '0' || digits !== '00')
@@ -144,9 +169,10 @@ export function createMockVessel(data: VesselCreate): CompanyVessel {
   if (!category) setError('category', 'Odabrana kategorija ne postoji.')
   if (!homePort) setError('home_port', 'Odabrana luka ne postoji.')
 
-  const length = decimal(data.length_m)
+  // Use the provisional DecimalField(5, 2) from #71 until #116 checks the API schema.
+  const length = decimal(data.length_m, 3)
   if (!length || length.startsWith('-') || length === '0.00') {
-    setError('length_m', 'Unesite duljinu veću od 0 s najviše dvije decimale.')
+    setError('length_m', 'Unesite duljinu od 0,01 do 999,99 m s najviše dvije decimale.')
   }
 
   const price = decimal(data.daily_price, 8)
