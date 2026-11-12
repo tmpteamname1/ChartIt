@@ -95,7 +95,9 @@ class PublicApiTests(APITestCase):
         self.assertEqual([c['name'] for c in response.json()], ['Jedrilica', 'Katamaran'])
 
     def test_ports_public_with_coordinates(self):
-        Port.objects.create(name='Split', latitude=Decimal('43.508133'), longitude=Decimal('16.440193'))
+        Port.objects.create(
+            name='Split', latitude=Decimal('43.508133'), longitude=Decimal('16.440193')
+        )
 
         response = self.client.get('/api/ports/')
 
