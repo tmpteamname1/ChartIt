@@ -50,11 +50,19 @@ function NewVesselButton() {
   )
 }
 
-// A long vessel name next to it must never squeeze the label into an ellipsis.
+// Sentence case and medium weight for both labels. miw: a long vessel name next to the
+// badge must never squeeze the label into an ellipsis.
+const STATUS_BADGE_PROPS = { tt: 'none', fw: 500, miw: 'max-content' } as const
+
+// Inactive gets a dark pill so it stands out clearly on white rows and cards.
 function VesselStatus({ active }: { active: boolean }) {
-  return (
-    <Badge color={active ? 'green' : 'gray'} variant="light" miw="max-content">
-      {active ? 'Aktivno' : 'Neaktivno'}
+  return active ? (
+    <Badge color="green" variant="light" {...STATUS_BADGE_PROPS}>
+      Aktivno
+    </Badge>
+  ) : (
+    <Badge color="gray.7" c="gray.3" {...STATUS_BADGE_PROPS}>
+      Neaktivno
     </Badge>
   )
 }
