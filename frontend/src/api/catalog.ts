@@ -3,6 +3,7 @@
 // Until the backend endpoints exist, the functions return mock data with the same signature.
 
 import { mockCategories, mockCompanies, mockPorts, queryMockVessels } from './mocks/catalog'
+import { mockDelay } from './mocks/delay'
 
 export interface Category {
   id: number
@@ -100,23 +101,4 @@ export async function getPorts(signal?: AbortSignal): Promise<Port[]> {
 export async function getCompanies(signal?: AbortSignal): Promise<Paginated<Company>> {
   await mockDelay(signal)
   return { count: mockCompanies.length, next: null, previous: null, results: mockCompanies }
-}
-
-// Short artificial delay so loading states are visible; rejects on abort like fetch does.
-function mockDelay(signal?: AbortSignal, ms = 400): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if (signal?.aborted) {
-      reject(signal.reason)
-      return
-    }
-    const timer = setTimeout(resolve, ms)
-    signal?.addEventListener(
-      'abort',
-      () => {
-        clearTimeout(timer)
-        reject(signal.reason)
-      },
-      { once: true },
-    )
-  })
 }
