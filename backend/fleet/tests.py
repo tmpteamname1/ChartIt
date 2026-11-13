@@ -94,12 +94,20 @@ class PublicApiTests(APITestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual([c['name'] for c in response.json()], ['Jedrilica', 'Katamaran'])
 
-    def test_ports_public_with_coordinates(self):
+    def test_ports_public_sorted_with_coordinates(self):
+        Port.objects.create(
+            name='Zadar', latitude=Decimal('44.119371'), longitude=Decimal('15.231365')
+        )
         Port.objects.create(
             name='Split', latitude=Decimal('43.508133'), longitude=Decimal('16.440193')
+        )
+        Port.objects.create(
+            name='Pula', latitude=Decimal('44.866623'), longitude=Decimal('13.849578')
         )
 
         response = self.client.get('/api/ports/')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(set(response.json()[0]), {'id', 'name', 'latitude', 'longitude'})
+        data = response.json()
+        self.assertEqual([p['name'] for p in data], ['Pula', 'Split', 'Zadar'])
+        self.assertEqual(set(data[0]), {'id', 'name', 'latitude', 'longitude'})

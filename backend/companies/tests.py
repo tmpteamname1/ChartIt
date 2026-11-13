@@ -204,6 +204,7 @@ class PublicCompanyApiTests(APITestCase):
         response = self.client.get(f'/api/companies/{company.id}/')
 
         self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.json()['code'], 'not_found')
 
     def test_oib_not_in_response(self):
         company = create_company()

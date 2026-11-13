@@ -1,8 +1,8 @@
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter
 
 from .views import CompanyViewSet
 
-router = DefaultRouter()
+router = SimpleRouter()
 router.register('companies', CompanyViewSet, basename='company')
 
 urlpatterns = router.urls
