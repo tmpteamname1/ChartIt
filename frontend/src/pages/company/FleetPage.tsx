@@ -14,10 +14,10 @@ import {
   Title,
 } from '@mantine/core'
 import { IconAlertTriangle, IconSailboat } from '@tabler/icons-react'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery, type UseQueryResult } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Link, Navigate, useSearchParams } from 'react-router'
-import { PAGE_SIZE } from '../../api/catalog'
+import { PAGE_SIZE, type Paginated } from '../../api/catalog'
 import { ApiError } from '../../api/client'
 import { companyKeys, getCompanyVessels, type CompanyVessel } from '../../api/company'
 import { formatPrice } from '../../utils/format'
@@ -28,6 +28,9 @@ const PAGINATION_LABELS = {
   next: 'Sljedeća stranica',
   last: 'Zadnja stranica',
 }
+
+// Names the table for screen readers after the visible list heading.
+const LIST_HEADING_ID = 'fleet-list-heading'
 
 // The page lives in the URL (?page=2) so it survives a reload; anything else is the first page.
 function pageFromSearch(searchParams: URLSearchParams): number {
@@ -43,9 +46,10 @@ function NewVesselButton() {
   )
 }
 
+// A long vessel name next to it must never squeeze the label into an ellipsis.
 function VesselStatus({ active }: { active: boolean }) {
   return (
-    <Badge color={active ? 'green' : 'gray'} variant="light">
+    <Badge color={active ? 'green' : 'gray'} variant="light" miw="max-content">
       {active ? 'Aktivno' : 'Neaktivno'}
     </Badge>
   )
@@ -64,7 +68,7 @@ function Detail({ label, value }: { label: string; value: ReactNode }) {
 
 function VesselTable({ vessels }: { vessels: CompanyVessel[] }) {
   return (
-    <Table visibleFrom="md" tabularNums>
+    <Table visibleFrom="md" tabularNums aria-labelledby={LIST_HEADING_ID}>
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Plovilo</Table.Th>
@@ -78,7 +82,8 @@ function VesselTable({ vessels }: { vessels: CompanyVessel[] }) {
       <Table.Tbody>
         {vessels.map((vessel) => (
           <Table.Tr key={vessel.id}>
-            <Table.Td>{vessel.name}</Table.Td>
+            {/* Owners type the names, so a name without spaces must still wrap. */}
+            <Table.Td style={{ overflowWrap: 'anywhere' }}>{vessel.name}</Table.Td>
             <Table.Td>{vessel.category.name}</Table.Td>
             <Table.Td>{vessel.home_port.name}</Table.Td>
             <Table.Td>{vessel.max_people}</Table.Td>
@@ -101,7 +106,9 @@ function VesselCards({ vessels }: { vessels: CompanyVessel[] }) {
       {vessels.map((vessel) => (
         <Card key={vessel.id} withBorder>
           <Group justify="space-between" align="flex-start" wrap="nowrap">
-            <Text fw={600}>{vessel.name}</Text>
+            <Text fw={600} style={{ overflowWrap: 'anywhere' }}>
+              {vessel.name}
+            </Text>
             <VesselStatus active={vessel.is_active} />
           </Group>
           <SimpleGrid cols={2} mt="sm">
@@ -116,18 +123,16 @@ function VesselCards({ vessels }: { vessels: CompanyVessel[] }) {
   )
 }
 
-function VesselList() {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const page = pageFromSearch(searchParams)
-  const { data, error, isPending, isPlaceholderData, refetch } = useQuery({
-    queryKey: companyKeys.vessels(page),
-    queryFn: ({ signal }) => getCompanyVessels(page, signal),
-    // The current page stays on screen while the next one loads.
-    placeholderData: keepPreviousData,
-    // A 4xx answer, such as a page past the end, would not change on retry.
-    retry: (failureCount, err) =>
-      failureCount < 3 && !(err instanceof ApiError && err.status < 500),
-  })
+function VesselList({
+  page,
+  query,
+  onPageChange,
+}: {
+  page: number
+  query: UseQueryResult<Paginated<CompanyVessel>>
+  onPageChange: (page: number) => void
+}) {
+  const { data, error, isPending, isPlaceholderData, refetch } = query
 
   // Loaded data stays on screen if a later background refetch fails.
   if (!data) {
@@ -166,11 +171,6 @@ function VesselList() {
     )
   }
 
-  const changePage = (next: number) => {
-    setSearchParams(next === 1 ? {} : { page: String(next) })
-    window.scrollTo({ top: 0 })
-  }
-
   return (
     <Stack>
       <Box opacity={isPlaceholderData ? 0.6 : 1} aria-busy={isPlaceholderData}>
@@ -180,7 +180,7 @@ function VesselList() {
       <Pagination
         total={Math.ceil(data.count / PAGE_SIZE)}
         value={page}
-        onChange={changePage}
+        onChange={onPageChange}
         getControlProps={(control) => ({ 'aria-label': PAGINATION_LABELS[control] })}
         hideWithOnePage
       />
@@ -189,16 +189,34 @@ function VesselList() {
 }
 
 function FleetPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const page = pageFromSearch(searchParams)
+  const query = useQuery({
+    queryKey: companyKeys.vessels(page),
+    queryFn: ({ signal }) => getCompanyVessels(page, signal),
+    // The current page stays on screen while the next one loads.
+    placeholderData: keepPreviousData,
+    // A 4xx answer, such as a page past the end, would not change on retry.
+    retry: (failureCount, err) =>
+      failureCount < 3 && !(err instanceof ApiError && err.status < 500),
+  })
+
+  const changePage = (next: number) => {
+    setSearchParams(next === 1 ? {} : { page: String(next) })
+    window.scrollTo({ top: 0 })
+  }
+
   return (
     <Stack>
       <Title order={1}>Flota</Title>
       <Group justify="space-between">
-        <Title order={2} size="h4">
+        <Title order={2} size="h4" id={LIST_HEADING_ID}>
           Plovila vaše tvrtke
         </Title>
-        <NewVesselButton />
+        {/* An empty fleet has this button in its empty state instead. */}
+        {query.data?.count !== 0 && <NewVesselButton />}
       </Group>
-      <VesselList />
+      <VesselList page={page} query={query} onPageChange={changePage} />
     </Stack>
   )
 }
