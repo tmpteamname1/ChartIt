@@ -12,7 +12,7 @@ import CompanyProfilePage from './pages/company/CompanyProfilePage'
 import CompanyReservationDetailsPage from './pages/company/CompanyReservationDetailsPage'
 import CompanyReservationsPage from './pages/company/CompanyReservationsPage'
 import EmployeesPage from './pages/company/EmployeesPage'
-import FleetPage from './pages/company/FleetPage'
+import FleetRoute from './pages/company/FleetRoute'
 import RequestsPage from './pages/company/RequestsPage'
 import SchedulePage from './pages/company/SchedulePage'
 import ServicesPage from './pages/company/ServicesPage'
@@ -69,7 +69,7 @@ export const router = createBrowserRouter([
               {
                 element: <RequireRole roles={['VLASNIK']} />,
                 children: [
-                  { path: 'flota', element: <FleetPage /> },
+                  { path: 'flota', element: <FleetRoute /> },
                   { path: 'flota/novo', element: <VesselFormPage /> },
                   { path: 'flota/:id', element: <VesselFormPage /> },
                   { path: 'flota/:id/nedostupnost', element: <UnavailabilityPage /> },
