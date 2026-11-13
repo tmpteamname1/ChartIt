@@ -32,6 +32,10 @@ const PAGINATION_LABELS = {
 // Names the table for screen readers after the visible list heading.
 const LIST_HEADING_ID = 'fleet-list-heading'
 
+// Owners and admins type these names, so a name without spaces must still wrap.
+// Only names get it: on headers or prices it would split words and amounts when space is short.
+const WRAP_ANYWHERE = { overflowWrap: 'anywhere' } as const
+
 // The page lives in the URL (?page=2) so it survives a reload; anything else is the first page.
 function pageFromSearch(searchParams: URLSearchParams): number {
   const page = Number(searchParams.get('page') ?? 1)
@@ -55,14 +59,28 @@ function VesselStatus({ active }: { active: boolean }) {
   )
 }
 
-function Detail({ label, value }: { label: string; value: ReactNode }) {
+function Detail({ label, value, wrap }: { label: string; value: ReactNode; wrap?: boolean }) {
   return (
     <div>
       <Text size="xs" c="dimmed">
         {label}
       </Text>
-      <Text size="sm">{value}</Text>
+      <Text size="sm" style={wrap ? WRAP_ANYWHERE : undefined}>
+        {value}
+      </Text>
     </div>
+  )
+}
+
+// Wrapping anywhere lets the auto table layout shrink a column until ordinary words split,
+// so every name column keeps room for one ordinary word.
+function NameCell({ children }: { children: ReactNode }) {
+  return (
+    <Table.Td>
+      <Box miw="6rem" style={WRAP_ANYWHERE}>
+        {children}
+      </Box>
+    </Table.Td>
   )
 }
 
@@ -82,10 +100,9 @@ function VesselTable({ vessels }: { vessels: CompanyVessel[] }) {
       <Table.Tbody>
         {vessels.map((vessel) => (
           <Table.Tr key={vessel.id}>
-            {/* Owners type the names, so a name without spaces must still wrap. */}
-            <Table.Td style={{ overflowWrap: 'anywhere' }}>{vessel.name}</Table.Td>
-            <Table.Td>{vessel.category.name}</Table.Td>
-            <Table.Td>{vessel.home_port.name}</Table.Td>
+            <NameCell>{vessel.name}</NameCell>
+            <NameCell>{vessel.category.name}</NameCell>
+            <NameCell>{vessel.home_port.name}</NameCell>
             <Table.Td>{vessel.max_people}</Table.Td>
             <Table.Td>{formatPrice(vessel.daily_price)}</Table.Td>
             <Table.Td>
@@ -106,14 +123,14 @@ function VesselCards({ vessels }: { vessels: CompanyVessel[] }) {
       {vessels.map((vessel) => (
         <Card key={vessel.id} withBorder>
           <Group justify="space-between" align="flex-start" wrap="nowrap">
-            <Text fw={600} style={{ overflowWrap: 'anywhere' }}>
+            <Text fw={600} style={WRAP_ANYWHERE}>
               {vessel.name}
             </Text>
             <VesselStatus active={vessel.is_active} />
           </Group>
           <SimpleGrid cols={2} mt="sm">
-            <Detail label="Kategorija" value={vessel.category.name} />
-            <Detail label="Matična luka" value={vessel.home_port.name} />
+            <Detail label="Kategorija" value={vessel.category.name} wrap />
+            <Detail label="Matična luka" value={vessel.home_port.name} wrap />
             <Detail label="Broj osoba" value={vessel.max_people} />
             <Detail label="Cijena / dan" value={formatPrice(vessel.daily_price)} />
           </SimpleGrid>
