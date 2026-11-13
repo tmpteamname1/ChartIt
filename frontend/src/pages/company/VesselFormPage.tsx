@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Fieldset,
+  Flex,
   Group,
   Loader,
   NativeSelect,
@@ -42,7 +43,18 @@ function readVesselForm(form: HTMLFormElement) {
     return number
   }
 
-  function decimal(field: keyof VesselCreate, maxWholeDigits: number, allowZero: boolean) {
+  function decimal(
+    field: keyof VesselCreate,
+    {
+      maxWholeDigits,
+      allowZero,
+      message,
+    }: {
+      maxWholeDigits: number
+      allowZero: boolean
+      message: string
+    },
+  ) {
     const value = required(field)
     if (!value) return ''
 
@@ -56,9 +68,7 @@ function readVesselForm(form: HTMLFormElement) {
       digits.length > maxWholeDigits ||
       (isZero ? !allowZero : sign === '-')
     ) {
-      errors[field] = allowZero
-        ? 'Unesite cijenu od 0 do 99999999,99 € s najviše dvije decimale.'
-        : 'Unesite duljinu od 0,01 do 999,99 m s najviše dvije decimale.'
+      errors[field] = message
     }
     return `${digits}.${cents}`
   }
@@ -67,11 +77,19 @@ function readVesselForm(form: HTMLFormElement) {
     name: required('name'),
     category: Number(required('category')),
     home_port: Number(required('home_port')),
-    length_m: decimal('length_m', 3, false),
+    length_m: decimal('length_m', {
+      maxWholeDigits: 3,
+      allowZero: false,
+      message: 'Unesite duljinu od 0,01 do 999,99 m s najviše dvije decimale.',
+    }),
     max_people: integer('max_people', 1, maxSmallInteger),
     cabins: integer('cabins', 0, maxSmallInteger),
     year_built: integer('year_built', 1900, new Date().getFullYear()),
-    daily_price: decimal('daily_price', 8, true),
+    daily_price: decimal('daily_price', {
+      maxWholeDigits: 8,
+      allowZero: true,
+      message: 'Unesite cijenu od 0 do 99999999,99 € s najviše dvije decimale.',
+    }),
     description: read('description'),
     equipment: read('equipment'),
   }
@@ -82,6 +100,7 @@ function NewVesselForm() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const formRef = useRef<HTMLFormElement>(null)
+  const formErrorRef = useRef<HTMLDivElement>(null)
   const submitting = useRef(false)
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof VesselCreate, string>>>({})
   const [formErrors, setFormErrors] = useState<string[]>([])
@@ -107,10 +126,14 @@ function NewVesselForm() {
     !loadingOptions && !optionsError && (!categories.data?.length || !ports.data?.length)
 
   useEffect(() => {
-    if (!isPending && Object.keys(fieldErrors).length > 0) {
+    if (isPending) return
+    if (Object.keys(fieldErrors).length > 0) {
       formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus()
+    } else if (formErrors.length > 0) {
+      formErrorRef.current?.focus({ preventScroll: true })
+      formErrorRef.current?.scrollIntoView({ block: 'center' })
     }
-  }, [fieldErrors, isPending])
+  }, [fieldErrors, formErrors, isPending])
 
   function submit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -139,7 +162,7 @@ function NewVesselForm() {
             }
           }
           if (generalMessages.length === 0 && Object.keys(fieldMessages).length === 0) {
-            generalMessages.push(error.message || 'Provjerite unesene podatke.')
+            generalMessages.push('Provjerite unesene podatke.')
           }
         } else {
           generalMessages.push('Plovilo nije moguće spremiti. Pokušajte ponovno.')
@@ -164,6 +187,7 @@ function NewVesselForm() {
           <Button
             variant="light"
             size="xs"
+            mih={44}
             onClick={() => {
               if (categories.isError) void categories.refetch()
               if (ports.isError) void ports.refetch()
@@ -176,7 +200,11 @@ function NewVesselForm() {
       {optionsEmpty && (
         <Alert color="yellow">Za dodavanje plovila potrebne su kategorije i matične luke.</Alert>
       )}
-      {formErrors.length > 0 && <Alert color="red">{formErrors.join(' ')}</Alert>}
+      {formErrors.length > 0 && (
+        <Alert ref={formErrorRef} tabIndex={-1} color="red">
+          {formErrors.join(' ')}
+        </Alert>
+      )}
       <Box component="form" ref={formRef} onSubmit={submit} noValidate>
         <Fieldset variant="unstyled" disabled={isPending} aria-busy={isPending}>
           <Stack>
@@ -245,19 +273,20 @@ function NewVesselForm() {
               <Textarea name="description" label="Opis" rows={3} error={fieldErrors.description} />
               <Textarea name="equipment" label="Oprema" rows={3} error={fieldErrors.equipment} />
             </SimpleGrid>
-            <Group justify="flex-end">
-              <Button variant="default" onClick={() => void navigate(fleetPath)}>
+            <Flex direction={{ base: 'column', sm: 'row' }} justify="flex-end" gap="sm">
+              <Button variant="default" mih={44} onClick={() => void navigate(fleetPath)}>
                 Odustani
               </Button>
               <Button
                 type="submit"
+                mih={44}
                 leftSection={isPending && <Loader size="xs" color="currentColor" />}
                 aria-busy={isPending}
                 disabled={isPending || loadingOptions || optionsError || optionsEmpty}
               >
                 {isPending ? 'Spremanje…' : 'Spremi plovilo'}
               </Button>
-            </Group>
+            </Flex>
           </Stack>
         </Fieldset>
       </Box>
