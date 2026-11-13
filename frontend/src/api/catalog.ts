@@ -52,6 +52,9 @@ export interface Paginated<T> {
   results: T[]
 }
 
+// Results per page when the request has no page_size (docs chapter 4.9).
+export const PAGE_SIZE = 20
+
 export type VesselOrdering =
   'name' | '-name' | 'daily_price' | '-daily_price' | 'length_m' | '-length_m'
 
