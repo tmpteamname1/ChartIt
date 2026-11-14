@@ -90,6 +90,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'drf_spectacular',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.headless',
     'accounts',
     'companies',
     'reservations',
@@ -104,6 +109,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -249,5 +255,40 @@ SPECTACULAR_SETTINGS = {
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+
+# Google login (django-allauth headless, ADR-06). Docs chapter 6, "Google OAuth prijava".
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# Empty on Render (frontend and backend share one origin). Locally http://localhost:5173,
+# because Django runs on :8000 and the React app on :5173.
+FRONTEND_URL = env('FRONTEND_URL', default='')
+
+ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_SIGNUP_FIELDS = ['email*']
+SOCIALACCOUNT_ADAPTER = 'accounts.adapters.SocialAccountAdapter'
+SOCIALACCOUNT_LOGIN_ON_GET = False  # login starts with a POST, never a plain link
+
+HEADLESS_ONLY = True
+# Any failure at the provider leads to the frontend with a short code, no technical details.
+LOGIN_ERROR_URL = f'{FRONTEND_URL}/prijava?greska=prijava_nije_uspjela'
+HEADLESS_FRONTEND_URLS = {
+    'socialaccount_login_error': LOGIN_ERROR_URL,
+    # E-mail already used by an account that is not linked to Google.
+    'account_signup': LOGIN_ERROR_URL,
+}
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': env('GOOGLE_CLIENT_ID', default=''),
+            'secret': env('GOOGLE_CLIENT_SECRET', default=''),
+            'key': '',
+        },
+        'SCOPE': ['profile', 'email'],
+    }
+}
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
