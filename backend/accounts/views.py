@@ -2,7 +2,7 @@ from django.contrib.auth import login, logout
 from drf_spectacular.utils import extend_schema, inline_serializer
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from .models import User
@@ -46,10 +46,32 @@ def test_login(request):
     return Response(TestUserSerializer(user).data)
 
 
-# Temporary logout until the OAuth login (#44) brings its own.
+# Just for development, logout_view is the real logout
 @extend_schema(summary='Odjava testnog korisnika', request=None, responses={204: None})
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def test_logout(request):
     logout(request)
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CurrentUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'email', 'role']  # company comes later
+
+
+@extend_schema(summary='Prijavljeni korisnik', responses=CurrentUserSerializer)
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def me(request):
+    """Not logged in: 401 (config.authentication.SessionAuthentication)."""
+    return Response(CurrentUserSerializer(request.user).data)
+
+
+@extend_schema(summary='Odjava', request=None, responses={204: None})
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def logout_view(request):
+    logout(request)  # flushes the session
     return Response(status=status.HTTP_204_NO_CONTENT)

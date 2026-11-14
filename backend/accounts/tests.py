@@ -1,10 +1,19 @@
 import importlib
 from io import StringIO
 
+from allauth.account.models import EmailAddress
+from allauth.core.context import request_context
+from allauth.core.exceptions import ImmediateHttpResponse
+from allauth.socialaccount.adapter import get_adapter
+from allauth.socialaccount.helpers import complete_social_login
+from allauth.socialaccount.models import SocialAccount, SocialLogin
 from django.contrib.auth import get_user_model
+from django.contrib.auth.middleware import AuthenticationMiddleware
+from django.contrib.messages.middleware import MessageMiddleware
+from django.contrib.sessions.middleware import SessionMiddleware
 from django.core.management import call_command
 from django.db import IntegrityError, transaction
-from django.test import TestCase, override_settings
+from django.test import RequestFactory, TestCase, override_settings
 from django.urls import clear_url_caches, path
 from rest_framework import views
 from rest_framework.response import Response
@@ -12,6 +21,7 @@ from rest_framework.response import Response
 import config.urls
 from companies.models import Company
 
+from .adapters import SocialAccountAdapter
 from .permissions import IsCompanyEmployee, IsCompanyOwner, IsPlatformAdmin
 from .seed import TEST_USERS
 
@@ -261,3 +271,100 @@ class TestLoginEnabledTests(_TestLoginFlagMixin, TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertIn('username', response.json()['errors'])
         self.assertNotIn('_auth_user_id', self.client.session)
+
+
+# --- Google login (django-allauth); the provider is simulated, no network ---
+
+
+def make_request():
+    request = RequestFactory().get('/')
+    for middleware in (SessionMiddleware, AuthenticationMiddleware, MessageMiddleware):
+        middleware(lambda r: None).process_request(request)
+    request.session.save()
+    return request
+
+
+def fake_google_login(request, uid='123', email='ana@example.com', **extra):
+    """Builds the login the way allauth would after Google answers (provider is simulated)."""
+    data = {'email': email, 'first_name': 'Ana', 'last_name': 'Anić', **extra}
+    login = SocialLogin(
+        user=User(),
+        account=SocialAccount(provider='google', uid=uid, extra_data=data),
+        email_addresses=[EmailAddress(email=email, verified=True, primary=True)],
+        provider=get_adapter().get_provider(request, 'google'),
+    )
+    SocialAccountAdapter().populate_user(request, login, data)
+    return login
+
+
+def google_login(request, **kwargs):
+    """Runs the login with the request set as the current one, as AccountMiddleware does."""
+    with request_context(request):
+        return complete_social_login(request, fake_google_login(request, **kwargs))
+
+
+@override_settings(
+    SOCIALACCOUNT_PROVIDERS={
+        'google': {
+            'APP': {'client_id': 'test-client-id', 'secret': 'test-secret', 'key': ''},
+            'SCOPE': ['profile', 'email'],
+        }
+    }
+)
+class SocialLoginTests(TestCase):
+    def test_first_login_creates_customer(self):
+        google_login(make_request())
+
+        user = User.objects.get(email='ana@example.com')
+        self.assertEqual(user.role, User.Role.KORISNIK)
+        self.assertEqual((user.first_name, user.last_name), ('Ana', 'Anić'))
+        self.assertTrue(SocialAccount.objects.filter(user=user, uid='123').exists())
+
+    def test_role_from_provider_is_ignored(self):
+        google_login(make_request(), role='ADMINISTRATOR')
+
+        self.assertEqual(User.objects.get().role, User.Role.KORISNIK)
+
+    def test_repeat_login_does_not_duplicate(self):
+        for _ in range(2):
+            google_login(make_request())
+
+        self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(SocialAccount.objects.count(), 1)
+
+    def test_deactivated_user_cannot_log_in(self):
+        user = User.objects.create_user(
+            username='ana', email='ana@example.com', password=None, is_active=False
+        )
+        SocialAccount.objects.create(user=user, provider='google', uid='123')
+        request = make_request()
+
+        try:
+            response = google_login(request)
+        except ImmediateHttpResponse as exc:
+            response = exc.response
+
+        self.assertNotIn('_auth_user_id', request.session)
+        self.assertIn('greska=racun_deaktiviran', response['Location'])
+
+
+class MeEndpointTests(TestCase):
+    def test_me_without_login_returns_401(self):
+        self.assertEqual(self.client.get('/api/auth/me/').status_code, 401)
+
+    def test_me_returns_current_user(self):
+        user = User.objects.create_user(
+            username='ana', email='ana@example.com', first_name='Ana', last_name='Anić'
+        )
+        self.client.force_login(user)
+
+        data = self.client.get('/api/auth/me/').json()
+
+        self.assertEqual(data['email'], 'ana@example.com')
+        self.assertEqual(data['role'], 'KORISNIK')
+
+    def test_logout_then_me_returns_401(self):
+        self.client.force_login(User.objects.create_user(username='ana', email='ana@example.com'))
+
+        self.assertEqual(self.client.post('/api/auth/logout/').status_code, 204)
+        self.assertEqual(self.client.get('/api/auth/me/').status_code, 401)
