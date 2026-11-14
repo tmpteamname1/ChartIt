@@ -1,0 +1,42 @@
+.home-page {
+  max-width: 1180px;
+}
+
+.home-page__intro {
+  display: grid;
+  gap: var(--mantine-spacing-xs);
+  max-width: 700px;
+}
+
+.home-page__filters {
+  background: var(--mantine-color-body);
+}
+
+.home-page__results-heading {
+  min-height: 58px;
+}
+
+.home-page__loading {
+  display: grid;
+  gap: var(--mantine-spacing-md);
+}
+
+.home-page__empty {
+  background: var(--mantine-color-gray-0);
+}
+
+@media (max-width: 36em) {
+  .home-page {
+    padding-inline: var(--mantine-spacing-sm);
+  }
+
+  .home-page__filters {
+    padding: var(--mantine-spacing-sm);
+  }
+
+  .home-page__results-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--mantine-spacing-xs);
+  }
+}
