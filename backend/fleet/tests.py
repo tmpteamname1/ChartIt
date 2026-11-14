@@ -1,11 +1,16 @@
+from datetime import date
 from decimal import Decimal
 
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
-from django.test import TestCase
+from django.db.models.deletion import ProtectedError
+from django.test import TestCase, override_settings
 from rest_framework.test import APITestCase
 
-from .models import Category, Port
+from companies.models import Company
+
+from .models import Category, Port, Vessel
 
 
 class CategoryTests(TestCase):
@@ -111,3 +116,120 @@ class PublicApiTests(APITestCase):
         data = response.json()
         self.assertEqual([p['name'] for p in data], ['Pula', 'Split', 'Zadar'])
         self.assertEqual(set(data[0]), {'id', 'name', 'latitude', 'longitude'})
+
+
+class VesselTests(TestCase):
+    def setUp(self):
+        self.company = Company.objects.create(
+            name='Adria Charter',
+            oib='69435151530',
+            address='Riva 1, Split',
+            email='info@adria.example',
+            phone='+385911234567',
+        )
+        self.category = Category.objects.create(name='Jedrilica')
+        self.port = Port.objects.create(
+            name='Split', latitude=Decimal('43.508133'), longitude=Decimal('16.440193')
+        )
+
+    def make_vessel(self, **overrides):
+        data = {
+            'company': self.company,
+            'category': self.category,
+            'home_port': self.port,
+            'name': 'Bonaca',
+            'length_m': Decimal('12.50'),
+            'max_people': 8,
+            'cabins': 3,
+            'year_built': 2015,
+            'daily_price': Decimal('250.00'),
+        }
+        data.update(overrides)
+        return Vessel(**data)
+
+    def create_vessel(self, **overrides):
+        vessel = self.make_vessel(**overrides)
+        vessel.save()
+        return vessel
+
+    def test_str_shows_name_and_company(self):
+        self.assertEqual(str(self.make_vessel()), 'Bonaca (Adria Charter)')
+
+    def test_is_active_by_default(self):
+        self.assertTrue(self.create_vessel().is_active)
+
+    def test_description_and_equipment_can_be_blank(self):
+        self.make_vessel(description='', equipment='').full_clean()
+
+    def test_ordering_by_name(self):
+        self.create_vessel(name='Zeta')
+        self.create_vessel(name='Alfa')
+        names = list(Vessel.objects.values_list('name', flat=True))
+        self.assertEqual(names, ['Alfa', 'Zeta'])
+
+    def test_negative_price_rejected_by_database(self):
+        with self.assertRaises(IntegrityError), transaction.atomic():
+            self.create_vessel(daily_price=Decimal('-0.01'))
+
+    def test_zero_price_allowed(self):
+        self.create_vessel(daily_price=Decimal('0.00'))
+
+    def test_zero_max_people_rejected_by_database(self):
+        with self.assertRaises(IntegrityError), transaction.atomic():
+            self.create_vessel(max_people=0)
+
+    def test_zero_length_rejected_by_database(self):
+        with self.assertRaises(IntegrityError), transaction.atomic():
+            self.create_vessel(length_m=Decimal('0.00'))
+
+    def test_year_built_before_1900_rejected(self):
+        with self.assertRaises(ValidationError) as ctx:
+            self.make_vessel(year_built=1899).full_clean()
+        self.assertIn('year_built', ctx.exception.message_dict)
+
+    def test_year_built_in_future_rejected(self):
+        with self.assertRaises(ValidationError) as ctx:
+            self.make_vessel(year_built=date.today().year + 1).full_clean()
+        self.assertIn('year_built', ctx.exception.message_dict)
+
+    def test_year_built_current_year_allowed(self):
+        self.make_vessel(year_built=date.today().year).full_clean()
+
+    def test_company_with_vessels_cannot_be_deleted(self):
+        self.create_vessel()
+        with self.assertRaises(ProtectedError):
+            self.company.delete()
+
+    def test_category_with_vessels_cannot_be_deleted(self):
+        self.create_vessel()
+        with self.assertRaises(ProtectedError):
+            self.category.delete()
+
+    def test_port_with_vessels_cannot_be_deleted(self):
+        self.create_vessel()
+        with self.assertRaises(ProtectedError):
+            self.port.delete()
+
+    def test_related_name_vessels(self):
+        vessel = self.create_vessel()
+        self.assertEqual(list(self.company.vessels.all()), [vessel])
+        self.assertEqual(list(self.category.vessels.all()), [vessel])
+        self.assertEqual(list(self.port.vessels.all()), [vessel])
+
+
+@override_settings(
+    STORAGES={
+        'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+        'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
+    }
+)
+class VesselAdminTests(TestCase):
+    def setUp(self):
+        User = get_user_model()
+        admin = User.objects.create_superuser('admin', 'admin@example.com', 'x')
+        self.client.force_login(admin)
+
+    def test_changelist_and_add_form_load(self):
+        for url in ('/admin/fleet/vessel/', '/admin/fleet/vessel/add/'):
+            with self.subTest(url=url):
+                self.assertEqual(self.client.get(url, secure=True).status_code, 200)
