@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
 from django.db.models.deletion import ProtectedError
 from django.test import TestCase
+from rest_framework.test import APITestCase
 
 from .admin import CompanyAdmin
 from .models import Company
@@ -178,3 +179,37 @@ class CompanyAdminTests(TestCase):
         second.refresh_from_db()
         self.assertFalse(first.is_active)
         self.assertFalse(second.is_active)
+
+
+class PublicCompanyApiTests(APITestCase):
+    def test_list_public_without_login(self):
+        create_company()
+
+        response = self.client.get('/api/companies/')
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_inactive_company_not_in_list(self):
+        create_company(name='Aktivna', oib=VALID_OIB)
+        create_company(name='Neaktivna', oib=OTHER_VALID_OIB, is_active=False)
+
+        response = self.client.get('/api/companies/')
+
+        names = [c['name'] for c in response.json()['results']]
+        self.assertEqual(names, ['Aktivna'])
+
+    def test_inactive_company_detail_returns_404(self):
+        company = create_company(is_active=False)
+
+        response = self.client.get(f'/api/companies/{company.id}/')
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.json()['code'], 'not_found')
+
+    def test_oib_not_in_response(self):
+        company = create_company()
+
+        response = self.client.get(f'/api/companies/{company.id}/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn('oib', response.json())
