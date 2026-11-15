@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models.functions import Lower
@@ -59,3 +61,65 @@ class Port(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def current_year():
+    return date.today().year
+
+
+class Vessel(models.Model):
+    company = models.ForeignKey(
+        'companies.Company',
+        verbose_name='tvrtka',
+        on_delete=models.PROTECT,
+        related_name='vessels',
+    )
+    category = models.ForeignKey(
+        Category,
+        verbose_name='kategorija',
+        on_delete=models.PROTECT,
+        related_name='vessels',
+    )
+    home_port = models.ForeignKey(
+        Port,
+        verbose_name='matična luka',
+        on_delete=models.PROTECT,
+        related_name='vessels',
+    )
+    name = models.CharField('naziv', max_length=255)
+    description = models.TextField('opis', blank=True)
+    equipment = models.TextField('oprema', blank=True)
+    length_m = models.DecimalField('duljina (m)', max_digits=5, decimal_places=2)
+    max_people = models.PositiveSmallIntegerField('najveći broj osoba')
+    cabins = models.PositiveSmallIntegerField('broj kabina')
+    year_built = models.PositiveSmallIntegerField(
+        'godina izgradnje',
+        validators=[MinValueValidator(1900), MaxValueValidator(current_year)],
+    )
+    # Iznos u eurima; za novac se nikad ne koristi FloatField (ADR-04, 4.6).
+    daily_price = models.DecimalField('dnevna cijena (EUR)', max_digits=10, decimal_places=2)
+    is_active = models.BooleanField(
+        'aktivno', default=True
+    )  # plovila se deaktiviraju, ne brišu (4.6)
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'plovilo'
+        verbose_name_plural = 'plovila'
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(daily_price__gte=0),
+                name='fleet_vessel_daily_price_gte_0',
+            ),
+            models.CheckConstraint(
+                condition=models.Q(max_people__gte=1),
+                name='fleet_vessel_max_people_gte_1',
+            ),
+            models.CheckConstraint(
+                condition=models.Q(length_m__gt=0),
+                name='fleet_vessel_length_m_gt_0',
+            ),
+        ]
+
+    def __str__(self):
+        return f'{self.name} ({self.company})'
