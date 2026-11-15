@@ -1,7 +1,7 @@
-import { Button, Select, Stack, Title } from '@mantine/core'
-import { IconBrandGoogle } from '@tabler/icons-react'
+import { Alert, Button, Select, Stack, Title } from '@mantine/core'
+import { IconAlertCircle, IconBrandGoogle } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
-import { Navigate, useLocation } from 'react-router'
+import { Navigate, useLocation, useSearchParams } from 'react-router'
 import { getTestUsers, startGoogleLogin, TEST_LOGIN_ENABLED, type TestUser } from '../../api/auth'
 import { useAuth } from '../../auth/AuthContext'
 import { HOME_BY_ROLE, ROLE_LABELS } from '../../auth/roles'
@@ -54,9 +54,21 @@ function TestLoginSelect() {
   )
 }
 
+// Codes the backend sends as /prijava?greska=<code> when the Google login fails
+// (accounts/adapters.py). Users never see the technical cause.
+const LOGIN_ERRORS = new Map([
+  ['prijava_nije_uspjela', 'Prijava je prekinuta ili nije uspjela. Pokušajte ponovno.'],
+  ['racun_deaktiviran', 'Vaš račun je deaktiviran. Obratite se administratoru.'],
+])
+const UNKNOWN_LOGIN_ERROR = 'Prijava nije uspjela. Pokušajte ponovno.'
+
 function LoginPage() {
   const { status, user } = useAuth()
   const location = useLocation()
+  const [searchParams] = useSearchParams()
+  const errorCode = searchParams.get('greska')
+  const errorMessage =
+    errorCode === null ? null : (LOGIN_ERRORS.get(errorCode) ?? UNKNOWN_LOGIN_ERROR)
   // Set by RequireRole when a visitor opened a protected page.
   const from = (location.state as { from?: string } | null)?.from
   const [redirecting, setRedirecting] = useState(false)
@@ -78,6 +90,12 @@ function LoginPage() {
   return (
     <Stack align="flex-start">
       <Title order={1}>Prijava</Title>
+      {errorMessage && (
+        <Alert color="red" icon={<IconAlertCircle />} role="alert" maw={480}>
+          {errorMessage}
+        </Alert>
+      )}
+      {/* After an error this button is the retry. */}
       <Button
         leftSection={<IconBrandGoogle size={18} />}
         loading={redirecting}
