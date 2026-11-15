@@ -1,40 +1,40 @@
-.home-page {
+.homePage {
   max-width: 1180px;
 }
 
-.home-page__intro {
+.intro {
   display: grid;
   gap: var(--mantine-spacing-xs);
   max-width: 700px;
 }
 
-.home-page__filters {
+.filters {
   background: var(--mantine-color-body);
 }
 
-.home-page__results-heading {
+.resultsHeading {
   min-height: 58px;
 }
 
-.home-page__loading {
+.loading {
   display: grid;
   gap: var(--mantine-spacing-md);
 }
 
-.home-page__empty {
+.empty {
   background: var(--mantine-color-gray-0);
 }
 
 @media (max-width: 36em) {
-  .home-page {
+  .homePage {
     padding-inline: var(--mantine-spacing-sm);
   }
 
-  .home-page__filters {
+  .filters {
     padding: var(--mantine-spacing-sm);
   }
 
-  .home-page__results-heading {
+  .resultsHeading {
     align-items: flex-start;
     flex-direction: column;
     gap: var(--mantine-spacing-xs);

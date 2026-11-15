@@ -16,9 +16,11 @@ import {
   Title,
 } from '@mantine/core'
 import { keepPreviousData, useQuery } from '@tanstack/react-query' //za dohvacivanje backenda
+import { useEffect, useState, type FormEvent } from 'react'
 import { useSearchParams } from 'react-router' //citanje i mijenjanje parametra u URL adresi
 import { VesselCard } from '../../components/VesselCard' //react komponenta za prikaz pojedinog plovila
 import {
+  PAGE_SIZE,
   catalogKeys,
   getCategories,
   getCompanies,
@@ -27,9 +29,9 @@ import {
   type VesselFilters,
   type VesselOrdering,
 } from '../../api/catalog'
-import './HomePage.css'
+import { ApiError } from '../../api/client'
+import styles from './HomePage.module.css'
 
-const PAGE_SIZE = 20
 const ORDERING_VALUES: VesselOrdering[] = [
   //nacini sortiranja
   'name',
@@ -109,6 +111,13 @@ function HomePage() {
   //parametri url adrese, mijenjanje tih parametra
   const [searchParams, setSearchParams] = useSearchParams()
   const filters = readFilters(searchParams) //spremamo aktivne filtere u filters
+  const [draftState, setDraftState] = useState(() => ({
+    url: searchParams.toString(),
+    params: new URLSearchParams(searchParams),
+  }))
+  const draftSearchParams =
+    draftState.url === searchParams.toString() ? draftState.params : searchParams
+  const draftFilters = readFilters(draftSearchParams)
 
   //dohvacanje sa backenda
   //pocetna luka sprem u portsQuery
@@ -134,24 +143,53 @@ function HomePage() {
     queryKey: catalogKeys.vessels(filters),
     queryFn: ({ signal }) => getVessels(filters, signal),
     placeholderData: keepPreviousData,
+    retry: (count, error) =>
+      !(error instanceof ApiError && error.code === 'not_found') && count < 3,
   })
+
+  useEffect(() => {
+    if (
+      vesselsQuery.error instanceof ApiError &&
+      vesselsQuery.error.code === 'not_found' &&
+      filters.page !== undefined
+    ) {
+      setSearchParams(
+        (current) => {
+          const next = new URLSearchParams(current)
+          next.delete('page')
+          return next
+        },
+        { replace: true },
+      )
+    }
+  }, [filters.page, setSearchParams, vesselsQuery.error])
 
   //primamo key i vrijednost npr ('port', '3');
   //key naziv filtera koji zalimo mijenjati a value je nova vrijednost
   const updateFilter = (key: keyof VesselFilters, value: string | number | null) => {
-    setSearchParams(
-      (current) => {
-        const next = new URLSearchParams(current) //kopiramo postoji url kako ga ne bi izgubili
-        if (value === null || value === '') {
-          next.delete(key)
-        } else {
-          next.set(key, String(value))
-        }
-        next.delete('page') //krecemo od prve stranice
-        return next
-      },
-      { replace: key === 'search' },
-    )
+    setDraftState((current) => {
+      const currentParams = current.url === searchParams.toString() ? current.params : searchParams
+      const next = new URLSearchParams(currentParams) //kopiramo postoji url kako ga ne bi izgubili
+      if (value === null || value === '') {
+        next.delete(key)
+      } else {
+        next.set(key, String(value))
+      }
+      return { url: searchParams.toString(), params: next }
+    })
+  }
+
+  const applyFilters = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const next = new URLSearchParams(draftSearchParams)
+    next.delete('page') //krecemo od prve stranice
+    const search = next.get('search')?.trim()
+    if (search) {
+      next.set('search', search)
+    } else {
+      next.delete('search')
+    }
+    setSearchParams(next)
   }
 
   //primjena stranice
@@ -167,16 +205,19 @@ function HomePage() {
     })
   }
 
-  const clearFilters = () => setSearchParams({}) //brise sve parametre
+  const clearFilters = () => {
+    setDraftState({ url: searchParams.toString(), params: new URLSearchParams() })
+    setSearchParams({})
+  } //brise sve parametre
   const results = vesselsQuery.data //sprema dohvacene podatke o plovlima u results
   const pageCount = results ? Math.ceil(results.count / PAGE_SIZE) : 0 //ukupan broj stranica
   const lookupsFailed = portsQuery.isError || categoriesQuery.isError || companiesQuery.isError
 
   return (
     //py razmak gore dolje
-    <Container className="home-page" size="xl" py="xl">
+    <Container className={styles.homePage} size="xl" py="xl">
       <Stack gap="xl">
-        <header className="home-page__intro">
+        <header className={styles.intro}>
           <Text c="blue.7" fw={700} size="sm" tt="uppercase">
             ChartIt · javna ponuda
           </Text>{' '}
@@ -187,105 +228,112 @@ function HomePage() {
           </Text>
         </header>
 
-        <Paper className="home-page__filters" p="lg" radius="md" withBorder>
-          <Grid>
-            <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
-              <TextInput
-                label="Pretraga po nazivu"
-                placeholder="npr. Adriana"
-                value={searchParams.get('search') ?? ''}
-                onChange={(event) => updateFilter('search', event.currentTarget.value)}
-              />
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
-              <Select
-                clearable
-                label="Polazna luka"
-                placeholder={portsQuery.isPending ? 'Učitavanje luka…' : 'Sve luke'}
-                data={(portsQuery.data ?? []).map((port) => ({
-                  value: String(port.id),
-                  label: port.name,
-                }))} //ako je undefined onda null inace dodijeli string
-                value={filters.port === undefined ? null : String(filters.port)}
-                onChange={(value) => updateFilter('port', value)}
-                disabled={portsQuery.isPending || portsQuery.isError}
-              />
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
-              <Select
-                clearable
-                label="Kategorija plovila"
-                placeholder={
-                  categoriesQuery.isPending ? 'Učitavanje kategorija…' : 'Sve kategorije'
-                } //ako psotoje podaci o lukama koristi ih a ako ne postoje koristi prazan niz
-                data={(categoriesQuery.data ?? []).map((category) => ({
-                  value: String(category.id),
-                  label: category.name,
-                }))}
-                value={filters.category === undefined ? null : String(filters.category)}
-                onChange={(value) => updateFilter('category', value)}
-                disabled={categoriesQuery.isPending || categoriesQuery.isError}
-              />
-            </Grid.Col>{' '}
-            {/*bas na mobu  cijeli na manjim ekranima pola a na velikima 1/3 */}
-            <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
-              <Select
-                clearable
-                label="Tvrtka"
-                placeholder={companiesQuery.isPending ? 'Učitavanje tvrtki…' : 'Sve tvrtke'}
-                data={(companiesQuery.data?.results ?? []).map((company) => ({
-                  value: String(company.id),
-                  label: company.name,
-                }))} //ako ne postoji ta firma daj null a ako postoji id u string
-                value={filters.company === undefined ? null : String(filters.company)}
-                onChange={(value) => updateFilter('company', value)}
-                disabled={companiesQuery.isPending || companiesQuery.isError}
-              />
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, sm: 6, lg: 2 }}>
-              <NumberInput
-                label="Najmanje osoba"
-                min={1}
-                allowDecimal={false}
-                allowNegative={false}
-                value={filters.people ?? ''}
-                onChange={(value) => updateFilter('people', value === '' ? null : String(value))}
-              />
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
-              <NumberInput
-                label="Najniža cijena (€ / dan)"
-                min={0} //min cijena
-                decimalScale={2}
-                allowNegative={false}
-                value={filters.min_price ?? ''}
-                onChange={(value) => updateFilter('min_price', value === '' ? null : String(value))}
-              />
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
-              <NumberInput
-                label="Najviša cijena (€ / dan)"
-                min={0}
-                decimalScale={2}
-                allowNegative={false}
-                value={filters.max_price ?? ''}
-                onChange={(value) => updateFilter('max_price', value === '' ? null : String(value))}
-              />
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
-              <Select //select sortiranje
-                label="Sortiranje"
-                data={orderingOptions}
-                value={filters.ordering ?? 'name'}
-                onChange={(value) => updateFilter('ordering', value)}
-              />
-            </Grid.Col>
-          </Grid>
-          <Group justify="flex-end" mt="md">
-            <Button variant="subtle" onClick={clearFilters}>
-              Ukloni filtre
-            </Button>
-          </Group>
+        <Paper className={styles.filters} p="lg" radius="md" withBorder>
+          <form onSubmit={applyFilters}>
+            <Grid>
+              <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
+                <TextInput
+                  label="Pretraga po nazivu"
+                  placeholder="npr. Adriana"
+                  value={draftSearchParams.get('search') ?? ''}
+                  onChange={(event) => updateFilter('search', event.currentTarget.value)}
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
+                <Select
+                  clearable
+                  label="Polazna luka"
+                  placeholder={portsQuery.isPending ? 'Učitavanje luka…' : 'Sve luke'}
+                  data={(portsQuery.data ?? []).map((port) => ({
+                    value: String(port.id),
+                    label: port.name,
+                  }))} //ako je undefined onda null inace dodijeli string
+                  value={draftFilters.port === undefined ? null : String(draftFilters.port)}
+                  onChange={(value) => updateFilter('port', value)}
+                  disabled={portsQuery.isPending || portsQuery.isError}
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
+                <Select
+                  clearable
+                  label="Kategorija plovila"
+                  placeholder={
+                    categoriesQuery.isPending ? 'Učitavanje kategorija…' : 'Sve kategorije'
+                  } //ako psotoje podaci o lukama koristi ih a ako ne postoje koristi prazan niz
+                  data={(categoriesQuery.data ?? []).map((category) => ({
+                    value: String(category.id),
+                    label: category.name,
+                  }))}
+                  value={draftFilters.category === undefined ? null : String(draftFilters.category)}
+                  onChange={(value) => updateFilter('category', value)}
+                  disabled={categoriesQuery.isPending || categoriesQuery.isError}
+                />
+              </Grid.Col>{' '}
+              {/*bas na mobu  cijeli na manjim ekranima pola a na velikima 1/3 */}
+              <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
+                <Select
+                  clearable
+                  label="Tvrtka"
+                  placeholder={companiesQuery.isPending ? 'Učitavanje tvrtki…' : 'Sve tvrtke'}
+                  data={(companiesQuery.data?.results ?? []).map((company) => ({
+                    value: String(company.id),
+                    label: company.name,
+                  }))} //ako ne postoji ta firma daj null a ako postoji id u string
+                  value={draftFilters.company === undefined ? null : String(draftFilters.company)}
+                  onChange={(value) => updateFilter('company', value)}
+                  disabled={companiesQuery.isPending || companiesQuery.isError}
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, lg: 2 }}>
+                <NumberInput
+                  label="Najmanje osoba"
+                  min={1}
+                  allowDecimal={false}
+                  allowNegative={false}
+                  value={draftFilters.people ?? ''}
+                  onChange={(value) => updateFilter('people', value === '' ? null : String(value))}
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
+                <NumberInput
+                  label="Najniža cijena (€ / dan)"
+                  min={0} //min cijena
+                  decimalScale={2}
+                  allowNegative={false}
+                  value={draftFilters.min_price ?? ''}
+                  onChange={(value) =>
+                    updateFilter('min_price', value === '' ? null : String(value))
+                  }
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, lg: 3 }}>
+                <NumberInput
+                  label="Najviša cijena (€ / dan)"
+                  min={0}
+                  decimalScale={2}
+                  allowNegative={false}
+                  value={draftFilters.max_price ?? ''}
+                  onChange={(value) =>
+                    updateFilter('max_price', value === '' ? null : String(value))
+                  }
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, lg: 4 }}>
+                <Select //select sortiranje
+                  label="Sortiranje"
+                  data={orderingOptions}
+                  value={draftFilters.ordering ?? 'name'}
+                  onChange={(value) => updateFilter('ordering', value)}
+                />
+              </Grid.Col>
+            </Grid>
+            <Group justify="space-between" mt="md">
+              <Button type="button" variant="subtle" onClick={clearFilters}>
+                Ukloni filtre
+              </Button>
+              <Button type="submit">Pretraži</Button>
+            </Group>
+          </form>
           {lookupsFailed && (
             <Alert color="red" mt="md" title="Filtre nije moguće učitati" role="alert">
               <Group justify="space-between" align="center">
@@ -307,7 +355,7 @@ function HomePage() {
         </Paper>
 
         <section aria-labelledby="search-results-title">
-          <Group className="home-page__results-heading" justify="space-between" align="end" mb="md">
+          <Group className={styles.resultsHeading} justify="space-between" align="end" mb="md">
             <div>
               <Text c="dimmed" size="sm">
                 Plovila koja odgovaraju kriterijima
@@ -330,8 +378,8 @@ function HomePage() {
             </Text>
           )}
 
-          {vesselsQuery.isFetching && !results && (
-            <div className="home-page__loading" role="status" aria-live="polite">
+          {vesselsQuery.isPending && (
+            <div className={styles.loading} role="status" aria-live="polite">
               <Text c="dimmed">Učitavanje rezultata…</Text>
               <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} aria-hidden="true">
                 {Array.from({ length: 6 }, (_, index) => (
@@ -346,7 +394,7 @@ function HomePage() {
             </div>
           )}
 
-          {vesselsQuery.isError && !vesselsQuery.isFetching && (
+          {vesselsQuery.isError && !results && (
             <Alert color="red" title="Pretraga nije uspjela" role="alert">
               <Group justify="space-between" align="center">
                 <Text size="sm">Podatke nije moguće učitati. Pokušajte ponovno kasnije.</Text>
@@ -357,8 +405,8 @@ function HomePage() {
             </Alert>
           )}
 
-          {!vesselsQuery.isFetching && results?.count === 0 && (
-            <Paper className="home-page__empty" p="xl" radius="md" withBorder>
+          {results?.count === 0 && (
+            <Paper className={styles.empty} p="xl" radius="md" withBorder>
               <Stack align="center" gap="xs">
                 {' '}
                 {/*aako su uvjeti zadovoljeni prikazi paper poruku */}
@@ -371,7 +419,7 @@ function HomePage() {
             </Paper>
           )}
 
-          {!vesselsQuery.isFetching && results && results.count > 0 && (
+          {results && results.count > 0 && (
             <>
               <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md">
                 {results.results.map((vessel) => (
