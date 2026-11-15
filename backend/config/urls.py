@@ -21,7 +21,7 @@ from django.urls import include, path, re_path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 import config.schema  # noqa: F401  (registers the session login with drf-spectacular)
-from accounts.urls import test_login_urlpatterns
+from accounts.urls import auth_urlpatterns, test_login_urlpatterns
 from config.views import api_not_found, health, media, spa_index
 
 # API routes (docs chapter 4.9): /api/<resource>/, English plural nouns in kebab-case.
@@ -32,6 +32,8 @@ api_urlpatterns = [
     path('docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('', include('fleet.urls')),
     path('', include('companies.urls')),
+    # Current user and logout (OAuth login, #44). Always available.
+    path('auth/', include(auth_urlpatterns)),
     # Test login without OAuth (docs 4.7). When off the routes do not exist and answer 404.
     *([path('auth/', include(test_login_urlpatterns))] if settings.ENABLE_TEST_LOGIN else []),
     # Must stay last.
@@ -41,8 +43,17 @@ api_urlpatterns = [
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(api_urlpatterns)),
+    # django-allauth: the Google callback (/accounts/google/login/callback/).
+    path('accounts/', include('allauth.urls')),
+    # Of the headless API only the start of the Google login is used (F-18, ADR-06). Local
+    # signup, login and password endpoints answer 404. Must stay above the include below.
+    re_path(
+        r'^_allauth/(?!browser/v1/auth/provider/redirect$)(?P<path>.*)$',
+        api_not_found,
+    ),
+    path('_allauth/', include('allauth.headless.urls')),
     # Uploaded files (MEDIA_URL), served by Django in every environment (docs chapter 6).
     re_path(r'^media/(?P<path>.+)$', media, name='media'),
     # Every path not owned by Django returns the React app (must stay last).
-    re_path(r'^(?!(?:api|admin|static|media)(?:/|$)).*$', spa_index, name='spa'),
+    re_path(r'^(?!(?:api|admin|static|media|accounts|_allauth)(?:/|$)).*$', spa_index, name='spa'),
 ]

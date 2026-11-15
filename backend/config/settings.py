@@ -90,6 +90,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'drf_spectacular',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.headless',
     'accounts',
     'companies',
     'reservations',
@@ -104,6 +109,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -245,6 +251,46 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'REST API platforme za najam plovila. Konvencije su opisane u poglavlju 4.9 dokumentacije.',
     'VERSION': '0.1.0',
     'SERVE_INCLUDE_SCHEMA': False,
+}
+
+# Google login (django-allauth headless, ADR-06). Docs chapter 6, "Google OAuth prijava".
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# Empty on Render (frontend and backend share one origin). Locally http://localhost:5173,
+# because Django runs on :8000 and the React app on :5173.
+FRONTEND_URL = env('FRONTEND_URL', default='')
+
+ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_SIGNUP_FIELDS = ['email*']
+# Local signup is closed, accounts are created only through Google (F-18, ADR-06).
+ACCOUNT_ADAPTER = 'accounts.adapters.AccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'accounts.adapters.SocialAccountAdapter'
+SOCIALACCOUNT_LOGIN_ON_GET = False  # login starts with a POST, never a plain link
+
+# ADR-06 / F-18: a Google login is linked to the existing account with the same e-mail,
+# only when Google marks the address as verified.
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
+
+HEADLESS_ONLY = True
+# Any failure at the provider leads to the frontend with a short code, no technical details.
+LOGIN_ERROR_URL = f'{FRONTEND_URL}/prijava?greska=prijava_nije_uspjela'
+HEADLESS_FRONTEND_URLS = {
+    'socialaccount_login_error': LOGIN_ERROR_URL,
+}
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': env('GOOGLE_CLIENT_ID', default=''),
+            'secret': env('GOOGLE_CLIENT_SECRET', default=''),
+            'key': '',
+        },
+        'SCOPE': ['profile', 'email'],
+    }
 }
 
 # Default primary key field type

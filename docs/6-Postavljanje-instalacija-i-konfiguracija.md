@@ -26,6 +26,7 @@ Varijable koje su već postavljene u okruženju (Docker, Azure, Render) imaju pr
 | `DJANGO_HTTPS` | ne | suprotno od `DJANGO_DEBUG` | Preusmjeravanje na HTTPS, sigurni kolačići i HSTS. `False` omogućuje lokalno pokretanje s produkcijskim postavkama preko HTTP-a. |
 | `DJANGO_HSTS_SECONDS` | ne | `3600` | Trajanje HSTS-a dok je HTTPS uključen. Povećati na `31536000` kada se potvrdi da HTTPS radi. |
 | `DJANGO_MEDIA_ROOT` | ne | `backend/media` | Mapa za učitane datoteke. Na Azureu `/home/media` (odjeljak Medijske datoteke). |
+| `FRONTEND_URL` | ne | prazno | Adresa frontenda na koju se korisnik vraća nakon neuspjele prijave. Lokalno `http://localhost:5173`; na Renderu prazno (frontend i backend su isti origin). |
 | `GOOGLE_CLIENT_ID` | ne | nema | OAuth Client ID iz Google Cloud Consolea (`xxx.apps.googleusercontent.com`). Lokalno ID klijenta "ChartIt Web Client (lokalno)", na Renderu ID produkcijskog klijenta. |
 | `GOOGLE_CLIENT_SECRET` | da | nema | OAuth Client Secret (`GOCSPX-...`) istog klijenta. Lokalno secret lokalnog klijenta; produkcijski secret postoji samo na Renderu. |
 
@@ -163,7 +164,7 @@ cd backend                         # uz aktivirano virtualno okruženje
 DATABASE_URL='<vanjski URL>' python manage.py createsuperuser
 ```
 
-Vanjski URL sadrži lozinku baze, pa se ne sprema u `.env`, commit ni poruku. Za administratora se koristi adresa e-pošte koja se neće koristiti za OAuth prijavu, jer je e-pošta korisnika jedinstvena. Podaci za prijavu dijele se prema odjeljku Dijeljenje tajni u timu. Trajni način stvaranja prvog administratora platforme dio je zadatka #50.
+Vanjski URL sadrži lozinku baze, pa se ne sprema u `.env`, commit ni poruku. Podaci za prijavu dijele se prema odjeljku Dijeljenje tajni u timu. Trajni način stvaranja prvog administratora platforme dio je zadatka #50.
 
 ### Ograničenja besplatnog plana
 
