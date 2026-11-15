@@ -164,7 +164,7 @@ cd backend                         # uz aktivirano virtualno okruženje
 DATABASE_URL='<vanjski URL>' python manage.py createsuperuser
 ```
 
-Vanjski URL sadrži lozinku baze, pa se ne sprema u `.env`, commit ni poruku. Za administratora se koristi adresa e-pošte koja se neće koristiti za OAuth prijavu, jer je e-pošta korisnika jedinstvena. Podaci za prijavu dijele se prema odjeljku Dijeljenje tajni u timu. Trajni način stvaranja prvog administratora platforme dio je zadatka #50.
+Vanjski URL sadrži lozinku baze, pa se ne sprema u `.env`, commit ni poruku. Podaci za prijavu dijele se prema odjeljku Dijeljenje tajni u timu. Trajni način stvaranja prvog administratora platforme dio je zadatka #50.
 
 ### Ograničenja besplatnog plana
 

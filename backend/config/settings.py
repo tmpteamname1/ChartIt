@@ -253,9 +253,6 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
 }
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
 # Google login (django-allauth headless, ADR-06). Docs chapter 6, "Google OAuth prijava".
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -268,16 +265,21 @@ FRONTEND_URL = env('FRONTEND_URL', default='')
 
 ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_SIGNUP_FIELDS = ['email*']
+# Local signup is closed, accounts are created only through Google (F-18, ADR-06).
+ACCOUNT_ADAPTER = 'accounts.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'accounts.adapters.SocialAccountAdapter'
 SOCIALACCOUNT_LOGIN_ON_GET = False  # login starts with a POST, never a plain link
+
+# ADR-06 / F-18: a Google login is linked to the existing account with the same e-mail,
+# only when Google marks the address as verified.
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 
 HEADLESS_ONLY = True
 # Any failure at the provider leads to the frontend with a short code, no technical details.
 LOGIN_ERROR_URL = f'{FRONTEND_URL}/prijava?greska=prijava_nije_uspjela'
 HEADLESS_FRONTEND_URLS = {
     'socialaccount_login_error': LOGIN_ERROR_URL,
-    # E-mail already used by an account that is not linked to Google.
-    'account_signup': LOGIN_ERROR_URL,
 }
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -290,5 +292,8 @@ SOCIALACCOUNT_PROVIDERS = {
         'SCOPE': ['profile', 'email'],
     }
 }
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

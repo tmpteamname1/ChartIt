@@ -284,16 +284,21 @@ def make_request():
     return request
 
 
-def fake_google_login(request, uid='123', email='ana@example.com', **extra):
+def fake_google_login(
+    request, uid='123', email='ana@example.com', email_verified=True, has_email=True, **extra
+):
     """Builds the login the way allauth would after Google answers (provider is simulated)."""
     data = {'email': email, 'first_name': 'Ana', 'last_name': 'Anić', **extra}
     login = SocialLogin(
-        user=User(),
+        # A default that differs from KORISNIK, so the test shows that the adapter resets it.
+        user=User(role=User.Role.ADMINISTRATOR),
         account=SocialAccount(provider='google', uid=uid, extra_data=data),
-        email_addresses=[EmailAddress(email=email, verified=True, primary=True)],
+        email_addresses=(
+            [EmailAddress(email=email, verified=email_verified, primary=True)] if has_email else []
+        ),
         provider=get_adapter().get_provider(request, 'google'),
     )
-    SocialAccountAdapter().populate_user(request, login, data)
+    get_adapter().populate_user(request, login, data)
     return login
 
 
@@ -301,6 +306,14 @@ def google_login(request, **kwargs):
     """Runs the login with the request set as the current one, as AccountMiddleware does."""
     with request_context(request):
         return complete_social_login(request, fake_google_login(request, **kwargs))
+
+
+def google_login_response(request, **kwargs):
+    """Runs the login and returns the response, also when the adapter stops it."""
+    try:
+        return google_login(request, **kwargs)
+    except ImmediateHttpResponse as exc:
+        return exc.response
 
 
 @override_settings(
@@ -312,6 +325,10 @@ def google_login(request, **kwargs):
     }
 )
 class SocialLoginTests(TestCase):
+    def test_adapter_is_configured(self):
+        # Without SOCIALACCOUNT_ADAPTER in settings the role override would never run.
+        self.assertIsInstance(get_adapter(), SocialAccountAdapter)
+
     def test_first_login_creates_customer(self):
         google_login(make_request())
 
@@ -339,11 +356,44 @@ class SocialLoginTests(TestCase):
         SocialAccount.objects.create(user=user, provider='google', uid='123')
         request = make_request()
 
-        try:
-            response = google_login(request)
-        except ImmediateHttpResponse as exc:
-            response = exc.response
+        response = google_login_response(request)
 
+        self.assertNotIn('_auth_user_id', request.session)
+        self.assertIn('greska=racun_deaktiviran', response['Location'])
+
+    def test_existing_user_is_linked_by_verified_email(self):
+        user = User.objects.create_user(username='ana', email='ana@example.com')
+
+        google_login(make_request())
+
+        self.assertEqual(User.objects.count(), 1)
+        self.assertTrue(SocialAccount.objects.filter(user=user, uid='123').exists())
+
+    def test_unverified_email_is_rejected(self):
+        request = make_request()
+
+        response = google_login_response(request, email_verified=False)
+
+        self.assertEqual(User.objects.count(), 0)
+        self.assertNotIn('_auth_user_id', request.session)
+        self.assertIn('greska=prijava_nije_uspjela', response['Location'])
+
+    def test_login_without_email_is_rejected(self):
+        request = make_request()
+
+        response = google_login_response(request, has_email=False)
+
+        self.assertEqual(User.objects.count(), 0)
+        self.assertNotIn('_auth_user_id', request.session)
+        self.assertIn('greska=prijava_nije_uspjela', response['Location'])
+
+    def test_deactivated_user_linked_by_email_cannot_log_in(self):
+        User.objects.create_user(username='ana', email='ana@example.com', is_active=False)
+        request = make_request()
+
+        response = google_login_response(request)
+
+        self.assertEqual(SocialAccount.objects.count(), 0)
         self.assertNotIn('_auth_user_id', request.session)
         self.assertIn('greska=racun_deaktiviran', response['Location'])
 
@@ -368,3 +418,24 @@ class MeEndpointTests(TestCase):
 
         self.assertEqual(self.client.post('/api/auth/logout/').status_code, 204)
         self.assertEqual(self.client.get('/api/auth/me/').status_code, 401)
+
+
+class LocalSignupClosedTests(TestCase):
+    def test_signup_endpoint_is_not_available(self):
+        response = self.client.post(
+            '/_allauth/browser/v1/auth/signup',
+            {'email': 'x@example.com'},
+            content_type='application/json',
+        )
+
+        self.assertEqual(response.status_code, 404)
+        self.assertFalse(User.objects.exists())
+
+    def test_password_request_endpoint_is_not_available(self):
+        response = self.client.post(
+            '/_allauth/browser/v1/auth/password/request',
+            {'email': 'x@example.com'},
+            content_type='application/json',
+        )
+
+        self.assertEqual(response.status_code, 404)
