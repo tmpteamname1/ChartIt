@@ -46,8 +46,18 @@ export async function apiPost<T>(path: string, data?: unknown): Promise<T> {
   return (response.status === 204 ? undefined : response.json()) as Promise<T>
 }
 
+// Called on every 401: the session has ended (logout in another tab, expired session).
+// AuthProvider registers it to reset the login state; kept here so this module has no React.
+let onUnauthorized: (() => void) | null = null
+
+export function setUnauthorizedHandler(handler: (() => void) | null) {
+  onUnauthorized = handler
+}
+
 async function request(method: string, path: string, init: RequestInit): Promise<Response> {
+  // Same origin (ADR-01), so the session and CSRF cookies are sent without extra options.
   const response = await fetch(path, { ...init, method })
+  if (response.status === 401) onUnauthorized?.()
   if (!response.ok) {
     const body = await readErrorBody(response)
     throw new ApiError(
@@ -61,7 +71,7 @@ async function request(method: string, path: string, init: RequestInit): Promise
 }
 
 // The token changes on login, so it is read for every request.
-function readCookie(name: string): string | null {
+export function readCookie(name: string): string | null {
   const prefix = `${name}=`
   const cookie = document.cookie.split('; ').find((part) => part.startsWith(prefix))
   return cookie ? decodeURIComponent(cookie.slice(prefix.length)) : null

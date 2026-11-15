@@ -115,7 +115,7 @@ Za isprobavanje uloga bez Google računa lokalno se može prijaviti kao testni k
 | `test-vlasnik-2` | VLASNIK | Druga testna tvrtka d.o.o. |
 | `test-administrator` | ADMINISTRATOR | – |
 
-Vlasnik druge tvrtke služi za ručnu provjeru da tvrtka ne vidi tuđe podatke. Testni korisnici nemaju lozinku i mogu se prijaviti samo ovim putem. Bez `ENABLE_TEST_LOGIN` (zadano) endpointi `/api/auth/test-login/` i `/api/auth/test-logout/` ne postoje (404), a izbornik se ne prikazuje. Na javnoj instanci zastavica se ne uključuje.
+Vlasnik druge tvrtke služi za ručnu provjeru da tvrtka ne vidi tuđe podatke. Testni korisnici nemaju lozinku i mogu se prijaviti samo ovim putem. Bez `ENABLE_TEST_LOGIN` (zadano) endpoint `/api/auth/test-login/` ne postoji (404), a izbornik se ne prikazuje. Na javnoj instanci zastavica se ne uključuje.
 
 ### Formatiranje i provjera koda
 

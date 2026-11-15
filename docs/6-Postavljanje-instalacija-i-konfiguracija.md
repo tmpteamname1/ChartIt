@@ -149,7 +149,6 @@ Cijela konfiguracija nalazi se u `render.yaml` (Render Blueprint) u korijenu rep
 | `DJANGO_SECRET_KEY` | Render, generiran pri prvom postavljanju (`generateValue`). |
 | `DJANGO_ALLOWED_HOSTS`, `DJANGO_CSRF_TRUSTED_ORIGINS` | `render.yaml`, naziv poslužitelja koji je dodijelio Render. |
 | `PYTHON_VERSION`, `NODE_VERSION` | `render.yaml`, iste verzije kao u `backend/Dockerfile` i CI-ju. |
-| `VITE_ROLE_SWITCHER` | `render.yaml`, prikazuje prekidač testnih uloga dok ne postoji OAuth prijava (#41). |
 | `GOOGLE_CLIENT_ID` | `render.yaml`, ID produkcijskog klijenta `ChartIt Web Client`. Nije tajna. |
 | `GOOGLE_CLIENT_SECRET` | Upisuje se ručno u Render > `chartit` > Environment (`sync: false`). Render ne traži vrijednost za postojeći Blueprint, pa se nakon dodavanja u `render.yaml` mora postaviti ručno. |
 

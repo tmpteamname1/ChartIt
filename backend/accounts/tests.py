@@ -221,11 +221,9 @@ class TestLoginDisabledTests(_TestLoginFlagMixin, TestCase):
     def test_endpoints_do_not_exist(self):
         call_command('seed_test_users', stdout=StringIO())
 
-        for url in ['/api/auth/test-login/', '/api/auth/test-logout/']:
-            with self.subTest(url=url):
-                response = self.client.post(url, {'username': 'test-administrator'})
+        response = self.client.post('/api/auth/test-login/', {'username': 'test-administrator'})
 
-                self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 404)
         self.assertNotIn('_auth_user_id', self.client.session)
 
 
@@ -257,10 +255,10 @@ class TestLoginEnabledTests(_TestLoginFlagMixin, TestCase):
                     str(User.objects.get(username=username).pk),
                 )
 
-    def test_logout_ends_the_session(self):
+    def test_real_logout_ends_a_test_session(self):
         self.login('test-vlasnik')
 
-        response = self.client.post('/api/auth/test-logout/')
+        response = self.client.post('/api/auth/logout/')
 
         self.assertEqual(response.status_code, 204)
         self.assertNotIn('_auth_user_id', self.client.session)
@@ -401,6 +399,12 @@ class SocialLoginTests(TestCase):
 class MeEndpointTests(TestCase):
     def test_me_without_login_returns_401(self):
         self.assertEqual(self.client.get('/api/auth/me/').status_code, 401)
+
+    def test_me_sets_csrf_cookie_for_anonymous_user(self):
+        # The React app needs the token for the Google login form (#47).
+        response = self.client.get('/api/auth/me/')
+
+        self.assertIn('csrftoken', response.cookies)
 
     def test_me_returns_current_user(self):
         user = User.objects.create_user(
