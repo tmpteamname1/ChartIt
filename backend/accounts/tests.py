@@ -11,7 +11,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.middleware import AuthenticationMiddleware
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
-from django.core.management import call_command
+from django.core.management import CommandError, call_command
 from django.db import IntegrityError, transaction
 from django.test import RequestFactory, TestCase, override_settings
 from django.urls import clear_url_caches, path
@@ -439,3 +439,97 @@ class LocalSignupClosedTests(TestCase):
         )
 
         self.assertEqual(response.status_code, 404)
+
+
+class PromoteAdminTests(TestCase):
+    def promote(self, email):
+        out = StringIO()
+        call_command('promote_admin', email, stdout=out)
+        return out.getvalue()
+
+    def google_user(self, email='ana@example.com', **extra):
+        user = User.objects.create_user(username=email, email=email, **extra)
+        SocialAccount.objects.create(user=user, provider='google', uid=email)
+        return user
+
+    def test_promotes_user_to_administrator(self):
+        user = self.google_user()
+
+        self.promote('ana@example.com')
+
+        user.refresh_from_db()
+        self.assertEqual(user.role, User.Role.ADMINISTRATOR)
+
+    def test_does_not_grant_django_admin_access(self):
+        user = self.google_user()
+
+        self.promote('ana@example.com')
+
+        user.refresh_from_db()
+        self.assertFalse(user.is_staff)
+        self.assertFalse(user.is_superuser)
+
+    def test_email_lookup_ignores_case(self):
+        user = self.google_user()
+
+        self.promote('ANA@Example.com')
+
+        user.refresh_from_db()
+        self.assertEqual(user.role, User.Role.ADMINISTRATOR)
+
+    def test_unknown_email_is_an_error(self):
+        with self.assertRaisesMessage(CommandError, 'ne postoji'):
+            self.promote('nitko@example.com')
+
+    def test_user_who_never_logged_in_with_google_is_rejected(self):
+        user = User.objects.create_user(username='ana', email='ana@example.com')
+
+        with self.assertRaisesMessage(CommandError, 'nikad nije prijavio'):
+            self.promote('ana@example.com')
+
+        user.refresh_from_db()
+        self.assertEqual(user.role, User.Role.KORISNIK)
+
+    def test_deactivated_user_is_rejected(self):
+        user = self.google_user(is_active=False)
+
+        with self.assertRaisesMessage(CommandError, 'deaktiviran'):
+            self.promote('ana@example.com')
+
+        user.refresh_from_db()
+        self.assertEqual(user.role, User.Role.KORISNIK)
+
+    def test_company_member_is_rejected(self):
+        company = Company.objects.create(
+            name='Test Charter',
+            oib='69435151530',
+            address='Split',
+            email='test@example.com',
+            phone='+385911234567',
+        )
+        user = self.google_user(role=User.Role.VLASNIK, company=company)
+
+        with self.assertRaisesMessage(CommandError, 'tvrtki'):
+            self.promote('ana@example.com')
+
+        user.refresh_from_db()
+        self.assertEqual(user.role, User.Role.VLASNIK)
+
+    def test_running_twice_is_harmless(self):
+        user = self.google_user()
+
+        self.promote('ana@example.com')
+        output = self.promote('ana@example.com')
+
+        user.refresh_from_db()
+        self.assertEqual(user.role, User.Role.ADMINISTRATOR)
+        self.assertIn('već je ADMINISTRATOR', output)
+
+    def test_other_users_are_not_changed(self):
+        self.google_user()
+        other = self.google_user(email='bruno@example.com')
+
+        self.promote('ana@example.com')
+
+        other.refresh_from_db()
+        self.assertEqual(other.role, User.Role.KORISNIK)
