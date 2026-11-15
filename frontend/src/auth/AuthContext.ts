@@ -2,17 +2,22 @@ import { createContext, useContext } from 'react'
 import type { Role } from './roles'
 
 export interface User {
+  id: number
+  // Full name, or the e-mail when the account has no name.
   name: string
+  email: string
   role: Role
 }
 
+// 'loading' until GET /api/auth/me/ answers, so the UI never flickers between states (NF-05).
+export type AuthStatus = 'loading' | 'authenticated' | 'anonymous'
+
 export interface AuthContextValue {
+  status: AuthStatus
   user: User | null
-  // TODO: replace with the OAuth login from the auth epic; for now any role can be picked.
-  loginAs: (role: Role) => void
   // Real session login as a seeded test user (#49), only when VITE_ENABLE_TEST_LOGIN is on.
   loginAsTestUser: (username: string) => Promise<User>
-  logout: () => void
+  logout: () => Promise<void>
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null)

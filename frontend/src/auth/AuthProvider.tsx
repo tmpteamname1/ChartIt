@@ -1,53 +1,69 @@
-import { useMemo, useState, type ReactNode } from 'react'
-import { TEST_LOGIN_ENABLED, testLogin, testLogout } from '../api/auth'
-import { AuthContext, type User } from './AuthContext'
-import { ROLE_LABELS, ROLES, type Role } from './roles'
+import { useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query'
+import { useEffect, useMemo, type ReactNode } from 'react'
+import { getCurrentUser, logout, testLogin, type CurrentUser } from '../api/auth'
+import { setUnauthorizedHandler } from '../api/client'
+import { AuthContext, type AuthContextValue, type AuthStatus, type User } from './AuthContext'
 
-// Temporary: the user is kept in the browser until /api/auth/me/ exists (#44).
-const STORAGE_KEY = 'chartit.user'
+// The login state is not stored in the browser; the server session decides (4.4.3).
+const ME_KEY = ['auth', 'me'] as const
 
-function readStoredUser(): User | null {
-  try {
-    const user = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? 'null') as User | null
-    return user && typeof user.name === 'string' && ROLES.includes(user.role) ? user : null
-  } catch {
-    return null
-  }
+function toUser({ id, first_name, last_name, email, role }: CurrentUser): User {
+  const name = `${first_name} ${last_name}`.trim()
+  return { id, name: name || email, email, role }
 }
 
-function storeUser(user: User | null) {
-  try {
-    if (user) localStorage.setItem(STORAGE_KEY, JSON.stringify(user))
-    else localStorage.removeItem(STORAGE_KEY)
-  } catch {
-    // Storage can be blocked; the user then lasts until reload.
-  }
+// Data of the previous user must not stay in the cache for the next one.
+function resetSession(queryClient: QueryClient) {
+  queryClient.removeQueries({ predicate: (query) => query.queryKey[0] !== ME_KEY[0] })
+  queryClient.setQueryData(ME_KEY, null)
 }
 
 function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(readStoredUser)
+  const queryClient = useQueryClient()
+  const { data, isPending } = useQuery({
+    queryKey: ME_KEY,
+    queryFn: ({ signal }) => getCurrentUser(signal),
+    // Login and logout in this tab update it here, and a 401 below resets it.
+    staleTime: Infinity,
+    // Login or logout in another tab: checked again when the user comes back to this one.
+    // Runs in the background, so the page does not show the loader again.
+    refetchOnWindowFocus: 'always',
+    // If the server cannot be reached, the app continues as for a visitor.
+    retry: 1,
+  })
 
-  const value = useMemo(() => {
-    const signIn = (next: User | null) => {
-      storeUser(next)
-      setUser(next)
-    }
+  useEffect(() => {
+    setUnauthorizedHandler(() => {
+      if (queryClient.getQueryData(ME_KEY)) resetSession(queryClient)
+    })
+    return () => setUnauthorizedHandler(null)
+  }, [queryClient])
+
+  const value = useMemo<AuthContextValue>(() => {
+    const user = data ? toUser(data) : null
+    const status: AuthStatus = isPending ? 'loading' : user ? 'authenticated' : 'anonymous'
     return {
+      status,
       user,
-      loginAs: (role: Role) => signIn({ name: `Test ${ROLE_LABELS[role]}`, role }),
       loginAsTestUser: async (username: string) => {
-        const { name, role } = await testLogin(username)
-        const loggedIn = { name, role }
-        signIn(loggedIn)
-        return loggedIn
+        await testLogin(username)
+        resetSession(queryClient)
+        const me = await queryClient.fetchQuery({
+          queryKey: ME_KEY,
+          queryFn: () => getCurrentUser(),
+        })
+        if (!me) throw new Error('Test login did not create a session')
+        return toUser(me)
       },
-      logout: () => {
-        // Ends the server session too; errors are ignored because the browser state is cleared anyway.
-        if (TEST_LOGIN_ENABLED) testLogout().catch(() => {})
-        signIn(null)
+      logout: async () => {
+        try {
+          await logout()
+        } finally {
+          resetSession(queryClient)
+        }
       },
     }
-  }, [user])
+  }, [data, isPending, queryClient])
 
   return <AuthContext value={value}>{children}</AuthContext>
 }

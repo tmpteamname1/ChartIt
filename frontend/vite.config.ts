@@ -23,7 +23,8 @@ export default defineConfig({
     proxy: {
       '/api': googleLoginProxy,
       '/_allauth': googleLoginProxy,
-      '/admin': djangoUrl,
+      // Regex, not the '/admin' prefix: that would also send the React route /administracija to Django.
+      '^/admin(/|$)': djangoUrl,
       '/static': djangoUrl,
       '/media': djangoUrl,
     },
