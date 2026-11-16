@@ -293,11 +293,11 @@ class PhotoTests(TestCase):
             category=category,
             home_port=port,
             name='Adria',
-            length_m=Decimal('12'),
+            length_m=Decimal(12),
             max_people=8,
             cabins=3,
             year_built=2020,
-            daily_price=Decimal('250'),
+            daily_price=Decimal(250),
         )
 
     def make_photo(self, **kwargs):
