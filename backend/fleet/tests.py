@@ -1,19 +1,18 @@
 import tempfile
 from datetime import date
 from decimal import Decimal
-from io import BytesIO
-from io import StringIO
+from io import BytesIO, StringIO
 from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.management import call_command
+from django.core.management.base import CommandError
 from django.db import IntegrityError, transaction
 from django.db.models.deletion import ProtectedError
 from django.test import TestCase, override_settings
-from django.core.management import call_command
-from django.core.management.base import CommandError
 from PIL import Image
 from rest_framework.test import APITestCase
 
