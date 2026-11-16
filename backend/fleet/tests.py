@@ -13,13 +13,13 @@ from django.db.models.deletion import ProtectedError
 from django.test import TestCase, override_settings
 from PIL import Image
 from rest_framework.request import Request
-from rest_framework.test import APITestCase, APIRequestFactory
+from rest_framework.test import APIRequestFactory, APITestCase
 
 from companies.models import Company
 
+from .filters import StableOrderingFilter
 from .images import make_thumbnail
 from .models import Category, Photo, Port, Vessel
-from .filters import StableOrderingFilter
 from .views import VesselViewSet
 
 
@@ -629,7 +629,5 @@ class VesselListApiTests(APITestCase):
         ]:
             with self.subTest(ordering=param):
                 request = Request(APIRequestFactory().get(self.URL, {'ordering': param}))
-                ordering = StableOrderingFilter().get_ordering(
-                    request, Vessel.objects.all(), view
-                )
+                ordering = StableOrderingFilter().get_ordering(request, Vessel.objects.all(), view)
                 self.assertEqual(ordering, expected)
