@@ -353,6 +353,7 @@ class PhotoTests(TestCase):
 
         with self.assertRaises(ValidationError):
             photo.full_clean()
+
     def test_replacing_image_deletes_old_files(self):
         photo = Photo.objects.get(pk=self.make_photo().pk)
         old_image, old_thumbnail = photo.image.name, photo.thumbnail.name
