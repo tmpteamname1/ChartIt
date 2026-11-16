@@ -369,9 +369,7 @@ class PhotoTests(TestCase):
         self.assertTrue(default_storage.exists(photo.image.name))
 
 
-class VesselListApiTests(APITestCase):
-    URL = '/api/vessels/'
-
+class VesselApiTestCase(APITestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -417,6 +415,10 @@ class VesselListApiTests(APITestCase):
 
     def make_photo(self, vessel, **kwargs):
         return Photo.objects.create(vessel=vessel, image=make_image_file(size=(100, 50)), **kwargs)
+
+
+class VesselListApiTests(VesselApiTestCase):
+    URL = '/api/vessels/'
 
     def get(self, **params):
         response = self.client.get(self.URL, params)
@@ -631,3 +633,94 @@ class VesselListApiTests(APITestCase):
                 request = Request(APIRequestFactory().get(self.URL, {'ordering': param}))
                 ordering = StableOrderingFilter().get_ordering(request, Vessel.objects.all(), view)
                 self.assertEqual(ordering, expected)
+
+
+class VesselDetailApiTests(VesselApiTestCase):
+    def url(self, vessel):
+        return f'/api/vessels/{vessel.id}/'
+
+    def assert_not_found(self, response):
+        """404 u formatu greške API-ja (docs 4.9)."""
+        self.assertEqual(response.status_code, 404)
+        body = response.json()
+        self.assertEqual(set(body), {'detail', 'code', 'errors'})
+        self.assertEqual(body['code'], 'not_found')
+        self.assertIsNone(body['errors'])
+        self.assertTrue(body['detail'])
+
+    def test_detail_is_public_and_has_all_fields(self):
+        vessel = self.make_vessel(
+            name='Bonaca', description='Opis', equipment='GPS, bimini', year_built=2018
+        )
+
+        response = self.client.get(self.url(vessel))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.json(),
+            {
+                'id': vessel.id,
+                'name': 'Bonaca',
+                'category': {'id': self.category.id, 'name': 'Jedrilica'},
+                'home_port': {
+                    'id': self.port.id,
+                    'name': 'Split',
+                    'latitude': '43.508133',
+                    'longitude': '16.440193',
+                },
+                'company': {
+                    'id': self.company.id,
+                    'name': 'Adria Charter',
+                    'address': 'Riva 1, Split',
+                    'email': 'info@example.com',
+                    'phone': '+385911234567',
+                },
+                'max_people': 8,
+                'cabins': 3,
+                'length_m': '12.50',
+                'daily_price': '150.00',
+                'thumbnail': None,
+                'description': 'Opis',
+                'equipment': 'GPS, bimini',
+                'year_built': 2018,
+                'photos': [],
+            },
+        )
+
+    def test_photos_are_ordered_by_sort_order_with_full_urls(self):
+        vessel = self.make_vessel()
+        third = self.make_photo(vessel, sort_order=3)
+        first = self.make_photo(vessel, sort_order=1)
+        second = self.make_photo(vessel, sort_order=2)
+
+        data = self.client.get(self.url(vessel)).json()
+
+        self.assertEqual([p['id'] for p in data['photos']], [first.id, second.id, third.id])
+        self.assertEqual(data['photos'][0]['image'], 'http://testserver' + first.image.url)
+        self.assertEqual(data['photos'][0]['thumbnail'], 'http://testserver' + first.thumbnail.url)
+        self.assertEqual(data['thumbnail'], data['photos'][0]['thumbnail'])
+
+    def test_inactive_vessel_returns_404(self):
+        vessel = self.make_vessel(is_active=False)
+
+        self.assert_not_found(self.client.get(self.url(vessel)))
+
+    def test_vessel_of_inactive_company_returns_404(self):
+        inactive = self.make_company('Zatvorena', '12345678903', is_active=False)
+        vessel = self.make_vessel(company=inactive)
+
+        self.assert_not_found(self.client.get(self.url(vessel)))
+
+    def test_missing_vessel_returns_404(self):
+        self.assert_not_found(self.client.get('/api/vessels/999999/'))
+
+    def test_query_count_does_not_depend_on_number_of_photos(self):
+        vessel = self.make_vessel()
+        self.make_photo(vessel)
+        with self.assertNumQueries(2):  # plovilo, fotografije
+            self.client.get(self.url(vessel))
+
+        for _ in range(5):
+            self.make_photo(vessel)
+        with self.assertNumQueries(2):
+            self.client.get(self.url(vessel))

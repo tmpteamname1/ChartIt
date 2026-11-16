@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 from companies.models import Company
 
-from .models import Category, Port, Vessel
+from .models import Category, Photo, Port, Vessel
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -66,3 +66,34 @@ class VesselListSerializer(serializers.ModelSerializer):
         if photo is None or not photo.thumbnail:
             return None
         return self.context['request'].build_absolute_uri(photo.thumbnail.url)
+
+
+class PhotoSerializer(serializers.ModelSerializer):
+    """Fotografija plovila; image i thumbnail su apsolutni URL-ovi."""
+
+    class Meta:
+        model = Photo
+        fields = ['id', 'image', 'thumbnail', 'sort_order']
+
+
+class CompanyContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ['id', 'name', 'address', 'email', 'phone']
+
+
+class VesselDetailSerializer(VesselListSerializer):
+    """Detalji plovila na stranici /plovila/:id."""
+
+    home_port = PortSerializer(read_only=True)  # id, name, latitude, longitude
+    company = CompanyContactSerializer(read_only=True)
+    photos = PhotoSerializer(many=True, read_only=True)
+
+    class Meta(VesselListSerializer.Meta):
+        fields = [
+            *VesselListSerializer.Meta.fields,
+            'description',
+            'equipment',
+            'year_built',
+            'photos',
+        ]
