@@ -1,15 +1,14 @@
+from datetime import date
+
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
+from django.db.models.functions import Lower
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 
 from config.validators import IMAGE_VALIDATORS
 
 from .images import make_thumbnail
-
-from datetime import date
-
-from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db import models
-from django.db.models.functions import Lower
 
 
 class Category(models.Model):

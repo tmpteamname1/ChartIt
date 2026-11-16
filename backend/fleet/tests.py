@@ -145,11 +145,11 @@ class VesselTests(TestCase):
             'category': self.category,
             'home_port': self.port,
             'name': 'Bonaca',
-            'length_m': Decimal('12.50'),
+            'length_m': Decimal(12),
             'max_people': 8,
             'cabins': 3,
             'year_built': 2015,
-            'daily_price': Decimal('250.00'),
+            'daily_price': Decimal(250),
         }
         data.update(overrides)
         return Vessel(**data)
