@@ -85,9 +85,10 @@ class CompanyContactSerializer(serializers.ModelSerializer):
 class VesselDetailSerializer(VesselListSerializer):
     """Detalji plovila na stranici /plovila/:id."""
 
-    home_port = PortSerializer(read_only=True)  # id, name, latitude, longitude
+    home_port = PortSerializer(read_only=True)
     company = CompanyContactSerializer(read_only=True)
     photos = PhotoSerializer(many=True, read_only=True)
+    year_built = serializers.IntegerField(read_only=True)
 
     class Meta(VesselListSerializer.Meta):
         fields = [
