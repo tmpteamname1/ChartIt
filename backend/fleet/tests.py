@@ -2,6 +2,7 @@ import tempfile
 from datetime import date
 from decimal import Decimal
 from io import BytesIO
+from io import StringIO
 from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
@@ -11,6 +12,8 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import IntegrityError, transaction
 from django.db.models.deletion import ProtectedError
 from django.test import TestCase, override_settings
+from django.core.management import call_command
+from django.core.management.base import CommandError
 from PIL import Image
 from rest_framework.test import APITestCase
 
@@ -364,3 +367,54 @@ class PhotoTests(TestCase):
         self.assertFalse(default_storage.exists(old_image))
         self.assertFalse(default_storage.exists(old_thumbnail))
         self.assertTrue(default_storage.exists(photo.image.name))
+
+
+class SeedCatalogTests(TestCase):
+    def setUp(self):
+        media_root = tempfile.TemporaryDirectory()
+        self.addCleanup(media_root.cleanup)
+        media_override = override_settings(MEDIA_ROOT=media_root.name, DEBUG=True)
+        media_override.enable()
+        self.addCleanup(media_override.disable)
+
+    def run_seed(self, *args):
+        call_command('seed_catalog', *args, stdout=StringIO())
+
+    def counts(self):
+        return (
+            Company.objects.count(),
+            Port.objects.count(),
+            Category.objects.count(),
+            Vessel.objects.count(),
+            Photo.objects.count(),
+        )
+
+    def test_creates_catalog(self):
+        self.run_seed()
+
+        self.assertEqual(self.counts()[:4], (3, 6, 4, 15))
+        self.assertGreaterEqual(Photo.objects.count(), 15)
+        self.assertEqual(Vessel.objects.filter(is_active=False).count(), 1)
+
+    def test_second_run_creates_no_duplicates(self):
+        self.run_seed()
+        first = self.counts()
+
+        self.run_seed()
+
+        self.assertEqual(self.counts(), first)
+
+    def test_reset_recreates_catalog(self):
+        self.run_seed()
+        first = self.counts()
+
+        self.run_seed('--reset')
+
+        self.assertEqual(self.counts(), first)
+
+    @override_settings(DEBUG=False)
+    def test_refuses_without_force_when_debug_is_off(self):
+        with self.assertRaises(CommandError):
+            self.run_seed()
+
+        self.assertEqual(self.counts(), (0, 0, 0, 0, 0))

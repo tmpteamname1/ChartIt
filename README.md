@@ -91,7 +91,11 @@ docker compose logs -f backend                        # praćenje logova backend
 docker compose exec backend python manage.py test     # testovi (koriste PostgreSQL)
 docker compose exec backend python manage.py <naredba>
 docker compose exec db psql -U chartit -d chartit     # konzola baze
+docker compose exec backend python manage.py seed_catalog          # demo katalog: tvrtke, luke, kategorije, plovila, fotografije
+docker compose exec backend python manage.py seed_catalog --reset  # obriši i ponovno stvori katalog
 ```
+
+Naredba `seed_catalog` može se pokretati više puta bez duplikata; bez `--force` odbija rad kad je `DJANGO_DEBUG` isključen.
 
 Ako je port 5432 zauzet (npr. druga PostgreSQL baza na računalu), potrebno ju je zaustaviti prije `docker compose up`.
 
