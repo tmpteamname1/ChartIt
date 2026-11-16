@@ -145,11 +145,11 @@ class VesselTests(TestCase):
             'category': self.category,
             'home_port': self.port,
             'name': 'Bonaca',
-            'length_m': Decimal(12),
+            'length_m': Decimal('12.50'),
             'max_people': 8,
             'cabins': 3,
             'year_built': 2015,
-            'daily_price': Decimal(250),
+            'daily_price': Decimal('250.00'),
         }
         data.update(overrides)
         return Vessel(**data)
@@ -353,3 +353,13 @@ class PhotoTests(TestCase):
 
         with self.assertRaises(ValidationError):
             photo.full_clean()
+    def test_replacing_image_deletes_old_files(self):
+        photo = Photo.objects.get(pk=self.make_photo().pk)
+        old_image, old_thumbnail = photo.image.name, photo.thumbnail.name
+
+        photo.image = make_image_file('new.jpg')
+        photo.save()
+
+        self.assertFalse(default_storage.exists(old_image))
+        self.assertFalse(default_storage.exists(old_thumbnail))
+        self.assertTrue(default_storage.exists(photo.image.name))

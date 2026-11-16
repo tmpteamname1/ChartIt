@@ -165,9 +165,18 @@ class Photo(models.Model):
     def save(self, *args, **kwargs):
         # Minijaturu izrađujemo samo kad je slika nova ili promijenjena,
         # ne pri svakom spremanju (npr. promjena redoslijeda).
+        old = None
         if self._image_changed():
+            if self.pk:
+                old = Photo.objects.filter(pk=self.pk).first()
             self.thumbnail = make_thumbnail(self.image)
         super().save(*args, **kwargs)
+        # Zamjenom slike stari original i minijatura ostaju bez reference, pa ih brišemo.
+        if old:
+            if old.image and old.image.name != self.image.name:
+                old.image.delete(save=False)
+            if old.thumbnail and old.thumbnail.name != self.thumbnail.name:
+                old.thumbnail.delete(save=False)
 
     def _image_changed(self):
         if not self.image:
