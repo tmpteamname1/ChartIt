@@ -1,16 +1,23 @@
+import tempfile
 from datetime import date
 from decimal import Decimal
+from io import BytesIO
+from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.core.files.storage import default_storage
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import IntegrityError, transaction
 from django.db.models.deletion import ProtectedError
 from django.test import TestCase, override_settings
+from PIL import Image
 from rest_framework.test import APITestCase
 
 from companies.models import Company
 
-from .models import Category, Port, Vessel
+from .images import make_thumbnail
+from .models import Category, Photo, Port, Vessel
 
 
 class CategoryTests(TestCase):
@@ -233,3 +240,127 @@ class VesselAdminTests(TestCase):
         for url in ('/admin/fleet/vessel/', '/admin/fleet/vessel/add/'):
             with self.subTest(url=url):
                 self.assertEqual(self.client.get(url, secure=True).status_code, 200)
+
+
+def make_image_file(name='photo.jpg', size=(2000, 1000), fmt='JPEG'):
+    """Testna slika izrađena u kodu, bez datoteka u repozitoriju."""
+    buffer = BytesIO()
+    Image.new('RGB', size).save(buffer, format=fmt)
+    return SimpleUploadedFile(name, buffer.getvalue())
+
+
+class MakeThumbnailTests(TestCase):
+    def open_result(self, result):
+        result.seek(0)
+        return Image.open(BytesIO(result.read()))
+
+    def test_thumbnail_is_webp_with_longer_side_800_and_same_ratio(self):
+        result = make_thumbnail(make_image_file(size=(2000, 1000)))
+
+        image = self.open_result(result)
+        self.assertEqual(image.format, 'WEBP')
+        self.assertEqual(image.size, (800, 400))
+        self.assertTrue(result.name.endswith('.webp'))
+
+    def test_small_image_is_not_enlarged(self):
+        result = make_thumbnail(make_image_file(size=(300, 200)))
+
+        self.assertEqual(self.open_result(result).size, (300, 200))
+
+
+class PhotoTests(TestCase):
+    def setUp(self):
+        # Datoteke iz testova idu u privremenu mapu, ne u backend/media.
+        media_root = tempfile.TemporaryDirectory()
+        self.addCleanup(media_root.cleanup)
+        media_override = override_settings(MEDIA_ROOT=media_root.name)
+        media_override.enable()
+        self.addCleanup(media_override.disable)
+
+        company = Company.objects.create(
+            name='Test Charter',
+            oib='69435151530',
+            address='Riva 1, Split',
+            email='test@example.com',
+            phone='+385911234567',
+        )
+        category = Category.objects.create(name='Jedrilica')
+        port = Port.objects.create(
+            name='Split', latitude=Decimal('43.508133'), longitude=Decimal('16.440193')
+        )
+        self.vessel = Vessel.objects.create(
+            company=company,
+            category=category,
+            home_port=port,
+            name='Adria',
+            length_m=Decimal(12),
+            max_people=8,
+            cabins=3,
+            year_built=2020,
+            daily_price=Decimal(250),
+        )
+
+    def make_photo(self, **kwargs):
+        return Photo.objects.create(vessel=self.vessel, image=make_image_file(), **kwargs)
+
+    def test_saving_photo_creates_thumbnail(self):
+        photo = self.make_photo()
+
+        self.assertTrue(photo.thumbnail.name.endswith('.webp'))
+        self.assertTrue(default_storage.exists(photo.image.name))
+        self.assertTrue(default_storage.exists(photo.thumbnail.name))
+        self.assertTrue(photo.image.name.startswith(f'vessels/{self.vessel.id}/'))
+
+    def test_changing_only_sort_order_does_not_recreate_thumbnail(self):
+        photo = Photo.objects.get(pk=self.make_photo().pk)
+        thumbnail_name = photo.thumbnail.name
+
+        with patch('fleet.models.make_thumbnail') as mocked:
+            photo.sort_order = 5
+            photo.save()
+
+        mocked.assert_not_called()
+        photo.refresh_from_db()
+        self.assertEqual(photo.thumbnail.name, thumbnail_name)
+        self.assertEqual(photo.sort_order, 5)
+
+    def test_deleting_photo_deletes_files(self):
+        photo = self.make_photo()
+        image_name, thumbnail_name = photo.image.name, photo.thumbnail.name
+
+        photo.delete()
+
+        self.assertFalse(default_storage.exists(image_name))
+        self.assertFalse(default_storage.exists(thumbnail_name))
+
+    def test_deleting_vessel_deletes_photo_files(self):
+        photo = self.make_photo()
+        image_name, thumbnail_name = photo.image.name, photo.thumbnail.name
+
+        self.vessel.delete()
+
+        self.assertFalse(default_storage.exists(image_name))
+        self.assertFalse(default_storage.exists(thumbnail_name))
+
+    def test_photos_are_ordered_by_sort_order(self):
+        second = self.make_photo(sort_order=2)
+        first = self.make_photo(sort_order=1)
+
+        self.assertEqual(list(self.vessel.photos.all()), [first, second])
+
+    def test_non_image_extension_is_rejected(self):
+        photo = Photo(vessel=self.vessel, image=make_image_file('photo.gif', fmt='GIF'))
+
+        with self.assertRaises(ValidationError):
+            photo.full_clean()
+
+    def test_replacing_image_deletes_old_files(self):
+        photo = Photo.objects.get(pk=self.make_photo().pk)
+        old_image, old_thumbnail = photo.image.name, photo.thumbnail.name
+
+        photo.image = make_image_file('new.jpg')
+        photo.save()
+
+        self.assertFalse(default_storage.exists(old_image))
+        self.assertFalse(default_storage.exists(old_thumbnail))
+        self.assertTrue(default_storage.exists(photo.image.name))
