@@ -3,6 +3,8 @@
 import io
 
 from django.core.files.base import ContentFile
+from django.core.management.base import CommandError
+from django.db.models.deletion import ProtectedError
 from PIL import Image, ImageDraw
 
 from companies.models import Company
@@ -76,8 +78,8 @@ VESSELS = [
     ('Zadranka', 1, 'Jedrilica', 'Zadar', '9.90', 6, 2, 2010, '160.00', False),
     ('Lavanda', 2, 'Jedrilica', 'Dubrovnik', '13.80', 9, 4, 2019, '300.00', True),
     ('Elafiti', 2, 'Katamaran', 'Dubrovnik', '14.50', 12, 5, 2021, '480.00', True),
-    ('Peljesac', 2, 'Motorna jahta', 'Dubrovnik', '17.00', 10, 4, 2020, '800.00', True),
-    ('Sibenka', 2, 'Jedrilica', 'Šibenik', '11.00', 7, 3, 2014, '200.00', True),
+    ('Pelješac', 2, 'Motorna jahta', 'Dubrovnik', '17.00', 10, 4, 2020, '800.00', True),
+    ('Šibenka', 2, 'Jedrilica', 'Šibenik', '11.00', 7, 3, 2014, '200.00', True),
     ('Krka', 2, 'Gumenjak', 'Šibenik', '7.20', 7, 0, 2023, '170.00', True),
 ]
 
@@ -96,9 +98,15 @@ def make_photo_file(title, index):
 def reset_catalog():
     """Delete only the catalog data created by seed_catalog (not users, not test companies)."""
     seed_oibs = [company['oib'] for company in COMPANIES]
-    # Photo.delete() signals remove the files, a queryset delete() also fires post_delete.
-    Vessel.objects.filter(company__oib__in=seed_oibs).delete()
-    Company.objects.filter(oib__in=seed_oibs).delete()
+    try:
+        # Photo files are removed by the post_delete signal.
+        Vessel.objects.filter(company__oib__in=seed_oibs).delete()
+        Company.objects.filter(oib__in=seed_oibs).delete()
+    except ProtectedError as error:
+        raise CommandError(
+            'Reset nije moguć: korisnici su povezani s demo tvrtkama. '
+            'Odspojite ih u adminu pa pokušajte ponovno.'
+        ) from error
     Port.objects.filter(name__in=PORTS, vessels__isnull=True).delete()
     Category.objects.filter(name__in=CATEGORIES, vessels__isnull=True).delete()
 
@@ -116,13 +124,16 @@ def seed_catalog():
     ports = {}
     for name, (latitude, longitude) in PORTS.items():
         ports[name], created = Port.objects.get_or_create(
-            name=name, defaults={'latitude': latitude, 'longitude': longitude}
+            name__iexact=name,
+            defaults={'name': name, 'latitude': latitude, 'longitude': longitude},
         )
         counts['ports'] += created
 
     categories = {}
     for name in CATEGORIES:
-        categories[name], created = Category.objects.get_or_create(name=name)
+        categories[name], created = Category.objects.get_or_create(
+            name__iexact=name, defaults={'name': name}
+        )
         counts['categories'] += created
 
     for i, row in enumerate(VESSELS):

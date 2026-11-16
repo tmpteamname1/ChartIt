@@ -97,6 +97,8 @@ docker compose exec backend python manage.py seed_catalog --reset  # obriši i p
 
 Naredba `seed_catalog` može se pokretati više puta bez duplikata; bez `--force` odbija rad kad je `DJANGO_DEBUG` isključen.
 
+Nad produkcijskom bazom naredba se pokreće s `--force`, uz postavljene varijable baze (`DATABASE_URL`) i vanjske pohrane za fotografije. Bez vanjske pohrane odbija rad jer bi nastali zapisi fotografija bez datoteka.
+
 Ako je port 5432 zauzet (npr. druga PostgreSQL baza na računalu), potrebno ju je zaustaviti prije `docker compose up`.
 
 Ako je lokalna baza stvorena prije uvođenja prilagođenog modela korisnika (aplikacija `accounts`), migracije javljaju grešku `InconsistentMigrationHistory`. Bazu je tada potrebno jednom obrisati s `docker compose down -v` i ponovno pokrenuti `docker compose up`.

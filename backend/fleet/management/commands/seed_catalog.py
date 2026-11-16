@@ -22,7 +22,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if not settings.DEBUG and not options['force']:
-            raise CommandError('DEBUG is off. Use --force to run seed_catalog anyway.')
+            raise CommandError('DEBUG je isključen. Za pokretanje koristi --force.')
+
+        storage = settings.STORAGES['default']['BACKEND']
+        if not settings.DEBUG and storage == 'django.core.files.storage.FileSystemStorage':
+            raise CommandError(
+                'DEBUG je isključen, a pohrana je lokalni disk. '
+                'Postavi vanjsku pohranu za fotografije.'
+            )
 
         with transaction.atomic():
             if options['reset']:
@@ -31,7 +38,7 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                'Created: {companies} companies, {ports} ports, {categories} categories, '
-                '{vessels} vessels, {photos} photos'.format(**counts)
+                'Stvoreno: {companies} tvrtke, {ports} luka, {categories} kategorije, '
+                '{vessels} plovila, {photos} fotografija'.format(**counts)
             )
         )
