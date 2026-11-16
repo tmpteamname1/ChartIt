@@ -1,9 +1,11 @@
+from django.db.models import Prefetch
 from drf_spectacular.utils import extend_schema, extend_schema_view
-from rest_framework import viewsets
+from rest_framework import mixins, viewsets
 from rest_framework.permissions import AllowAny
 
-from .models import Category, Port
-from .serializers import CategorySerializer, PortSerializer
+from .filters import VesselFilter
+from .models import Category, Photo, Port, Vessel
+from .serializers import CategorySerializer, PortSerializer, VesselListSerializer
 
 
 @extend_schema_view(
@@ -26,3 +28,26 @@ class PortViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = PortSerializer
     permission_classes = [AllowAny]
     pagination_class = None
+
+
+@extend_schema_view(
+    list=extend_schema(
+        summary='Popis plovila',
+        description=(
+            'Javni popis aktivnih plovila aktivnih tvrtki za početnu stranicu i pretragu. '
+            'Podržava filtre, pretragu po nazivu (`search`), sortiranje (`ordering`) i straničenje.'
+        ),
+    ),
+)
+class VesselViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = (
+        Vessel.objects.filter(is_active=True, company__is_active=True)
+        .select_related('company', 'category', 'home_port')
+        .prefetch_related(Prefetch('photos', queryset=Photo.objects.all()))
+    )
+    serializer_class = VesselListSerializer
+    permission_classes = [AllowAny]
+    filterset_class = VesselFilter
+    search_fields = ['name']
+    ordering_fields = ['daily_price', 'length_m', 'name']
+    ordering = ['name', 'id']  # id kao drugi ključ da straničenje bude stabilno
