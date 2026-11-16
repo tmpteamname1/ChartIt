@@ -118,6 +118,74 @@ Redirect URI uvijek pokazuje na Django (backend), ne na Vite poslužitelj. Promj
 
 Varijable `GOOGLE_CLIENT_ID` i `GOOGLE_CLIENT_SECRET` opisane su u tablici "Popis varijabli". Lokalno se postavljaju u `.env`, a na Renderu prema odjeljku "Varijable okruženja na Renderu".
 
+## Administrator platforme
+
+Svi korisnici koji se prijave Googleom dobivaju ulogu `KORISNIK`. Ulogu `ADMINISTRATOR` ne može dobiti nitko prijavom ni zahtjevom klijenta, nego je postavlja tim naredbom na poslužitelju. Administrator platforme zatim u React aplikaciji stvara tvrtke i dodjeljuje vlasnike (UC-14).
+
+Uloga `ADMINISTRATOR` i pristup Django adminu su odvojene stvari. Naredba mijenja samo `role`, a ne `is_staff` ni `is_superuser`. Django admin je alat za tim (pregled baze, ispravci) i za njega se koristi `createsuperuser` (odjeljak Administrator u poglavlju Postavljanje na Render). Administracija platforme obavlja se u React aplikaciji.
+
+### Naredba `promote_admin`
+
+```bash
+python manage.py promote_admin <e-mail>
+```
+
+Naredba postavlja ulogu `ADMINISTRATOR` korisniku s tom adresom e-pošte (velika i mala slova se ne razlikuju). Odbija se s porukom o grešci ako:
+
+- korisnik ne postoji,
+- se korisnik još nikad nije prijavio Googleom,
+- je korisnik deaktiviran,
+- korisnik pripada tvrtki (administrator platforme ne smije imati tvrtku, 4.3.1).
+
+Ako je korisnik već administrator, naredba to javlja i ništa ne mijenja, pa se može sigurno ponoviti.
+
+### Postupak
+
+1. Buduća administratorica se prijavi Googleom na aplikaciji. Time nastaje njezin korisnik s ulogom `KORISNIK`. Lokalno je to http://localhost:5173, na Renderu https://chartit-okv1.onrender.com.
+2. Netko od tima pokrene naredbu s adresom e-pošte njezina Google računa.
+3. Provjera: dok je prijavljena, otvoriti `/api/auth/me/` (lokalno http://localhost:5173/api/auth/me/, na Renderu https://chartit-okv1.onrender.com/api/auth/me/). Odgovor mora sadržavati `"role": "ADMINISTRATOR"`. Ponovna prijava nije potrebna, jer se uloga čita iz baze pri svakom zahtjevu.
+
+### Lokalno (Docker)
+
+```bash
+docker compose exec backend python manage.py promote_admin ana@example.com
+```
+
+### Render
+
+Besplatni plan nema ljusku na poslužitelju, pa se naredba pokreće s vlastitog računala, spojena na produkcijsku bazu preko vanjskog URL-a (isto kao `createsuperuser`). Vanjski URL vidi samo osoba s pristupom Renderu (Render > `chartit-db` > External Database URL).
+
+1. Pripremiti backend na računalu (jednom), uz aktivirano virtualno okruženje:
+
+   ```bash
+   cd backend
+   python3 -m venv .venv              # samo prvi put
+   source .venv/bin/activate          # Windows (CMD/PowerShell): .venv\Scripts\activate
+   python -m pip install -r requirements-dev.txt
+   ```
+
+   Treba i `.env` u korijenu repozitorija (kopija `.env.example`), jer Django traži `DJANGO_SECRET_KEY`. Vrijednost iz `.env.example` je dovoljna, produkcijski ključ ne treba.
+
+2. Pokrenuti naredbu, s vanjskim URL-om baze samo za tu naredbu:
+
+   ```bash
+   DATABASE_URL='<vanjski URL>' python manage.py promote_admin ana@example.com
+   ```
+
+   U Windows PowerShellu se varijabla postavlja zasebno:
+
+   ```powershell
+   $env:DATABASE_URL='<vanjski URL>'
+   python manage.py promote_admin ana@example.com
+   Remove-Item Env:DATABASE_URL
+   ```
+
+   Varijabla postavljena u okruženju ima prednost pred vrijednošću iz `.env`, pa naredba radi na produkcijskoj bazi, a ne na lokalnoj. Vanjski URL sadrži lozinku baze, pa se ne sprema u `.env`, commit ni poruku.
+
+3. Očekivani ispis je `ana@example.com je sada ADMINISTRATOR.` Ako se ispiše `Korisnik ... ne postoji`, osoba se još nije prijavila na Renderu (ili je upisana druga adresa).
+
+Prvi zahtjev prema Renderu nakon razdoblja bez prometa čeka da se servis ponovno pokrene, pa prijava i provjera mogu potrajati.
+
 ## Postavljanje na Render
 
 Aplikacija je javno dostupna na https://chartit-okv1.onrender.com. Render je zamjenski smještaj dok Azure nije dostupan, a postavljanje je zamišljeno jednako kao na Azureu: jedan servis na kojem Django poslužuje API, Django admin i izgrađenu React aplikaciju s istog origina (WhiteNoise). Zato frontend nema zaseban servis ni CORS postavke, a nepoznate putanje (npr. `/plovila/5`) vraćaju React aplikaciju, koja sama prikazuje odgovarajuću stranicu.
@@ -138,7 +206,7 @@ Cijela konfiguracija nalazi se u `render.yaml` (Render Blueprint) u korijenu rep
 2. Render stvara bazu, generira `DJANGO_SECRET_KEY` i povezuje `DATABASE_URL`, zatim izvršava build i start naredbu.
 3. Ako je naziv `chartit` zauzet, Render servisu dodjeljuje drugi naziv poslužitelja (ovdje `chartit-okv1.onrender.com`). Taj naziv treba upisati u `DJANGO_ALLOWED_HOSTS` i `DJANGO_CSRF_TRUSTED_ORIGINS` u `render.yaml`.
 4. Provjeriti https://chartit-okv1.onrender.com/api/health/, koji mora vratiti `{"status": "ok", "database": "ok"}`, i početnu stranicu, koja mora prikazati "backend: OK".
-5. Stvoriti administratora (odjeljak Administrator).
+5. Stvoriti administratora za Django admin (odjeljak Administrator), a nakon prve Google prijave i administratora platforme (odjeljak Administrator platforme).
 
 ### Varijable okruženja na Renderu
 
@@ -163,7 +231,7 @@ cd backend                         # uz aktivirano virtualno okruženje
 DATABASE_URL='<vanjski URL>' python manage.py createsuperuser
 ```
 
-Vanjski URL sadrži lozinku baze, pa se ne sprema u `.env`, commit ni poruku. Podaci za prijavu dijele se prema odjeljku Dijeljenje tajni u timu. Trajni način stvaranja prvog administratora platforme dio je zadatka #50.
+Vanjski URL sadrži lozinku baze, pa se ne sprema u `.env`, commit ni poruku. Podaci za prijavu dijele se prema odjeljku Dijeljenje tajni u timu. Time se stvara administrator za Django admin. Administrator platforme (uloga `ADMINISTRATOR`) stvara se naredbom `promote_admin` (odjeljak Administrator platforme).
 
 ### Ograničenja besplatnog plana
 
