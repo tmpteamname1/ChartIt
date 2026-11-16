@@ -24,7 +24,7 @@ def oib_with_check_digit(first_ten):
     return f'{first_ten}{check}'
 
 
-# Invented companies; the OIBs only have a valid format and are not real.
+# Invented companies, the OIBs only have a valid format and are not real.
 COMPANIES = [
     {
         'name': 'Adria Charter d.o.o.',
@@ -96,7 +96,7 @@ def make_photo_file(title, index):
 def reset_catalog():
     """Delete only the catalog data created by seed_catalog (not users, not test companies)."""
     seed_oibs = [company['oib'] for company in COMPANIES]
-    # Photo.delete() signals remove the files; a queryset delete() also fires post_delete.
+    # Photo.delete() signals remove the files, a queryset delete() also fires post_delete.
     Vessel.objects.filter(company__oib__in=seed_oibs).delete()
     Company.objects.filter(oib__in=seed_oibs).delete()
     Port.objects.filter(name__in=PORTS, vessels__isnull=True).delete()
@@ -109,9 +109,7 @@ def seed_catalog():
 
     companies = []
     for data in COMPANIES:
-        company, created = Company.objects.get_or_create(
-            oib=data['oib'], defaults=data
-        )
+        company, created = Company.objects.get_or_create(oib=data['oib'], defaults=data)
         companies.append(company)
         counts['companies'] += created
 
