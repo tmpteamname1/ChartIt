@@ -1,4 +1,6 @@
 from django_filters import rest_framework as filters
+from rest_framework import filters as drf_filters
+
 
 from .models import Vessel
 
@@ -22,3 +24,13 @@ class VesselFilter(filters.FilterSet):
     class Meta:
         model = Vessel
         fields = []
+        
+
+class StableOrderingFilter(drf_filters.OrderingFilter):
+    """OrderingFilter koji uvijek dodaje 'id' kao zadnji ključ, da straničenje bude stabilno."""
+
+    def get_ordering(self, request, queryset, view):
+        ordering = super().get_ordering(request, queryset, view)
+        if ordering and 'id' not in ordering and '-id' not in ordering:
+            ordering = [*ordering, 'id']
+        return ordering

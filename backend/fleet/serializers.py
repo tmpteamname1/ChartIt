@@ -30,10 +30,16 @@ class CompanyBriefSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
+class CategoryBriefSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name']
+
+
 class VesselListSerializer(serializers.ModelSerializer):
     """Kartica plovila na početnoj stranici i u pretrazi."""
 
-    category = CategorySerializer(read_only=True)
+    category = CategoryBriefSerializer(read_only=True)
     home_port = PortBriefSerializer(read_only=True)
     company = CompanyBriefSerializer(read_only=True)
     thumbnail = serializers.SerializerMethodField()

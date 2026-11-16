@@ -12,12 +12,15 @@ from django.db import IntegrityError, transaction
 from django.db.models.deletion import ProtectedError
 from django.test import TestCase, override_settings
 from PIL import Image
-from rest_framework.test import APITestCase
+from rest_framework.request import Request
+from rest_framework.test import APITestCase, APIRequestFactory
 
 from companies.models import Company
 
 from .images import make_thumbnail
 from .models import Category, Photo, Port, Vessel
+from .filters import StableOrderingFilter
+from .views import VesselViewSet
 
 
 class CategoryTests(TestCase):
@@ -600,3 +603,33 @@ class VesselListApiTests(APITestCase):
             self.make_photo(self.make_vessel())
         with self.assertNumQueries(3):
             self.client.get(self.URL)
+
+    def test_ordering_by_equal_price_has_stable_pagination(self):
+        # 21 plovila iste cijene, pa se po cijeni ne mogu razlikovati
+        for _ in range(21):
+            self.make_vessel(daily_price=Decimal('150.00'))
+
+        page1 = self.get(ordering='daily_price')
+        page2 = self.get(ordering='daily_price', page=2)
+
+        ids1 = [v['id'] for v in page1['results']]
+        ids2 = [v['id'] for v in page2['results']]
+        self.assertEqual(len(ids1), 20)
+        self.assertEqual(len(ids2), 1)
+        self.assertFalse(set(ids1) & set(ids2))  # stranice se ne preklapaju
+        self.assertEqual(len(set(ids1 + ids2)), 21)  # nijedno plovilo ne nedostaje
+
+    def test_ordering_always_ends_with_id(self):
+        # Ne ovisi o redoslijedu koji baza vrati, pa pada bez StableOrderingFilter-a
+        view = VesselViewSet()
+        for param, expected in [
+            ('daily_price', ['daily_price', 'id']),
+            ('-length_m', ['-length_m', 'id']),
+            ('name', ['name', 'id']),
+        ]:
+            with self.subTest(ordering=param):
+                request = Request(APIRequestFactory().get(self.URL, {'ordering': param}))
+                ordering = StableOrderingFilter().get_ordering(
+                    request, Vessel.objects.all(), view
+                )
+                self.assertEqual(ordering, expected)
