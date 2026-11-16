@@ -415,6 +415,13 @@ class SeedCatalogTests(TestCase):
         self.assertEqual(self.counts(), first)
 
     @override_settings(DEBUG=False)
+    def test_refuses_without_force_when_debug_is_off(self):
+        with self.assertRaises(CommandError):
+            self.run_seed()
+
+        self.assertEqual(self.counts(), (0, 0, 0, 0, 0))
+
+    @override_settings(DEBUG=False)
     def test_refuses_with_force_on_local_storage_when_debug_is_off(self):
         with self.assertRaises(CommandError):
             self.run_seed('--force')
