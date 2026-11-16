@@ -1,3 +1,10 @@
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+
+from config.validators import IMAGE_VALIDATORS
+
+from .images import make_thumbnail
+
 from datetime import date
 
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -123,3 +130,58 @@ class Vessel(models.Model):
 
     def __str__(self):
         return f'{self.name} ({self.company})'
+
+
+def vessel_photo_path(instance, filename):
+    return f'vessels/{instance.vessel_id}/{filename}'
+
+
+def vessel_thumbnail_path(instance, filename):
+    return f'vessels/{instance.vessel_id}/thumbs/{filename}'
+
+
+class Photo(models.Model):
+    vessel = models.ForeignKey(
+        Vessel,
+        verbose_name='plovilo',
+        on_delete=models.CASCADE,
+        related_name='photos',
+    )
+    image = models.ImageField(
+        'fotografija', upload_to=vessel_photo_path, validators=IMAGE_VALIDATORS
+    )
+    thumbnail = models.ImageField(
+        'minijatura', upload_to=vessel_thumbnail_path, editable=False, blank=True
+    )
+    sort_order = models.PositiveSmallIntegerField('redoslijed', default=0)
+
+    class Meta:
+        ordering = ['sort_order', 'id']
+        verbose_name = 'fotografija plovila'
+        verbose_name_plural = 'fotografije plovila'
+
+    def __str__(self):
+        return f'Fotografija {self.pk} ({self.vessel})'
+
+    def save(self, *args, **kwargs):
+        # Minijaturu izrađujemo samo kad je slika nova ili promijenjena,
+        # ne pri svakom spremanju (npr. promjena redoslijeda).
+        if self._image_changed():
+            self.thumbnail = make_thumbnail(self.image)
+        super().save(*args, **kwargs)
+
+    def _image_changed(self):
+        if not self.image:
+            return False
+        if self.pk is None or not self.thumbnail:
+            return True
+        old = Photo.objects.filter(pk=self.pk).values_list('image', flat=True).first()
+        return old != self.image.name
+
+
+@receiver(post_delete, sender=Photo)
+def delete_photo_files(sender, instance, **kwargs):
+    # Signal radi i kod kaskadnog brisanja plovila, kad se delete() fotografije ne poziva.
+    for field in (instance.image, instance.thumbnail):
+        if field:
+            field.delete(save=False)
