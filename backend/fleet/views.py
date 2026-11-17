@@ -6,7 +6,12 @@ from rest_framework.permissions import AllowAny
 
 from .filters import StableOrderingFilter, VesselFilter
 from .models import Category, Port, Vessel
-from .serializers import CategorySerializer, PortSerializer, VesselListSerializer
+from .serializers import (
+    CategorySerializer,
+    PortSerializer,
+    VesselDetailSerializer,
+    VesselListSerializer,
+)
 
 
 @extend_schema_view(
@@ -39,8 +44,17 @@ class PortViewSet(viewsets.ReadOnlyModelViewSet):
             'Podržava filtre, pretragu po nazivu (`search`), sortiranje (`ordering`) i straničenje.'
         ),
     ),
+    retrieve=extend_schema(
+        summary='Detalji plovila',
+        description=(
+            'Javni endpoint s punim podacima za stranicu plovila: opis, oprema, godina '
+            'izgradnje, sve fotografije (poredane po `sort_order`), matična luka s '
+            'koordinatama za kartu i kontakt tvrtke. Neaktivno plovilo ili plovilo '
+            'neaktivne tvrtke vraća 404, kao da ne postoji.'
+        ),
+    ),
 )
-class VesselViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class VesselViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     queryset = (
         Vessel.objects.filter(is_active=True, company__is_active=True)
         .select_related('company', 'category', 'home_port')
@@ -53,3 +67,15 @@ class VesselViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     ordering_fields = ['daily_price', 'length_m', 'name']
     ordering = ['name', 'id']  # id kao drugi ključ da straničenje bude stabilno
     filter_backends = [DjangoFilterBackend, SearchFilter, StableOrderingFilter]
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return VesselDetailSerializer
+        return VesselListSerializer
+
+    def filter_queryset(self, queryset):
+        # Filteri, pretraga i sortiranje vrijede samo za popis; inače bi
+        # /api/vessels/5/?port=abc vraćao 400, a ?port=2 bi dao 404.
+        if self.action != 'list':
+            return queryset
+        return super().filter_queryset(queryset)
