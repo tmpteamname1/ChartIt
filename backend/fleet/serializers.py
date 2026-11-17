@@ -100,3 +100,29 @@ class VesselDetailSerializer(VesselListSerializer):
             'year_built',
             'photos',
         ]
+
+
+class CompanyVesselSerializer(serializers.ModelSerializer):
+    """Vessel in the company panel ("Flota" screen); includes inactive vessels."""
+
+    category = CategoryBriefSerializer(read_only=True)
+    home_port = PortBriefSerializer(read_only=True)
+    # Same reason as in VesselDetailSerializer (callable MaxValueValidator).
+    year_built = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Vessel
+        fields = [
+            'id',
+            'name',
+            'description',
+            'equipment',
+            'category',
+            'home_port',
+            'length_m',
+            'max_people',
+            'cabins',
+            'year_built',
+            'daily_price',
+            'is_active',
+        ]

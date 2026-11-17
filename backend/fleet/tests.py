@@ -17,6 +17,7 @@ from PIL import Image
 from rest_framework.request import Request
 from rest_framework.test import APIRequestFactory, APITestCase
 
+from accounts.models import User
 from companies.models import Company
 
 from .filters import StableOrderingFilter
@@ -784,3 +785,143 @@ class VesselDetailApiTests(VesselApiTestCase):
             self.make_photo(vessel)
         with self.assertNumQueries(2):
             self.client.get(self.url(vessel))
+
+
+class CompanyVesselApiTests(VesselApiTestCase):
+    URL = '/api/company/vessels/'
+
+    def setUp(self):
+        super().setUp()  # self.company je tvrtka A
+        self.company_b = self.make_company('Tvrtka B', '12345678903')
+        self.owner_a = self.make_user('vlasnik_a', User.Role.VLASNIK, self.company)
+        self.owner_b = self.make_user('vlasnik_b', User.Role.VLASNIK, self.company_b)
+
+    def make_user(self, username, role, company=None):
+        return User.objects.create_user(
+            username=username,
+            email=f'{username}@example.com',
+            password='x',
+            role=role,
+            company=company,
+        )
+
+    def names(self):
+        response = self.client.get(self.URL)
+        self.assertEqual(response.status_code, 200)
+        return [item['name'] for item in response.json()['results']]
+
+    # Izolacija po tvrtki
+
+    def test_owner_sees_only_own_vessels_including_inactive(self):
+        self.make_vessel(name='A aktivno')
+        self.make_vessel(name='A neaktivno', is_active=False)
+        self.make_vessel(name='B aktivno', company=self.company_b)
+        self.client.force_login(self.owner_a)
+
+        self.assertEqual(self.names(), ['A aktivno', 'A neaktivno'])
+
+    def test_other_company_vessel_returns_404(self):
+        foreign = self.make_vessel(company=self.company_b)
+        self.client.force_login(self.owner_a)
+
+        response = self.client.get(f'{self.URL}{foreign.id}/')
+
+        self.assertEqual(response.status_code, 404)
+        body = response.json()
+        self.assertEqual(set(body), {'detail', 'code', 'errors'})
+        self.assertEqual(body['code'], 'not_found')
+
+    def test_own_inactive_vessel_detail_is_available(self):
+        vessel = self.make_vessel(is_active=False)
+        self.client.force_login(self.owner_a)
+
+        response = self.client.get(f'{self.URL}{vessel.id}/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.json()['is_active'])
+
+    # Oblik odgovora
+
+    def test_fields(self):
+        vessel = self.make_vessel(name='Bonaca', description='Opis', equipment='GPS')
+        self.client.force_login(self.owner_a)
+
+        item = self.client.get(self.URL).json()['results'][0]
+
+        self.assertEqual(
+            item,
+            {
+                'id': vessel.id,
+                'name': 'Bonaca',
+                'description': 'Opis',
+                'equipment': 'GPS',
+                'category': {'id': self.category.id, 'name': 'Jedrilica'},
+                'home_port': {'id': self.port.id, 'name': 'Split'},
+                'length_m': '12.50',
+                'max_people': 8,
+                'cabins': 3,
+                'year_built': 2015,
+                'daily_price': '150.00',
+                'is_active': True,
+            },
+        )
+
+    def test_default_ordering_by_name(self):
+        self.make_vessel(name='Zeta')
+        self.make_vessel(name='Alfa')
+        self.client.force_login(self.owner_a)
+
+        self.assertEqual(self.names(), ['Alfa', 'Zeta'])
+
+    def test_default_page_size_is_20(self):
+        for _ in range(21):
+            self.make_vessel()
+        self.client.force_login(self.owner_a)
+
+        data = self.client.get(self.URL).json()
+
+        self.assertEqual(data['count'], 21)
+        self.assertEqual(len(data['results']), 20)
+        self.assertIsNotNone(data['next'])
+
+    # Dopuštenja
+
+    def test_anonymous_gets_401(self):
+        self.assertEqual(self.client.get(self.URL).status_code, 401)
+
+    def test_customer_gets_403(self):
+        self.client.force_login(self.make_user('korisnik', User.Role.KORISNIK))
+
+        self.assertEqual(self.client.get(self.URL).status_code, 403)
+
+    def test_employee_gets_403(self):
+        self.client.force_login(self.make_user('djelatnik', User.Role.DJELATNIK, self.company))
+
+        self.assertEqual(self.client.get(self.URL).status_code, 403)
+
+    def test_owner_without_company_gets_403(self):
+        # Baza to ne dopušta (CheckConstraint), pa koristimo nespremljenog korisnika.
+        user = User(username='bez_tvrtke', email='x@example.com', role=User.Role.VLASNIK)
+        self.client.force_authenticate(user=user)
+
+        self.assertEqual(self.client.get(self.URL).status_code, 403)
+
+    def test_owner_of_inactive_company_gets_403(self):
+        Company.objects.filter(pk=self.company_b.pk).update(is_active=False)
+        self.client.force_login(self.owner_b)
+
+        self.assertEqual(self.client.get(self.URL).status_code, 403)
+
+    # Broj upita
+
+    def test_query_count_does_not_depend_on_number_of_vessels(self):
+        self.client.force_login(self.owner_a)
+        for _ in range(2):
+            self.make_vessel()
+        with self.assertNumQueries(5):  # sesija, korisnik, tvrtka, count, plovila
+            self.client.get(self.URL)
+
+        for _ in range(18):
+            self.make_vessel()
+        with self.assertNumQueries(5):
+            self.client.get(self.URL)

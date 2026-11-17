@@ -504,6 +504,7 @@ class CompanyServiceViewSet(viewsets.ModelViewSet):
 
 1. U aplikaciji napisati serijalizator i pogled (najčešće `ModelViewSet` ili `ReadOnlyModelViewSet`).
 2. Postaviti dopuštenja: po zadanom je potrebna prijava, a javni pogledi izričito postavljaju `permission_classes = [AllowAny]`. Pogledi dostupni samo određenim ulogama koriste klase iz `accounts/permissions.py` (vidi „Dopuštenja prema ulogama”).
+Svaki pogled koji vlasnik ili djelatnik koristi u panelu tvrtke nasljeđuje `CompanyScopedMixin` (`backend/companies/mixins.py`), koji se piše ispred DRF-ove bazne klase, i uz klasu uloge koristi `HasActiveCompany`
 3. Za popise postaviti zadani poredak i, po potrebi, `filterset_fields`, `search_fields` i `ordering_fields`.
 4. Registrirati pogled u routeru u `urls.py` aplikacije i, ako aplikacija još nije uključena, dodati je u `api_urlpatterns`.
 5. Provjeriti izgled endpointa u `/api/docs/` i napisati testove (uključujući pristup bez prijave i pristup podacima druge tvrtke).

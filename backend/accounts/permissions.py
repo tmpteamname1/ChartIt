@@ -38,3 +38,16 @@ class IsCompanyEmployee(_HasRole):
     """Charter company staff (role DJELATNIK); owners can do everything employees can."""
 
     roles = (User.Role.DJELATNIK, User.Role.VLASNIK)
+
+
+class HasActiveCompany(BasePermission):
+    """The user belongs to a company and that company is active (ADR-02, 4.6)."""
+
+    message = 'Korisnik nema aktivnu tvrtku.'
+
+    def has_permission(self, request, view):
+        user = request.user
+        if not (user and user.is_authenticated):
+            return False
+        company = user.company  # one query, cached on the user for the rest of the request
+        return company is not None and company.is_active
