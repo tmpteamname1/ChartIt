@@ -88,6 +88,9 @@ class VesselDetailSerializer(VesselListSerializer):
     home_port = PortSerializer(read_only=True)
     company = CompanyContactSerializer(read_only=True)
     photos = PhotoSerializer(many=True, read_only=True)
+    # Declared explicitly: the model's MaxValueValidator(current_year) is a callable,
+    # and drf-spectacular cannot turn it into a schema maximum.
+    year_built = serializers.IntegerField(read_only=True)
 
     class Meta(VesselListSerializer.Meta):
         fields = [
