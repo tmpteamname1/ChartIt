@@ -91,7 +91,13 @@ docker compose logs -f backend                        # praćenje logova backend
 docker compose exec backend python manage.py test     # testovi (koriste PostgreSQL)
 docker compose exec backend python manage.py <naredba>
 docker compose exec db psql -U chartit -d chartit     # konzola baze
+docker compose exec backend python manage.py seed_catalog          # demo katalog: tvrtke, luke, kategorije, plovila, fotografije
+docker compose exec backend python manage.py seed_catalog --reset  # obriši i ponovno stvori katalog
 ```
+
+Naredba `seed_catalog` može se pokretati više puta bez duplikata; bez `--force` odbija rad kad je `DJANGO_DEBUG` isključen.
+
+Nad produkcijskom bazom naredba se pokreće s vlastitog računala uz `--force` i vanjski URL baze (`DATABASE_URL='<vanjski URL>' python manage.py seed_catalog --force`, isto kao `createsuperuser`, poglavlje 6). Zasad odbija rad kad je pohrana fotografija lokalni disk, jer bi nastali zapisi fotografija bez datoteka (na Renderu nema trajnog diska), za produkciju prvo treba uvesti vanjsku pohranu.
 
 Ako je port 5432 zauzet (npr. druga PostgreSQL baza na računalu), potrebno ju je zaustaviti prije `docker compose up`.
 
