@@ -37,7 +37,7 @@ class CategoryBriefSerializer(serializers.ModelSerializer):
 
 
 class VesselListSerializer(serializers.ModelSerializer):
-    """Kartica plovila na početnoj stranici i u pretrazi."""
+    """Vessel card on the home page and in search results."""
 
     category = CategoryBriefSerializer(read_only=True)
     home_port = PortBriefSerializer(read_only=True)
@@ -61,7 +61,7 @@ class VesselListSerializer(serializers.ModelSerializer):
 
     @extend_schema_field(serializers.URLField(allow_null=True))
     def get_thumbnail(self, obj):
-        # Fotografije su već dohvaćene (prefetch) i poredane po sort_order, id; uzimamo prvu.
+        # Photos are already prefetched and ordered by sort_order, id; take the first one.
         photo = next(iter(obj.photos.all()), None)
         if photo is None or not photo.thumbnail:
             return None
@@ -69,7 +69,7 @@ class VesselListSerializer(serializers.ModelSerializer):
 
 
 class PhotoSerializer(serializers.ModelSerializer):
-    """Fotografija plovila; image i thumbnail su apsolutni URL-ovi."""
+    """Vessel photo; image and thumbnail are absolute URLs."""
 
     class Meta:
         model = Photo
@@ -83,12 +83,11 @@ class CompanyContactSerializer(serializers.ModelSerializer):
 
 
 class VesselDetailSerializer(VesselListSerializer):
-    """Detalji plovila na stranici /plovila/:id."""
+    """Vessel details for the /plovila/:id page."""
 
     home_port = PortSerializer(read_only=True)
     company = CompanyContactSerializer(read_only=True)
     photos = PhotoSerializer(many=True, read_only=True)
-    year_built = serializers.IntegerField(read_only=True)
 
     class Meta(VesselListSerializer.Meta):
         fields = [
