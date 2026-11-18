@@ -65,7 +65,7 @@ docker compose exec backend python manage.py seed_catalog --reset  # obriši i p
 
 Naredba se može pokretati više puta bez duplikata; bez `--force` odbija rad kad je `DJANGO_DEBUG` isključen.
 
-Nad produkcijskom bazom naredba se pokreće s vlastitog računala uz `--force` i vanjski URL baze (`DATABASE_URL='<vanjski URL>' python manage.py seed_catalog --force`, isto kao `createsuperuser`, odjeljak [Administrator](#administrator)). Zasad odbija rad kad je pohrana fotografija lokalni disk, jer bi nastali zapisi fotografija bez datoteka (na Renderu nema trajnog diska); za produkciju prvo treba uvesti vanjsku pohranu.
+Nad produkcijskom bazom naredba se pokreće s vlastitog računala uz `--force` i vanjski URL baze (`DATABASE_URL='<vanjski URL>' python manage.py seed_catalog --force`, isto kao `createsuperuser`, odjeljak [Administrator](#administrator)). Odbija rad kad je pohrana fotografija lokalni disk, jer bi nastali zapisi fotografija bez datoteka (na Renderu nema trajnog diska). Zato se uz `DATABASE_URL` u istoj naredbi postavljaju i varijable `MEDIA_S3_*` s vrijednostima s Rendera (odjeljak [Medijske datoteke](#medijske-datoteke-fotografije-plovila)), kako bi fotografije završile u spremniku. Ni one se ne upisuju u `.env`.
 
 ### Backend izvan Dockera (virtualno okruženje)
 
@@ -186,7 +186,12 @@ Varijable koje su već postavljene u okruženju (Docker, Azure, Render) imaju pr
 | `DJANGO_CSRF_TRUSTED_ORIGINS` | ne | prazno | Origini (sa shemom) kojima se vjeruje za CSRF. Lokalno prazno; na Azureu `https://<aplikacija>.azurewebsites.net`. |
 | `DJANGO_HTTPS` | ne | suprotno od `DJANGO_DEBUG` | Preusmjeravanje na HTTPS, sigurni kolačići i HSTS. `False` omogućuje lokalno pokretanje s produkcijskim postavkama preko HTTP-a. |
 | `DJANGO_HSTS_SECONDS` | ne | `3600` | Trajanje HSTS-a dok je HTTPS uključen. Povećati na `31536000` kada se potvrdi da HTTPS radi. |
-| `DJANGO_MEDIA_ROOT` | ne | `backend/media` | Mapa za učitane datoteke. Na Azureu `/home/media` (odjeljak Medijske datoteke). |
+| `DJANGO_MEDIA_ROOT` | ne | `backend/media` | Mapa za učitane datoteke kada spremnik nije postavljen (lokalni razvoj, Docker, CI). |
+| `MEDIA_S3_BUCKET` | ne | prazno | Naziv spremnika za fotografije (`chartit-media`). Ako je postavljen, fotografije se spremaju u spremnik i moraju biti postavljene i ostale četiri varijable `MEDIA_S3_*`, inače se aplikacija ne pokreće. Lokalno prazno. |
+| `MEDIA_S3_ENDPOINT_URL` | ne | prazno | Adresa S3 API-ja pružatelja, za R2 u jurisdikciji EU `https://<ID računa>.eu.r2.cloudflarestorage.com`. |
+| `MEDIA_S3_PUBLIC_URL` | ne | prazno | Javna adresa spremnika s koje preglednik dohvaća fotografije, npr. `https://pub-<oznaka>.r2.dev`. Mora počinjati s `https://`. |
+| `MEDIA_S3_ACCESS_KEY_ID` | da | prazno | Access Key ID API tokena za spremnik. |
+| `MEDIA_S3_SECRET_ACCESS_KEY` | da | prazno | Secret Access Key istog tokena. Postoji samo na Renderu. |
 | `FRONTEND_URL` | ne | prazno | Adresa frontenda na koju se korisnik vraća nakon neuspjele prijave. Lokalno `http://localhost:5173`; na Renderu prazno (frontend i backend su isti origin). |
 | `GOOGLE_CLIENT_ID` | ne | nema | OAuth Client ID iz Google Cloud Consolea (`xxx.apps.googleusercontent.com`). Lokalno ID klijenta "ChartIt Web Client (lokalno)", na Renderu ID produkcijskog klijenta. |
 | `GOOGLE_CLIENT_SECRET` | da | nema | OAuth Client Secret (`GOCSPX-...`) istog klijenta. Lokalno secret lokalnog klijenta; produkcijski secret postoji samo na Renderu. |
@@ -218,28 +223,63 @@ Samo brisanje iz commita nije dovoljno, jer tajna ostaje u povijesti gita i u ko
 
 ## Medijske datoteke (fotografije plovila)
 
-Fotografije plovila koje učitavaju vlasnici spremaju se u datotečni sustav poslužitelja, u mapu zadanu postavkom `MEDIA_ROOT`, a dostupne su na putanji `/media/` (poglavlje 4.7). Rješenje je odabrano jer ne zahtijeva dodatnu uslugu ni ključeve i dovoljno je za opseg projekta.
+Fotografije plovila i njihove minijature spremaju se preko Djangovog sustava pohrane (`STORAGES['default']`). Modeli koriste samo `upload_to` i `field.delete`, a URL fotografije daje `photo.image.url` / `photo.thumbnail.url`, pa se pohrana mijenja samo postavkom, bez promjene modela, serijalizatora ili frontenda. Pohranu bira `backend/config/storage.py` prema varijablama okruženja:
 
-| Okruženje | Mapa (`DJANGO_MEDIA_ROOT`) | Napomena |
+| Okruženje | Pohrana | Napomena |
 | --- | --- | --- |
-| Lokalno (venv ili Docker) | `backend/media/` (zadano) | Mapa nije u gitu. U Dockeru je `backend/` montiran u kontejner, pa datoteke ostaju na računalu i nakon `docker compose down`. |
-| Azure App Service | `/home/media` | `/home` je jedina pohrana koja ostaje nakon ponovnog pokretanja. Mapa je izvan `/home/site/wwwroot`, koju svako postavljanje zamjenjuje novom verzijom koda. |
+| Lokalno (venv ili Docker) i CI | lokalni disk, mapa `backend/media/` (`DJANGO_MEDIA_ROOT`) | Varijable `MEDIA_S3_*` nisu postavljene, pa nije potreban nikakav račun ni tajna. Mapa nije u gitu. U Dockeru je `backend/` montiran u kontejner, pa datoteke ostaju na računalu i nakon `docker compose down`. |
+| Render | spremnik `chartit-media` kod Cloudflare R2, jurisdikcija EU | Postavljen `MEDIA_S3_BUCKET` uključuje S3 pohranu (`storages.backends.s3.S3Storage` iz `django-storages`). Fotografije ostaju nakon postavljanja, ponovnog pokretanja i gašenja servisa. |
+
+S3 pohrana koristi ove opcije:
+
+- `file_overwrite=False`: druga fotografija istog naziva (npr. `IMG_0001.jpg`) za isto plovilo dobiva nastavak uz naziv i ne prepisuje prvu,
+- `querystring_auth=False` i `custom_domain` (iz `MEDIA_S3_PUBLIC_URL`): URL fotografije je trajan javni URL spremnika, a ne potpisani URL s rokom trajanja,
+- bez ACL-ova (`default_acl=None`), jer ih R2 ne podržava; javno čitanje uključuje se na samom spremniku,
+- `region_name='auto'`, kako R2 očekuje.
+
+Brisanje fotografije ili plovila briše i datoteke iz spremnika (signal `post_delete` modela `Photo` u `backend/fleet/models.py`).
 
 ### Posluživanje
 
-WhiteNoise poslužuje samo datoteke koje postoje pri pokretanju aplikacije (statičke datoteke i izgrađeni React), a ne datoteke učitane kasnije. Zato `/media/` u svim okruženjima poslužuje Django (pogled `media` u `backend/config/views.py`). U razvoju Vite prosljeđuje `/media` na Django, kao i `/api`.
+Na Renderu preglednik fotografije dohvaća izravno sa spremnika, pa ih ne poslužuje Django na slabom besplatnom poslužitelju.
 
-Ovaj način je sporiji od posluživanja preko zasebnog poslužitelja ili pohrane u oblaku, ali je za broj fotografija i korisnika u projektu dovoljan. Razmotrene alternative:
+Bez spremnika WhiteNoise ne može poslužiti fotografije, jer poslužuje samo datoteke koje postoje pri pokretanju aplikacije (statičke datoteke i izgrađeni React). Zato `/media/` lokalno i u CI-ju poslužuje Django (pogled `media` u `backend/config/views.py`), a u razvoju Vite prosljeđuje `/media` na Django, kao i `/api`. Ruta postoji i na Renderu, ali se ne koristi, jer URL-ovi fotografija pokazuju na spremnik.
 
-- Azure Blob Storage uz `django-storages`: fotografije ne opterećuju aplikaciju i ne ovise o disku App Servicea, ali zahtijevaju dodatnu uslugu, ključ za pristup i drugačije postavljanje u razvoju. Ostaje mogući sljedeći korak ako fotografija bude puno ili aplikacija dobije više instanci.
+### Odabir pružatelja pohrane
+
+Uvjeti: besplatni plan dovoljan za projekt (nekoliko GB), S3 kompatibilno sučelje (radi `django-storages`), javno čitanje datoteka putem URL-a, regija u EU i po mogućnosti bez obveznog unosa kartice. Uvjeti besplatnih planova provjereni su na službenim stranicama pružatelja u studenom 2026.
+
+| Pružatelj | Besplatno | Prednosti | Nedostaci |
+| --- | --- | --- | --- |
+| **Cloudflare R2** (odabran) | 10 GB pohrane, 1 milijun zapisa i 10 milijuna čitanja mjesečno, promet prema korisnicima bez naknade | Velik besplatni prostor, promet se ne naplaćuje, jurisdikcija EU za podatke, javni URL `r2.dev` bez vlastite domene | Pri uključivanju R2 traži se unos kartice (naplata tek iznad besplatne kvote). Nema ACL-ova. Cloudflare navodi da je `r2.dev` ograničene brzine i namijenjen razvoju; za projekt je dovoljan, a prijelaz na vlastitu domenu mijenja samo `MEDIA_S3_PUBLIC_URL`. |
+| Backblaze B2 | prvih 10 GB pohrane, promet do trostruke količine pohranjenih podataka | Regija EU Central, S3 sučelje | Javni spremnik zahtijeva povijest plaćanja ili malu uplatu karticom; promet iznad kvote se naplaćuje. |
+| Supabase Storage | 1 GB pohrane, 5 GB prometa | Bez kartice, regija Frankfurt, S3 sučelje | Besplatni projekt pauzira se nakon tjedan dana bez aktivnosti, pa bi fotografije bile nedostupne dok ga netko ručno ne pokrene; javni URL sadrži putanju, što `custom_domain` ne podržava izravno. |
+
+Odabran je Cloudflare R2: jedini od kandidata nema ni ograničenje prometa ni pauziranje, a obvezni unos kartice prihvaćen je jer projekt ostaje daleko ispod besplatne kvote. Razmatrane su i alternative bez vanjske usluge:
+
+- disk servisa: na besplatnom planu Rendera nije trajan (odjeljak [Ograničenja besplatnog plana](#ograničenja-besplatnog-plana)), a trajni disk postoji samo na plaćenim planovima,
 - WhiteNoise: nije moguće, jer ne vidi datoteke učitane nakon pokretanja.
+
+### Postavljanje spremnika (Cloudflare R2)
+
+Postavlja se jednom, na računu koji je otvorio član tima zadužen za pohranu.
+
+1. U Cloudflare nadzornoj ploči otvoriti R2 Object Storage i uključiti R2 (traži unos načina plaćanja; naplaćuje se samo potrošnja iznad besplatne kvote).
+2. Stvoriti spremnik `chartit-media`: lokacija s jurisdikcijom European Union (EU), razred pohrane Standard (besplatna kvota ne vrijedi za Infrequent Access).
+3. U postavkama spremnika, Public access > R2.dev subdomain, uključiti javni pristup. Prikazana adresa (`https://pub-<oznaka>.r2.dev`) je `MEDIA_S3_PUBLIC_URL`.
+4. Na stranici spremnika pročitati S3 API adresu (`https://<ID računa>.eu.r2.cloudflarestorage.com`, bez naziva spremnika na kraju); to je `MEDIA_S3_ENDPOINT_URL`.
+5. R2 > Manage API tokens > Create API token: dopuštenje Object Read & Write, ograničeno samo na spremnik `chartit-media`. Access Key ID i Secret Access Key prikazuju se samo jednom; upisuju se odmah na Renderu i ne spremaju se u `.env`, commit ni poruku.
+6. Na Renderu (`chartit` > Environment) upisati svih pet varijabli `MEDIA_S3_*` i spremiti uz novo postavljanje.
+7. Provjera: kroz Django admin na https://chartit-okv1.onrender.com/admin/ dodati fotografiju plovilu. Adresa fotografije i minijature mora počinjati s `MEDIA_S3_PUBLIC_URL`, a fotografija se mora prikazivati i nakon ručnog ponovnog postavljanja (Manual Deploy) te nakon gašenja servisa. Brisanjem fotografije u adminu datoteke nestaju iz spremnika (R2 > `chartit-media` > Objects).
+
+Ako ključ procuri, token se briše u R2 > Manage API tokens, stvara novi i upisuje na Renderu (odjeljak [Postupak kada tajna završi u repozitoriju](#postupak-kada-tajna-završi-u-repozitoriju)).
 
 ### Ograničenja učitavanja
 
 Polja za slike koriste zajedničke validatore `IMAGE_VALIDATORS` iz `backend/config/validators.py`:
 
 - dopuštene vrste: jpg, jpeg, png i webp,
-- najveća veličina: 5 MB po datoteci (besplatni plan App Servicea ima ukupno 1 GB prostora),
+- najveća veličina: 5 MB po datoteci (besplatni plan R2 ima ukupno 10 GB prostora),
 - Django admin i DRF serijalizatori otvaraju datoteku bibliotekom Pillow i odbijaju sve što nije stvarna slika, bez obzira na nastavak.
 
 Primjer u modelu:
@@ -250,7 +290,7 @@ from config.validators import IMAGE_VALIDATORS
 image = models.ImageField(upload_to='vessels/', validators=IMAGE_VALIDATORS)
 ```
 
-Datoteke se poslužuju s istog origina kao aplikacija, pa se ne smiju dopuštati vrste koje preglednik može izvršiti (npr. SVG ili HTML). Zaglavlje `X-Content-Type-Options: nosniff` (Django `SecurityMiddleware`) dodatno sprječava da preglednik datoteku protumači kao drugu vrstu.
+Lokalno se datoteke poslužuju s istog origina kao aplikacija, a na Renderu s javne adrese spremnika, pa se ne smiju dopuštati vrste koje preglednik može izvršiti (npr. SVG ili HTML). Kad ih poslužuje Django, zaglavlje `X-Content-Type-Options: nosniff` (Django `SecurityMiddleware`) dodatno sprječava da preglednik datoteku protumači kao drugu vrstu; spremnik vraća vrstu sadržaja zapisanu pri učitavanju.
 
 ## Google OAuth prijava
 
@@ -380,6 +420,7 @@ Cijela konfiguracija nalazi se u `render.yaml` (Render Blueprint) u korijenu rep
 | `PYTHON_VERSION`, `NODE_VERSION` | `render.yaml`, iste verzije kao u `backend/Dockerfile` i CI-ju. |
 | `GOOGLE_CLIENT_ID` | `render.yaml`, ID produkcijskog klijenta `ChartIt Web Client`. Nije tajna. |
 | `GOOGLE_CLIENT_SECRET` | Upisuje se ručno u Render > `chartit` > Environment (`sync: false`). Render ne traži vrijednost za postojeći Blueprint, pa se nakon dodavanja u `render.yaml` mora postaviti ručno. |
+| `MEDIA_S3_BUCKET`, `MEDIA_S3_ENDPOINT_URL`, `MEDIA_S3_PUBLIC_URL`, `MEDIA_S3_ACCESS_KEY_ID`, `MEDIA_S3_SECRET_ACCESS_KEY` | Upisuju se ručno (`sync: false`) prema odjeljku [Postavljanje spremnika](#postavljanje-spremnika-cloudflare-r2). Ključevi su tajne; ostale tri vrijednosti nisu, ali su na istom mjestu kao i ključevi. Dok `MEDIA_S3_BUCKET` nije postavljen, fotografije se spremaju na disk servisa i gube se. |
 
 `DJANGO_DEBUG` nije postavljen, pa je `False`, a time su uključeni i preusmjeravanje na HTTPS, sigurni kolačići i HSTS. Render prekida TLS i prosljeđuje zahtjeve sa zaglavljem `X-Forwarded-Proto`, kao i Azure. `/api/health/` izuzet je od preusmjeravanja (`SECURE_REDIRECT_EXEMPT`), jer bi preusmjeravanje Render smatrao uspješnim odgovorom bez provjere baze.
 
@@ -398,7 +439,7 @@ Vanjski URL sadrži lozinku baze, pa se ne sprema u `.env`, commit ni poruku. Po
 
 - Servis se nakon razdoblja bez prometa gasi, pa prvi sljedeći zahtjev čeka da se ponovno pokrene.
 - Baza istječe 30 dana nakon stvaranja (uz 14 dana odgode, nakon čega se briše). Prije isteka podatke treba prebaciti u novu bazu.
-- Servis nema trajni disk: učitane datoteke (fotografije plovila) u `backend/media` gube se pri svakom postavljanju, ponovnom pokretanju i gašenju.
+- Servis nema trajni disk: sve što se zapiše u `backend/` gubi se pri svakom postavljanju, ponovnom pokretanju i gašenju. Zato se fotografije plovila spremaju u spremnik Cloudflare R2 (odjeljak [Medijske datoteke](#medijske-datoteke-fotografije-plovila)), a ne na disk servisa.
 
 ## Kontinuirana integracija (CI)
 
