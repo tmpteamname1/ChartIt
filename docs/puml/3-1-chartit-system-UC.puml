@@ -1,5 +1,5 @@
 @startuml
-title Sustav ChartIt – slučajevi uporabe
+title Sustav ChartIt – obrasci uporabe
 left to right direction
 
 skinparam shadowing false
@@ -22,17 +22,16 @@ skinparam usecase {
 ' Primarni akteri (uloge, ne stanja)
 ' ==============================================================================
 actor Visitor as "Posjetitelj"
-actor User as "Korisnik aplikacije"
 actor Customer as "Korisnik"
 actor Staff as "Djelatnik"
 actor Owner as "Vlasnik"
 actor Admin as "Administrator"
 
-' Sve uloge su specijalizacije korisnika aplikacije, a on je specijalizacija
-' posjetitelja, pa nasljeđuju pretragu, detalje plovila i prijavu.
+' Sve uloge nasljeđuju posjetitelja (pretraga, detalji plovila i prijava).
+' Vlasnik nasljeđuje djelatnika jer može sve što može djelatnik.
 Customer -|> Visitor
 Staff -|> Visitor
-Owner -|> Visitor
+Owner -|> Staff
 Admin -|> Visitor
 
 ' Samo za raspored na dijagramu.
@@ -96,7 +95,6 @@ Staff -- UC13
 Staff -- UC05
 
 Owner -- UC04
-Owner -- UC05
 Owner -- UC09
 Owner -- UC07
 Owner -- UC08

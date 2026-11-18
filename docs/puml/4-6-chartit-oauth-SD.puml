@@ -71,7 +71,7 @@ G --> BE : Profil (e-pošta, status potvrde, ime)
 ' ==============================================================================
 ' Povezivanje računa po potvrđenoj e-pošti (F-18, AS-08)
 ' ==============================================================================
-alt E-pošta postoji i potvrđena je
+alt E-pošta postoji i potvrđena je, račun nije deaktiviran
   alt Račun s tom e-poštom već postoji
     BE -> BE : Poveži prijavu s postojećim računom\n(zadržava se uloga)
   else Račun ne postoji
@@ -80,14 +80,19 @@ alt E-pošta postoji i potvrđena je
   BE -> BE : Stvori sesiju
   BE --> Korisnik : 302 na callback_url\n+ Set-Cookie: sessionid (HttpOnly)
   Korisnik -> FE : Učitaj stranicu
-  FE -> BE : GET /_allauth/browser/v1/auth/session\n(s kolačićem)
-  BE --> FE : 200 + korisnik (uloga)
+  FE -> BE : GET /api/auth/me/\n(s kolačićem)
+  BE --> FE : 200 + korisnik (ime, e-pošta, uloga)
   FE -> Korisnik : Prikaz prijavljenog stanja
 else E-pošta nedostaje ili nije potvrđena
   BE -> BE : SocialAccountAdapter odbija prijavu
-  BE --> Korisnik : 302 na callback_url?error=...
-  Korisnik -> FE : Učitaj callback_url
-  FE -> Korisnik : Poruka o neuspjeloj prijavi na /prijava
+  BE --> Korisnik : 302 na /prijava?greska=prijava_nije_uspjela
+  Korisnik -> FE : Učitaj /prijava
+  FE -> Korisnik : Poruka o neuspjeloj prijavi
+else Račun s tom e-poštom je deaktiviran
+  BE -> BE : SocialAccountAdapter odbija prijavu
+  BE --> Korisnik : 302 na /prijava?greska=racun_deaktiviran
+  Korisnik -> FE : Učitaj /prijava
+  FE -> Korisnik : Poruka da je račun deaktiviran
 end
 
 ' ==============================================================================

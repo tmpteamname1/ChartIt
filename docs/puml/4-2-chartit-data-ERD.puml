@@ -34,18 +34,20 @@ skinparam entity {
 
 ' Jedna tablica pokriva sve uloge. Djelatnik i vlasnik pripadaju točno jednoj
 ' tvrtki, a korisnik i administrator nemaju tvrtku (company_id je prazan).
-' Svaka tvrtka ima najviše jednog aktivnog vlasnika (jedinstveno ograničenje).
+' Svaka tvrtka ima najviše jednog aktivnog vlasnika (planirano uz UC-14).
+' Veza s Google računom pohranjuje se u tablici biblioteke django-allauth
+' (SocialAccount) i nije prikazana.
 entity "Korisnik" as User {
     * user_id : ID <<PK>>
     --
     company_id : ID <<FK>>
+    username : text
     email : text
-    display_name : text
-    phone : text
+    first_name : text
+    last_name : text
     role : enum
-    oauth_subject : text
     is_active : boolean
-    created_at : datetime
+    date_joined : datetime
 }
 
 entity "Charter tvrtka" as Company {
@@ -102,7 +104,8 @@ entity "Fotografija plovila" as Photo {
     * photo_id : ID <<PK>>
     --
     * vessel_id : ID <<FK>>
-    url : text
+    image : file
+    thumbnail : file
     sort_order : integer
 }
 
