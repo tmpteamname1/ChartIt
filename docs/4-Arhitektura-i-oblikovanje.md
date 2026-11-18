@@ -19,22 +19,26 @@
 **Slika 4.1. Dijagram komponenata sustava ChartIt**
 
 **PlantUML izvor:** [izvor](./puml/4-1-chartit-system-CMP.puml)
+
+Poslužiteljske komponente ostvaruju se kao Django aplikacije: `accounts` (autentifikacija, korisnici i kontrola pristupa), `companies` (tvrtke), `fleet` (flota, kategorije i luke) i `reservations` (rezervacije), uz zajednički kod API-ja u `config`. Usluge obavijesti, statistike i vremenske prognoze dodat će se kao zasebne aplikacije kada se budu ostvarivale (ADR-01). Klijentski dijelovi su skupine ruta React aplikacije (4.8), a svi pozivi API-ja nalaze se u modulima `frontend/src/api/`.
+
 | Komponenta | Odgovornost | Razlog za ovu granicu |
 | --- | --- | --- |
 | Web klijent | Krovna komponenta za interakciju s korisnikom aplikacije bez poslovne logike F-17, NF-03 | Korisnička interakcija odvojena je od poslovnih pravila najma i trajne pohrane. |
 | Panel tvrtke (djelatnik, vlasnik)| Služi pregledu flote, rezervacija, preuzimanja, djelatnika i statistike. F-08, F-11, F-13, F-14, F-15, F-21, NF-02| Poslovanje pojedine tvrtke odvojeno je od korisničkog i administratorskog sučelja platforme. |
-| Korisnički dio (rezervacije korisnika) | Pregled plovila, zahtjevanje, otkazivanje i pregled rezervacija. | Radnje korisnika nad vlastitim rezervacijama odvojene su od upravljanja ponudom tvrtke. |
-| Javni dio (pretraga i detalji plovila)| Pregled plovila, detalji i pregled slobodnih tremina | Sadržaj dostupan bez prijave odvojen je od funkcionalnosti koje zahtijevaju autentifikaciju. |
-| Administracija platforme | Pregled i editiranje tvrtki, vlasnika, kategorija i luka | Upravljanje platformom kao cjelinom odvojeno je od poslovanja pojedinih tvrtki. |
+| Korisnički dio (rezervacije korisnika) | Slanje zahtjeva za rezervaciju, pregled i otkazivanje vlastitih rezervacija. F-03, F-06, F-12 | Radnje korisnika nad vlastitim rezervacijama odvojene su od upravljanja ponudom tvrtke. |
+| Javni dio (pretraga i detalji plovila)| Pretraga plovila, detalji i pregled slobodnih termina. F-01, F-02 | Sadržaj dostupan bez prijave odvojen je od funkcionalnosti koje zahtijevaju autentifikaciju. |
+| Administracija platforme | Pregled i izmjena tvrtki, vlasnika, korisnika, kategorija i luka. F-19, F-22, F-23 | Upravljanje platformom kao cjelinom odvojeno je od poslovanja pojedinih tvrtki. |
 | REST API | Prima zahtjeve od web-klijenta i odgovara na njih. | Odgovornosti izložene putem HTTP-a odvojene su od poslovne logike pojedinih domena. |
 | Usluga vremenske prognoze | Komunicira s vanjskom uslugom za vremenske prognoze. F-16, NF-06| Komunikacija s vanjskim API-jem za prognozu odvojena je od ostatka sustava, uz mogućnost privremene pohrane i obrade nedostupnosti. |
-| Upravljanje tvrtkama | Komponenta preko koje se upravlja tvrtkama i djelatnicima (stvaranje, editiranje, brisanje). F-19, F-20, F-21| Podaci o tvrtkama i njihovim djelatnicima odvojeni su od ponude plovila koju tvrtke nude. |
+| Upravljanje tvrtkama | Komponenta preko koje se upravlja tvrtkama i djelatnicima (stvaranje, izmjena, deaktivacija). F-19, F-20, F-21| Podaci o tvrtkama i njihovim djelatnicima odvojeni su od ponude plovila koju tvrtke nude. |
 | Statistika i izvještaj | Komponenta preko koje se računa, prikazuje i izvozi statistika. F-15| Agregacija i izvoz podataka odvojeni su od operativne obrade rezervacija. |
-| Autentifikacija i korisnici | Komponenta koja je u komunikaciji s OAuth poslužiteljem. Prijava i stvaranje korisnika. | Identitet i uloge korisnika odvojeni su od komunikacije s vanjskim OAuth pružateljem i od poslovnih podataka. |
+| Autentifikacija i korisnici | Komponenta koja je u komunikaciji s OAuth poslužiteljem. Prijava, odjava i stvaranje korisnika (django-allauth, ADR-06). F-18 | Identitet i uloge korisnika odvojeni su od komunikacije s vanjskim OAuth pružateljem i od poslovnih podataka. |
 | Usluga rezervacija | Komponenta za stvaranje zahtjeva za rezervacije. Također vraća informacije o rezervacijama. F-03, F-04, F-05, F-06, F-11, F-12, F-13, F-14 | Pravila zauzetosti, izračuna cijene i promjena statusa rezervacije odvojena su od održavanja ponude. |
-| Kontrola pristupa  | Kompnenta za provjeru uloge i pripadnosti tvrtki. F-22, NF-02| Provjera uloga i pripadnosti tvrtki izdvojena je kako bi se jednako primjenjivala na sve zahtjeve. |
+| Kontrola pristupa  | Komponenta za provjeru uloge i pripadnosti tvrtki. F-22, NF-02| Provjera uloga i pripadnosti tvrtki izdvojena je kako bi se jednako primjenjivala na sve zahtjeve. |
 | Upravljanje flotom | Plovila, cijene usluga, fotografije, razdoblja zauzetosti. F-01, F-02, F-08, F-09, F-10, F-23| Ponuda plovila, cijena, dodatnih usluga i razdoblja nedostupnosti odvojena je od procesa rezerviranja. |
-| Usluga obavjesti | Komunikacija s vanjskim servisom za slanje elektroničke pošte. F-07| Slanje e-pošte odvojeno je od obrade rezervacija kako zastoj vanjskog poslužitelja ne bi utjecao na rezervaciju. |
+| Usluga obavijesti | Komunikacija s vanjskim servisom za slanje elektroničke pošte. F-07| Slanje e-pošte odvojeno je od obrade rezervacija kako zastoj vanjskog poslužitelja ne bi utjecao na rezervaciju. |
+| Django admin (alat tima) | Ugrađeno Django sučelje za pregled i ispravak podataka u bazi, dostupno na `/admin/` samo računima osoblja (`is_staff`, stvaraju se naredbom `createsuperuser`). Nije uloga u aplikaciji i nije dio korisničkog sučelja. Dok ekrani administracije platforme ne postoje, tim kroz njega unosi tvrtke, kategorije i luke. | Održavanje podataka odvojeno je od administracije platforme, koja se obavlja u React aplikaciji uz ulogu ADMINISTRATOR (poglavlje 6). |
 
 
 ## 4.3 Model podataka i oblikovanje razreda
@@ -49,12 +53,14 @@
 **Napomene za dijagram:**
 1. Jedna tablica Korisnik pokriva sve uloge. Djelatnik i vlasnik pripadaju točno jednoj
 tvrtki, a korisnik i administrator nemaju tvrtku (company_id je prazan).
-Svaka tvrtka ima najviše jednog aktivnog vlasnika (jedinstveno ograničenje).
+Pravilo da tvrtka ima najviše jednog aktivnog vlasnika planirano je uz dodjelu vlasnika (UC-14). Veza korisnika s Google računom pohranjuje se u tablici biblioteke django-allauth i nije prikazana.
 2. Tvrtka rezervacije određena je plovilom pa se ne pohranjuje zasebno.
 Dnevna cijena i ukupni iznos pohranjuju se u trenutku podnošenja zahtjeva
 kako kasnije promjene cijena ne bi mijenjale postojeće rezervacije.
 Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 3. Katalog dodatnih usluga definira se na razini tvrtke i vrijedi za sva njezina plovila; cijena je fiksna po najmu.
+4. Kategorije i luke se ne deaktiviraju: administrator ih dodaje i mijenja, a kategorija ili luka koju koristi neko plovilo ne može se obrisati (`on_delete=PROTECT`).
+5. Korisnik, tvrtka, kategorija, luka, plovilo i fotografija ostvareni su kao Django modeli; razdoblje nedostupnosti, dodatna usluga, rezervacija i odabrana usluga oblikovani su, ali još nisu ostvareni.
 
 ### 4.3.2 Reprezentativni UML dijagram razreda
 
@@ -62,6 +68,8 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 **Slika 4.3. Dijagram razreda za obradu rezervacija**
 
 **PlantUML izvor:** [izvor](./puml/4-3-chartit-domain-CD.puml)
+
+Dijagram oblikuje obradu rezervacija prije njezine implementacije. Poslovna pravila (provjera razdoblja, kapaciteta i pripadnosti usluga tvrtki te prijelazi statusa) nalaze se u domenskom razredu rezervacije, a servis rezervacija ih poziva unutar transakcije i preko sučelja dobiva pohranu, katalog flote i slanje obavijesti, pa se pravila mogu ispitati bez HTTP-a i baze (4.6).
 
 ## 4.4 Ponašanje tijekom izvođenja
 
@@ -71,17 +79,23 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 
 **PlantUML izvor:** [izvor](./puml/4-4-chartit-reservation-request-SD.puml)
 
+Dijagram prikazuje podnošenje zahtjeva za rezervaciju (UC-02) i alternativu u kojoj je termin u međuvremenu zauzet: provjera preklapanja i spremanje izvode se u istoj transakciji, a povreda ograničenja u bazi vraća se kao 409 Conflict (ADR-03). Ponašanje je oblikovano; ostvaruje se s rezervacijama.
+
 ### 4.4.2 Reprezentativni UML dijagram stanja
 ![Reprezentativni dijagram stanja podnošenja zahtjeva](./assets/diagrams/4-5-chartit-reservation-SM.svg)<br>
 **Slika 4.5 Dijagram stanja za podnošenje zahtjeva za rezervaciju**
 
 **PlantUML izvor:** [izvor](./puml/4-5-chartit-reservation-SM.puml)
 
+Dijagram prikazuje statuse rezervacije iz F-05 i događaje koji ih mijenjaju. Termin je zauzet u statusima „zahtjev” i „potvrđena”, a oslobađa se odbijanjem ili otkazivanjem (AS-02). Radnje koje dijagram pripisuje djelatniku može izvesti i vlasnik tvrtke (F-11).
+
 ### 4.4.3 Sekvencijski dijagram prijave putem OAuth pružatelja
 ![Sekvencijski dijagram prijave putem OAuth pružatelja](./assets/diagrams/4-6-chartit-oauth-SD.svg)<br>
 **Slika 4.6 Sekvencijski dijagram prijave putem vanjskog OAuth pružatelja**
 
 **PlantUML izvor:** [izvor](./puml/4-6-chartit-oauth-SD.puml)
+
+Dijagram prikazuje ostvarenu prijavu Google računom (UC-10): React pokreće prijavu, django-allauth provodi OAuth tok s Googleom, stvara ili povezuje korisnika i postavlja sesiju, a React zatim stanje prijave čita iz `/api/auth/me/`. Neuspješna prijava vraća korisnika na `/prijava` s kodom greške (4.8).
 
 ## 4.5 Zapisi arhitekturnih odluka
 
@@ -91,7 +105,7 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 | Kontekst i cilj | Tim od sedam članova tijekom jednog semestra mora izraditi i javno postaviti platformu za najam plovila više charter tvrtki, s javnim dijelom, korisničkim dijelom, panelom tvrtke i administracijom. Polovica tima radi na poslužitelju, a polovica na klijentu. |
 | Kriteriji odluke | Tim može izraditi, integrirati, postaviti i objasniti rješenje; poslužiteljski i klijentski dio mogu se razvijati usporedno; komponente zadržavaju prepoznatljive odgovornosti; sučelje je prilagodljivo različitim uređajima (NF-03). |
 | Razmatrane alternative | Jedan Django sustav s predlošcima: jednostavno postavljanje, ali frontend tim ne može raditi neovisno, a interaktivni dijelovi (kalendar, karta, filtri) teže se izrađuju. Jedan Django sustav s REST API-jem i zasebnom React aplikacijom: jasna podjela rada uz jedno ugovoreno sučelje. Zasebne usluge (npr. rezervacije, flota, obavijesti): neovisno postavljanje, ali znatno više rada na integraciji, postavljanju i dosljednosti podataka. |
-| Odluka i obrazloženje | Odabrati jedan Django sustav s REST API-jem (DRF), podijeljen na aplikacije prema odgovornostima (accounts, companies, fleet, reservations, notifications, reports, weather), i zasebnu React aplikaciju. Time timovi rade usporedno, a postavljanje ostaje jednostavno, uz prihvaćanje da kvar poslužitelja istodobno zaustavlja sve funkcionalnosti te da se API mora unaprijed dogovoriti i održavati. |
+| Odluka i obrazloženje | Odabrati jedan Django sustav s REST API-jem (DRF), podijeljen na aplikacije prema odgovornostima (accounts, companies, fleet i reservations, a kasnije i aplikacije za obavijesti, izvještaje i vremensku prognozu), i zasebnu React aplikaciju. Time timovi rade usporedno, a postavljanje ostaje jednostavno, uz prihvaćanje da kvar poslužitelja istodobno zaustavlja sve funkcionalnosti te da se API mora unaprijed dogovoriti i održavati. |
 | Status | Prihvaćeno. |
 
 ### ADR-02: Višetvrtkovnost u zajedničkoj bazi uz filtriranje po tvrtki
@@ -138,7 +152,7 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 | Kriteriji odluke | Tim može izraditi, integrirati, postaviti i objasniti rješenje; sigurnost prijave i zaštita korisničkih podataka; uklapanje u postojeću arhitekturu (ADR-01) i raspored domena na kojem se aplikacija postavlja; količina koda koji tim mora sam napisati i održavati; dostupnost krajnjim korisnicima i zrelost rješenja (dokumentacija, održavanje). |
 | Razmatrane alternative | Pružatelj. Google: najširi doseg i vraća potvrđenu adresu e-pošte, pa je povezivanje po e-pošti sigurno. GitHub: jednostavan za tim, ali netipičan za krajnje korisnike, a e-pošta nije uvijek dostupna ni potvrđena. Biblioteka. django-allauth (headless): namijenjen SPA aplikacijama i sam rješava OAuth tok, povezivanje računa i stvaranje korisnika, ali je opsežniji od nužnog. social-auth-app-django: zreo, ali bez headless API-ja, pa bi se REST sloj za React pisao ručno. dj-rest-auth: za društvenu prijavu ionako koristi allauth, a usmjeren je na tokene. Održavanje prijave. Django sesija (HttpOnly kolačić uz CSRF zaštitu): JavaScript ne čita kolačić, odjava je trenutna, Django to podržava izravno, ali traži same-site klijent i poslužitelj. JWT: radi i na različitim domenama, ali treba riješiti pohranu, osvježavanje i opoziv tokena. |
 | Odluka i obrazloženje | Odabrati Google kao pružatelja, django-allauth u headless načinu i Django sesiju s HttpOnly kolačićem i CSRF zaštitom. Povezivanje po e-pošti uključuje se postavkama `SOCIALACCOUNT_EMAIL_AUTHENTICATION` i `SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT` i vrijedi samo za potvrđenu adresu. Odbijanje prijave bez adrese ili s nepotvrđenom adresom nije zadano ponašanje allautha (u headless načinu vodi u `provider_signup` ili stvara račun s nepotvrđenom adresom), pa se piše vlastiti `SocialAccountAdapter` koji takvu prijavu odbija; React tada na `/prijava` prikazuje poruku o neuspjeloj prijavi (tok u 4.4.3). Od headless API-ja koristi se samo pokretanje prijave kod pružatelja (`/_allauth/browser/v1/auth/provider/redirect`). Lokalna registracija, prijava lozinkom i ostali lokalni endpointi allautha zatvoreni su: `AccountAdapter.is_open_for_signup` vraća `False`, a sve ostale putanje `/_allauth/` odgovaraju s 404 (`config/urls.py`). Tako se račun stvara isključivo preko pružatelja (F-18), a nitko ne može lokalnom registracijom zauzeti tuđu adresu e-pošte. Deaktiviran korisnik ne može se prijaviti ni kad se Google račun povezuje s njim po e-pošti. Klijent i poslužitelj su na istom originu jer Django poslužuje React (ADR-01, poglavlje 6), pa je uvjet same-site ispunjen. Prihvaća se ovisnost o Googleu kao jedinom pružatelju na početku, veći opseg biblioteke od nužnog, vlastiti kod adaptera i to da povezivanje po e-pošti vrijedi samo dok pružatelj jamči potvrđenu adresu. |
-| Status | Prijedlog. |
+| Status | Prihvaćeno i ostvareno (#44, #47, #48). |
 
 ## 4.6 Zajednička pravila oblikovanja (engl. Cross-cutting concerns)
 
@@ -148,17 +162,18 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 | Sigurnost | Autorizacija prema ulogama | Ovlasti korisnika, djelatnika, vlasnika i administratora provjeravaju se na poslužiteljskoj strani prije svake radnje; skrivanje gumba u korisničkom sučelju nije dovoljna zaštita. | DRF klase dopuštenja (npr. IsCompanyEmployee, IsCompanyOwner, IsPlatformAdmin) na svim pogledima; provjere u ReservationService. |
 | Sigurnost | Izolacija podataka tvrtki | Podaci tvrtke uvijek se filtriraju prema tvrtki prijavljenog korisnika, a ne prema identifikatoru iz URL-a ili tijela zahtjeva; zahtjev za objekt druge tvrtke vraća 404 Not Found | Zajednički bazni razred pogleda koji ograničava get_queryset() na request.user.company; svi pogledi panela tvrtke; automatizirani testovi s identifikatorima druge tvrtke (NF-02). |
 | Sigurnost	| Zaštita komunikacije i tajni | Sva komunikacija ide putem HTTPS-a, veza s bazom je zaštićena, a ključevi, lozinke i tajne OAuth-a čitaju se iz varijabli okruženja i ne pohranjuju se u repozitorij. | Django postavke (SECURE_SSL_REDIRECT, DATABASES), konfiguracija postavljanja, datoteka .env izvan repozitorija (NF-04).
+| Sigurnost | Pristup Django adminu | Django admin (`/admin/`) dostupan je samo računima osoblja (`is_staff`). To nije uloga u aplikaciji: uloga ADMINISTRATOR ne daje pristup Django adminu, a račun osoblja ne daje ulogu ADMINISTRATOR. Administracija platforme obavlja se u React aplikaciji. | Naredbe `createsuperuser` i `promote_admin` (poglavlje 6); Django admin samo za održavanje podataka. |
 | Validacija podataka | Dvorazinska validacija | Klijent provjerava unos radi boljeg korisničkog iskustva, ali je provjera na poslužitelju jedina mjerodavna: serijalizatori provjeravaju oblik podataka, a domenski razredi poslovna pravila (kapacitet, datumi, pripadnost usluga tvrtki). | React obrasci; DRF serijalizatori; Reservation.request() i RentalPeriod.
-| Integritet podataka | Transakcije i ograničenja u bazi | Radnje koje mijenjaju više zapisa izvode se u jednoj transakciji; pravila koja se moraju poštovati i pri istodobnom radu provode se ograničenjima u bazi. | transaction.atomic u metodama ReservationService; ograničenje isključivanja za rezervacije, jedinstveni vlasnik po tvrtki (ADR-03).
+| Integritet podataka | Transakcije i ograničenja u bazi | Radnje koje mijenjaju više zapisa izvode se u jednoj transakciji; pravila koja se moraju poštovati i pri istodobnom radu provode se ograničenjima u bazi. | transaction.atomic u metodama ReservationService; ograničenje isključivanja za rezervacije (ADR-03); ograničenja u modelima (npr. tvrtka prema ulozi korisnika, cijena i kapacitet plovila), koja se provjeravaju i u serijalizatorima kako bi neispravan unos vratio 400, a ne 500.
 | Integritet podataka | Upravljanje stanjem rezervacije	| Status rezervacije mijenja se isključivo metodama domenskog razreda pozvanima iz servisa; pogledi i serijalizatori ne postavljaju status izravno. | Reservation.confirm(), reject(), cancel(), recordPickup(), recordReturn(); status samo za čitanje u serijalizatorima.
-| Integritet podataka | Deaktivacija umjesto brisanja | Tvrtke, plovila, usluge i korisnici se deaktiviraju, a ne brišu, kako bi povijest rezervacija i statistika ostale potpune. | Polje is_active i filtriranje aktivnih zapisa u javnoj pretrazi; strani ključevi s on_delete=PROTECT (F-15, UC-15).
-| Obrada pogrešaka | Jedinstveno preslikavanje iznimki u HTTP odgovore | Domenske iznimke preslikavaju se na jednom mjestu u odgovarajuće statuse (400, 401, 403, 404, 409, 500) i jedinstveni JSON oblik s kodom, porukom i pogreškama po poljima; korisniku se ne prikazuju tehnički detalji. | Prilagođeni DRF exception handler; zajednički modul klijenta za obradu odgovora i prikaz poruka.
+| Integritet podataka | Deaktivacija umjesto brisanja | Tvrtke, plovila, usluge i korisnici se deaktiviraju, a ne brišu, kako bi povijest rezervacija i statistika ostale potpune. Kategorije i luke se ne deaktiviraju, ali se ne mogu obrisati dok ih koristi neko plovilo. | Polje is_active i filtriranje aktivnih zapisa u javnoj pretrazi; strani ključevi s on_delete=PROTECT (F-15, UC-15).
+| Obrada pogrešaka | Jedinstveno preslikavanje iznimki u HTTP odgovore | Domenske iznimke preslikavaju se na jednom mjestu u odgovarajuće statuse (400, 401, 403, 404, 409, 500) i jedinstveni JSON oblik s kodom, porukom i pogreškama po poljima; korisniku se ne prikazuju tehnički detalji. | Prilagođeni DRF exception handler (`config.api.exception_handler`, format u 4.9); zajednički modul klijenta za obradu odgovora i prikaz poruka.
 | Integracija vanjskih servisa | Ograničeno čekanje i postupna degradacija | Pozivi vremenske prognoze i kartografskih pločica imaju vremensko ograničenje; nedostupnost servisa prikazuje se kao obavijest, a ostatak stranice radi normalno. | weather aplikacija (timeout, privremena pohrana); komponente karte i prognoze u Reactu (NF-06, ADR-05).
 | Obavijesti | Slanje nakon potvrde transakcije	| E-pošta se šalje tek nakon uspješne pohrane promjene; neuspjeh slanja se bilježi, ali ne poništava rezervaciju. | transaction.on_commit u ReservationService; implementacija sučelja ReservationNotifier.
 | Upravljanje ovisnostima | Injektiranje ovisnosti | Servis koji provodi poslovnu logiku ne stvara sam konkretne implementacije pohrane i slanja e-pošte, nego ih prima izvana, pa se u testovima mogu zamijeniti | ReservationService prima implementacije sučelja ReservationRepository, FleetCatalog i ReservationNotifier.
 | Novčani iznosi | Decimalni zapis cijena | Cijene i iznosi pohranjuju se i računaju kao decimalni brojevi s dvije decimale u eurima, nikad kao brojevi s pomičnim zarezom; ukupni iznos računa poslužitelj. | DecimalField u modelima; Reservation.totalPrice(); serijalizatori vraćaju iznose kao tekst (ADR-04).
 | Datumi i vrijeme | Jedinstvena pravila vremenskih zona | Razdoblje najma pohranjuje se kao datumi bez vremena, a trenuci događaja (podnošenje, preuzimanje, povrat) kao vrijeme u UTC-u; prikaz korisniku je u vremenskoj zoni Europe/Zagreb. | USE_TZ = True; RentalPeriod; formatiranje datuma u zajedničkom modulu klijenta.
-| Odzivnost	| Indikatori učitavanja i straničenje | Svaki zahtjev prema poslužitelju prikazuje indikator učitavanja, a popisi (pretraga, rezervacije, plovila) dohvaćaju se po stranicama. | Zajednički React hook za dohvat podataka; DRF zadano straničenje (NF-05).
+| Odzivnost	| Indikatori učitavanja i straničenje | Svaki zahtjev prema poslužitelju prikazuje indikator učitavanja, a popisi (pretraga, rezervacije, plovila) dohvaćaju se po stranicama. | TanStack Query za dohvat podataka i stanja učitavanja; zajednička stanja sučelja (`docs/dizajn/58-Zajednicka-stanja-sucelja.md`); DRF zadano straničenje (`config.api.DefaultPagination`, NF-05).
 
 ## 4.7 Arhitekturni rizici i tehnički dug
 
@@ -170,11 +185,12 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 | Izolacija podataka tvrtki ovisi o filtriranju u aplikaciji, a ne o razdvajanju u bazi (ADR-02). | Pogled u kojem je filtriranje izostavljeno mogao bi otkriti ili omogućiti izmjenu podataka druge tvrtke. | Svi pogledi panela tvrtke nasljeđuju zajednički bazni razred koji ograničava upite na tvrtku korisnika; automatizirani testovi izravno pozivaju API s identifikatorima druge tvrtke (NF-02); pregled koda pri svakom spajanju. |
 | Ograničenje u bazi sprječava preklapanje samo među rezervacijama, ne i s razdobljima nedostupnosti (ADR-03). | Vlasnik koji unosi nedostupnost i korisnik koji istodobno šalje zahtjev mogli bi stvoriti preklapanje. | Unos nedostupnosti i stvaranje rezervacije zaključavaju redak plovila (select_for_update) i provjeravaju preklapanje u istoj transakciji; vjerojatnost je mala, pa se dodatno ograničenje u bazi ne uvodi. |
 | Oslanjanje na mogućnosti specifične za PostgreSQL (rasponi datuma, proširenje btree_gist). | Rješenje se ne može izvoditi na SQLite-u, a razlika okruženja može sakriti pogreške. | Svi članovi tima i testovi koriste PostgreSQL u Dockeru; SQLite se ne koristi ni lokalno. |
-| Fotografije plovila pohranjuju se u datotečni sustav poslužitelja. | Pri ponovnom postavljanju ili zamjeni kontejnera fotografije se mogu izgubiti. | Mapa za medije montira se kao trajni volumen; prijelaz na S3 kompatibilnu pohranu ostavljen je kao mogući sljedeći korak. |
+| Fotografije plovila pohranjuju se u datotečni sustav poslužitelja, a besplatni plan Rendera nema trajni disk. | Na javnoj instanci učitane fotografije gube se pri svakom postavljanju, ponovnom pokretanju i gašenju servisa, pa pretraga prikazuje neispravne slike. | Lokalno se fotografije čuvaju u `backend/media`. Za produkciju je planiran prijelaz na S3 kompatibilnu pohranu objekata, uz promjenu samo postavke `STORAGES` ([#131](https://github.com/tmpteamname1/ChartIt/issues/131)). |
+| Besplatni plan Rendera (poglavlje 6). | Servis se gasi nakon razdoblja bez prometa, pa prvi zahtjev čeka ponovno pokretanje; besplatna baza istječe 30 dana nakon stvaranja. | Prihvaćeno za opseg projekta. Prije isteka baze podaci se prenose u novu bazu; ograničenja su navedena u README-u i poglavlju 6. |
 | E-pošta se šalje iz poslužiteljske aplikacije bez zasebnog pozadinskog procesa i ponovnih pokušaja. | Sporiji odgovor pri potvrdi ili odbijanju zahtjeva; obavijest se gubi ako poslužitelj e-pošte nije dostupan. | Prihvaćeni tehnički dug. Slanje se izvodi nakon potvrde transakcije, neuspjeh se bilježi u dnevnik, a status rezervacije uvijek je vidljiv u aplikaciji, pa obavijest nije jedini izvor informacije. |
-| Ugovor API-ja između poslužiteljskog i klijentskog tima može se razići tijekom usporednog razvoja. | Klijent šalje ili očekuje podatke drugačijeg oblika, a pogreške se otkrivaju tek pri integraciji. | Shema API-ja generira se iz koda (OpenAPI, npr. drf-spectacular) i služi kao zajednička dokumentacija; promjene sučelja najavljuju se u zahtjevu za spajanje. |
-| Tim nema iskustva s Djangom i DRF-om. | Različiti dijelovi koda mogu slijediti različite obrasce, a poslovna pravila mogu završiti u pogledima i serijalizatorima. | Aplikacija reservations izrađuje se prva kao referentni primjer slojeva (pogled, servis, domena); pravila iz poglavlja o zajedničkim pravilima oblikovanja provjeravaju se pri pregledu koda. |
-| Prijava ovisi isključivo o vanjskom OAuth pružatelju. | Testiranje različitih uloga zahtijeva više stvarnih računa, a nedostupnost pružatelja onemogućuje prijavu. | U lokalnom razvoju omogućena je prijava testnih korisnika bez OAuth-a (zastavica ENABLE_TEST_LOGIN). Na javnoj instanci je isključena, osim po potrebi za demonstraciju, i tada samo za unaprijed pripremljene demo račune zaštićene lozinkom. Nedostupnost pružatelja prihvaćena je kao rizik. |
+| Ugovor API-ja između poslužiteljskog i klijentskog tima može se razići tijekom usporednog razvoja. | Klijent šalje ili očekuje podatke drugačijeg oblika, a pogreške se otkrivaju tek pri integraciji. | Shema API-ja generira se iz koda (OpenAPI, drf-spectacular) i dostupna je kao Swagger UI na `/api/docs/`. Frontend dok endpoint ne postoji radi s lažnim podacima točnog oblika iz zadatka, a promjene oblika odgovora najavljuju se u zahtjevu za spajanje (4.9). |
+| Tim nema iskustva s Djangom i DRF-om. | Različiti dijelovi koda mogu slijediti različite obrasce, a poslovna pravila mogu završiti u pogledima i serijalizatorima. | Zajednička pravila (4.6) i konvencije API-ja (4.9) zapisani su prije implementacije i provjeravaju se pri pregledu koda; zajednički bazni razred pogleda panela tvrtke (#101) i klase dopuštenja (`accounts/permissions.py`) nasljeđuju se umjesto ponovnog pisanja. |
+| Prijava ovisi isključivo o vanjskom OAuth pružatelju. | Testiranje različitih uloga zahtijeva više stvarnih računa, a nedostupnost pružatelja onemogućuje prijavu. | U lokalnom razvoju omogućena je prijava testnih korisnika bez OAuth-a (zastavica ENABLE_TEST_LOGIN). Na javnoj instanci zastavica se ne uključuje; testni korisnici nemaju lozinku i ne mogu se prijaviti drugim putem. Nedostupnost pružatelja prihvaćena je kao rizik. |
 
 **Poslovni ili domenski rizici**
 
@@ -186,8 +202,6 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 | Vremenska prognoza može se shvatiti kao jamstvo. | Korisnik planira najam za nekoliko mjeseci na temelju prognoze koja je pouzdana samo nekoliko dana unaprijed. | Prognoza se prikazuje samo za dane unutar raspona pružatelja, uz oznaku da je informativna; za dalje datume prikazuje se poruka da prognoza još nije dostupna. |
 | Procijenjeni iznos u pregledniku razlikuje se od konačnog. | Korisnik može očekivati iznos koji nije zapisan u rezervaciji, npr. ako je vlasnik u međuvremenu promijenio cijenu. | Mjerodavan je iznos koji izračuna poslužitelj (ADR-04); prikazuje se u potvrdi zahtjeva i detaljima rezervacije. | 
 ## 4.8 Mapa stranica i ruta klijentske aplikacije
-
-> Radna inačica za zadatak #52, prije pregleda s timom. Rute su ulaz za kostur React aplikacije (#61) i wireframee (#53 do #57).
 
 Za sve ekrane iz ove mape zajednički nacrti i pravila učitavanja, praznih stanja, grešaka, obavijesti i potvrdnih dijaloga definirani su u [katalogu zajedničkih stanja sučelja (#58)](dizajn/58-Zajednicka-stanja-sucelja.md). [Tablica primjene po ekranima](dizajn/58-Zajednicka-stanja-sucelja.md#primjena-po-ekranima) povezuje rute s oznakama uzoraka koje se koriste u wireframeima #53–#57.
 
@@ -237,7 +251,7 @@ Skice panela za [#55](https://github.com/tmpteamname1/ChartIt/issues/55) dostupn
 
 Ruta `/tvrtka` preusmjerava na `/tvrtka/zahtjevi`.
 
-Oznake F u tablici slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi). Prema F-11 i [UC-05](3-Obrasci-uporabe.md#uc-05-upravljanje-rezervacijama), djelatnik i vlasnik upravljaju rezervacijama vlastite tvrtke. Usklađivanje React routera i izbornika ide u zaseban zadatak.
+Oznake F u tablici slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi). Prema F-11 i [UC-05](3-Obrasci-uporabe.md#uc-05-upravljanje-rezervacijama), djelatnik i vlasnik upravljaju rezervacijama vlastite tvrtke.
 
 ### Administracija platforme
 
@@ -247,12 +261,12 @@ Oznake F u tablici slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijsk
 | Nova tvrtka | `/administracija/tvrtke/nova` | ADMINISTRATOR | UC-14 | F-19 | Obrazac tvrtke (naziv, OIB, adresa, kontakt) i dodjela vlasnika; poruka o duplikatu OIB-a. |
 | Izmjena tvrtke | `/administracija/tvrtke/:id` | ADMINISTRATOR | UC-14, UC-15 | F-19 | Izmjena podataka, promjena vlasnika, deaktivacija s brojem budućih potvrđenih rezervacija. |
 | Korisnici | `/administracija/korisnici` | ADMINISTRATOR | – | F-22 | Pretraga korisnika, promjena uloge, deaktivacija računa. |
-| Kategorije plovila | `/administracija/kategorije` | ADMINISTRATOR | – | F-23 | Popis, dodavanje, izmjena i deaktivacija kategorija. |
-| Luke | `/administracija/luke` | ADMINISTRATOR | – | F-23 | Popis, dodavanje, izmjena i deaktivacija luka, s lokacijom na karti (F-17). |
+| Kategorije plovila | `/administracija/kategorije` | ADMINISTRATOR | – | F-23 | Popis, dodavanje i izmjena kategorija. |
+| Luke | `/administracija/luke` | ADMINISTRATOR | – | F-23 | Popis, dodavanje i izmjena luka, s lokacijom na karti (F-17). |
 
 Ruta `/administracija` preusmjerava na `/administracija/tvrtke`.
 
-[Skice administracije (#56)](dizajn/56-Wireframe-administracije.svg) prikazuju popis tvrtki, obrazac tvrtke s duplikatom OIB-a, dodjelu vlasnika, deaktivaciju i ponovnu aktivaciju tvrtke, korisnike i uloge te šifrarnike kategorija i luka s potvrdom deaktivacije. Dostupan je i [izvor za uređivanje u Excalidrawu](dizajn/56-Wireframe-administracije.excalidraw). Oznake F u tablici administracije i na skicama #56 slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi).
+[Skice administracije (#56)](dizajn/56-Wireframe-administracije.svg) prikazuju popis tvrtki, obrazac tvrtke s duplikatom OIB-a, dodjelu vlasnika, deaktivaciju i ponovnu aktivaciju tvrtke, korisnike i uloge te šifrarnike kategorija i luka. Skice šifrarnika prikazuju i deaktivaciju, no tim je naknadno odlučio da se kategorije i luke ne deaktiviraju (4.3.1). Dostupan je i [izvor za uređivanje u Excalidrawu](dizajn/56-Wireframe-administracije.excalidraw). Oznake F u tablici administracije i na skicama #56 slijede [analizu zahtjeva](2-Analiza-zahtjeva.md#21-funkcijski-zahtjevi).
 
 ### Sustavne stranice
 
@@ -378,12 +392,12 @@ Karta označava matičnu luku i mjesto preuzimanja. Pri nedostupnosti karte ili 
 
 Na 320 i 375 px provjeriti filtre, prijavu s povratkom na zahtjev i očuvanim odabirom te radnje preuzimanja i povrata. Na 320 px provjeriti odabir oba datuma uz okomiti popis kao u skici 03b-320, a na 375 px u mjesečnoj mreži kao u skici 03b. Na 767 i 768 px provjeriti zamjenu hamburgera poveznicama u zaglavlju. Na 991 i 992 px provjeriti raspored kartica i obrazaca uz otvoren bočni izbornik. Stranica na tim širinama ostaje unutar prikaza, uz vodoravno pomicanje samo u predviđenim tablicama.
 
-### Otvorena pitanja za pregled s timom
+### Odluke nakon pregleda s timom
 
-1. Smiju li djelatnik, vlasnik i administrator rezervirati plovilo kao korisnici? Prijedlog: ne, korisnički dio dostupan je samo ulozi KORISNIK.
-2. F-22 (administrator upravlja korisničkim računima i ulogama) i F-21 (vlasnik upravlja djelatnicima) se preklapaju. Prijedlog: administrator mijenja uloge i deaktivira račune, a djelatnike tvrtke dodaje vlasnik.
-3. Treba li djelatniku zaseban pregled flote (F-13 „pregled osnovnih podataka o plovilu”) ili su dovoljni podaci o plovilu u detaljima rezervacije?
-4. Je li zahtjev za rezervaciju zasebna stranica ili dijalog na detaljima plovila (#54)? Prijedlog: zasebna ruta, kako bi korisnik nakon prijave mogao biti vraćen izravno na nju.
+1. Djelatnik, vlasnik i administrator ne rezerviraju plovila kao korisnici: korisnički dio dostupan je samo ulozi KORISNIK (`RequireRole` u `frontend/src/router.tsx`).
+2. Administrator mijenja uloge i deaktivira račune (F-22), a djelatnike tvrtke dodaje vlasnik upisom adrese e-pošte osobe koja se već prijavila (F-21, UC-08).
+3. Djelatnik nema zaseban pregled flote; podaci o plovilu prikazuju se u rasporedu i detaljima rezervacije (F-13).
+4. Zahtjev za rezervaciju je zasebna ruta (`/plovila/:id/rezervacija`), kako bi se korisnik nakon prijave mogao vratiti izravno na nju.
 
 ## 4.9 Konvencije REST API-ja
 

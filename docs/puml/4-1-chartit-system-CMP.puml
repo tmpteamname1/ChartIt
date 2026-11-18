@@ -62,6 +62,7 @@ rectangle "Sustav Chartit" {
     component "Usluga obavijesti" as Notify
     component "Statistika i izvještaji" as Stats
     component "Usluga vremenske prognoze" as Weather
+    component "Django admin\n(alat tima)" as DjAdmin
   }
 
   database "PostgreSQL" as DB
@@ -111,4 +112,5 @@ Companies --> DB : tvrtke i djelatnici
 Fleet --> DB : plovila, kategorije, luke
 Reservations --> DB : rezervacije i statusi
 Stats --> DB : agregacija podataka
+DjAdmin --> DB : pregled i ispravci podataka\n(samo račun osoblja)
 @enduml

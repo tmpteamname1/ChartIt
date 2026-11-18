@@ -28,7 +28,7 @@ Izvor „Odobreni zadatak” označava zahtjev iz projektnog zadatka. Izvor „O
 | F-20 | Sustav omogućuje vlasniku izmjenu podataka o svojoj tvrtki. | Srednji | Odluka tima | Vlasnik mijenja kontakt i adresu svoje tvrtke; podaci druge tvrtke nisu dostupni. |
 | F-21 | Sustav omogućuje vlasniku stvaranje, izmjenu i deaktivaciju djelatnika svoje tvrtke. | Visok | Odluka tima | Vlasnik dodaje djelatnika u svoju tvrtku i deaktivira ga; deaktivirani djelatnik više ne može pristupiti panelu tvrtke. |
 | F-22 | Sustav omogućuje administratoru upravljanje korisničkim računima i dodjelu uloga (korisnik, djelatnik, vlasnik, administrator) uz odgovarajuće ovlasti. | Srednji | Odluka tima | Administrator pregledava račune, mijenja ulogu i deaktivira račun; promjena uloge vrijedi od sljedećeg zahtjeva korisnika. |
-| F-23 | Sustav omogućuje administratoru upravljanje zajedničkim popisima kategorija plovila i luka. | Srednji | Odluka tima | Administrator dodaje i deaktivira kategorije i luke; deaktivirane vrijednosti ne nude se pri unosu novih plovila. |
+| F-23 | Sustav omogućuje administratoru upravljanje zajedničkim popisima kategorija plovila i luka. | Srednji | Odluka tima | Administrator dodaje i mijenja kategorije i luke; kategorija ili luka koju koristi neko plovilo ne može se obrisati. |
 
 ## 2.2 Nefunkcijski zahtjevi
 
