@@ -48,7 +48,8 @@ def api_not_found(request, path):
 def media(request, path):
     """Serve an uploaded file from MEDIA_ROOT (vessel photos).
 
-    WhiteNoise cannot serve files uploaded after startup. serve() rejects paths outside
+    Only used without a bucket (local development, Docker, CI); with S3 storage photo URLs
+    point to the bucket (config/storage.py). WhiteNoise cannot serve files uploaded after startup. serve() rejects paths outside
     MEDIA_ROOT, and SECURE_CONTENT_TYPE_NOSNIFF stops browsers from treating a file as another type.
     """
     return serve(request, path, document_root=settings.MEDIA_ROOT)

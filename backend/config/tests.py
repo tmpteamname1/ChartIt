@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -15,9 +15,11 @@ from django.urls import path, reverse
 from rest_framework import generics, serializers, views
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
+from storages.backends.s3 import S3Storage
 
 import config.urls
 from config.api import DefaultPagination
+from config.storage import media_storage
 from config.validators import IMAGE_VALIDATORS, MAX_IMAGE_SIZE_MB
 
 
@@ -228,6 +230,74 @@ class MediaTests(SimpleTestCase):
     def test_paths_outside_media_root_are_rejected(self):
         # serve() raises SuspiciousFileOperation, which Django answers with 400.
         self.assertEqual(self.client.get('/media/../settings.py').status_code, 400)
+
+
+S3_ENV = {
+    'MEDIA_S3_BUCKET': 'chartit-media',
+    'MEDIA_S3_ENDPOINT_URL': 'https://account.eu.r2.cloudflarestorage.com',
+    'MEDIA_S3_ACCESS_KEY_ID': 'key-id',
+    'MEDIA_S3_SECRET_ACCESS_KEY': 'secret',
+    'MEDIA_S3_PUBLIC_URL': 'https://pub-123.r2.dev/',
+}
+
+
+class MediaStorageSettingsTests(SimpleTestCase):
+    """STORAGES['default'] chosen from environment variables; no request reaches a bucket."""
+
+    def test_without_bucket_files_stay_on_local_disk(self):
+        self.assertEqual(
+            media_storage({}), {'BACKEND': 'django.core.files.storage.FileSystemStorage'}
+        )
+
+    def test_with_bucket_uses_s3_storage_with_permanent_public_urls(self):
+        config = media_storage(S3_ENV)
+
+        self.assertEqual(config['BACKEND'], 'storages.backends.s3.S3Storage')
+        self.assertEqual(
+            config['OPTIONS'],
+            {
+                'bucket_name': 'chartit-media',
+                'endpoint_url': 'https://account.eu.r2.cloudflarestorage.com',
+                'access_key': 'key-id',
+                'secret_key': 'secret',
+                'region_name': 'auto',
+                'default_acl': None,
+                'custom_domain': 'pub-123.r2.dev',
+                'querystring_auth': False,
+                'file_overwrite': False,
+            },
+        )
+
+    def test_photo_url_points_to_public_bucket_without_signature(self):
+        storage = S3Storage(**media_storage(S3_ENV)['OPTIONS'])
+
+        self.assertEqual(
+            storage.url('vessels/5/thumbs/IMG_0001.webp'),
+            'https://pub-123.r2.dev/vessels/5/thumbs/IMG_0001.webp',
+        )
+
+    def test_file_with_existing_name_gets_a_new_name(self):
+        storage = S3Storage(**media_storage(S3_ENV)['OPTIONS'])
+
+        with patch.object(
+            S3Storage, 'exists', side_effect=lambda name: name == 'vessels/5/IMG_0001.jpg'
+        ):
+            name = storage.get_available_name('vessels/5/IMG_0001.jpg')
+
+        self.assertNotEqual(name, 'vessels/5/IMG_0001.jpg')
+        self.assertRegex(name, r'^vessels/5/IMG_0001_\w+\.jpg$')
+
+    def test_missing_variable_fails_on_startup(self):
+        env = {**S3_ENV, 'MEDIA_S3_SECRET_ACCESS_KEY': ''}
+
+        with self.assertRaisesMessage(ImproperlyConfigured, 'MEDIA_S3_SECRET_ACCESS_KEY'):
+            media_storage(env)
+
+    def test_public_url_must_use_https(self):
+        env = {**S3_ENV, 'MEDIA_S3_PUBLIC_URL': 'http://pub-123.r2.dev'}
+
+        with self.assertRaises(ImproperlyConfigured):
+            media_storage(env)
 
 
 class ImageValidatorTests(SimpleTestCase):

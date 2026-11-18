@@ -46,8 +46,20 @@ services:
         value: 1024250450845-49n11k59v5nu8e7el7oblqmfho0sb11c.apps.googleusercontent.com
       - key: GOOGLE_CLIENT_SECRET
         sync: false
-      # Free web services have no persistent disk: uploaded files in the default
-      # backend/media are lost on every deploy, restart and spin-down.
+      # Free web services have no persistent disk, so vessel photos are kept in a
+      # Cloudflare R2 bucket (#131, docs chapter 6). All five values are set by hand in
+      # the dashboard. Without MEDIA_S3_BUCKET photos fall back to backend/media and are
+      # lost on every deploy, restart and spin-down.
+      - key: MEDIA_S3_BUCKET
+        sync: false
+      - key: MEDIA_S3_ENDPOINT_URL
+        sync: false
+      - key: MEDIA_S3_PUBLIC_URL
+        sync: false
+      - key: MEDIA_S3_ACCESS_KEY_ID
+        sync: false
+      - key: MEDIA_S3_SECRET_ACCESS_KEY
+        sync: false
 
 databases:
   # Free databases expire 30 days after creation (14-day grace period, then deleted).
