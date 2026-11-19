@@ -1,5 +1,7 @@
 from rest_framework.exceptions import PermissionDenied
 
+from accounts.permissions import HasActiveCompany
+
 
 class CompanyScopedMixin:
     """Base for company panel views (ADR-02, docs 4.6, 4.9).
@@ -8,12 +10,14 @@ class CompanyScopedMixin:
     gives 404, and sets the company on create. Put it before the DRF base class:
 
         class XViewSet(CompanyScopedMixin, mixins.ListModelMixin, viewsets.GenericViewSet): ...
-
-    Also add HasActiveCompany to permission_classes. The mixin fails closed as well:
-    a user without a company never gets any data.
     """
 
     company_field = 'company'  # name of the FK to Company on the view's model
+
+    def get_permissions(self):
+        # The role comes from the view's permission_classes and is checked first
+        # (anonymous 401, wrong role 403); HasActiveCompany is always added after it.
+        return [*super().get_permissions(), HasActiveCompany()]
 
     def _user_company(self):
         company = self.request.user.company

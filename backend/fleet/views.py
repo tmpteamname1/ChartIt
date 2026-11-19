@@ -4,7 +4,7 @@ from rest_framework import mixins, viewsets
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import AllowAny
 
-from accounts.permissions import HasActiveCompany, IsCompanyOwner
+from accounts.permissions import IsCompanyOwner
 from companies.mixins import CompanyScopedMixin
 
 from .filters import StableOrderingFilter, VesselFilter
@@ -106,7 +106,7 @@ class CompanyVesselViewSet(
 ):
     queryset = Vessel.objects.select_related('category', 'home_port')
     serializer_class = CompanyVesselSerializer
-    permission_classes = [IsCompanyOwner, HasActiveCompany]
+    permission_classes = [IsCompanyOwner]
     filter_backends = [StableOrderingFilter]
     ordering_fields = ['name']
     ordering = ['name', 'id']
