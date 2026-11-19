@@ -4,8 +4,8 @@ Usage on a view: permission_classes = [IsCompanyOwner]. Each class replaces the 
 default IsAuthenticated and already requires a logged-in, active user.
 
 These classes check only the role, not which company the data belongs to. Company panel
-views also restrict get_queryset() to request.user.company through a shared base class
-(ADR-02, #101).
+views also inherit CompanyScopedMixin (companies/mixins.py), which restricts get_queryset()
+to request.user.company and adds HasActiveCompany (ADR-02).
 """
 
 from rest_framework.permissions import BasePermission

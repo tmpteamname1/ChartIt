@@ -494,7 +494,7 @@ class CompanyServiceViewSet(CompanyScopedMixin, viewsets.ModelViewSet):
 ```
 
 - Klasa zamjenjuje zadani `IsAuthenticated` i sama zahtijeva prijavljenog i aktivnog korisnika: bez prijave odgovor je 401, a s pogrešnom ulogom 403.
-- Klase provjeravaju samo ulogu, a ne kojoj tvrtki podaci pripadaju. Pogledi panela tvrtke zato uz njih nasljeđuju zajednički bazni razred koji ograničava `get_queryset()` na `request.user.company` (ADR-02, #101).
+- Klase uloga provjeravaju samo ulogu, a ne kojoj tvrtki podaci pripadaju. Pogledi panela tvrtke zato uz njih nasljeđuju `CompanyScopedMixin` (`backend/companies/mixins.py`), koji ograničava `get_queryset()` na `request.user.company` i sam dodaje `HasActiveCompany` (vidi „Pogledi panela tvrtke”) (ADR-02).
 - Django superkorisnik (`createsuperuser`) dobiva ulogu KORISNIK i nema pristup API-ju administracije dok mu se uloga ne promijeni u ADMINISTRATOR.
 
 ### Pogledi panela tvrtke
