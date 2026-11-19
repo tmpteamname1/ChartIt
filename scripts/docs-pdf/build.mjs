@@ -130,7 +130,9 @@ const page = (pages) => `<!doctype html><html lang="hr"><head><meta charset="utf
   .landscape img { max-height: 168mm; width: 100%; object-fit: contain; margin: 0 auto; }
   p:has(> img) { break-inside: avoid; }
   .mermaid { break-inside: avoid; margin: 8px 0; text-align: center; }
-  .mermaid svg { width: 100%; max-width: 100% !important; height: auto; max-height: 230mm; }
+  /* Mermaid sets width 100% and max-width to the natural size: a diagram shrinks to fit, never grows. */
+  .mermaid svg { height: auto; max-height: 230mm; }
+  p:has(+ .mermaid) { break-after: avoid; }
   body { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-size: 10pt; line-height: 1.45; color: #1f2328; }
   h1 { font-size: 20pt; border-bottom: 2px solid #0d6efd; padding-bottom: 4px; margin-top: 0; }
   h2 { font-size: 14pt; margin-top: 20px; border-bottom: 1px solid #d0d7de; padding-bottom: 2px; }

@@ -305,40 +305,46 @@ Na mobitelu se poveznice iz zaglavlja i bočni izbornik sklapaju u izbornik koji
 
 ### Dijagram navigacije
 
+Dijagram je podijeljen po dijelovima aplikacije kako bi oznake ruta ostale čitljive i u ispisu. Strelica označava prijelaz poveznicom ili gumbom; rute bez strelice otvaraju se iz zaglavlja ili bočnog izbornika (tablica izbornika iznad).
+
+**Javni dio i korisnik**
+
 ```mermaid
 flowchart TB
-    subgraph Javno
-        P["/ pretraga"] --> D["/plovila/:id"]
-        D --> T["/tvrtke/:id"]
-        T --> D
-        L["/prijava"]
-    end
-    subgraph Korisnik
-        Z["/plovila/:id/rezervacija"] --> MR["/moje-rezervacije"]
-        MR --> MRD["/moje-rezervacije/:id"]
-    end
-    subgraph Tvrtka
-        TZ["/tvrtka/zahtjevi"]
-        TR["/tvrtka/raspored"] --> TRD["/tvrtka/rezervacije/:id"]
-        TREZ["/tvrtka/rezervacije"] --> TRD
-        TZ --> TRD
-        TF["/tvrtka/flota"] --> TFN["/tvrtka/flota/novo"]
-        TF --> TFI["/tvrtka/flota/:id"] --> TFD["/tvrtka/flota/:id/nedostupnost"]
-        TU["/tvrtka/usluge"]
-        TDJ["/tvrtka/djelatnici"]
-        TP["/tvrtka/podaci"]
-        TS["/tvrtka/statistika"]
-    end
-    subgraph Administracija
-        AT["/administracija/tvrtke"] --> ATN["/administracija/tvrtke/nova"]
-        AT --> ATI["/administracija/tvrtke/:id"]
-        AK["/administracija/korisnici"]
-        AKAT["/administracija/kategorije"]
-        AL["/administracija/luke"]
-    end
-    D -- "Pošalji zahtjev (prijavljen)" --> Z
-    D -- "Pošalji zahtjev (neprijavljen)" --> L
-    L -- "nakon prijave za nastavak zahtjeva" --> Z
+    P["/ pretraga"] --> D["/plovila/:id"]
+    D --> T["/tvrtke/:id"]
+    T --> D
+    D -- "Pošalji zahtjev<br/>(prijavljen)" --> Z["/plovila/:id/rezervacija"]
+    D -- "Pošalji zahtjev<br/>(neprijavljen)" --> L["/prijava"]
+    L -- "nakon prijave" --> Z
+    Z --> MR["/moje-rezervacije"]
+    MR --> MRD["/moje-rezervacije/:id"]
+```
+
+**Panel tvrtke**
+
+```mermaid
+flowchart LR
+    TZ["/tvrtka/zahtjevi"] --> TRD["/tvrtka/rezervacije/:id"]
+    TR["/tvrtka/raspored"] --> TRD
+    TREZ["/tvrtka/rezervacije"] --> TRD
+    TF["/tvrtka/flota"] --> TFN["/tvrtka/flota/novo"]
+    TF --> TFI["/tvrtka/flota/:id"] --> TFD["/tvrtka/flota/:id/nedostupnost"]
+    TU["/tvrtka/usluge"]
+    TDJ["/tvrtka/djelatnici"]
+    TP["/tvrtka/podaci"]
+    TS["/tvrtka/statistika"]
+```
+
+**Administracija**
+
+```mermaid
+flowchart LR
+    AT["/administracija/tvrtke"] --> ATN["/administracija/tvrtke/nova"]
+    AT --> ATI["/administracija/tvrtke/:id"]
+    AK["/administracija/korisnici"]
+    AKAT["/administracija/kategorije"]
+    AL["/administracija/luke"]
 ```
 
 ### Mobilni prikaz (#57)
