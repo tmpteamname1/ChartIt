@@ -9,6 +9,8 @@
   "dependencies": {
     "github-slugger": "2.0.0",
     "marked": "15.0.12",
+    "mermaid": "11.4.1",
+    "pdfjs-dist": "4.10.38",
     "puppeteer-core": "23.11.1"
   }
 }

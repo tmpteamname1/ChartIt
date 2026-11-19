@@ -69,7 +69,7 @@ Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 
 **PlantUML izvor:** [izvor](./puml/4-3-chartit-domain-CD.puml)
 
-Dijagram oblikuje obradu rezervacija prije njezine implementacije. Poslovna pravila (provjera razdoblja, kapaciteta i pripadnosti usluga tvrtki te prijelazi statusa) nalaze se u domenskom razredu rezervacije, a servis rezervacija ih poziva unutar transakcije i preko sučelja dobiva pohranu, katalog flote i slanje obavijesti, pa se pravila mogu ispitati bez HTTP-a i baze (4.6).
+Dijagram oblikuje obradu rezervacija prije njezine implementacije. Poslovna pravila (provjera razdoblja, kapaciteta i pripadnosti usluga tvrtki te prijelazi statusa) nalaze se u domenskom razredu rezervacije, a servis rezervacija ih poziva unutar transakcije i preko sučelja dobiva pohranu, katalog flote i slanje obavijesti, pa se pravila mogu ispitati bez HTTP-a i baze (4.6). Tip `ID` je konceptualni identifikator; u modelima i API-ju ostvaren je kao cjelobrojni primarni ključ.
 
 ## 4.4 Ponašanje tijekom izvođenja
 
@@ -95,7 +95,7 @@ Dijagram prikazuje statuse rezervacije iz F-05 i događaje koji ih mijenjaju. Te
 
 **PlantUML izvor:** [izvor](./puml/4-6-chartit-oauth-SD.puml)
 
-Dijagram prikazuje ostvarenu prijavu Google računom (UC-10): React pokreće prijavu, django-allauth provodi OAuth tok s Googleom, stvara ili povezuje korisnika i postavlja sesiju, a React zatim stanje prijave čita iz `/api/auth/me/`. Neuspješna prijava vraća korisnika na `/prijava` s kodom greške (4.8).
+Dijagram prikazuje ostvarenu prijavu Google računom (UC-10). Pri učitavanju aplikacije React poziva `/api/auth/me/`; neprijavljeni korisnik dobiva 401 i CSRF kolačić, čiju vrijednost React šalje u polju `csrfmiddlewaretoken` obrasca za pokretanje prijave. Nakon toga django-allauth provodi OAuth tok s Googleom, stvara ili povezuje korisnika i postavlja sesiju, a React ponovno čita stanje prijave iz `/api/auth/me/`. Neuspješna prijava vraća korisnika na `/prijava` s kodom greške (4.8).
 
 ## 4.5 Zapisi arhitekturnih odluka
 
@@ -305,40 +305,46 @@ Na mobitelu se poveznice iz zaglavlja i bočni izbornik sklapaju u izbornik koji
 
 ### Dijagram navigacije
 
+Dijagram je podijeljen po dijelovima aplikacije kako bi oznake ruta ostale čitljive i u ispisu. Strelica označava prijelaz poveznicom ili gumbom; rute bez strelice otvaraju se iz zaglavlja ili bočnog izbornika (tablica izbornika iznad).
+
+**Javni dio i korisnik**
+
+```mermaid
+flowchart TB
+    P["/ pretraga"] --> D["/plovila/:id"]
+    D --> T["/tvrtke/:id"]
+    T --> D
+    D -- "Pošalji zahtjev<br/>(prijavljen)" --> Z["/plovila/:id/rezervacija"]
+    D -- "Pošalji zahtjev<br/>(neprijavljen)" --> L["/prijava"]
+    L -- "nakon prijave" --> Z
+    Z --> MR["/moje-rezervacije"]
+    MR --> MRD["/moje-rezervacije/:id"]
+```
+
+**Panel tvrtke**
+
 ```mermaid
 flowchart LR
-    subgraph Javno
-        P["/ pretraga"] --> D["/plovila/:id"]
-        D --> T["/tvrtke/:id"]
-        T --> D
-        L["/prijava"]
-    end
-    subgraph Korisnik
-        Z["/plovila/:id/rezervacija"] --> MR["/moje-rezervacije"]
-        MR --> MRD["/moje-rezervacije/:id"]
-    end
-    subgraph Tvrtka
-        TZ["/tvrtka/zahtjevi"]
-        TR["/tvrtka/raspored"] --> TRD["/tvrtka/rezervacije/:id"]
-        TREZ["/tvrtka/rezervacije"] --> TRD
-        TZ --> TRD
-        TF["/tvrtka/flota"] --> TFN["/tvrtka/flota/novo"]
-        TF --> TFI["/tvrtka/flota/:id"] --> TFD["/tvrtka/flota/:id/nedostupnost"]
-        TU["/tvrtka/usluge"]
-        TDJ["/tvrtka/djelatnici"]
-        TP["/tvrtka/podaci"]
-        TS["/tvrtka/statistika"]
-    end
-    subgraph Administracija
-        AT["/administracija/tvrtke"] --> ATN["/administracija/tvrtke/nova"]
-        AT --> ATI["/administracija/tvrtke/:id"]
-        AK["/administracija/korisnici"]
-        AKAT["/administracija/kategorije"]
-        AL["/administracija/luke"]
-    end
-    D -- "Pošalji zahtjev (prijavljen)" --> Z
-    D -- "Pošalji zahtjev (neprijavljen)" --> L
-    L -- "nakon prijave za nastavak zahtjeva" --> Z
+    TZ["/tvrtka/zahtjevi"] --> TRD["/tvrtka/rezervacije/:id"]
+    TR["/tvrtka/raspored"] --> TRD
+    TREZ["/tvrtka/rezervacije"] --> TRD
+    TF["/tvrtka/flota"] --> TFN["/tvrtka/flota/novo"]
+    TF --> TFI["/tvrtka/flota/:id"] --> TFD["/tvrtka/flota/:id/nedostupnost"]
+    TU["/tvrtka/usluge"]
+    TDJ["/tvrtka/djelatnici"]
+    TP["/tvrtka/podaci"]
+    TS["/tvrtka/statistika"]
+```
+
+**Administracija**
+
+```mermaid
+flowchart LR
+    AT["/administracija/tvrtke"] --> ATN["/administracija/tvrtke/nova"]
+    AT --> ATI["/administracija/tvrtke/:id"]
+    AK["/administracija/korisnici"]
+    AKAT["/administracija/kategorije"]
+    AL["/administracija/luke"]
 ```
 
 ### Mobilni prikaz (#57)
@@ -442,6 +448,16 @@ Svaki endpoint popisa vraća stranicu rezultata (20 po zadanom):
 | `ordering` | `?ordering=-daily_price` | Sortiranje po poljima iz `ordering_fields`; `-` znači silazno. |
 
 Queryset pogleda popisa mora imati zadani poredak (`order_by` ili `Meta.ordering`), inače straničenje nije stabilno i Django javlja upozorenje.
+
+Iznimka su šifrarnici, koji su kratki i vraćaju se cijeli, kao jednostavan JSON niz bez straničenja (`GET /api/categories/`, `GET /api/ports/`):
+
+```json
+[
+  { "id": 3, "name": "Split", "latitude": "43.508133", "longitude": "16.440193" }
+]
+```
+
+Provjera dostupnosti (`GET /api/health/`) ne koristi format greške. Vraća 200 s `{"status": "ok", "database": "ok"}`, a kad baza ne odgovara, 503 s `{"status": "error", "database": "unavailable"}`, bez tehničkih detalja.
 
 ### Format greške
 

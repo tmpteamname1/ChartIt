@@ -86,7 +86,14 @@ docker compose exec backend python manage.py seed_catalog --reset  # obriši i p
 
 Naredba se može pokretati više puta bez duplikata; bez `--force` odbija rad kad je `DJANGO_DEBUG` isključen. Pokretanje nad produkcijskom bazom opisano je u odjeljku [Početni podaci u produkciji](#početni-podaci-u-produkciji).
 
-Nakon punjenja kataloga trajno spremanje podataka provjerava se tako da se na http://localhost:5173 otvori plovilo iz kataloga s fotografijama, zatim zaustavi i ponovno pokrene backend (`docker compose down`, pa `docker compose up`) te ponovno otvori isto plovilo.
+Nakon punjenja kataloga trajno spremanje podataka provjerava se preko API-ja (ekran detalja plovila u Reactu predviđen je za kasniju iteraciju):
+
+1. Otvoriti http://localhost:8000/api/vessels/, odabrati plovilo s fotografijama i zapisati njegov `id`.
+2. Otvoriti `http://localhost:8000/api/vessels/<id>/` i zapisati adresu iz polja `image` prve fotografije u popisu `photos`.
+3. Zaustaviti i ponovno pokrenuti backend (`docker compose down`, pa `docker compose up`).
+4. Ponovno otvoriti `/api/vessels/<id>/`: plovilo mora postojati, a zapisana adresa fotografije mora biti ista i vraćati sliku.
+
+Ista se provjera može provesti kroz Django admin (`/admin/`, plovilo i njegove fotografije), kao u odjeljku [Postavljanje spremnika](#postavljanje-spremnika-cloudflare-r2).
 
 ### Backend izvan Dockera (virtualno okruženje)
 
@@ -184,7 +191,7 @@ Aplikacija je tada dostupna na http://localhost:8000. `DJANGO_HTTPS=False` isklj
 
 ### PDF dokumentacije
 
-Za predaju se cijela dokumentacija (`Home.md`, poglavlja 1 – 7 i A) spaja u jedan PDF u mapi `docs/deliverables/`, nazvan prema predlošku kolegija (`PROINZ26_G09.4_ChartIt_v1.pdf`). Skripta `scripts/docs-pdf/build.mjs` pretvara Markdown u HTML s naslovnicom i sadržajem, ugrađuje dijagrame iz `docs/assets/diagrams/`, poveznice među poglavljima pretvara u poveznice unutar PDF-a, a poveznice na kod u poveznice na GitHub. PDF zatim ispisuje lokalno instalirani Chrome.
+Za predaju se cijela dokumentacija (`Home.md`, poglavlja 1 – 7 i A) spaja u jedan PDF u mapi `docs/deliverables/`, nazvan prema predlošku kolegija (`PROINZ26_G09.4_ChartIt_v1.pdf`). Skripta `scripts/docs-pdf/build.mjs` pretvara Markdown u HTML s naslovnicom i sadržajem, ugrađuje dijagrame iz `docs/assets/diagrams/`, poveznice među poglavljima pretvara u poveznice unutar PDF-a, a poveznice na kod u poveznice na GitHub. Poveznice na GitHub vode na commit iz kojeg je PDF izrađen, a ne na `main`, pa i kasnije pokazuju predano stanje; zato se PDF izrađuje iz commita koji je objavljen na GitHubu. Mermaid dijagrami pretvaraju se u SVG, široki dijagrami dobivaju zasebnu vodoravnu stranicu, a brojevi stranica u sadržaju čitaju se iz prvog ispisa, nakon čega se PDF ispisuje ponovno. PDF ispisuje lokalno instalirani Chrome.
 
 ```bash
 cd scripts/docs-pdf
@@ -375,7 +382,7 @@ Prijava Google računom koristi OAuth 2.0. Aplikacija je registrirana u Google C
    - Branding: naziv aplikacije `ChartIt`, kontakt e-pošta `progiprojekt94.fer@gmail.com`,
    - Data Access: opsezi `openid`, `email`, `profile` (nisu osjetljivi, pa verifikacija nije potrebna),
    - Audience: vrsta korisnika External.
-3. **Test users** (Audience > Test users): dok je aplikacija u stanju "Testing", prijaviti se mogu samo korisnici s popisa. Na popis se dodaju Google računi svih članova tima i asistenata. Adrese se ne navode u repozitoriju, nego se popis vodi i provjerava u konzoli. Pristup projektu u IAM-u ne dodaje korisnika na taj popis. Prije demonstracije aplikacija se može prebaciti u "In production" (Publish app), što s osnovnim opsezima ne traži verifikaciju.
+3. **Test users** (Audience > Test users): u stanju "Testing" ograničenje na korisnike s popisa vrijedi samo za opsege izvan osnovnih. Aplikacija traži samo osnovne podatke o profilu i adresu e-pošte (`openid`, `email`, `profile`), pa se prema [Googleovoj uputi](https://support.google.com/cloud/answer/15549945) može prijaviti i korisnik koji nije na popisu, bez upozorenja i bez isteka odobrenja nakon sedam dana. Na računima Google Workspacea (npr. fakultetskim) organizacija može dodatno ograničiti pristup aplikacijama trećih strana. Na popis se ipak dodaju Google računi članova tima i asistenata, za slučaj da se kasnije zatraži opseg izvan osnovnih. Adrese se ne navode u repozitoriju, nego se popis vodi i provjerava u konzoli. Pristup projektu u IAM-u ne dodaje korisnika na taj popis. Aplikacija se može prebaciti u "In production" (Publish app), što s osnovnim opsezima ne traži verifikaciju.
 4. **Web klijenti** (Clients > Create client > Web application). Consent screen, opsezi i test users zajednički su za oba klijenta.
 
 #### Klijenti za lokalni razvoj i produkciju
@@ -438,9 +445,9 @@ Podaci za prijavu dijele se prema odjeljku [Dijeljenje tajni u timu](#dijeljenje
 
 #### Administrator platforme
 
-Svi korisnici koji se prijave Googleom dobivaju ulogu `KORISNIK`. Ulogu `ADMINISTRATOR` ne može dobiti nitko prijavom ni zahtjevom klijenta, nego je postavlja tim naredbom `promote_admin`. Administrator platforme zatim u React aplikaciji stvara tvrtke i dodjeljuje vlasnike (UC-14).
+Svi korisnici koji se prijave Googleom dobivaju ulogu `KORISNIK`. Ulogu `ADMINISTRATOR` ne može dobiti nitko prijavom ni zahtjevom klijenta, nego je postavlja tim naredbom `promote_admin` ([#50](https://github.com/tmpteamname1/ChartIt/issues/50)). Stvaranje tvrtki i dodjela vlasnika u React aplikaciji planirani su kao UC-14; ekrani administracije u prvoj iteraciji postoje samo kao skice ([#56](https://github.com/tmpteamname1/ChartIt/issues/56)).
 
-Uloga `ADMINISTRATOR` i pristup Django adminu su odvojene stvari. Naredba mijenja samo `role`, a ne `is_staff` ni `is_superuser`. Administracija platforme obavlja se u React aplikaciji, a ne u Django adminu.
+Uloga `ADMINISTRATOR` i pristup Django adminu su odvojene stvari. Naredba mijenja samo `role`, a ne `is_staff` ni `is_superuser`. Administracija platforme predviđena je u React aplikaciji. Do tada tvrtke, kategorije i luke unosi i ispravlja ovlašteno osoblje tima kroz Django admin (`/admin/`, samo računi s `is_staff`, odjeljak 4.2).
 
 ```bash
 python manage.py promote_admin <e-mail>
@@ -485,7 +492,7 @@ Provjera: na https://chartit-okv1.onrender.com prikazuju se plovila demo katalog
 
 #### Postupak ažuriranja
 
-Svaka promjena ulazi u granu `main` samo kroz pull request koji je odobrio drugi član tima i koji je prošao CI (odjeljak [Kontinuirana integracija (CI)](#kontinuirana-integracija-ci)). Svaki push u `main` (odnosno svaki spojeni pull request) automatski pokreće novo postavljanje na Renderu (zadano ponašanje Rendera za granu `main` iz `render.yaml`): build, migracije i zamjena verzije tek nakon uspješnog health checka. Render pri tome ne čeka rezultat CI-ja, nego se na njega oslanja zato što u `main` ne može ući promjena koja nije prošla provjere. Ručno ponovno postavljanje pokreće se u Render > `chartit` > Manual Deploy.
+Svaka promjena ulazi u granu `main` samo kroz pull request. Pravilo grane traži odobrenje drugog člana tima i prolazak CI-ja (odjeljak [Kontinuirana integracija (CI)](#kontinuirana-integracija-ci)); voditelj projekta može ga zaobići, a dio pull requestova spojen je bez odobrenja ([Home](Home.md#organizacija-projekta-i-razvojni-proces)). Svaki push u `main` (odnosno svaki spojeni pull request) automatski pokreće novo postavljanje na Renderu (zadano ponašanje Rendera za granu `main` iz `render.yaml`): build, migracije i zamjena verzije tek nakon uspješnog health checka. Render pri tome ne čeka rezultat CI-ja, nego se na njega oslanja zato što u `main` bez zaobilaženja pravila ne može ući promjena koja nije prošla provjere. Ručno ponovno postavljanje pokreće se u Render > `chartit` > Manual Deploy.
 
 Projekt dakle koristi kontinuiranu integraciju i automatsko postavljanje iz glavne grane, s provjerama koje se izvode prije spajanja u `main`, a ne kao dio tijeka postavljanja.
 
@@ -512,7 +519,7 @@ Workflow ima dva posla koji rade usporedno:
 
 Verzije Nodea, Pythona i PostgreSQL-a jednake su onima u `docker-compose.yml`, `backend/Dockerfile` i `render.yaml`. Testovi koriste PostgreSQL, a ne SQLite, jer ograničenje preklapanja rezervacija treba rasponske tipove i `btree_gist` (ADR-03). Backend u CI-ju radi s `DJANGO_DEBUG=False`, kao u produkciji, i s `DJANGO_HTTPS=False` kako testni klijent ne bi bio preusmjeravan na HTTPS. CI ne treba nikakve tajne.
 
-Poslovi `frontend` i `backend` obavezne su provjere u pravilima grane `main` (ruleset "Approved before merge"), pa se pull request s neuspješnim CI-jem ne može spojiti. Promjena naziva posla zato zahtijeva i promjenu ruleseta. Workflow nema filtar po mapama (paths filter): obavezna provjera koja se zbog filtra ne pokrene ostaje na čekanju i blokira merge, a cijeli CI ionako traje nekoliko minuta.
+Poslovi `frontend` i `backend` obavezne su provjere u pravilima grane `main` (ruleset "Approved before merge"), pa se pull request s neuspješnim CI-jem ne može spojiti bez zaobilaženja pravila. Promjena naziva posla zato zahtijeva i promjenu ruleseta. Workflow nema filtar po mapama (paths filter): obavezna provjera koja se zbog filtra ne pokrene ostaje na čekanju i blokira merge, a cijeli CI ionako traje nekoliko minuta.
 
 Ista provjera može se lokalno pokrenuti naredbama iz odjeljka [Formatiranje i provjera koda](#formatiranje-i-provjera-koda).
 
