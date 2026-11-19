@@ -25,11 +25,11 @@ Za potpuni opseg, zahtjeve, oblikovanje i dokaze ispitivanja pogledajte [dokumen
 
 **Javno dostupna aplikacija:** https://chartit-okv1.onrender.com
 
-**Isprobajte:** Na početnoj stranici odaberite polaznu luku ili kategoriju plovila i pokrenite pretragu, a zatim promijenite sortiranje rezultata.
+**Isprobajte:** Početna stranica prikazuje demo katalog: 14 izmišljenih plovila triju čarter tvrtki, s fotografijama. Za polaznu luku odaberite Split (tri plovila), zatim dodajte kategoriju Jedrilica (ostaje jedno plovilo) i promijenite sortiranje rezultata.
 
 **Demonstracija:** Za pretragu korisnički račun nije potreban. Prijava Google računom radi za račune koje je tim dodao na popis testnih korisnika aplikacije (Google OAuth u stanju "Testing"). Panel tvrtke dostupan je vlasniku i djelatniku tvrtke; ulogu i tvrtku računu dodjeljuje tim na zahtjev. Lozinke ni pristupni podaci ne objavljuju se.
 
-**Ograničenja:** Aplikacija je na besplatnom planu Rendera: nakon razdoblja bez prometa prvi zahtjev čeka ponovno pokretanje servisa (do minute), a učitane fotografije ne ostaju trajno spremljene. Detalji su u odjeljku [Ograničenja besplatnog plana](docs/6-Postavljanje-instalacija-i-konfiguracija.md#ograničenja-besplatnog-plana).
+**Ograničenja:** Aplikacija je na besplatnom planu Rendera: nakon razdoblja bez prometa prvi zahtjev čeka ponovno pokretanje servisa (do minute), a besplatna baza istječe 30 dana nakon stvaranja. Fotografije se spremaju u Cloudflare R2, pa ostaju i nakon ponovnog pokretanja. Detalji su u odjeljku [Ograničenja besplatnog plana](docs/6-Postavljanje-instalacija-i-konfiguracija.md#ograničenja-besplatnog-plana).
 
 [Vodič za postavljanje i pokretanje](docs/6-Postavljanje-instalacija-i-konfiguracija.md) opisuje postavljanje na Render.
 
@@ -69,7 +69,8 @@ Provjera: http://localhost:5173/api/health/ vraća `{"status": "ok", "database":
 | Mantine | Komponente sučelja i responzivni raspored. | Gotove pristupačne komponente (obrasci, tablice, obavijesti) za računalo i mobitel. |
 | TanStack Query | Dohvat i privremeno spremanje podataka s API-ja u klijentu. | Stanja učitavanja i greške prikazuju se jednako na svim ekranima; dok backend endpoint ne postoji, API modul vraća lažne podatke istog oblika. |
 | django-allauth i Google OAuth 2.0 | Prijava korisnika Google računom i sesija u kolačiću. | Aplikacija ne pohranjuje lozinke; prijava na javnoj instanci ovisi o postavkama klijenta u Google Cloud Consoleu (ADR-06). |
-| Render | Javno postavljanje web-servisa i PostgreSQL baze iz `render.yaml`. | Besplatni plan: gašenje servisa bez prometa, baza istječe nakon 30 dana, nema trajnog diska za fotografije. |
+| Render | Javno postavljanje web-servisa i PostgreSQL baze iz `render.yaml`. | Besplatni plan: gašenje servisa bez prometa, baza istječe nakon 30 dana, nema trajnog diska (zato se fotografije spremaju u Cloudflare R2). |
+| Cloudflare R2 | Pohrana fotografija plovila (S3 sučelje, `django-storages`). | Besplatnih 10 GB i promet bez naplate; jurisdikcija EU; fotografije se poslužuju s javne adrese `r2.dev`. |
 | GitHub Actions | CI na svakom pull requestu: lint, formatiranje, build klijenta, provjera migracija i backend testovi. | Pull request se ne može spojiti u `main` dok provjere ne prođu. |
 
 <a id="team-members"></a>
