@@ -1,0 +1,70 @@
+' ==============================================================================
+' 6-1-chartit-deploy-DD.puml
+'
+' Svrha:    Prikazuje produkcijski razmještaj sustava ChartIt: korisnički
+'           uređaj, web servis i bazu na Renderu, spremnik fotografija
+'           Cloudflare R2 i Google OAuth, te protokole među njima.
+' Praćenje: Odgovara render.yaml i backend/config/storage.py; pri promjeni
+'           smještaja ili pružatelja pohrane ažurirati model.
+'
+' Diagram level: Production deployment
+' Diagram type:  UML Deployment Diagram
+' Version:       1.0
+' ==============================================================================
+
+@startuml
+title Sustav ChartIt – razmještaj (produkcija)
+left to right direction
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #212529
+
+skinparam node {
+    BackgroundColor #E7F1FF
+    BorderColor #0D6EFD
+}
+skinparam artifact {
+    BackgroundColor #FFFFFF
+    BorderColor #0D6EFD
+}
+skinparam database {
+    BackgroundColor #E7F1FF
+    BorderColor #0D6EFD
+}
+skinparam cloud {
+    BackgroundColor #F8F9FA
+    BorderColor #6C757D
+}
+
+node "Korisnički uređaj" as client {
+    node "Web-preglednik" as browser {
+        artifact "React aplikacija\n(JavaScript, HTML, CSS)" as spa
+    }
+}
+
+node "Render (regija Frankfurt)" as render {
+    node "Web servis chartit\n<<besplatni plan, Python 3.11>>" as web {
+        node "gunicorn" as gunicorn {
+            artifact "Django + DRF\n(API, Django admin)" as django
+            artifact "WhiteNoise\n(statičke datoteke,\nfrontend_dist)" as whitenoise
+        }
+    }
+    database "chartit-db\n<<PostgreSQL 17, besplatni plan>>" as db
+}
+
+cloud "Cloudflare R2 (jurisdikcija EU)" as r2 {
+    database "Spremnik chartit-media\n(fotografije i minijature)" as bucket
+}
+
+cloud "Google" as google {
+    node "Google OAuth 2.0" as oauth
+}
+
+spa --> web : HTTPS (TLS prekida Render)\nREST/JSON, sesijski kolačić
+web --> db : TCP 5432, PostgreSQL\n(interna mreža, sslmode=require)
+web --> bucket : HTTPS, S3 API\n(učitavanje i brisanje)
+web --> oauth : HTTPS\n(zamjena koda za token)
+client --> r2 : HTTPS (javni URL r2.dev)\ndohvat fotografija
+client --> google : HTTPS (preusmjeravanje\nna prijavu i natrag)
+@enduml

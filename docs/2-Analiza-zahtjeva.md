@@ -127,7 +127,7 @@ Komponente su opisane u poglavlju 4.2, a testovi se nalaze u datotekama `tests.p
 | --- | --- | --- |
 | Konzultacije s asistentom (prije Iteracije 1) | Zahtjeva je previše i neki se ponavljaju. | Zahtjevi su preuređeni u F-01 – F-23 i NF-01 – NF-07; vidi odjeljak 2.5. |
 | Konzultacije s asistentom (prije Iteracije 1) | Vlasnik tvrtke u praksi ne želi sam obrađivati rezervacije. | Obradu rezervacija preuzima i djelatnik (F-05, F-11); vidi odjeljak 2.5. |
-| Konzultacije s asistentom, 5. 11. 2026. | Postavljanje na Azure nije uspijevalo, a aplikacija mora biti javno dostupna (NF-07). | Zahtjev NF-07 ostaje nepromijenjen; aplikacija je postavljena na Render ([poglavlje 6](6-Postavljanje-instalacija-i-konfiguracija.md#postavljanje-na-render)). |
+| Konzultacije s asistentom, 5. 11. 2026. | Postavljanje na Azure nije uspijevalo, a aplikacija mora biti javno dostupna (NF-07). | Zahtjev NF-07 ostaje nepromijenjen; aplikacija je postavljena na Render ([poglavlje 6](6-Postavljanje-instalacija-i-konfiguracija.md#63-javno-postavljanje-i-administracija)). |
 | Iteracija 1 | Slijedi | Slijedi |
 | Demo 2 | Slijedi | Slijedi |
 | Završni pregled | Slijedi | Slijedi |

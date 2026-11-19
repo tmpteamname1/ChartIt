@@ -72,7 +72,11 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | Alat | Inačica ili model | Koristio/la | Glavna svrha |
 | --- | --- | --- | --- |
 | OpenAI Codex | GPT-6.1 Sol | Nikolić | Izrada i dorada skica sučelja (#54, #55, #57) i zajedničkih stanja sučelja (#58); izrada i provjera klijentskog koda (#91, #113, #115) |
+| OpenAI Codex | GPT-6.1 Sol | Rušev | Pomoć pri vlastitim zadacima: skice javnog dijela i administracije (PR #88, #98) i ekran flote tvrtke (PR #122) |
 | Claude Code | Claude Opus | Matić | Izrada i provjera koda kostura aplikacije, sigurnosnih postavki, prijave i CI-ja; izrada nacrta dokumentacije (poglavlja 2, 4 i 6, README) i opisa zadataka |
+| Claude | Claude Sonnet 5.5 | Lepur | Pisanje i otklanjanje grešaka u kodu (Google prijava, naredba `promote_admin`); pomoć pri pisanju dokumentacije (ADR-06, opis postavljanja Google OAuth-a) |
+| Claude | Claude Sonnet 5.5 | Crnković | Pomoć pri pisanju koda i otklanjanju grešaka |
+| OpenAI Codex | GPT-6.1 Sol | Bartulović | Otklanjanje grešaka i pomoć pri pisanju koda (ekran javne pretrage) |
 
 ### Opseg doprinosa umjetne inteligencije
 
@@ -98,7 +102,7 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 
 Uz svaku promjenu izrađenu uz pomoć alata, autor je prije commita pregledao promjene, a pull request je prije spajanja odobrio drugi član tima.
 
-Stranice i artefakti koji nisu navedeni iznad izrađeni su bez pomoći generativne umjetne inteligencije.
+Tablica opsega navodi pojedinačno samo odabrane artefakte. Članovi navedeni u tablici alata koristili su umjetnu inteligenciju i pri drugim svojim zadacima, u svrhe navedene u stupcu „Glavna svrha”; za te zadatke vrijede iste provjere opisane u nastavku.
 
 ### Provjera generiranog sadržaja
 
