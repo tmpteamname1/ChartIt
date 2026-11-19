@@ -4,10 +4,14 @@ from rest_framework import mixins, viewsets
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import AllowAny
 
+from accounts.permissions import IsCompanyOwner
+from companies.mixins import CompanyScopedMixin
+
 from .filters import StableOrderingFilter, VesselFilter
 from .models import Category, Port, Vessel
 from .serializers import (
     CategorySerializer,
+    CompanyVesselSerializer,
     PortSerializer,
     VesselDetailSerializer,
     VesselListSerializer,
@@ -79,3 +83,30 @@ class VesselViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.G
         if self.action != 'list':
             return queryset
         return super().filter_queryset(queryset)
+
+
+@extend_schema_view(
+    list=extend_schema(
+        summary='Popis plovila tvrtke',
+        description=(
+            'Sva plovila tvrtke prijavljenog vlasnika, aktivna i neaktivna (ekran Flota). '
+            'Zahtijeva ulogu vlasnika i aktivnu tvrtku.'
+        ),
+    ),
+    retrieve=extend_schema(
+        summary='Detalji plovila tvrtke',
+        description=(
+            'Plovilo tvrtke prijavljenog vlasnika. Plovilo druge tvrtke vraća 404, '
+            'kao da ne postoji.'
+        ),
+    ),
+)
+class CompanyVesselViewSet(
+    CompanyScopedMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet
+):
+    queryset = Vessel.objects.select_related('category', 'home_port')
+    serializer_class = CompanyVesselSerializer
+    permission_classes = [IsCompanyOwner]
+    filter_backends = [StableOrderingFilter]
+    ordering_fields = ['name']
+    ordering = ['name', 'id']
