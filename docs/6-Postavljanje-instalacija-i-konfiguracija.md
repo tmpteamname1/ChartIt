@@ -446,8 +446,10 @@ DATABASE_URL='<vanjski URL>' python manage.py createsuperuser
 Član tima koji treba pristup Django adminu traži ga od voditelja projekta:
 
 1. Član se prijavi Googleom na javnoj aplikaciji, čime nastaje njegov korisnički račun.
-2. Voditelj tom računu dodjeljuje prava superkorisnika (`is_staff` i `is_superuser`) i postavlja privremenu lozinku.
+2. Voditelj tom računu uključuje `is_staff` (bez `is_superuser`), dodaje ga u grupu s dopuštenjima potrebnima za njegov posao i postavlja privremenu lozinku. Za ispravke kataloga to je grupa „Urednici kataloga” s dopuštenjima pregleda i izmjene (`view`, `change`) za tvrtke, plovila, fotografije, kategorije i luke. Grupu jednom stvara superkorisnik u Django adminu (Authentication and Authorization > Groups).
 3. Voditelj mu privremenu lozinku šalje preko WhatsAppa (odjeljak [Dijeljenje tajni u timu](#dijeljenje-tajni-u-timu)), a član je nakon prve prijave u Django admin mijenja.
+
+Prava superkorisnika (`is_superuser`) ima samo voditelj projekta, jer obuhvaćaju i upravljanje korisničkim računima i dopuštenjima. Član koji privremeno treba takav posao dobiva ta prava samo dok ga obavlja.
 
 Pristup Django adminu ne daje pristup bazi izvan Djanga ni vanjski URL baze.
 
