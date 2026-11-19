@@ -12,7 +12,7 @@
 '
 ' Diagram level: Domain Object Behavioral Design
 ' Diagram type:  State Machine Diagram
-' Version:       1.0
+' Version:       1.1
 ' ==============================================================================
 
 @startuml
@@ -45,6 +45,7 @@ state "Rezervacija" as Life {
   ' Rezervacija nastaje tek ako su podaci valjani i termin slobodan
   ' (dijagram 4-4); neuspješni zahtjevi ne stvaraju objekt.
   [*] --> Requested : korisnik podnese zahtjev\n[podaci valjani i termin slobodan]\n/ kopiraj cijene, izračunaj ukupni iznos
+  [*] --> Confirmed : djelatnik stvori rezervaciju za korisnika\n[podaci valjani i termin slobodan]\n/ kopiraj cijene, izračunaj ukupni iznos,\npošalji obavijest
 
   state "Zahtjev (REQUESTED)" as Requested
   state "Odbijena (REJECTED)" as Rejected
@@ -66,9 +67,10 @@ state "Rezervacija" as Life {
   Requested --> Confirmed : djelatnik potvrdi\n/ processedBy = djelatnik,\npošalji obavijest
   Requested --> Rejected : djelatnik odbije(razlog)\n/ statusNote = razlog,\npošalji obavijest
 
-  ' Otkazivanje je dopušteno samo prije preuzimanja plovila.
-  Requested --> Cancelled : korisnik ili djelatnik otkaže(razlog)\n/ statusNote = razlog,\npošalji obavijest
-  AwaitingPickup --> Cancelled : korisnik ili djelatnik otkaže(razlog)\n[pickedUpAt == null]\n/ statusNote = razlog,\npošalji obavijest
+  ' Korisnik otkazuje najkasnije dan prije početka najma, a djelatnik
+  ' dok preuzimanje nije evidentirano (F-05, F-12).
+  Requested --> Cancelled : korisnik otkaže(razlog) [danas < startDate]\nili djelatnik otkaže(razlog)\n/ statusNote = razlog,\npošalji obavijest
+  AwaitingPickup --> Cancelled : korisnik otkaže(razlog) [danas < startDate]\nili djelatnik otkaže(razlog) [pickedUpAt == null]\n/ statusNote = razlog,\npošalji obavijest
 
   ' Povrat zatvara najam.
   PickedUp --> Completed : djelatnik evidentira povrat\n[pickedUpAt != null]\n/ returnedAt = sada

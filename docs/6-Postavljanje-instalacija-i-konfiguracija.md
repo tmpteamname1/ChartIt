@@ -15,7 +15,7 @@ Dijagram komponenata u [poglavlju 4](4-Arhitektura-i-oblikovanje.md) prikazuje l
 
 - **Korisnički uređaj:** Preglednik preuzima izgrađenu React aplikaciju s web servisa i izvršava je. API poziva relativnim putanjama (`/api/...`) na istom originu, pa nije potreban CORS (ADR-01). Fotografije plovila preglednik dohvaća izravno s javne adrese spremnika.
 - **Web servis `chartit` (Render):** Jedan proces (gunicorn) izvodi Django s DRF-om (REST API i Django admin) i WhiteNoise, koji poslužuje statičke datoteke i izgrađeni frontend (`backend/frontend_dist`). Klijentski i poslužiteljski dio postavljaju se zajedno, kao jedan servis. Render prekida TLS i prosljeđuje zahtjeve servisu.
-- **Baza `chartit-db` (Render):** PostgreSQL 17 u istoj regiji (Frankfurt). Spaja se samo web servis, preko interne mreže Rendera i uz obaveznu enkripciju (`DATABASE_SSLMODE=require`). Preglednik nikad ne pristupa bazi izravno.
+- **Baza `chartit-db` (Render):** PostgreSQL 17 u istoj regiji (Frankfurt). Aplikacija se spaja samo iz web servisa, preko interne mreže Rendera i uz obaveznu enkripciju (`DATABASE_SSLMODE=require`). Preglednik nikad ne pristupa bazi izravno. Drugi put do baze je vanjski URL, preko kojeg voditelj projekta sa svojeg računala pokreće upravljačke naredbe (odjeljak [Naredbe nad produkcijskom bazom](#naredbe-nad-produkcijskom-bazom)).
 - **Cloudflare R2:** Spremnik `chartit-media` u jurisdikciji EU čuva fotografije i minijature, jer web servis na besplatnom planu nema trajni disk. Django datoteke učitava i briše preko S3 API-ja, a preglednik ih čita preko javnog URL-a `r2.dev`.
 - **Google OAuth 2.0:** Preglednik se za prijavu preusmjerava na Google i vraća na povratni URL Djanga, a Django s Googleom izravno mijenja autorizacijski kod za podatke o korisniku (poglavlje 4.7).
 
@@ -251,7 +251,7 @@ Sve varijable s prefiksom `VITE_` ugrađuju se u JavaScript koji preuzima pregle
 
 #### Dijeljenje tajni u timu
 
-Tim dijeli tajne (npr. secret lokalnog OAuth klijenta, podatke za prijavu u Django admin) preko zajedničke WhatsApp grupe. Za projekt ove veličine to je dogovoreni kompromis. Produkcijske tajne ne šalju se ako nisu potrebne; postavljaju se izravno na Renderu, a vide ih samo članovi s pristupom Render računu.
+Tim dijeli tajne (npr. secret lokalnog OAuth klijenta, privremene lozinke za Django admin) preko WhatsAppa. Za projekt ove veličine to je dogovoreni kompromis. Produkcijske tajne ne šalju se ako nisu potrebne; postavljaju se izravno na Renderu, a vide ih samo članovi s pristupom Render računu.
 
 #### Postupak kada tajna završi u repozitoriju
 
@@ -404,7 +404,9 @@ Zapisi (logovi) servisa vide se u Render > `chartit` > Logs, a tijek i zapis sva
 
 #### Naredbe nad produkcijskom bazom
 
-Besplatni plan nema pristup ljusci (shell) na poslužitelju, pa se upravljačke naredbe (`createsuperuser`, `promote_admin`, `seed_catalog`) pokreću s vlastitog računala, spojene na produkcijsku bazu preko vanjskog URL-a (Render > `chartit-db` > External Database URL). Vanjski URL vidi samo osoba s pristupom Renderu. Vanjske veze s Renderovom bazom uvijek su šifrirane.
+Besplatni plan nema pristup ljusci (shell) na poslužitelju, pa se upravljačke naredbe (`createsuperuser`, `promote_admin`, `seed_catalog`) pokreću s vlastitog računala, spojene na produkcijsku bazu preko vanjskog URL-a (Render > `chartit-db` > External Database URL). Vanjske veze s Renderovom bazom uvijek su šifrirane.
+
+Izravan pristup produkcijskoj bazi trenutačno ima samo voditelj projekta (Sven Matić): jedino on ima vanjski URL baze i pokreće ove naredbe. URL sadrži lozinku baze, pa se ne dijeli s drugim članovima, ne šalje u WhatsApp grupu i ne sprema u `.env`, commit ni poruku. Ostali članovi podatke u produkciji pregledavaju i ispravljaju kroz Django admin (odjeljak [Django admin](#django-admin)). Ako izravan pristup zatreba još nekome, voditelj mu ga daje privremeno, a nakon toga se lozinka baze mijenja na Renderu.
 
 1. Pripremiti backend na računalu (jednom), uz aktivirano virtualno okruženje:
 
@@ -435,13 +437,19 @@ Varijabla postavljena u okruženju ima prednost pred vrijednošću iz `.env`, pa
 
 #### Django admin
 
-Django admin (https://chartit-okv1.onrender.com/admin/) alat je za tim: pregled baze i ispravci podataka (poglavlje 4). Račun se stvara naredbom:
+Django admin (https://chartit-okv1.onrender.com/admin/) alat je za tim: pregled baze i ispravci podataka (poglavlje 4). Prvi račun stvoren je naredbom:
 
 ```bash
 DATABASE_URL='<vanjski URL>' python manage.py createsuperuser
 ```
 
-Podaci za prijavu dijele se prema odjeljku [Dijeljenje tajni u timu](#dijeljenje-tajni-u-timu).
+Član tima koji treba pristup Django adminu traži ga od voditelja projekta:
+
+1. Član se prijavi Googleom na javnoj aplikaciji, čime nastaje njegov korisnički račun.
+2. Voditelj tom računu dodjeljuje prava superkorisnika (`is_staff` i `is_superuser`) i postavlja privremenu lozinku.
+3. Voditelj mu privremenu lozinku šalje preko WhatsAppa (odjeljak [Dijeljenje tajni u timu](#dijeljenje-tajni-u-timu)), a član je nakon prve prijave u Django admin mijenja.
+
+Pristup Django adminu ne daje pristup bazi izvan Djanga ni vanjski URL baze.
 
 #### Administrator platforme
 

@@ -51,7 +51,7 @@ Plan rada ažurira se prema napretku projekta i dogovorima grupe. GitHub Project
 
 ## A.3 Aktivnosti i doprinosi članova
 
-Tim nije bilježio sate po zadatku. Sati su zato procjena: procijenjeni prosjek od 1,5 sata po zadatku pomnožen s brojem zadataka u retku, uključujući zadatke u tijeku. Iznimka su odabir tehnologija, mapa korisničkih priča, zahtjevi (#10) i posljednji redak, za koje su sati zabilježeni ili procijenjeni zasebno. Poveznice vode na spojene pull requestove; otvoreni zadaci navedeni su zasebno.
+Tim nije bilježio sate po zadatku. Sati su zato procjena: procijenjeni prosjek od 1,5 sata po zadatku pomnožen s brojem zadataka u retku, uključujući zadatke u tijeku. Iznimka su odabir tehnologija, mapa korisničkih priča, zahtjevi (#10) i posljednji redak, za koje su sati zabilježeni ili procijenjeni zasebno. Zadatak #116 (prelazak ekrana flote na API) LN i LR rade zajedno, pa je naveden u retku svake od njih i ulazi u procjenu obiju. Poveznice vode na spojene pull requestove; otvoreni zadaci navedeni su zasebno.
 
 | Aktivnost ili rezultat | Član | Prijavljeni sati | Reprezentativni rezultat ili poveznica |
 |---|---|---|---|
@@ -66,7 +66,7 @@ Tim nije bilježio sate po zadatku. Sati su zato procjena: procijenjeni prosjek 
 | Odabir OAuth rješenja (ADR-06), registracija Google OAuth aplikacije, Google prijava i naredba `promote_admin` | LL | 6 | [#86](https://github.com/tmpteamname1/ChartIt/pull/86), [#106](https://github.com/tmpteamname1/ChartIt/pull/106), [#125](https://github.com/tmpteamname1/ChartIt/pull/125), [#127](https://github.com/tmpteamname1/ChartIt/pull/127) |
 | Model charter tvrtke i plovila, javni popis plovila s filtrima i detalji plovila | BC | 7,5 | [#105](https://github.com/tmpteamname1/ChartIt/pull/105), [#124](https://github.com/tmpteamname1/ChartIt/pull/124), [#132](https://github.com/tmpteamname1/ChartIt/pull/132), [#134](https://github.com/tmpteamname1/ChartIt/pull/134); #101 u tijeku (PR #135) |
 | Pregled aktivnosti grupe (početna verzija) | BC | 1,5 | [#79](https://github.com/tmpteamname1/ChartIt/pull/79) |
-| Obrasci uporabe (poglavlje 3) | BP | 1,5 | [#66](https://github.com/tmpteamname1/ChartIt/pull/66) |
+| Prva verzija obrazaca uporabe (poglavlje 3) | BP | 1,5 | [#66](https://github.com/tmpteamname1/ChartIt/pull/66) |
 | Šifrarnici, javni API kataloga, fotografije i minijature, naredba `seed_catalog` | BP | 7,5 | [#90](https://github.com/tmpteamname1/ChartIt/pull/90), [#120](https://github.com/tmpteamname1/ChartIt/pull/120), [#130](https://github.com/tmpteamname1/ChartIt/pull/130), [#133](https://github.com/tmpteamname1/ChartIt/pull/133); #102 u tijeku |
 | Wireframeovi korisničkog dijela, panela tvrtke i mobilnog prikaza; zajednička stanja sučelja | LN | 6 | [#82](https://github.com/tmpteamname1/ChartIt/pull/82), [#87](https://github.com/tmpteamname1/ChartIt/pull/87), [#89](https://github.com/tmpteamname1/ChartIt/pull/89), [#99](https://github.com/tmpteamname1/ChartIt/pull/99) |
 | Početna stranica dokumentacije, pristup djelatnika rezervacijama u zahtjevima | LN | 3 | [#64](https://github.com/tmpteamname1/ChartIt/pull/64), [#107](https://github.com/tmpteamname1/ChartIt/pull/107) |
@@ -74,7 +74,7 @@ Tim nije bilježio sate po zadatku. Sati su zato procjena: procijenjeni prosjek 
 | Opis projekta (poglavlje 1), wireframeovi javnog dijela i administracije, usklađivanje oznaka zahtjeva | LR | 6 | [#65](https://github.com/tmpteamname1/ChartIt/pull/65), [#88](https://github.com/tmpteamname1/ChartIt/pull/88), [#98](https://github.com/tmpteamname1/ChartIt/pull/98), [#108](https://github.com/tmpteamname1/ChartIt/pull/108) |
 | Ekran flote tvrtke | LR | 3 | [#122](https://github.com/tmpteamname1/ChartIt/pull/122); #116 u tijeku |
 | Ekran javne pretrage plovila | MB | 3 | [#126](https://github.com/tmpteamname1/ChartIt/pull/126); #96 u tijeku |
-| Rad na dokumentaciji (dijagram i opisi obrazaca uporabe) | Svi članovi | 2-3 sata po članu | Poglavlje 3. |
+| Zajednička dorada poglavlja 3 nakon prve verzije (dijagram i opisi obrazaca uporabe) | Svi članovi | 2-3 sata po članu, uz redak iznad | Poglavlje 3. |
 
 ## A.4 Pregled promjena u repozitoriju
 

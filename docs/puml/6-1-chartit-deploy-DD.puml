@@ -37,6 +37,10 @@ skinparam cloud {
     BorderColor #6C757D
 }
 
+node "Računalo voditelja projekta" as admin {
+    artifact "manage.py\n(createsuperuser, promote_admin,\nseed_catalog)" as cli
+}
+
 node "Korisnički uređaj" as client {
     node "Web-preglednik" as browser {
         artifact "React aplikacija\n(JavaScript, HTML, CSS)" as spa
@@ -66,5 +70,6 @@ web --> db : TCP 5432, PostgreSQL\n(interna mreža, sslmode=require)
 web --> bucket : HTTPS, S3 API\n(učitavanje i brisanje)
 web --> oauth : HTTPS\n(zamjena koda za token)
 client --> r2 : HTTPS (javni URL r2.dev)\ndohvat fotografija
+cli --> db : TCP 5432, vanjski URL baze\n(TLS; samo voditelj projekta)
 client --> google : HTTPS (preusmjeravanje\nna prijavu i natrag)
 @enduml
