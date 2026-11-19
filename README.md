@@ -57,7 +57,7 @@ npm run dev
 
 **Konfiguracija:** Vrijednosti iz `.env.example` dovoljne su za lokalni razvoj. Za prijavu Googleom potrebni su `GOOGLE_CLIENT_ID` i `GOOGLE_CLIENT_SECRET` lokalnog OAuth klijenta, koje tim dijeli izvan repozitorija; bez njih se uloge mogu isprobati [testnom prijavom](docs/6-Postavljanje-instalacija-i-konfiguracija.md#testna-prijava). Sve varijable opisane su u [poglavlju 6](docs/6-Postavljanje-instalacija-i-konfiguracija.md#varijable-okruženja-i-tajne).
 
-Provjera: http://localhost:5173/api/health/ vraća `{"status": "ok", "database": "ok"}`. Demo katalog (tvrtke, luke, kategorije i plovila) puni se naredbom `docker compose exec backend python manage.py seed_catalog`. Pokretanje backenda izvan Dockera, testna prijava, korisne naredbe, provjera koda i rješavanje čestih problema opisani su u odjeljku [Lokalna instalacija i konfiguracija](docs/6-Postavljanje-instalacija-i-konfiguracija.md#lokalna-instalacija-i-konfiguracija).
+Provjera: http://localhost:5173/api/health/ vraća `{"status": "ok", "database": "ok"}`. Demo katalog (tvrtke, luke, kategorije i plovila) puni se naredbom `docker compose exec backend python manage.py seed_catalog`. Pokretanje backenda izvan Dockera, testna prijava, korisne naredbe, provjera koda i rješavanje čestih problema opisani su u odjeljku [Lokalna instalacija i konfiguracija](docs/6-Postavljanje-instalacija-i-konfiguracija.md#62-lokalna-instalacija-i-konfiguracija).
 
 ## Tehnologije
 

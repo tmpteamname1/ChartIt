@@ -1,6 +1,6 @@
-# Render Blueprint (https://render.com/docs/blueprint-spec), fallback host while
-# Azure is not available. Same single-origin setup as Azure: Django + WhiteNoise
-# serve the React build, migrations run on startup.
+# Render Blueprint (https://render.com/docs/blueprint-spec), the production host
+# (docs chapter 6.3). Single-origin setup: Django + WhiteNoise serve the React
+# build, migrations run on startup.
 
 services:
   - type: web

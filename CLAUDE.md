@@ -13,7 +13,7 @@ Roles (`accounts.User.role`): KORISNIK, DJELATNIK, VLASNIK, ADMINISTRATOR. An ow
   - 4.8 frontend routes, 4.9 REST API conventions (URLs, pagination, error format, CSRF, permissions, adding an endpoint)
   - `docs/dizajn/`: wireframes and the shared UI states catalogue (`58-Zajednicka-stanja-sucelja.md`, codes like U-01, G-02)
 
-Quick start is in `README.md`; full local setup, commands and test login are in `docs/6-Postavljanje-instalacija-i-konfiguracija.md` ("Lokalna instalacija i konfiguracija").
+Quick start is in `README.md`; full local setup, commands and test login are in `docs/6-Postavljanje-instalacija-i-konfiguracija.md` ("6.2 Lokalna instalacija i konfiguracija").
 
 ## Commands
 
