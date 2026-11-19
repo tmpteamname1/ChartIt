@@ -84,6 +84,14 @@ function render(file) {
   html = html
     .replace(/<a id="([^"]+)"><\/a>/g, (_, id) => `<a id="${key(file)}--${id}"></a>`)
     .replace(/<details>/g, '<details open>')
+    // Short cells (IDs such as F-01, dates, roles) stay on one line.
+    .replace(/<(td|th)([^>]*)>([\s\S]*?)<\/\1>/g, (cell, tag, attrs, inner) => {
+      const text = inner.replace(/<[^>]+>/g, '').replace(/&[a-z#0-9]+;/g, 'x').trim()
+      if (text.length <= 14) return `<${tag}${attrs} class="nw">${inner}</${tag}>`
+      // Long identifiers in code may break only after _ . / : so the parts stay readable.
+      const withBreaks = inner.replace(/<code>([\s\S]*?)<\/code>/g, (_, c) => `<code>${c.replace(/([_./:])/g, '$1<wbr>')}</code>`)
+      return `<${tag}${attrs}>${withBreaks}</${tag}>`
+    })
   return `<section class="chapter" id="${key(file)}">${html}</section>`
 }
 
@@ -106,9 +114,12 @@ const page = `<!doctype html><html lang="hr"><head><meta charset="utf-8"><title>
   h1, h2, h3, h4 { break-after: avoid; }
   .chapter { break-before: page; }
   table { border-collapse: collapse; width: 100%; font-size: 8pt; margin: 8px 0; table-layout: auto; }
-  th, td { border: 1px solid #d0d7de; padding: 3px 5px; vertical-align: top; overflow-wrap: anywhere; }
+  /* break-word keeps whole words together, so columns do not shrink below their longest word */
+  th, td { border: 1px solid #d0d7de; padding: 3px 5px; vertical-align: top; overflow-wrap: break-word; }
+  td.nw, th.nw { white-space: nowrap; }
+  td code { overflow-wrap: break-word; font-size: 7.5pt; }
   th { background: #f0f3f6; } tr { break-inside: avoid; }
-  code { font-family: Menlo, monospace; font-size: 8.5pt; background: #f0f3f6; padding: 0 2px; border-radius: 3px; overflow-wrap: anywhere; }
+  code { font-family: Menlo, monospace; font-size: 8.5pt; background: #f0f3f6; padding: 0 2px; border-radius: 3px; }
   pre { background: #f6f8fa; padding: 8px; border-radius: 4px; white-space: pre-wrap; font-size: 8pt; break-inside: avoid; }
   pre code { background: none; padding: 0; }
   img { max-width: 100%; max-height: 235mm; display: block; margin: 8px auto; }
