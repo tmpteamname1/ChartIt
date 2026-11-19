@@ -14,7 +14,7 @@
 '
 ' Diagram level: Structural / Domain Design
 ' Diagram type:  Class Diagram
-' Version:       1.0
+' Version:       1.1
 ' ==============================================================================
 
 @startuml
@@ -43,6 +43,7 @@ package "Aplikacijski sloj" {
 
   class ReservationService <<ApplicationService>> {
     +createRequest(): ID
+    +createForCustomer(): ID
     +confirm(): void
     +reject(): void
     +cancel(): void
@@ -74,7 +75,8 @@ package "Domenski sloj" {
     -statusNote: String [0..1]
     -pickedUpAt: DateTime [0..1]
     -returnedAt: DateTime [0..1]
-    +{static} request(customerId: ID, vessel: Vessel, period: RentalPeriod, pickupPortId: ID, numberOfPeople: Integer, services: AdditionalService [0..*]): Reservation
+    +{static} request(customerId: ID, vessel: Vessel, period: RentalPeriod, numberOfPeople: Integer, services: AdditionalService [0..*]): Reservation
+    +{static} createConfirmed(customerId: ID, vessel: Vessel, period: RentalPeriod, numberOfPeople: Integer, services: AdditionalService [0..*], employeeId: ID): Reservation
     +confirm(employeeId: ID): void
     +reject(employeeId: ID, reason: String): void
     +cancel(reason: String): void
@@ -109,6 +111,7 @@ package "Domenski sloj" {
   class Vessel <<Entity>> <<AggregateRoot>> {
     -id: ID
     -companyId: ID
+    -homePortId: ID
     -dailyPrice: Decimal
     -maxPeople: Integer
     -isActive: Boolean
@@ -175,14 +178,19 @@ note left of Reservation
   - sve usluge su aktivne i pripadaju tvrtki plovila
   Dnevna cijena i cijene usluga kopiraju se u
   rezervaciju; totalPrice() = dailyPrice * days()
-  + zbroj priceAtBooking.
+  + zbroj priceAtBooking. pickupPortId je uvijek
+  matična luka plovila (homePortId).
+  createConfirmed() provjerava iste invarijante i
+  stvara rezervaciju sa statusom CONFIRMED
+  (rezervacija iz panela tvrtke).
 
   Dopušteni prijelazi stanja:
   - confirm()      : REQUESTED -> CONFIRMED
   - reject()       : REQUESTED -> REJECTED
                      (sprema statusNote)
-  - cancel()       : REQUESTED ili CONFIRMED,
-                     prije preuzimanja -> CANCELLED
+  - cancel()       : REQUESTED ili CONFIRMED -> CANCELLED;
+                     korisnik do dana prije početka
+                     najma, djelatnik do preuzimanja
   - recordPickup() : CONFIRMED, sprema pickedUpAt
   - recordReturn() : CONFIRMED nakon preuzimanja
                      -> COMPLETED (sprema returnedAt)
@@ -202,16 +210,21 @@ note bottom of RentalPeriod
 end note
 
 note bottom of ReservationService
-  createRequest() unutar jedne transakcije provjerava
+  createRequest() i createForCustomer() unutar jedne
+  transakcije zaključavaju redak plovila, provjeravaju
   hasConflict() (rezervacije i razdoblja nedostupnosti)
-  i sprema rezervaciju; ograničenje u bazi dodatno
+  i spremaju rezervaciju; ograničenje u bazi dodatno
   sprječava preklapanje pri istodobnim zahtjevima.
+  createRequest() odbija zahtjev ako se totalPrice()
+  razlikuje od iznosa koji je korisnik pregledao.
 
   Provjera dopuštenja je u aplikacijskom sloju:
   - createRequest(), cancel(): korisnik, samo vlastite
-  - confirm(), reject(), cancel(), recordPickup(),
-    recordReturn(): djelatnik tvrtke kojoj pripada plovilo
-  Obavijesti se šalju nakon potvrde transakcije.
+  - createForCustomer(), confirm(), reject(), cancel(),
+    recordPickup(), recordReturn(): djelatnik ili vlasnik
+    tvrtke kojoj pripada plovilo
+  Obavijesti se šalju nakon potvrde transakcije;
+  neuspjelo slanje bilježi se i ne poništava promjenu.
   Nazivi operacija su konceptualni.
 end note
 

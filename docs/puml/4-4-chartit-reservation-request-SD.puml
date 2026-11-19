@@ -13,7 +13,7 @@
 '
 ' Diagram level: Conceptual Interaction Design
 ' Diagram type:  Sequence Diagram
-' Version:       1.0
+' Version:       1.1
 ' ==============================================================================
 
 @startuml
@@ -49,24 +49,29 @@ database "Spremište rezervacija" as Store <<Persistence>>
 ' ==============================================================================
 ' Faza 1: odabir i slanje zahtjeva
 ' ==============================================================================
-User -> Web : odaberi razdoblje, broj osoba,\nluku preuzimanja i dodatne usluge
+User -> Web : odaberi razdoblje, broj osoba\ni dodatne usluge
 activate Web
-Web --> User : prikaži procijenjeni ukupni iznos
-User -> Web : pošalji zahtjev
-Web -> API : POST /reservations (plovilo, razdoblje,\nluka, broj osoba, usluge)
+Web --> User : prikaži matičnu luku plovila (mjesto preuzimanja)\ni ukupni iznos
+User -> Web : pregledaj iznos i pošalji zahtjev
+Web -> API : POST /api/reservations/ (plovilo, razdoblje,\nbroj osoba, usluge, pregledani iznos)
 activate API
 API -> Service : createRequest()
 activate Service
 
 ' ==============================================================================
-' Faza 2: dohvat ponude i stvaranje rezervacije
+' Faza 2: u transakciji: zaključavanje plovila, dohvat ponude i stvaranje rezervacije
 ' ==============================================================================
-Service -> Catalog : findVessel(), findServices()
+Service -> Catalog : findVessel() uz zaključavanje retka\n(select_for_update), findServices()
 activate Catalog
+note right of Catalog
+  Isti redak plovila zaključava i unos razdoblja
+  nedostupnosti, pa se provjere preklapanja
+  za isto plovilo izvode jedna za drugom (ADR-03).
+end note
 Catalog --> Service : plovilo i odabrane usluge
 deactivate Catalog
 
-Service -> Res : request(korisnik, plovilo, razdoblje,\nluka, broj osoba, usluge)
+Service -> Res : request(korisnik, plovilo, razdoblje,\nbroj osoba, usluge)\nluka preuzimanja = matična luka plovila
 activate Res
 
 alt podaci nisu valjani\n(neaktivno plovilo, kapacitet, usluga druge tvrtke, datumi)
@@ -80,6 +85,12 @@ else rezervacija je stvorena (REQUESTED, cijene kopirane)
   activate Res
   Res --> Service : nova rezervacija
   deactivate Res
+
+  alt totalPrice() se razlikuje od pregledanog iznosa\n(cijena je promijenjena nakon pregleda)
+    Service --> API : PriceChangedException (novi iznos)
+    API --> Web : 409 Conflict (price_changed, novi iznos)
+    Web --> User : prikaži novi iznos i\ntraži ponovnu potvrdu (ADR-04)
+  else iznos je jednak pregledanom
 
   ' ============================================================================
   ' Faza 3: provjera preklapanja i pohrana u jednoj transakciji
@@ -111,6 +122,7 @@ else rezervacija je stvorena (REQUESTED, cijene kopirane)
     end
   end
   deactivate Store
+  end
 end
 
 deactivate Service

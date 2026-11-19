@@ -56,7 +56,7 @@ tvrtki, a korisnik i administrator nemaju tvrtku (company_id je prazan).
 Pravilo da tvrtka ima najviše jednog aktivnog vlasnika planirano je uz dodjelu vlasnika (UC-14). Veza korisnika s Google računom pohranjuje se u tablici biblioteke django-allauth i nije prikazana.
 2. Tvrtka rezervacije određena je plovilom pa se ne pohranjuje zasebno.
 Dnevna cijena i ukupni iznos pohranjuju se u trenutku podnošenja zahtjeva
-kako kasnije promjene cijena ne bi mijenjale postojeće rezervacije.
+kako kasnije promjene cijena ne bi mijenjale postojeće rezervacije. Mjesto preuzimanja (`pickup_port_id`) uvijek je matična luka plovila i kopira se iz plovila pri podnošenju zahtjeva, kao i cijena.
 Termini istog plovila ne smiju se preklapati (ograničenje u bazi).
 3. Katalog dodatnih usluga definira se na razini tvrtke i vrijedi za sva njezina plovila; cijena je fiksna po najmu.
 4. Kategorije i luke se ne deaktiviraju: administrator ih dodaje i mijenja, a kategorija ili luka koju koristi neko plovilo ne može se obrisati (`on_delete=PROTECT`).
@@ -79,7 +79,7 @@ Dijagram oblikuje obradu rezervacija prije njezine implementacije. Poslovna prav
 
 **PlantUML izvor:** [izvor](./puml/4-4-chartit-reservation-request-SD.puml)
 
-Dijagram prikazuje podnošenje zahtjeva za rezervaciju (UC-02) i alternativu u kojoj je termin u međuvremenu zauzet: provjera preklapanja i spremanje izvode se u istoj transakciji, a povreda ograničenja u bazi vraća se kao 409 Conflict (ADR-03). Ponašanje je oblikovano; ostvaruje se s rezervacijama.
+Dijagram prikazuje podnošenje zahtjeva za rezervaciju (UC-02) i alternative u kojima se cijena promijenila nakon pregleda (ADR-04) ili je termin u međuvremenu zauzet: zaključavanje retka plovila, provjera preklapanja i spremanje izvode se u istoj transakciji, a povreda ograničenja u bazi vraća se kao 409 Conflict (ADR-03). Preuzimanje je uvijek u matičnoj luci plovila. Ponašanje je oblikovano; ostvaruje se s rezervacijama.
 
 ### 4.4.2 Reprezentativni UML dijagram stanja
 ![Reprezentativni dijagram stanja podnošenja zahtjeva](./assets/diagrams/4-5-chartit-reservation-SM.svg)<br>
@@ -87,7 +87,7 @@ Dijagram prikazuje podnošenje zahtjeva za rezervaciju (UC-02) i alternativu u k
 
 **PlantUML izvor:** [izvor](./puml/4-5-chartit-reservation-SM.puml)
 
-Dijagram prikazuje statuse rezervacije iz F-05 i događaje koji ih mijenjaju. Termin je zauzet u statusima „zahtjev” i „potvrđena”, a oslobađa se odbijanjem ili otkazivanjem (AS-02). Radnje koje dijagram pripisuje djelatniku može izvesti i vlasnik tvrtke (F-11).
+Dijagram prikazuje statuse rezervacije iz F-05 i događaje koji ih mijenjaju. Termin je zauzet u statusima „zahtjev” i „potvrđena”, a oslobađa se odbijanjem ili otkazivanjem (AS-02). Radnje koje dijagram pripisuje djelatniku može izvesti i vlasnik tvrtke (F-11). Rezervacija koju djelatnik ili vlasnik stvori u panelu tvrtke nastaje odmah u stanju „potvrđena”. Korisnik otkazuje najkasnije dan prije početka najma, a djelatnik dok preuzimanje nije evidentirano.
 
 ### 4.4.3 Sekvencijski dijagram prijave putem OAuth pružatelja
 ![Sekvencijski dijagram prijave putem OAuth pružatelja](./assets/diagrams/4-6-chartit-oauth-SD.svg)<br>
@@ -123,7 +123,7 @@ Dijagram prikazuje ostvarenu prijavu Google računom (UC-10). Pri učitavanju ap
 | Kontekst i cilj | Isto plovilo ne smije imati preklapajuće rezervacije, a preklapanje se mora spriječiti već pri podnošenju zahtjeva (F-04). Sustav istodobno koristi više korisnika (NF-01), pa dva zahtjeva za isti termin mogu stići u istom trenutku. |
 | Kriteriji odluke | Preklapanje mora biti spriječeno i pri istodobnim zahtjevima; korisnik dobiva razumljiv odgovor; rješenje je provjerljivo testovima i ne usporava znatno sustav (NF-05). |
 | Razmatrane alternative | Samo provjera u aplikaciji prije spremanja: jednostavno, ali dva istodobna zahtjeva mogu proći provjeru i oba se spremiti. Zaključavanje retka plovila (select_for_update) tijekom provjere: sprječava utrku, ali ovisi o tome da svaki dio koda koji stvara rezervacije zaključava ispravno. Ograničenje isključivanja u PostgreSQL-u (rasponi datuma po plovilu) uz provjeru u aplikaciji: baza jamči ispravnost neovisno o kodu, a aplikacijska provjera daje korisniku jasnu poruku. |
-| Odluka i obrazloženje | Odabrati ograničenje isključivanja nad razdobljem rezervacije za statuse Zahtjev i Potvrđena, uz prethodnu provjeru preklapanja u istoj transakciji, koja uključuje i razdoblja nedostupnosti. Povreda ograničenja pretvara se u odgovor 409 Conflict, jednako kao uobičajeno preklapanje. Prihvaća se vezanje uz PostgreSQL (proširenje btree_gist) te to što ograničenje ne pokriva razdoblja nedostupnosti, koja se provjeravaju samo u aplikaciji. |
+| Odluka i obrazloženje | Odabrati ograničenje isključivanja nad razdobljem rezervacije za statuse Zahtjev i Potvrđena, uz prethodnu provjeru preklapanja u istoj transakciji, koja uključuje i razdoblja nedostupnosti. Povreda ograničenja pretvara se u odgovor 409 Conflict, jednako kao uobičajeno preklapanje. Zahtjev zauzima termin od trenutka spremanja (AS-02). Svako stvaranje rezervacije (zahtjev korisnika i rezervacija iz panela tvrtke), svaka izmjena razdoblja postojeće rezervacije (UC-05) i svaki unos razdoblja nedostupnosti u istoj transakciji najprije zaključava redak plovila (`select_for_update`), a zatim provjerava preklapanje i sprema promjenu, pa se ti zapisi za isto plovilo stvaraju i mijenjaju jedan za drugim (4.7). Pri izmjeni razdoblja provjera preklapanja izuzima rezervaciju koja se uređuje. Prihvaća se vezanje uz PostgreSQL (proširenje btree_gist) te to što ograničenje ne pokriva razdoblja nedostupnosti, koja štiti zaključavanje retka plovila. |
 | Status | Prihvaćeno. |
 
 ### ADR-04: Pohrana cijena u rezervaciji u trenutku podnošenja zahtjeva
@@ -132,7 +132,7 @@ Dijagram prikazuje ostvarenu prijavu Google računom (UC-10). Pri učitavanju ap
 | Kontekst i cilj | Vlasnik može mijenjati dnevnu cijenu plovila i cijene dodatnih usluga (F-09), a korisnik mora vidjeti iznos koji je prihvatio (F-06), dok statistika prihoda mora ostati točna za prošla razdoblja (F-15). |
 | Kriteriji odluke | Iznos postojeće rezervacije ne mijenja se nakon podnošenja; izvještaji su ponovljivi; model podataka ostaje jednostavan. |
 | Razmatrane alternative | Izračun iz trenutačnih cijena putem stranog ključa: nema dupliciranja, ali promjena cijene mijenja postojeće rezervacije i prošlu statistiku. Povijest cijena s razdobljima važenja: točno, ali složeniji model i upiti. Kopiranje cijena u rezervaciju i odabrane usluge: jednostavno i ponovljivo, uz manje dupliciranja podataka. |
-| Odluka i obrazloženje | Odabrati kopiranje dnevne cijene u rezervaciju i cijene svake usluge u zapis odabrane usluge pri stvaranju rezervacije te pohranu ukupnog iznosa koji izračunava poslužitelj. Iznos koji prikazuje klijent samo je procjena. Prihvaća se da se ista cijena nalazi na više mjesta i da se naknadno ispravljanje cijene ne prenosi na postojeće rezervacije. |
+| Odluka i obrazloženje | Odabrati kopiranje dnevne cijene u rezervaciju i cijene svake usluge u zapis odabrane usluge pri stvaranju rezervacije te pohranu ukupnog iznosa koji izračunava poslužitelj. Klijent uz zahtjev šalje iznos koji je korisnik pregledao. Ako se razlikuje od iznosa koji izračuna poslužitelj (npr. vlasnik je u međuvremenu promijenio cijenu), zahtjev se ne sprema, a odgovor 409 Conflict s kodom `price_changed` sadrži novi iznos u polju `new_total` (primjer u 4.9), koji korisnik mora ponovno potvrditi ili odabrati drugi termin (UC-02, 5b). Tako korisnik ne može poslati zahtjev s iznosom koji nije vidio. Prihvaća se da se ista cijena nalazi na više mjesta i da se naknadno ispravljanje cijene ne prenosi na postojeće rezervacije. |
 | Status | Prihvaćeno. |
 
 ### ADR-05: Dohvat vremenske prognoze putem poslužitelja
@@ -183,11 +183,11 @@ Dijagram prikazuje ostvarenu prijavu Google računom (UC-10). Pri učitavanju ap
 | --- | --- | --- |
 | Jedna instanca poslužiteljske aplikacije i jedna baza podataka (ADR-01). | Kvar smještaja aplikacije ili baze privremeno onemogućuje pretragu, rezervacije i rad tvrtki. | Rizik je prihvaćen za opseg projekta; ne uvodi se pričuvna instanca ni automatsko prebacivanje. Baza se može sigurnosno kopirati. |
 | Izolacija podataka tvrtki ovisi o filtriranju u aplikaciji, a ne o razdvajanju u bazi (ADR-02). | Pogled u kojem je filtriranje izostavljeno mogao bi otkriti ili omogućiti izmjenu podataka druge tvrtke. | Svi pogledi panela tvrtke nasljeđuju zajednički bazni razred koji ograničava upite na tvrtku korisnika; automatizirani testovi izravno pozivaju API s identifikatorima druge tvrtke (NF-02); pregled koda pri svakom spajanju. |
-| Ograničenje u bazi sprječava preklapanje samo među rezervacijama, ne i s razdobljima nedostupnosti (ADR-03). | Vlasnik koji unosi nedostupnost i korisnik koji istodobno šalje zahtjev mogli bi stvoriti preklapanje. | Unos nedostupnosti i stvaranje rezervacije zaključavaju redak plovila (select_for_update) i provjeravaju preklapanje u istoj transakciji; vjerojatnost je mala, pa se dodatno ograničenje u bazi ne uvodi. |
+| Ograničenje u bazi sprječava preklapanje samo među rezervacijama, ne i s razdobljima nedostupnosti (ADR-03). | Vlasnik koji unosi nedostupnost i korisnik koji istodobno šalje zahtjev mogli bi stvoriti preklapanje. | Unos nedostupnosti, stvaranje rezervacije i izmjena njezina razdoblja zaključavaju redak plovila (select_for_update) i provjeravaju preklapanje u istoj transakciji; vjerojatnost je mala, pa se dodatno ograničenje u bazi ne uvodi. |
 | Oslanjanje na mogućnosti specifične za PostgreSQL (rasponi datuma, proširenje btree_gist). | Rješenje se ne može izvoditi na SQLite-u, a razlika okruženja može sakriti pogreške. | Svi članovi tima i testovi koriste PostgreSQL u Dockeru; SQLite se ne koristi ni lokalno. |
 | Besplatni plan Rendera nema trajni disk, pa se fotografije plovila na javnoj instanci pohranjuju kod vanjskog pružatelja (Cloudflare R2). | Fotografije ovise o dostupnosti i besplatnom planu pružatelja; prekoračenje besplatne kvote naplaćuje se, a nedostupnost spremnika prikazuje neispravne slike. | Za opseg projekta (nekoliko GB) besplatni plan je dovoljan. Pohrana se bira samo postavkom `STORAGES` prema varijablama okruženja, pa se pružatelj može zamijeniti bez promjene modela; lokalno se fotografije čuvaju u `backend/media` (poglavlje 6, [#131](https://github.com/tmpteamname1/ChartIt/issues/131)). |
 | Besplatni plan Rendera (poglavlje 6). | Servis se gasi nakon razdoblja bez prometa, pa prvi zahtjev čeka ponovno pokretanje; besplatna baza istječe 30 dana nakon stvaranja. | Prihvaćeno za opseg projekta. Prije isteka baze podaci se prenose u novu bazu; ograničenja su navedena u README-u i poglavlju 6. |
-| E-pošta se šalje iz poslužiteljske aplikacije bez zasebnog pozadinskog procesa i ponovnih pokušaja. | Sporiji odgovor pri potvrdi ili odbijanju zahtjeva; obavijest se gubi ako poslužitelj e-pošte nije dostupan. | Prihvaćeni tehnički dug. Slanje se izvodi nakon potvrde transakcije, neuspjeh se bilježi u dnevnik, a status rezervacije uvijek je vidljiv u aplikaciji, pa obavijest nije jedini izvor informacije. |
+| E-pošta se šalje iz poslužiteljske aplikacije bez zasebnog pozadinskog procesa i ponovnih pokušaja. | Sporiji odgovor pri potvrdi ili odbijanju zahtjeva; obavijest se gubi ako poslužitelj e-pošte nije dostupan. | Prihvaćeni tehnički dug. Korisniku se jamči točan status u aplikaciji (Moje rezervacije), a dostava e-pošte nije zajamčena (F-07). Slanje se izvodi nakon potvrde transakcije i nikad ne poništava promjenu statusa. Neuspjela dostava bilježi se u zapisima poslužitelja s ID-jem rezervacije i vrstom obavijesti; poruka se ne šalje ponovno automatski, a korisnik stanje i kontakt tvrtke vidi u detaljima rezervacije. |
 | Ugovor API-ja između poslužiteljskog i klijentskog tima može se razići tijekom usporednog razvoja. | Klijent šalje ili očekuje podatke drugačijeg oblika, a pogreške se otkrivaju tek pri integraciji. | Shema API-ja generira se iz koda (OpenAPI, drf-spectacular) i dostupna je kao Swagger UI na `/api/docs/`. Frontend dok endpoint ne postoji radi s lažnim podacima točnog oblika iz zadatka, a promjene oblika odgovora najavljuju se u zahtjevu za spajanje (4.9). |
 | Tim nema iskustva s Djangom i DRF-om. | Različiti dijelovi koda mogu slijediti različite obrasce, a poslovna pravila mogu završiti u pogledima i serijalizatorima. | Zajednička pravila (4.6) i konvencije API-ja (4.9) zapisani su prije implementacije i provjeravaju se pri pregledu koda; zajednički bazni razred pogleda panela tvrtke (#101) i klase dopuštenja (`accounts/permissions.py`) nasljeđuju se umjesto ponovnog pisanja. |
 | Prijava ovisi isključivo o vanjskom OAuth pružatelju. | Testiranje različitih uloga zahtijeva više stvarnih računa, a nedostupnost pružatelja onemogućuje prijavu. | U lokalnom razvoju omogućena je prijava testnih korisnika bez OAuth-a (zastavica ENABLE_TEST_LOGIN). Na javnoj instanci zastavica se ne uključuje; testni korisnici nemaju lozinku i ne mogu se prijaviti drugim putem. Nedostupnost pružatelja prihvaćena je kao rizik. |
@@ -200,7 +200,7 @@ Dijagram prikazuje ostvarenu prijavu Google računom (UC-10). Pri učitavanju ap
 | Nejasno značenje zadnjeg dana najma. | Korisnik i tvrtka mogu različito tumačiti smije li novi najam početi na dan povrata, što dovodi do spornih preklapanja. | Razdoblje se tretira kao poluotvoreni interval: dan povrata može biti dan preuzimanja za sljedeći najam. Pravilo je jasno prikazano u sučelju pri odabiru datuma. |
 | Deaktivacija tvrtke s budućim potvrđenim rezervacijama. | Plovila nestaju iz pretrage, a korisnici imaju rezervacije kod tvrtke koja više nije aktivna. | Rezervacije ostaju vidljive korisnicima s kontaktom tvrtke; administrator prije deaktivacije vidi broj budućih rezervacija. Rješavanje tih najmova odgovornost je tvrtke izvan sustava. |
 | Vremenska prognoza može se shvatiti kao jamstvo. | Korisnik planira najam za nekoliko mjeseci na temelju prognoze koja je pouzdana samo nekoliko dana unaprijed. | Prognoza se prikazuje samo za dane unutar raspona pružatelja, uz oznaku da je informativna; za dalje datume prikazuje se poruka da prognoza još nije dostupna. |
-| Procijenjeni iznos u pregledniku razlikuje se od konačnog. | Korisnik može očekivati iznos koji nije zapisan u rezervaciji, npr. ako je vlasnik u međuvremenu promijenio cijenu. | Mjerodavan je iznos koji izračuna poslužitelj (ADR-04); prikazuje se u potvrdi zahtjeva i detaljima rezervacije. | 
+| Procijenjeni iznos u pregledniku razlikuje se od konačnog. | Korisnik može očekivati iznos koji nije zapisan u rezervaciji, npr. ako je vlasnik u međuvremenu promijenio cijenu. | Mjerodavan je iznos koji izračuna poslužitelj (ADR-04). Klijent šalje pregledani iznos; ako se razlikuje, poslužitelj ne sprema zahtjev, nego vraća novi iznos koji korisnik ponovno potvrđuje. | 
 ## 4.8 Mapa stranica i ruta klijentske aplikacije
 
 Za sve ekrane iz ove mape zajednički nacrti i pravila učitavanja, praznih stanja, grešaka, obavijesti i potvrdnih dijaloga definirani su u [katalogu zajedničkih stanja sučelja (#58)](dizajn/58-Zajednicka-stanja-sucelja.md). [Tablica primjene po ekranima](dizajn/58-Zajednicka-stanja-sucelja.md#primjena-po-ekranima) povezuje rute s oznakama uzoraka koje se koriste u wireframeima #53–#57.
@@ -476,6 +476,18 @@ Sve greške API-ja imaju isti oblik, pa ih klijent obrađuje na jednom mjestu:
 
 - `detail` je kratak opis za prikaz, `code` stabilan strojni kod prema kojem klijent odlučuje što prikazati, a `errors` sadrži greške po poljima samo kod validacije (inače `null`).
 - Greške koje se ne odnose na jedno polje (npr. iz `validate()` serijalizatora) nalaze se pod ključem `non_field_errors`.
+- Domenska greška može uz ta tri polja vratiti i dodatne podatke koji su klijentu potrebni za nastavak. Svako dodatno polje vezano je uz jedan `code` i navodi se u ovom odjeljku. Zasad je to samo `new_total` uz `price_changed` (ADR-04): novi iznos kao decimalni tekst, isti kao iznosi u ostalim odgovorima.
+
+```json
+{
+  "detail": "Cijena se promijenila. Provjerite novi iznos.",
+  "code": "price_changed",
+  "errors": null,
+  "new_total": "1340.00"
+}
+```
+
+Prema kodu `price_changed` obrazac zahtjeva prikazuje novi iznos i nudi njegovu potvrdu ili odabir drugog termina. Zajednička obrada grešaka (`config.api.exception_handler`) i klijentski `ApiError` (`frontend/src/api/client.ts`) zasad prenose samo `detail`, `code` i `errors`, pa ih uz rezervacije treba proširiti da prenose i dodatna polja.
 
 | Status | `code` | Značenje i reakcija klijenta |
 | --- | --- | --- |

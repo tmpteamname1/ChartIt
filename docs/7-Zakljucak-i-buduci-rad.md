@@ -20,7 +20,7 @@ Poglavlje opisuje stanje projekta u Iteraciji 1 (projektni tjedan 7). Rezultati 
 - Ograničenje preklapanja rezervacija pripremljeno je u bazi (proširenje `btree_gist`, ADR-03), ali model rezervacije još ne postoji (F-04, NF-01).
 - Administracija tvrtki i šifrarnika radi samo kroz Django admin, bez ekrana u aplikaciji (F-19, F-22, F-23).
 
-**Nije ostvareno:** rezervacije i njihova obrada (F-03 – F-07, F-11 – F-14), statistika i izvještaj (F-15), vremenska prognoza i karta (F-16, F-17), upravljanje djelatnicima i podacima tvrtke (F-20, F-21), dodatne usluge plovila (F-09) i kalendar dostupnosti (F-10). Korisnik zato u ovoj fazi može pronaći plovilo, ali ne može poslati zahtjev za rezervaciju, što je glavna svrha aplikacije.
+**Nije ostvareno:** rezervacije i njihova obrada (F-03 – F-07, F-11 – F-14), statistika i izvještaj (F-15), vremenska prognoza i karta (F-16, F-17), upravljanje djelatnicima i podacima tvrtke (F-20, F-21), cjenik dodatnih usluga (dio F-09) i kalendar dostupnosti (F-10). Korisnik zato u ovoj fazi može pronaći plovilo, ali ne može poslati zahtjev za rezervaciju, što je glavna svrha aplikacije.
 
 ## 7.2 Izazovi i naučene lekcije
 
@@ -34,16 +34,17 @@ Poglavlje opisuje stanje projekta u Iteraciji 1 (projektni tjedan 7). Rezultati 
 
 ## 7.3 Budući rad
 
-Nužno za ispunjenje izvornog opsega, prema prioritetu:
+Nužno za ispunjenje dogovorenog opsega, prema prioritetu. Sve navedeno planirano je nakon prve predaje:
 
 1. **Rezervacije (F-03 – F-06, F-12, NF-01).** Model rezervacije s ograničenjem preklapanja u bazi, zahtjev korisnika i pregled vlastitih rezervacija. Bez toga aplikacija ne ispunjava glavnu svrhu. Uz to treba ispitati istodobne zahtjeve za isti termin.
-2. **Obrada rezervacija u panelu tvrtke (F-05, F-11, F-13, F-14) i obavijesti (F-07).** Djelatnik i vlasnik prihvaćaju ili odbijaju zahtjeve i vide raspored; korisnik dobiva obavijest e-poštom.
-3. **Filtar pretrage po terminu (F-01) i kalendar dostupnosti (F-10),** koji ovise o rezervacijama.
-4. **Ekrani administracije (F-19 – F-23)** umjesto Django admina, kako bi administrator platforme radio u aplikaciji.
+2. **Obrada rezervacija u panelu tvrtke (F-05, F-11, F-13, F-14) i obavijesti (F-07).** Djelatnik i vlasnik prihvaćaju ili odbijaju zahtjeve, stvaraju i otkazuju rezervacije i vide raspored; korisnik dobiva obavijest e-poštom.
+3. **Filtar pretrage po terminu (F-01), kalendar dostupnosti (F-10) i dodatne usluge (F-09),** koji ovise o rezervacijama. Od F-09 ostvarena je dnevna cijena plovila; cjenik dodatnih usluga tvrtke i njihov odabir u zahtjevu odgođeni su do rezervacija.
+4. **Statistika i izvoz u CSV (F-15), vremenska prognoza (F-16) i karta (F-17).** Dio su odobrenog zadatka (poglavlje 2.1), pa su obvezni.
+5. **Funkcionalnosti vlasnika tvrtke: izmjena podataka tvrtke (F-20) i upravljanje djelatnicima (F-21).**
+6. **Ekrani administracije platforme (F-19, F-22, F-23)** umjesto Django admina, kako bi administrator platforme radio u aplikaciji.
 
 Neobavezna proširenja:
 
-- vremenska prognoza i karta polazne luke (F-16, F-17) i statistika tvrtke (F-15), ako ostane vremena nakon rezervacija,
 - automatski testovi klijentske aplikacije, jer se ponašanje u pregledniku zasad provjerava samo ručno (poglavlje 5.4),
 - postupak prijenosa produkcijske baze prije isteka besplatne baze na Renderu (30 dana) i zaštita naredbe `seed_catalog` od pokretanja nad produkcijom bez spremnika.
 
