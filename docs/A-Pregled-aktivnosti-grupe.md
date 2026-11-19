@@ -36,8 +36,8 @@ Projektna grupa održava dva sastanka tjedno. Jedan sastanak održava se u sklop
 
 | Razdoblje/Tjedan | Glavni planirani rad | Odgovorni članovi | Poveznica na zadatke |
 |---|---|---|---|
-| Tjedan 1 | Formiranje grupe i upoznavanje s projektnim zadatkom. | Svi članovi | / |
-| Tjedan 2 | Odabir razvojnih tehnologija. | SM | [Zadatak #4](https://github.com/orgs/tmpteamname1/projects/3/views/2?pane=issue&itemId=278728960&issue=tmpteamname1%7CChartIt%7C4) |
+| Tjedan 1 | Formiranje grupe i upoznavanje s projektnim zadatkom; početak izrade mape korisničkih priča u Figmi. | Svi članovi | [Odjeljak 2.8](2-Analiza-zahtjeva.md#28-početna-mapa-korisničkih-priča) |
+| Tjedan 2 | Odabir razvojnih tehnologija; dovršetak mape korisničkih priča. | Tehnologije SM; mapa korisničkih priča svi članovi | [Zadatak #4](https://github.com/orgs/tmpteamname1/projects/3/views/2?pane=issue&itemId=278728960&issue=tmpteamname1%7CChartIt%7C4) |
 | Tjedan 3 | Definiranje funkcionalnih i nefunkcionalnih zahtjeva. | LL | [Zadatak #10](https://github.com/orgs/tmpteamname1/projects/3/views/2?pane=issue&itemId=283747405&issue=tmpteamname1%7CChartIt%7C10) |
 | Tjedan 4 | Podjela na pod-timove | Svi članovi | / |
 | Tjedan 5 | Rad na dokumentaciji i dogovor o prvoj fazi implementacije; kostur aplikacije, konvencije API-ja, postavljanje na Render. | Svi članovi; kostur i postavljanje SM | [Zadatak #23](https://github.com/orgs/tmpteamname1/projects/3/views/2?pane=issue&itemId=288207191&issue=tmpteamname1%7CChartIt%7C23), [epik #32](https://github.com/tmpteamname1/ChartIt/issues/32) |
@@ -49,11 +49,12 @@ Plan rada ažurira se prema napretku projekta i dogovorima grupe. GitHub Project
 
 ## A.3 Aktivnosti i doprinosi članova
 
-Tim nije bilježio sate po zadatku. Sati su zato procjena: procijenjeni prosjek od 1,5 sata po zadatku pomnožen s brojem zadataka u retku, uključujući zadatke u tijeku. Iznimka su prvi i posljednji redak te zahtjevi (#10), za koje su sati zabilježeni ranije. Poveznice vode na spojene pull requestove; otvoreni zadaci navedeni su zasebno.
+Tim nije bilježio sate po zadatku. Sati su zato procjena: procijenjeni prosjek od 1,5 sata po zadatku pomnožen s brojem zadataka u retku, uključujući zadatke u tijeku. Iznimka su odabir tehnologija, mapa korisničkih priča, zahtjevi (#10) i posljednji redak, za koje su sati zabilježeni ili procijenjeni zasebno. Poveznice vode na spojene pull requestove; otvoreni zadaci navedeni su zasebno.
 
 | Aktivnost ili rezultat | Član | Prijavljeni sati | Reprezentativni rezultat ili poveznica |
 |---|---|---|---|
 | Odabir tehnologija | SM | 1 | Odabir Django i React tehnologija. |
+| Početna mapa korisničkih priča u Figmi (tjedni 1 i 2) | Svi članovi | 2,5 sata po članu | [Slika 2.1](2-Analiza-zahtjeva.md#28-početna-mapa-korisničkih-priča) |
 | Kostur projekta, Docker, kostur React aplikacije i konvencije REST API-ja | SM | 6 | [#8](https://github.com/tmpteamname1/ChartIt/pull/8), [#62](https://github.com/tmpteamname1/ChartIt/pull/62), [#63](https://github.com/tmpteamname1/ChartIt/pull/63), [#77](https://github.com/tmpteamname1/ChartIt/pull/77) |
 | Postavljanje na Render, varijable okruženja, lint i CI | SM | 7,5 | [#78](https://github.com/tmpteamname1/ChartIt/pull/78), [#81](https://github.com/tmpteamname1/ChartIt/pull/81), [#83](https://github.com/tmpteamname1/ChartIt/pull/83), [#84](https://github.com/tmpteamname1/ChartIt/pull/84), [#85](https://github.com/tmpteamname1/ChartIt/pull/85) |
 | Klase dopuštenja, CSRF, testna prijava, prijava u klijentu i zaštićene rute | SM | 7,5 | [#110](https://github.com/tmpteamname1/ChartIt/pull/110), [#111](https://github.com/tmpteamname1/ChartIt/pull/111), [#112](https://github.com/tmpteamname1/ChartIt/pull/112), [#128](https://github.com/tmpteamname1/ChartIt/pull/128), [#129](https://github.com/tmpteamname1/ChartIt/pull/129) |

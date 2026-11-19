@@ -131,3 +131,19 @@ Komponente su opisane u poglavlju 4.2, a testovi se nalaze u datotekama `tests.p
 | Iteracija 1 | Slijedi | Slijedi |
 | Demo 2 | Slijedi | Slijedi |
 | Završni pregled | Slijedi | Slijedi |
+
+## 2.8 Početna mapa korisničkih priča
+
+Na početku projekta (listopad 2026.) tim je u Figmi izradio mapu korisničkih priča (engl. *story map*), iz koje su nastali prvi funkcijski i nefunkcijski zahtjevi te obrasci uporabe. Mapa je priložena kao zapis početnog shvaćanja sustava i nije ažurirana tijekom razvoja, pa se dio funkcionalnosti razlikuje od današnjeg opsega. Mjerodavni su zahtjevi u odjeljcima 2.1 i 2.2, promjene u odjeljku 2.5 i sljedivost u odjeljku 2.6.
+
+![Početna mapa korisničkih priča sustava ChartIt](./assets/2-1-chartit-story-map.png)
+
+**Slika 2.1. Početna mapa korisničkih priča (Figma, listopad 2026.)**
+
+Plave kartice označavaju korisnike aplikacije, crvene kartice zajedničke funkcionalnosti više korisnika (opisane lijevo, u dijelu „Definicije zajedničkih kartica”), ljubičaste nazive grupa, a žute pojedinačne funkcionalnosti i detaljniji opis grupe. Desno su navedeni nefunkcijski zahtjevi.
+
+Glavne razlike u odnosu na današnji opseg:
+
+- **Registracija:** mapa predviđa registraciju korisnika. Aplikacija koristi samo prijavu Google računom, bez lozinke i zasebne registracije (F-18, ADR-06).
+- **Jedna ili više tvrtki:** mapa opisuje aplikaciju jedne charter tvrtke, u kojoj administrator uređuje plovila, luke, kategorije, opremu i djelatnike. Nakon proširenja na platformu za više tvrtki (odjeljak 2.5, 28. 10. 2026.) administrator platforme upravlja tvrtkama i zajedničkim popisima (luke, kategorije), a vlasnik tvrtke flotom, djelatnicima i podacima svoje tvrtke.
+- **Uloge:** uloge Korisnik, Djelatnik i Vlasnik zadržane su, a vlasnik danas može sve što i djelatnik ([poglavlje 3.1](3-Obrasci-uporabe.md)).
