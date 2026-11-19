@@ -42,7 +42,7 @@ skinparam note {
 package "Aplikacijski sloj" {
 
   class ReservationService <<ApplicationService>> {
-    +createRequest(): UUID
+    +createRequest(): ID
     +confirm(): void
     +reject(): void
     +cancel(): void
@@ -58,24 +58,25 @@ package "Aplikacijski sloj" {
 package "Domenski sloj" {
 
   ' Korisnik, plovilo i luka su drugi agregati, pa se referenciraju samo
-  ' identifikatorom. RentalPeriod i SelectedService su dijelovi agregata i
+  ' identifikatorom (konceptualni tip ID; u implementaciji cjelobrojni ključ).
+  ' RentalPeriod i SelectedService su dijelovi agregata i
   ' prikazani su kompozicijom, a ne atributima.
   class Reservation <<Entity>> <<AggregateRoot>> {
-    -id: UUID
-    -customerId: UUID
-    -vesselId: UUID
-    -pickupPortId: UUID
+    -id: ID
+    -customerId: ID
+    -vesselId: ID
+    -pickupPortId: ID
     -numberOfPeople: Integer
     -status: ReservationStatus
     -dailyPrice: Decimal
     -createdAt: DateTime
-    -processedById: UUID [0..1]
+    -processedById: ID [0..1]
     -statusNote: String [0..1]
     -pickedUpAt: DateTime [0..1]
     -returnedAt: DateTime [0..1]
-    +{static} request(customerId: UUID, vessel: Vessel, period: RentalPeriod, pickupPortId: UUID, numberOfPeople: Integer, services: AdditionalService [0..*]): Reservation
-    +confirm(employeeId: UUID): void
-    +reject(employeeId: UUID, reason: String): void
+    +{static} request(customerId: ID, vessel: Vessel, period: RentalPeriod, pickupPortId: ID, numberOfPeople: Integer, services: AdditionalService [0..*]): Reservation
+    +confirm(employeeId: ID): void
+    +reject(employeeId: ID, reason: String): void
     +cancel(reason: String): void
     +recordPickup(at: DateTime): void
     +recordReturn(at: DateTime): void
@@ -90,8 +91,8 @@ package "Domenski sloj" {
   }
 
   class SelectedService <<Entity>> {
-    -id: UUID
-    -serviceId: UUID
+    -id: ID
+    -serviceId: ID
     -priceAtBooking: Decimal
   }
 
@@ -106,29 +107,29 @@ package "Domenski sloj" {
   ' Elementi ponude kojima upravlja komponenta Upravljanje flotom. Prikazani
   ' su samo atributi potrebni za stvaranje rezervacije.
   class Vessel <<Entity>> <<AggregateRoot>> {
-    -id: UUID
-    -companyId: UUID
+    -id: ID
+    -companyId: ID
     -dailyPrice: Decimal
     -maxPeople: Integer
     -isActive: Boolean
   }
 
   class AdditionalService <<Entity>> <<AggregateRoot>> {
-    -id: UUID
-    -companyId: UUID
+    -id: ID
+    -companyId: ID
     -price: Decimal
     -isActive: Boolean
   }
 
   interface ReservationRepository <<Repository>> {
-    +findById(id: UUID): Reservation
+    +findById(id: ID): Reservation
     +save(reservation: Reservation): void
-    +hasConflict(vesselId: UUID, period: RentalPeriod): Boolean
+    +hasConflict(vesselId: ID, period: RentalPeriod): Boolean
   }
 
   interface FleetCatalog <<Repository>> {
-    +findVessel(id: UUID): Vessel
-    +findServices(companyId: UUID, ids: UUID [0..*]): AdditionalService [0..*]
+    +findVessel(id: ID): Vessel
+    +findServices(companyId: ID, ids: ID [0..*]): AdditionalService [0..*]
   }
 
   interface ReservationNotifier <<Port>> {
@@ -166,7 +167,7 @@ FleetCatalog ..> AdditionalService : vraća ►
 ' Ograničenja
 ' ==============================================================================
 
-note right of Reservation
+note left of Reservation
   request() stvara rezervaciju sa statusom REQUESTED
   i provjerava invarijante (ValidationException):
   - plovilo je aktivno
@@ -192,7 +193,7 @@ note right of Reservation
   Nedopušteni prijelaz se odbija pogreškom.
 end note
 
-note right of RentalPeriod
+note bottom of RentalPeriod
   Nepromjenjiv. Invarijante:
   startDate < endDate,
   startDate nije u prošlosti

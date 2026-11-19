@@ -4,6 +4,8 @@
 
 **Trenutačna faza:** Projektni tjedan 7 (Iteracija 1)
 
+**Datum presjeka:** 19. 11. 2026. Evidencija obuhvaća aktivnosti do tog dana; zadaci koji su tada bili u tijeku (npr. #136) navedeni su s tadašnjim stanjem.
+
 ## A.1 Evidencija sastanaka
 
 **Kratice članova tima:**

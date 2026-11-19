@@ -15,7 +15,7 @@
 '
 ' Diagram level: Runtime Behavioral Design
 ' Diagram type:  Sequence Diagram
-' Version:       1.1
+' Version:       1.2
 ' ==============================================================================
 
 @startuml
@@ -47,13 +47,15 @@ participant "Google OAuth" as G
 ' ==============================================================================
 ' Pokretanje prijave
 ' ==============================================================================
+Korisnik -> FE : Otvara aplikaciju (/prijava)
+FE -> BE : GET /api/auth/me/
+BE --> FE : 401 (nije prijavljen) + CSRF kolačić (csrftoken)
 Korisnik -> FE : Klik "Prijavi se putem Googlea"
-FE -> BE : GET /_allauth/browser/v1/config
-BE --> FE : 200 + CSRF kolačić
-FE -> BE : POST /_allauth/browser/v1/auth/provider/redirect\n(provider=google, callback_url, process=login)
+FE -> BE : POST /_allauth/browser/v1/auth/provider/redirect\n(provider=google, process=login, callback_url,\ncsrfmiddlewaretoken)
 note right
   Slanje HTML obrasca (navigacija preglednika),
   a ne fetch: odgovor 302 vodi preglednik na Google.
+  Ostale putanje /_allauth/ vraćaju 404.
 end note
 BE --> Korisnik : 302 na Google autorizacijski URL
 

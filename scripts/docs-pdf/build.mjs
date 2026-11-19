@@ -2,6 +2,7 @@
 // Usage (from scripts/docs-pdf): npm install, then npm run build -- v1
 // Output: docs/deliverables/PROINZ26_G09.4_ChartIt_<version>.pdf
 // Uses the locally installed Chrome; set CHROME_PATH if it is not in the default location.
+import { execSync } from 'node:child_process'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
@@ -9,9 +10,11 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { Marked } from 'marked'
 import GithubSlugger from 'github-slugger'
 import puppeteer from 'puppeteer-core'
+import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs'
 
 const version = process.argv[2] || 'v1'
-const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
+const here = path.dirname(fileURLToPath(import.meta.url))
+const repo = path.resolve(here, '../..')
 const docs = path.join(repo, 'docs')
 const outPdf = path.join(docs, 'deliverables', `PROINZ26_G09.4_ChartIt_${version}.pdf`)
 
@@ -29,7 +32,12 @@ if (!chrome) {
   console.error('Chrome nije pronađen. Postavite CHROME_PATH na putanju do Chromea.')
   process.exit(1)
 }
-const GH = 'https://github.com/tmpteamname1/ChartIt/blob/main/'
+// Links to files outside the PDF point to the commit the PDF is built from, not to main, so they
+// keep showing what was submitted. Build from a commit that is pushed (or will be merged).
+const rev = execSync('git rev-parse HEAD', { cwd: repo }).toString().trim()
+const GH = `https://github.com/tmpteamname1/ChartIt/blob/${rev}/`
+// Diagrams too wide for a portrait page get their own landscape page, together with the caption.
+const WIDE_IMAGES = ['story-map', '4-1-chartit-system-CMP', '4-3-chartit-domain-CD']
 const FILES = [
   'Home.md',
   '1-Projekt.md',
@@ -48,9 +56,10 @@ function rewriteHref(href, file) {
   if (!href || /^(https?:|mailto:)/.test(href)) return href
   const [p, hash] = href.split('#')
   if (!p) return '#' + key(file) + '--' + hash
-  const resolved = path.normalize(path.join('docs', p)) // repo-relative
-  const base = path.basename(resolved)
-  if (resolved.startsWith('docs/') && FILES.includes(base) && path.dirname(resolved) === 'docs') {
+  // path.posix, so links keep forward slashes when the PDF is built on Windows.
+  const resolved = path.posix.normalize(path.posix.join('docs', p)) // repo-relative
+  const base = path.posix.basename(resolved)
+  if (FILES.includes(base) && path.posix.dirname(resolved) === 'docs') {
     return '#' + key(base) + (hash ? '--' + hash : '')
   }
   return GH + resolved + (hash ? '#' + hash : '')
@@ -72,11 +81,14 @@ function render(file) {
       },
       image({ href, text }) {
         const src = /^https?:/.test(href) ? href : pathToFileURL(path.join(docs, href)).href
-        // Very wide images (the story map) get their own landscape page.
-        if (href.includes('story-map')) {
-          return `<span class="landscape"><img src="${src}" alt="${text}"></span>`
-        }
-        return `<img src="${src}" alt="${text}">`
+        const wide = WIDE_IMAGES.some((name) => href.includes(name))
+        return `<img src="${src}" alt="${text}"${wide ? ' class="wide"' : ''}>`
+      },
+      // Mermaid diagrams are rendered to SVG in the browser before printing.
+      code({ text, lang }) {
+        if (lang !== 'mermaid') return false
+        const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        return `<div class="mermaid">${escaped}</div>\n`
       },
     },
   })
@@ -84,6 +96,11 @@ function render(file) {
   html = html
     .replace(/<a id="([^"]+)"><\/a>/g, (_, id) => `<a id="${key(file)}--${id}"></a>`)
     .replace(/<details>/g, '<details open>')
+    // A paragraph with a wide image, plus a caption paragraph right after it, moves to a landscape page.
+    .replace(
+      /<p>((?:(?!<\/p>)[\s\S])*?class="wide"(?:(?!<\/p>)[\s\S])*)<\/p>\s*(<p><strong>Slika(?:(?!<\/p>)[\s\S])*<\/p>)?/g,
+      (_, figure, caption) => `<div class="landscape"><p>${figure}</p>${caption || ''}</div>`,
+    )
     // Short cells (IDs such as F-01, dates, roles) stay on one line.
     .replace(/<(td|th)([^>]*)>([\s\S]*?)<\/\1>/g, (cell, tag, attrs, inner) => {
       const text = inner.replace(/<[^>]+>/g, '').replace(/&[a-z#0-9]+;/g, 'x').trim()
@@ -96,17 +113,24 @@ function render(file) {
 }
 
 const chapters = FILES.map(render)
-const tocHtml = toc
-  .map((t) => `<li class="d${t.depth}"><a href="#${t.id}">${t.text}</a></li>`)
-  .join('\n')
+// Page numbers are known only after printing: the first pass prints with placeholders of the same
+// width, the page of each heading is read from the PDF outline, and the second pass prints again.
+const tocHtml = (pages) =>
+  toc
+    .map((t, i) => `<li class="d${t.depth}"><a href="#${t.id}"><span class="t">${t.text}</span><span class="pg">${pages[i] ?? ''}</span></a></li>`)
+    .join('\n')
 const today = new Date().toLocaleDateString('hr-HR')
 
-const page = `<!doctype html><html lang="hr"><head><meta charset="utf-8"><title>ChartIt – projektna dokumentacija</title>
+const page = (pages) => `<!doctype html><html lang="hr"><head><meta charset="utf-8"><title>ChartIt – projektna dokumentacija</title>
 <style>
   @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
   @page wide { size: A4 landscape; margin: 12mm; }
   .landscape { page: wide; display: block; break-before: page; break-after: page; }
-  .landscape img { max-height: 170mm; width: 100%; object-fit: contain; margin: 0; }
+  .landscape p { margin: 0 0 4px; }
+  .landscape img { max-height: 168mm; width: 100%; object-fit: contain; margin: 0 auto; }
+  p:has(> img) { break-inside: avoid; }
+  .mermaid { break-inside: avoid; margin: 8px 0; text-align: center; }
+  .mermaid svg { width: 100%; max-width: 100% !important; height: auto; max-height: 230mm; }
   body { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-size: 10pt; line-height: 1.45; color: #1f2328; }
   h1 { font-size: 20pt; border-bottom: 2px solid #0d6efd; padding-bottom: 4px; margin-top: 0; }
   h2 { font-size: 14pt; margin-top: 20px; border-bottom: 1px solid #d0d7de; padding-bottom: 2px; }
@@ -122,7 +146,7 @@ const page = `<!doctype html><html lang="hr"><head><meta charset="utf-8"><title>
   code { font-family: Menlo, monospace; font-size: 8.5pt; background: #f0f3f6; padding: 0 2px; border-radius: 3px; }
   pre { background: #f6f8fa; padding: 8px; border-radius: 4px; white-space: pre-wrap; font-size: 8pt; break-inside: avoid; }
   pre code { background: none; padding: 0; }
-  img { max-width: 100%; max-height: 235mm; display: block; margin: 8px auto; }
+  img { max-width: 100%; max-height: 200mm; display: block; margin: 8px auto; }
   blockquote { border-left: 3px solid #d0d7de; margin: 8px 0; padding: 0 10px; color: #57606a; }
   details { margin: 6px 0; } summary { font-weight: 600; list-style: none; }
   a { color: #0969da; text-decoration: none; }
@@ -132,6 +156,10 @@ const page = `<!doctype html><html lang="hr"><head><meta charset="utf-8"><title>
   .cover p { margin: 3px 0; font-size: 11pt; }
   .toc { break-before: page; } .toc ul { list-style: none; padding: 0; }
   .toc li.d1 { font-weight: 600; margin-top: 8px; } .toc li.d2 { margin-left: 16px; font-size: 9.5pt; }
+  .toc a { display: flex; align-items: baseline; color: inherit; }
+  .toc a .t { flex: 0 1 auto; } .toc a .pg { flex: 0 0 auto; margin-left: auto; padding-left: 6px; font-variant-numeric: tabular-nums; }
+  .toc a::after { content: ""; order: 1; flex: 1 1 auto; border-bottom: 1px dotted #8c959f; margin: 0 4px; min-width: 8mm; }
+  .toc a .pg { order: 2; margin-left: 0; min-width: 7mm; text-align: right; }
 </style></head><body>
 <div class="cover">
   <h1>ChartIt</h1>
@@ -143,13 +171,14 @@ const page = `<!doctype html><html lang="hr"><head><meta charset="utf-8"><title>
   <p>Javna aplikacija: https://chartit-okv1.onrender.com</p>
   <p style="margin-top:24px">Datum: ${today}</p>
 </div>
-<nav class="toc"><h1>Sadržaj</h1><ul>${tocHtml}</ul></nav>
+<nav class="toc"><h1>Sadržaj</h1><ul>${tocHtml(pages)}</ul></nav>
 ${chapters.join('\n')}
+<script src="${pathToFileURL(path.join(here, 'node_modules/mermaid/dist/mermaid.min.js')).href}"></script>
+<script>mermaid.initialize({ startOnLoad: false, theme: 'neutral', flowchart: { htmlLabels: false } })</script>
 </body></html>`
 
 // The intermediate HTML goes to a temp folder; images are referenced from docs/ by absolute file URL.
 const htmlPath = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'chartit-docs-')), 'docs.html')
-fs.writeFileSync(htmlPath, page)
 fs.mkdirSync(path.dirname(outPdf), { recursive: true })
 
 const browser = await puppeteer.launch({
@@ -157,17 +186,53 @@ const browser = await puppeteer.launch({
   args: ['--allow-file-access-from-files'],
 })
 const tab = await browser.newPage()
-await tab.goto(pathToFileURL(htmlPath).href, { waitUntil: 'networkidle0' })
-await tab.pdf({
-  path: outPdf,
-  preferCSSPageSize: true,
-  printBackground: true,
-  displayHeaderFooter: true,
-  headerTemplate: '<div></div>',
-  footerTemplate:
-    '<div style="font-size:8px;width:100%;text-align:center;color:#57606a">ChartIt – projektna dokumentacija · <span class="pageNumber"></span> / <span class="totalPages"></span></div>',
-  outline: true,
-  tagged: true,
+
+async function print(pages) {
+  fs.writeFileSync(htmlPath, page(pages))
+  await tab.goto(pathToFileURL(htmlPath).href, { waitUntil: 'networkidle0' })
+  await tab.evaluate(() => window.mermaid.run({ querySelector: '.mermaid' }))
+  return tab.pdf({
+    preferCSSPageSize: true,
+    printBackground: true,
+    displayHeaderFooter: true,
+    headerTemplate: '<div></div>',
+    footerTemplate:
+      '<div style="font-size:8px;width:100%;text-align:center;color:#57606a">ChartIt – projektna dokumentacija · <span class="pageNumber"></span> / <span class="totalPages"></span></div>',
+    outline: true,
+    tagged: true,
+  })
+}
+
+// Page number (1-based) of every heading in the PDF outline, in document order.
+async function headingPages(pdfBytes) {
+  const pdf = await getDocument({ data: new Uint8Array(pdfBytes), verbosity: 0 }).promise
+  const result = []
+  async function walk(items) {
+    for (const item of items || []) {
+      const dest = typeof item.dest === 'string' ? await pdf.getDestination(item.dest) : item.dest
+      const page = dest ? (await pdf.getPageIndex(dest[0])) + 1 : null
+      result.push({ title: item.title.replace(/\s+/g, ' ').trim(), page })
+      await walk(item.items)
+    }
+  }
+  await walk(await pdf.getOutline())
+  return result
+}
+
+const draft = await print(toc.map(() => '000'))
+const outline = await headingPages(draft)
+// Match TOC entries to outline entries in order, by title.
+let from = 0
+const pages = toc.map((t) => {
+  const title = t.text.replace(/\s+/g, ' ').trim()
+  const i = outline.findIndex((o, j) => j >= from && o.title === title)
+  if (i === -1) return ''
+  from = i + 1
+  return String(outline[i].page)
 })
+const missing = toc.filter((_, i) => !pages[i]).map((t) => t.text)
+if (missing.length) console.warn('Bez broja stranice u sadržaju:', missing.join('; '))
+
+fs.writeFileSync(outPdf, await print(pages))
 await browser.close()
 console.log('PDF:', outPdf)
