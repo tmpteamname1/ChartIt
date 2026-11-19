@@ -2,6 +2,7 @@
 # Dependencies
 .local/
 frontend/node_modules/
+scripts/docs-pdf/node_modules/
 backend/.venv/
 venv/
 

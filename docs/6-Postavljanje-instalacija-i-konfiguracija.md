@@ -182,6 +182,18 @@ DJANGO_DEBUG=False DJANGO_HTTPS=False gunicorn config.wsgi --bind 127.0.0.1:8000
 
 Aplikacija je tada dostupna na http://localhost:8000. `DJANGO_HTTPS=False` isključuje preusmjeravanje na HTTPS i sigurne kolačiće, koji su uz `DJANGO_DEBUG=False` inače uključeni. Gunicorn ne radi na Windowsima; tamo se ovaj način pokretanja isprobava u WSL-u ili Dockeru.
 
+### PDF dokumentacije
+
+Za predaju se cijela dokumentacija (`Home.md`, poglavlja 1 – 7 i A) spaja u jedan PDF u mapi `docs/deliverables/`, nazvan prema predlošku kolegija (`PROINZ26_G09.4_ChartIt_v1.pdf`). Skripta `scripts/docs-pdf/build.mjs` pretvara Markdown u HTML s naslovnicom i sadržajem, ugrađuje dijagrame iz `docs/assets/diagrams/`, poveznice među poglavljima pretvara u poveznice unutar PDF-a, a poveznice na kod u poveznice na GitHub. PDF zatim ispisuje lokalno instalirani Chrome.
+
+```bash
+cd scripts/docs-pdf
+npm install                        # samo prvi put
+npm run build -- v1                # v2 za završnu predaju
+```
+
+Ako Chrome nije na uobičajenoj putanji, postavlja se varijabla `CHROME_PATH`. PDF se ponovno izrađuje nakon svake promjene dokumentacije koja ulazi u predaju.
+
 ### Varijable okruženja i tajne
 
 Ključevi, lozinke i ostale tajne ne pohranjuju se u repozitorij, nego se čitaju iz varijabli okruženja (poglavlje 4.6; NF-04). Django ih čita u `backend/config/settings.py` pomoću biblioteke `django-environ`.

@@ -1,0 +1,14 @@
+{
+  "name": "chartit-docs-pdf",
+  "private": true,
+  "type": "module",
+  "description": "Builds the single PDF of the project documentation for docs/deliverables.",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "github-slugger": "2.0.0",
+    "marked": "15.0.12",
+    "puppeteer-core": "23.11.1"
+  }
+}
