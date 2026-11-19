@@ -106,7 +106,7 @@ Kod trećih strana (biblioteke navedene u `backend/requirements.txt` i `frontend
 
 Ovaj projekt slijedi FER-ova [pravila o primjerenoj uporabi umjetne inteligencije](https://www.fer.unizg.hr/_download/repository/Policy%20on%20the%20appropriate%20use%20of%20artificial%20intelligence%20at%20the%20faculty%20of%20electrical%20engineering%20and%20computing%5B1%5D.pdf).
 
-**Izjava:** Tim je koristio alate umjetne inteligencije (OpenAI Codex, Claude Code) za izradu i doradu skica sučelja, dijelova koda i dokumentacije. Svaka promjena prolazi pregled drugog člana tima u pull requestu i automatske provjere (CI), a autor promjene mora moći objasniti njezin sadržaj. U alate se ne unose tajne, pristupni podaci ni osobni podaci.
+**Izjava:** Tim je koristio alate umjetne inteligencije (OpenAI Codex, Claude Code, Claude) za izradu i doradu skica sučelja, pisanje dijelova koda, otklanjanje grešaka i pomoć pri pisanju dokumentacije. Svaka promjena prolazi pregled drugog člana tima u pull requestu i automatske provjere (CI), a autor promjene mora moći objasniti njezin sadržaj. U alate se ne unose tajne, pristupni podaci ni osobni podaci.
 
 Detaljan zapis (alati, modeli, članovi, opseg i način provjere) nalazi se u [Izjavi o uporabi umjetne inteligencije](docs/Home.md#izjava-o-uporabi-umjetne-inteligencije).
 
