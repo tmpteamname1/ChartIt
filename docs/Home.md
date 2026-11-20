@@ -42,8 +42,10 @@ Ažurirani popis članova, njihovih GitHub profila i glavnih uloga ili doprinosa
 
 | Kontrolna točka | Demonstracija | Video |
 | --- | --- | --- |
-| Iteracija 1 | [Javna aplikacija](https://chartit-okv1.onrender.com) | Nije snimljen |
+| Iteracija 1 | [Javna aplikacija](https://chartit-okv1.onrender.com) | [Snimka zaslona](assets/video/iteracija-1-demo.mp4) (20. 11. 2026., bez zvuka) |
 | Završni pregled | Slijedi | Slijedi |
+
+Snimka Iteracije 1 prikazuje sučelje aplikacije i prijavu Googleom na javnoj instalaciji. Prijava i uloge rade sa stvarnim backendom, a dio ekrana (pretraga plovila i flota) u trenutku snimanja još koristi privremene (mock) podatke na frontendu, pa prikazani podaci nisu stvarni.
 
 Dokumentacija se kontinuirano ažurira kako se aplikacija razvija.
 
