@@ -15,7 +15,7 @@ from django.db.models.deletion import ProtectedError
 from django.test import TestCase, override_settings
 from PIL import Image
 from rest_framework.request import Request
-from rest_framework.test import APIRequestFactory, APITestCase
+from rest_framework.test import APIClient, APIRequestFactory, APITestCase
 
 from accounts.models import User
 from companies.models import Company
@@ -925,3 +925,100 @@ class CompanyVesselApiTests(VesselApiTestCase):
             self.make_vessel()
         with self.assertNumQueries(5):
             self.client.get(self.URL)
+
+    # Stvaranje plovila
+
+    def payload(self, **overrides):
+        data = {
+            'name': 'Novo',
+            'description': 'Opis',
+            'equipment': 'GPS',
+            'category': self.category.id,
+            'home_port': self.port.id,
+            'length_m': '11.50',
+            'max_people': 6,
+            'cabins': 2,
+            'year_built': 2020,
+            'daily_price': '200.00',
+        }
+        data.update(overrides)
+        return data
+
+    def post(self, **overrides):
+        return self.client.post(self.URL, self.payload(**overrides), format='json')
+
+    def test_owner_creates_vessel_for_own_company(self):
+        self.client.force_login(self.owner_a)
+
+        response = self.post()
+
+        self.assertEqual(response.status_code, 201)
+        vessel = Vessel.objects.get(pk=response.json()['id'])
+        self.assertEqual(vessel.company, self.company)
+        self.assertTrue(vessel.is_active)
+        self.assertEqual(response.json()['name'], 'Novo')
+
+    def test_company_in_body_is_ignored(self):
+        self.client.force_login(self.owner_a)
+
+        response = self.post(company=self.company_b.id, is_active=False)
+
+        self.assertEqual(response.status_code, 201)
+        vessel = Vessel.objects.get(pk=response.json()['id'])
+        self.assertEqual(vessel.company, self.company)
+        self.assertTrue(vessel.is_active)
+
+    def test_created_vessel_is_visible_in_panel_and_public_list(self):
+        self.client.force_login(self.owner_a)
+        self.post(name='Vidljivo')
+
+        self.assertIn('Vidljivo', self.names())
+        public = self.client.get('/api/vessels/').json()['results']
+        self.assertIn('Vidljivo', [v['name'] for v in public])
+
+    def test_invalid_input_returns_400_with_field_error(self):
+        self.client.force_login(self.owner_a)
+        cases = {
+            'daily_price': '-1',
+            'max_people': 0,
+            'length_m': '0',
+            'category': 999999,
+            'year_built': 3000,
+        }
+        for field, value in cases.items():
+            with self.subTest(field=field):
+                response = self.post(**{field: value})
+
+                self.assertEqual(response.status_code, 400)
+                self.assertIn(field, response.json()['errors'])
+
+    def test_missing_required_field_returns_400(self):
+        self.client.force_login(self.owner_a)
+        data = self.payload()
+        del data['name']
+
+        response = self.client.post(self.URL, data, format='json')
+
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('name', response.json()['errors'])
+
+    def test_create_anonymous_gets_401(self):
+        self.assertEqual(self.post().status_code, 401)
+
+    def test_create_customer_gets_403(self):
+        self.client.force_login(self.make_user('korisnik', User.Role.KORISNIK))
+
+        self.assertEqual(self.post().status_code, 403)
+
+    def test_create_employee_gets_403(self):
+        self.client.force_login(self.make_user('djelatnik', User.Role.DJELATNIK, self.company))
+
+        self.assertEqual(self.post().status_code, 403)
+
+    def test_post_without_csrf_token_is_rejected(self):
+        client = APIClient(enforce_csrf_checks=True)
+        client.force_login(self.owner_a)
+
+        response = client.post(self.URL, self.payload(), format='json')
+
+        self.assertEqual(response.status_code, 403)

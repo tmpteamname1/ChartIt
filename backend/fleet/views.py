@@ -12,6 +12,7 @@ from .models import Category, Port, Vessel
 from .serializers import (
     CategorySerializer,
     CompanyVesselSerializer,
+    CompanyVesselCreateSerializer,
     PortSerializer,
     VesselDetailSerializer,
     VesselListSerializer,
@@ -100,9 +101,21 @@ class VesselViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.G
             'kao da ne postoji.'
         ),
     ),
+    create=extend_schema(
+        summary='Stvaranje plovila',
+        description=(
+            'Vlasnik dodaje novo aktivno plovilo svojoj tvrtki. Tvrtka se uzima iz '
+            'prijavljenog korisnika, a `company` u tijelu zahtjeva se zanemaruje.'
+        ),
+        responses={201: CompanyVesselSerializer},
+    ),
 )
 class CompanyVesselViewSet(
-    CompanyScopedMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet
+    CompanyScopedMixin,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet,
 ):
     queryset = Vessel.objects.select_related('category', 'home_port')
     serializer_class = CompanyVesselSerializer
@@ -110,3 +123,8 @@ class CompanyVesselViewSet(
     filter_backends = [StableOrderingFilter]
     ordering_fields = ['name']
     ordering = ['name', 'id']
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return CompanyVesselCreateSerializer
+        return CompanyVesselSerializer

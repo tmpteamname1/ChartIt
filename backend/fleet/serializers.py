@@ -1,3 +1,6 @@
+from datetime import date
+from decimal import Decimal
+
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
@@ -126,3 +129,40 @@ class CompanyVesselSerializer(serializers.ModelSerializer):
             'daily_price',
             'is_active',
         ]
+
+
+class CompanyVesselCreateSerializer(serializers.ModelSerializer):
+    """Input for POST /api/company/vessels/ (UC-04). Company and is_active are not input."""
+
+    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
+    home_port = serializers.PrimaryKeyRelatedField(queryset=Port.objects.all())
+    # Declared explicitly: the model's year validator is a callable (see above).
+    year_built = serializers.IntegerField(min_value=1900)
+    length_m = serializers.DecimalField(max_digits=5, decimal_places=2, min_value=Decimal('0.01'))
+    max_people = serializers.IntegerField(min_value=1, max_value=32767)
+    cabins = serializers.IntegerField(min_value=0, max_value=32767)
+    daily_price = serializers.DecimalField(max_digits=10, decimal_places=2, min_value=0)
+
+    class Meta:
+        model = Vessel
+        fields = [
+            'name',
+            'description',
+            'equipment',
+            'category',
+            'home_port',
+            'length_m',
+            'max_people',
+            'cabins',
+            'year_built',
+            'daily_price',
+        ]
+
+    def validate_year_built(self, value):
+        if value > date.today().year:
+            raise serializers.ValidationError('Godina izgradnje ne može biti u budućnosti.')
+        return value
+
+    def to_representation(self, instance):
+        # The response has the same shape as the details in the company panel.
+        return CompanyVesselSerializer(instance, context=self.context).data
