@@ -11,8 +11,8 @@ from .filters import StableOrderingFilter, VesselFilter
 from .models import Category, Port, Vessel
 from .serializers import (
     CategorySerializer,
-    CompanyVesselSerializer,
     CompanyVesselCreateSerializer,
+    CompanyVesselSerializer,
     PortSerializer,
     VesselDetailSerializer,
     VesselListSerializer,
