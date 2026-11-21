@@ -983,6 +983,8 @@ class CompanyVesselApiTests(VesselApiTestCase):
             'max_people': 0,
             'length_m': '0',
             'category': 999999,
+            'home_port': 999999,
+            'cabins': -1,
             'year_built': 3000,
         }
         for field, value in cases.items():
