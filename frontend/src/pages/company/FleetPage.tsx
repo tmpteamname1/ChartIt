@@ -14,13 +14,14 @@ import {
   Title,
 } from '@mantine/core'
 import { IconAlertTriangle, IconSailboat } from '@tabler/icons-react'
-import { useQuery, type UseQueryResult } from '@tanstack/react-query'
+import { useQuery, useQueryClient, type UseQueryResult } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Link, Navigate, useSearchParams } from 'react-router'
 import { PAGE_SIZE, type Paginated } from '../../api/catalog'
 import { ApiError } from '../../api/client'
 import { companyKeys, getCompanyVessels, type CompanyVessel } from '../../api/company'
 import { useAuth } from '../../auth/AuthContext'
+import { confirmedUserId } from '../../auth/session'
 import { formatPrice } from '../../utils/format'
 
 const PAGINATION_LABELS = {
@@ -219,9 +220,19 @@ function FleetPage() {
   const page = pageFromSearch(searchParams)
   // RequireRole renders this page only for a logged-in owner, so user is set here.
   const userId = useAuth().user?.id ?? 0
+  const queryClient = useQueryClient()
   const query = useQuery({
     queryKey: companyKeys.vessels(userId, page),
-    queryFn: ({ signal }) => getCompanyVessels(page, signal),
+    queryFn: async ({ signal, queryKey }) => {
+      // On return to the tab this refetch starts together with the login check. If the session
+      // now belongs to another owner, the answer would be their fleet stored under this owner's
+      // key, so the fetch is cancelled before the request and the cached list stays as it was.
+      if ((await confirmedUserId(queryClient)) !== userId) {
+        await queryClient.cancelQueries({ queryKey, exact: true })
+        throw new Error('The session belongs to another user.')
+      }
+      return getCompanyVessels(page, signal)
+    },
     enabled: userId !== 0,
     // The current page stays on screen while the next one loads, but only for the same account:
     // after a login as another owner in a different tab the list loads from scratch.

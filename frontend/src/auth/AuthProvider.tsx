@@ -3,9 +3,7 @@ import { useEffect, useMemo, type ReactNode } from 'react'
 import { getCurrentUser, logout, testLogin, type CurrentUser } from '../api/auth'
 import { setUnauthorizedHandler } from '../api/client'
 import { AuthContext, type AuthContextValue, type AuthStatus, type User } from './AuthContext'
-
-// The login state is not stored in the browser; the server session decides (4.4.3).
-const ME_KEY = ['auth', 'me'] as const
+import { ME_KEY } from './session'
 
 function toUser({ id, first_name, last_name, email, role }: CurrentUser): User {
   const name = `${first_name} ${last_name}`.trim()
