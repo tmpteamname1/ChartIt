@@ -14,12 +14,13 @@ import {
   Title,
 } from '@mantine/core'
 import { IconAlertTriangle, IconSailboat } from '@tabler/icons-react'
-import { keepPreviousData, useQuery, type UseQueryResult } from '@tanstack/react-query'
+import { useQuery, type UseQueryResult } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Link, Navigate, useSearchParams } from 'react-router'
 import { PAGE_SIZE, type Paginated } from '../../api/catalog'
 import { ApiError } from '../../api/client'
 import { companyKeys, getCompanyVessels, type CompanyVessel } from '../../api/company'
+import { useAuth } from '../../auth/AuthContext'
 import { formatPrice } from '../../utils/format'
 
 const PAGINATION_LABELS = {
@@ -216,11 +217,16 @@ function VesselList({
 function FleetPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const page = pageFromSearch(searchParams)
+  // RequireRole renders this page only for a logged-in owner, so user is set here.
+  const userId = useAuth().user?.id ?? 0
   const query = useQuery({
-    queryKey: companyKeys.vessels(page),
+    queryKey: companyKeys.vessels(userId, page),
     queryFn: ({ signal }) => getCompanyVessels(page, signal),
-    // The current page stays on screen while the next one loads.
-    placeholderData: keepPreviousData,
+    enabled: userId !== 0,
+    // The current page stays on screen while the next one loads, but only for the same account:
+    // after a login as another owner in a different tab the list loads from scratch.
+    placeholderData: (previous, previousQuery) =>
+      previousQuery?.queryKey[2] === userId ? previous : undefined,
     // A 4xx answer, such as a page past the end, would not change on retry.
     retry: (failureCount, err) =>
       failureCount < 3 && !(err instanceof ApiError && err.status < 500),
