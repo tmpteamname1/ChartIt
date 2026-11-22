@@ -34,11 +34,10 @@ export interface VesselCreate {
 }
 
 // Invalidate companyKeys.all after creating a vessel to refresh every page.
-// The fleet key holds the logged-in user's ID: if the session switches to another owner in a
-// different tab, the previous owner's fleet is never shown from the cache.
+// AuthProvider removes these when the logged-in user changes, so the keys need no user ID.
 export const companyKeys = {
   all: ['company'] as const,
-  vessels: (userId: number, page: number) => [...companyKeys.all, 'vessels', userId, page] as const,
+  vessels: (page: number) => [...companyKeys.all, 'vessels', page] as const,
   categories: () => [...companyKeys.all, 'categories'] as const,
   ports: () => [...companyKeys.all, 'ports'] as const,
 }
