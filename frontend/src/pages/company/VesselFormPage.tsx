@@ -16,9 +16,14 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { type SubmitEvent, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
-import { catalogKeys, getCategories, getPorts } from '../../api/catalog'
 import { ApiError } from '../../api/client'
-import { companyKeys, createVessel, type VesselCreate } from '../../api/company'
+import {
+  companyKeys,
+  createVessel,
+  getVesselCategories,
+  getVesselPorts,
+  type VesselCreate,
+} from '../../api/company'
 
 const fleetPath = '/tvrtka/flota'
 const maxSmallInteger = 32_767
@@ -105,12 +110,12 @@ function NewVesselForm() {
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof VesselCreate, string>>>({})
   const [formErrors, setFormErrors] = useState<string[]>([])
   const categories = useQuery({
-    queryKey: catalogKeys.categories(),
-    queryFn: ({ signal }) => getCategories(signal),
+    queryKey: companyKeys.categories(),
+    queryFn: ({ signal }) => getVesselCategories(signal),
   })
   const ports = useQuery({
-    queryKey: catalogKeys.ports(),
-    queryFn: ({ signal }) => getPorts(signal),
+    queryKey: companyKeys.ports(),
+    queryFn: ({ signal }) => getVesselPorts(signal),
   })
   const { mutate, isPending } = useMutation({
     mutationFn: createVessel,
