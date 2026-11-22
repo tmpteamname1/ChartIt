@@ -1,9 +1,9 @@
-// Company fleet list and creation API. The mock backs these calls until #116.
+// Company fleet list and creation API (#101, #102), only for the owner (VLASNIK).
+// The backend limits both calls to the logged-in user's company (ADR-02).
 // Both request and response keep DecimalField values as strings.
 
 import type { NamedRef, Paginated } from './catalog'
-import { createMockVessel, queryMockCompanyVessels } from './mocks/company'
-import { mockDelay } from './mocks/delay'
+import { apiGet, apiPost, toQueryString } from './client'
 
 export interface CompanyVessel {
   id: number
@@ -39,17 +39,17 @@ export const companyKeys = {
   vessels: (page: number) => [...companyKeys.all, 'vessels', page] as const,
 }
 
-// GET /api/company/vessels/
-export async function getCompanyVessels(
+// GET /api/company/vessels/?page=N, active and inactive vessels sorted by name.
+// A page past the last one answers 404.
+export function getCompanyVessels(
   page = 1,
   signal?: AbortSignal,
 ): Promise<Paginated<CompanyVessel>> {
-  await mockDelay(signal)
-  return queryMockCompanyVessels(page)
+  const query = toQueryString({ page: page === 1 ? undefined : page })
+  return apiGet<Paginated<CompanyVessel>>(`/api/company/vessels/${query}`, signal)
 }
 
-// POST /api/company/vessels/ (201 Created)
-export async function createVessel(data: VesselCreate): Promise<CompanyVessel> {
-  await mockDelay()
-  return createMockVessel(data)
+// POST /api/company/vessels/ (201 Created). Invalid input answers 400 with per-field errors.
+export function createVessel(data: VesselCreate): Promise<CompanyVessel> {
+  return apiPost<CompanyVessel>('/api/company/vessels/', data)
 }
