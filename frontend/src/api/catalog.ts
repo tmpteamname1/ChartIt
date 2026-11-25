@@ -1,9 +1,6 @@
-// Public catalogue (issues #74, #75): the only place the search screen gets its data from.
-// Field names and types follow the API responses exactly; DRF returns DecimalField as a string.
-// Until the backend endpoints exist, the functions return mock data with the same signature.
+// Public catalogue API (#74, #75, #96). DRF returns DecimalField values as strings.
 
-import { mockCategories, mockCompanies, mockPorts, queryMockVessels } from './mocks/catalog'
-import { mockDelay } from './mocks/delay'
+import { apiGet, toQueryString } from './client'
 
 export interface Category {
   id: number
@@ -84,24 +81,20 @@ export async function getVessels(
   filters: VesselFilters,
   signal?: AbortSignal,
 ): Promise<Paginated<VesselListItem>> {
-  await mockDelay(signal)
-  return queryMockVessels(filters)
+  return apiGet<Paginated<VesselListItem>>(`/api/vessels/${toQueryString(filters)}`, signal)
 }
 
 // GET /api/categories/ (not paginated)
 export async function getCategories(signal?: AbortSignal): Promise<Category[]> {
-  await mockDelay(signal)
-  return mockCategories
+  return apiGet<Category[]>('/api/categories/', signal)
 }
 
 // GET /api/ports/ (not paginated)
 export async function getPorts(signal?: AbortSignal): Promise<Port[]> {
-  await mockDelay(signal)
-  return mockPorts
+  return apiGet<Port[]>('/api/ports/', signal)
 }
 
 // GET /api/companies/
 export async function getCompanies(signal?: AbortSignal): Promise<Paginated<Company>> {
-  await mockDelay(signal)
-  return { count: mockCompanies.length, next: null, previous: null, results: mockCompanies }
+  return apiGet<Paginated<Company>>('/api/companies/', signal)
 }

@@ -81,7 +81,7 @@ Kratak sažetak: [README – Uporaba umjetne inteligencije](../README.md#ai-usag
 | Claude Code | Claude Opus | Matić | Izrada i provjera koda kostura aplikacije, sigurnosnih postavki, prijave i CI-ja; izrada nacrta dokumentacije (poglavlja 2, 4 i 6, README) i opisa zadataka |
 | Claude | Claude Sonnet 5.5 | Lepur | Pisanje i otklanjanje grešaka u kodu (Google prijava, naredba `promote_admin`); pomoć pri pisanju dokumentacije (ADR-06, opis postavljanja Google OAuth-a) |
 | Claude | Claude Sonnet 5.5 | Crnković | Pomoć pri pisanju koda i otklanjanju grešaka |
-| OpenAI Codex | GPT-6.1 Sol | Bartulović | Otklanjanje grešaka i pomoć pri pisanju koda (ekran javne pretrage) |
+| OpenAI Codex | GPT-6.1 Sol | Bartulović | Izrada i provjera javne pretrage plovila (#95) i prelaska javnog kataloga na API (#96) |
 
 ### Opseg doprinosa umjetne inteligencije
 
